@@ -1,0 +1,592 @@
+/*
+
+author - bart@blau.be
+http://www.blau.be
+
+*/
+
+/* first for IE 4–8 */
+/*@font-face {
+	font-family: DINWeb-Medium;
+	src: url("DINWeb-Medium.eot");
+}*/
+
+/* then for WOFF-capable browsers */
+/*@font-face {
+	font-family: DINWeb-Medium;
+	src: url("DINWeb-Medium.woff") format("woff");
+}*/
+
+/* go on with normal style definitions */
+/* Aangepast door Sam: DINWeb-Medium,*/
+h1,h2,h3,h4,h5,h6, h1.header {
+	font-family: sans-serif;
+}
+h1,h2,h3,h4,h5,h6 {
+
+}
+
+/* page
+------------------------------------------------------------------ */
+
+body {
+	background: #f8f7ed url(../images/bg-body.gif) no-repeat;
+	color: #444542;
+}
+
+#wrap {
+	width: 940px;
+	margin-left: auto;
+	margin-right: auto;
+	font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	background-color: #fff;
+}
+
+#primary {
+	margin: 0;
+}
+
+#content {
+	margin: 20px 0 0;
+	width: auto;
+	/* toegevoegd door Sam */
+	/*padding-bottom: 20px;*/
+	background-color: transparent;
+	padding-right: 20px;
+	padding-left: 20px;
+}
+
+#page, #exhibit-sections {
+	width: 100%;
+	margin: 0;
+}
+
+#page:nth-child(2) {
+	width: 78%;
+	float: right;
+}
+
+.clearfix{
+	clear:both;
+}
+
+/* header
+------------------------------------------------------------------ */
+
+#site-title {
+	position: relative;
+}
+
+#header-title h1.header {
+	background-color: transparent;
+	/* Aangepast DINWeb-Medium */
+	font: 45px/1em sans-serif;
+	position: absolute;
+	top: 15px;
+	left: 15px;
+	margin: 0;
+	padding: 0;
+}
+
+#header-nav ul.header_nav.dropdown li a {
+	font-size: 13px;
+}
+
+#header-title h2.header {
+	background-color: transparent;
+	/* Aangepast: DINWeb-Medium */
+	font: 20px/1px sans-serif;
+	position: absolute;
+	top: 75px;
+	left: 18px;
+	margin: 0;
+	padding: 0;
+}
+
+#site-title img.logo {
+	display: none;
+}
+
+#header-title a.cag-link h3.header {
+	/* aangepast DINWeb-Medium*/
+	font: 21px/24px sans-serif;
+	text-transform: uppercase;
+	text-shadow: #333 0.08em 0.08em 0.1em;
+	position: absolute;
+	position: absolute;
+	right: 0;
+	top: 75px;
+}
+
+#search-wrap {
+	float: none;
+	width: 920px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-right: auto;
+	margin-top: 5px;
+	margin-left: auto;
+	/* aangepast door Sam */
+	position: relative;
+	top: 70px;
+}
+
+#simple-search {
+	float: right;
+}
+
+#search-beeldbank #search-wrap {
+	float: none;
+	width: 40px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-right: auto;
+	margin-top: 0;
+	margin-left: 110px;
+}
+
+#search-beeldbank #simple-search {
+	float: left;
+	width: 100%;
+	margin-bottom: 2em;
+}
+
+
+
+div#header {
+	position: relative;
+	height: 235px;
+	background: url(../images/header-gezin-paard.jpg) no-repeat;
+	width: 940px;
+}
+
+.hTagcloud ul {
+	margin-top: 4em;
+	line-height: 1.8em;
+}
+
+#submit_search, #submit_search_advanced {
+	background-color: #9f7c15;
+	border-style: none;
+	font: bold 12px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	color: #fff;
+	height: 26px;
+	width: 64px;
+	position: relative;
+	top: -1px;
+}
+
+#submit_search:hover, #submit_search:focus, #submit_search_advanced:hover,  #submit_search_advanced:focus {
+	background-color: #795f0e;
+	cursor: pointer;
+}
+
+input#search.textinput, #advanced-search-form .inputs input {
+	height: 20px;
+	border: 2px solid #cda21f;
+	width: 180px;
+	font: bold 14px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	color: #292929;
+	padding-right: 4px;
+	padding-left: 4px;
+}
+
+#advanced-search-form .inputs input#advanced-0-terms {
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+#advanced-search-form select {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+input#search.textinput:hover, input#search.textinput:focus, #advanced-search-form .inputs input:hover, #advanced-search-form .inputs input:focus {
+	border: 2px solid #795f0e;
+}
+
+#header-nav ul.header_nav.dropdown {
+	height: 22px;
+	margin: 11px 0 0;
+	padding-top: 11px;
+	padding-bottom: 6px;
+}
+
+#header-nav_bar {
+	border-bottom-style: none;
+	position: relative;
+	top: 56px;
+	background-image: url(../images/yellow-transparant.png);
+	_background-image: url(../images/yellow-transparant.gif);
+}
+
+/* carrousel
+------------------------------------------------------------------ */
+
+#carousel-block {
+	width: 70%;
+}
+
+#item-block {
+	width: 100%;
+}
+
+/* show-gallery
+-------------------------------------------------------------------*/
+#gallery{
+	width:570px;
+}
+
+#gallery-image{
+
+}
+
+#gallery-image img{
+	float:left;
+	max-width:500px;
+	max-height:800px;
+	margin-bottom:20px;
+	padding-right:9px;
+	border-right:1px dashed #F8C400;
+
+}
+
+#gallery-thumbnails{
+	width:60px;
+
+}
+#gallery-thumbnails img{
+	padding: 0 0 10px 10px;
+	min-height:40px;
+}
+
+/* text
+------------------------------------------------------------------ */
+
+#primary p {
+	line-height: 150%;
+	margin-bottom: 15px;
+}
+
+#content h1 {
+	line-height: 150%;
+	font-size: 200%;
+	background-color: transparent;
+	color: #f8c400;
+	padding: 0;
+	margin-bottom: 7px;
+}
+
+/* toegevoegd door Sam */
+span.breadcrumb {
+	font-size: 200%;
+	color: #f8c400;
+}
+
+/* toegevoegd door Sam */
+#secondary-nav {
+	display: none;
+}
+
+/* toegevoegd door Sam */
+#page h1 {display:none;}
+
+#primary h2 {
+	line-height: 150%;
+	font-size: 140%;
+	font-weight: bold;
+	border-radius: 4px;
+}
+
+#primary a {
+	font-weight: bold;
+}
+
+
+#primary a:hover, #primary a:focus {
+	text-decoration:underline;
+	color: #07614e;
+}
+
+#primary a.permalink:hover {
+	border:0;
+}
+
+#exhibit-sections div.exhibit-sections-item {
+	padding: 10px;
+	margin-bottom: 10px;
+	border-bottom: 2px solid #e4e6e6;
+	border-top: 2px solid #e4e6e6;
+	background-color: #f4f4f4;
+}
+
+#exhibit-sections div.exhibit-sections-item h3 {
+	font-size: 120%;
+	margin-bottom: 11px;
+}
+
+#exhibit-sections div.exhibit-sections-item img {
+	border-style: none;
+}
+
+#exhibit-sections div.exhibit-sections-item h3 {
+	font-weight: bold;
+}
+
+div.exhibit-item-caption {
+    color: #AFAFAF;
+    margin-bottom: 1.5em;
+    margin-top: 7px;
+}
+
+table.exhibit_general_list tbody tr td {
+	padding: 20px;
+}
+
+ table.exhibit_general_list tbody tr td img {
+	border: 4px solid #c7caca;
+	margin-bottom: 12px;
+}
+
+.exhibit-text ul{
+	list-style-type: disc;
+	margin-left: 52%;
+}
+
+#page ul.uitgelicht-list {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: transparent;
+	padding: 0;
+}
+
+#page ul.uitgelicht-list h4 {
+	font-size: 160%;
+	margin-bottom: 11px;
+}
+
+#page ul.uitgelicht-list li {
+	margin-bottom: 8px;
+}
+
+#page ul.uitgelicht-list li li {
+	margin-left: 30px;
+}
+
+#wegwijs {
+	width: 26%;
+	background-color: #f8c400;
+	padding: 1% 1% 1.2%;
+	border-radius: 4px;
+	/* toegevoegd door Sam */
+	max-height: 500px;
+	overflow: auto;
+}
+
+#primary #wegwijs a {
+	padding: 0;
+	color: #fff;
+	border-bottom-style: none;
+	/* Toegevoegd door Sam */
+	/*font-size: 100%;
+	line-height: 22px;
+	display: block;*/
+	font-weight: normal;
+	font-style: normal;
+}
+
+#primary #wegwijs a:hover, #primary #wegwijs a:focus {
+	color: #f8efce;
+}
+
+
+.item-description table tbody tr td table td:first-child {
+	width: 30%;
+}
+
+/* contact
+------------------------------------------------------------------ */
+
+address {
+	line-height: 169%;
+	font-weight: normal;
+	font-style: normal;
+}
+
+#form-instructions {
+	margin-bottom: 20px;
+	background-color: #f0ecec;
+}
+
+#contact-form .field {
+	margin-bottom: 13px;
+}
+
+#contact-form label {
+	font-weight: bold;
+	padding-left: 2px;
+	padding-bottom: 2px;
+}
+
+#contact-form input, #contact-form textarea {
+	border: 1px solid #c8c8c8;
+	padding: 5px;
+	font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	font-weight: bold;
+}
+
+#contact-form textarea {
+	height: 180px;
+}
+
+#contact-form input:hover, #contact-form input:focus, #contact-form textarea:hover, #contact-form textarea:focus {
+	border: 1px solid #7e7f7f;
+}
+
+#contact-form input#send {
+	background-color: #066;
+	border-style: none;
+	color: #fff;
+	padding: 7px;
+	font: bold 13px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+}
+
+#contact-form input#send:hover, #contact-form input#send:focus {
+	background-color: #f8c400;
+}
+
+/* nav-left
+------------------------------------------------------------------ */
+
+#nav-left {
+	float: left;
+	width: 20%;
+}
+
+#nav-left img {
+	width: 100%;
+	border: 3px solid #e3e5e5;
+	display: none;
+}
+
+#nav-left ul.first {
+	border-style: none;
+	margin-top: 0;
+}
+
+#nav-left li {
+	margin-bottom: 10px;
+}
+
+#nav-left li:last-child {
+	margin-bottom: 0px;
+}
+
+#primary #nav-left a {
+	border-bottom-style: none;
+	color: #558282;
+}
+
+#primary #nav-left a:hover, #primary #nav-left a:focus {
+	color: #07614e;
+}
+
+/* breadcrumbs
+------------------------------------------------------------------ */
+
+p#simple-pages-breadcrumbs {
+	font-weight: bold;
+	color: #5d5d5d;
+	margin-bottom: 9px;
+}
+
+#simple-pages-breadcrumbs a {
+	color: #07614e;
+}
+
+/* footer
+------------------------------------------------------------------ */
+
+#footer {
+	color: #747474;
+	margin-left: 0;
+	width: 100%;
+	background-color: #f0ecec;
+	padding-top: 15px;
+	/*padding-bottom: 20px;*/
+}
+
+#footer a {
+	color: #7e8181;
+	border-bottom: 1px solid #d0d0d0;
+	font-weight: bold;
+}
+
+#footer a:hover, #footer a:focus {
+	color: #3f4040;
+	border-bottom: 1px solid #545555;
+	text-decoration: none;
+}
+
+#footer-text {
+	padding: 0;
+	color: #272727;
+}
+
+ul.navigation_footer {
+	padding-left: 0;
+}
+
+#footer ul.navigation_footer li {
+
+}
+
+#footer .column {
+	float: left;
+	display: inline;
+}
+
+#footer .column.logo {
+	width: 23%;
+	padding-left: 2%;
+}
+
+#footer h2 {
+	background-color: #f0ecec;
+	color: #606060;
+	padding: 0;
+	font-size: 13px;
+}
+
+#footer ul {
+	margin-bottom: 1.5em;
+}
+
+#footer .column.links {
+	width: 50%;
+}
+#footer .column.links .left {
+	width: 33%;
+}
+#footer .column.links .right {
+	width: 33%;
+	float: right;
+}
+
+#footer .column.contact {
+	width: 22%;
+	float: right;
+	padding-right: 1%;
+}
+
+.info {
+	clear: both;
+	width: 940px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	padding-top: 1em;
+	font: 0.9em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	padding-right: 2em;
+}
+
