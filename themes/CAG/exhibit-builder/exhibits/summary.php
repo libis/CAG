@@ -1,5 +1,13 @@
 <?php head(array('title' => html_escape('Summary of ' . exhibit('title')),'bodyid'=>'exhibit','bodyclass'=>'summary')); ?>
 <div id="primary">
+<div id="breadcrumb">
+    <ul>
+        <li><a href="<?php echo html_escape(uri('')); ?>">Home</a> ></li>
+        <li><a href="<?php echo html_escape(uri('verhalen'));?>">Verhalen</a> ></li>
+        <?php echo Libis_breadcrumb_tag($exhibit); ?>
+        <li><?php echo html_escape($exhibit['title']); ?></li>
+    </ul>
+</div>
 <h1><?php echo html_escape(exhibit('title')); ?></h1>
 <div id="exhibit_description">
 <?php echo exhibit('description'); ?>

@@ -169,6 +169,11 @@ div.error {font-size:1.5em; line-height:1.33333em; margin:1.33333em 0;}
 
 img.logo{float:left;}
 
+#breadcrumb,#subnav{height:35px;}
+#breadcrumb li,#subnav li{float:left;line-height:35px;padding-right:.25em;list-style:none}
+#breadcrumb li a{padding:0 0 0 0}
+
+
 /* == Content == */
 #content {background:#fff;width:980px; margin:30px;}
 p img{float:left; padding-right:10px;padding-bottom:10px; }
