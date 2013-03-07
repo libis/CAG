@@ -1,0 +1,3 @@
+[submodule "plugins/apc"]
+	path = plugins/apc
+	url = git://github.com/libis/plugin-apc.git
