@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<?php echo js('jquery');?>
+
+<title><?php echo settings('site_title'); echo isset($title) ? ' | ' . $title : ''; ?></title>
+
+<!-- Meta -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="<?php echo settings('description'); ?>" />
+
+
+<?php echo auto_discovery_link_tag(); ?>
+
+<!-- Plugin Stuff -->
+
+<?php plugin_header(); ?>
+
+<!-- Stylesheets -->
+<?php
+queue_css('reset');
+queue_css('style');
+queue_css('ie');
+queue_css('styleDropdown');
+queue_css('feature-carousel');
+queue_css('skin');
+queue_css('main');
+
+display_css(); 
+?>
+
+<?php if($headerBackground = get_theme_option('Header Background')): ?>
+
+<style type="text/css" media="screen">
+    #header {
+        background:transparent url('<?php echo WEB_THEME_UPLOADS.DIRECTORY_SEPARATOR.$headerBackground; ?>') top left no-repeat;
+    }
+</style>
+<?php endif; ?>
+
+<!-- JavaScripts -->
+<?php echo queue_js('jquery.collapser');?>
+<?php echo queue_js('jquery.dropdown');?>
+<?php echo queue_js('jquery.featureCarousel');?>
+<?php echo queue_js('iframe');?>
+<?php echo queue_js('selectivizr');?>
+
+<?php echo display_js(); ?>
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+	  
+	   
+	    jQuery("#carousel2").featureCarousel({
+	        autoPlay: 0,
+	        trackerIndividual:false,
+	        trackerSummation:false,
+	        sidePadding:20
+	    });
+	    jQuery("#carousel3").featureCarousel({
+	        autoPlay: 0,
+	        trackerIndividual:false,
+	        trackerSummation:false,
+	        sidePadding:20
+	    });
+	});
+
+				
+</script>
+<script language="JavaScript">
+	if (self !== top) document.write('<style type="text/css">#normal-title{display:none} #werktuig{width:470px;} html{background:#fff;margin:0 0 100px 0;} #footer {display: none;} #header {display: none;} #search-wrap {display: none;}</style>'); 
+</script><!--iframe changes-->
+</head>
+<body<?php echo isset($bodyid) ? ' id="'.$bodyid.'"' : ''; ?><?php echo isset($bodyclass) ? ' class="'.$bodyclass.'"' : ''; ?>>
+
+	<div id="search-wrap" class="group">						
+		<form id="simple-search" action="/cag/items/browse" method="get">
+			<fieldset>
+				<input type="text" name="search" id="search" value="" class="textinput"><input type="submit" name="submit_search" id="submit_search" value="Zoeken">
+			</fieldset>
+		</form>				
+	</div><!-- /#search-wrap -->
+	<div id="wrap">
+		<div id="header">
+			<div id="site-title">
+				<img class="logo" src="<?php echo (img("logo.jpg"));?>"/><?php //echo link_to_home_page(custom_display_logo()); ?>	
+				<div id="header-title">
+					<h1 class="header">Het Virtuele Land</h1>
+
+					<h2 class="header">Erfgoedbank landbouw, platteland en voeding</h2>
+				
+					<a class="cag-link" href="http://www.cagnet.be/"><h3 class="header">Centrum<br>Agrarische</br>Geschiedenis</h3></a>
+				</div>
+	    	</div>
+	    	
+	<div id="header-nav_bar">			
+						
+				<div id="header-nav">
+					
+			    	<ul class="header_nav dropdown">
+		        	<li><a href="<?php echo uri('#'); ?>">Home</a></li>
+		        	<li><a href="<?php echo uri('beeldbank'); ?>">Beeldbank</a>
+		        		<ul class="sub_menu">
+		        			<li><a href="<?php echo uri('beeldbank'); ?>">Zoeken</a></li>
+		        			<li><a href="<?php echo uri('items/advanced-search'); ?>">Geavanceerd Zoeken</a></li>
+		        			<li><a href="<?php echo uri('items/map'); ?>">Kaart</a></li>
+		        			<li><a href="<?php echo uri('beeldbank/tijdlijn'); ?>">Tijdlijn</a></li>
+		        			<li><a href="<?php echo uri('#'); ?>">Themaselecties</a></li>
+		        		</ul>
+		        	</li>
+		        	<li><a href="<?php echo uri('werktuigen'); ?>">Werktuigen</a></li>
+					<li><a href="<?php echo uri('verhalen'); ?>">Verhalen</a>
+		        		<ul class="sub_menu">
+		        			 <li><a href="<?php echo uri('verhalen'); ?>">Algemeen</a></li>
+		        			 <li><a href="<?php echo uri('verhalen/boeren'); ?>">Boeren en Boerinnen</a></li>
+		        			 <li><a href="<?php echo uri('verhalen/arm_en_rijk'); ?>">Arm en Rijk</a></li>
+		        			 <li><a href="<?php echo uri('verhalen/politiek'); ?>">Politiek</a></li>
+		        			 <li><a href="<?php echo uri('verhalen/onderwijs'); ?>">Onderwijs</a></li>
+		        		</ul>
+		        	</li>
+		        	<li><a href="<?php echo uri('bronnen'); ?>">Bronnen</a>
+		        		<ul class="sub_menu">
+		        			 <li><a href="<?php echo uri('bronnen/bibliografie'); ?>">Bibliografie</a></li>
+		        			 <li><a href="<?php echo uri('#'); ?>">Archiefgids</a></li>
+		        			 <li><a href="<?php echo uri('#'); ?>">Tijdschriften</a></li>
+		        			 <li><a href="<?php echo uri('#'); ?>">Rekeningen</a></li>
+		        			 <li><a href="<?php echo uri('#'); ?>">Beleidsmakers</a></li>
+		        		</ul>
+		        	</li>
+		        	<li><a href="<?php echo uri('actoren'); ?>">Actoren</a></li>
+		        	<li><a href="<?php echo uri('contact'); ?>">Contact</a></li>
+		        </ul>
+	    			
+				</div>
+			</div>
+			
+		</div>
+		<div id="content" class="group">
+		

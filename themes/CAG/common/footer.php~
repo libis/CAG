@@ -1,0 +1,65 @@
+
+
+<div id="footer" class="group">
+
+	<div class="column logo">
+		<img src="<?php echo (img("cag.gif"));?>" />
+	</div><!-- /.column -->
+	
+	<div class="column links">
+		<div class="column left">
+						<h2>Website</h2>
+							<ul>
+							<li><a href="<?php echo uri('over')?>">Over deze website</a></li>
+							<li><a href="http://www.cagnet.be">Technische vereisten</a></li> <!-- link CAG-->
+							<li><a href="<?php echo uri('copyright');?>">Copyright</a></li>
+							<li><a href="http://www.cagnet.be">Inhoud: Centrum Agrarische Geschiedenis</a></li>
+							<li><a href="http://libis.be">Ontwerp en realisatie: LIBIS</a></li>
+							<li><a href="http://www.blau.be">Vormgeving: Blau</a></li>
+							<li><a href="<?php echo uri("sitemap");?>">Sitemap</a></li>
+							<li><a href="http://www.cagnet.be">Disclaimer</a></li> <!-- link CAG-->
+							</ul>
+		</div><!-- /.column -->
+		<div class="column right">
+						<h2>Organisatie</h2>
+							<ul>
+							<li><a href="#">Missie en visie</a></li><!-- link CAG-->
+							<li><a href="#">Diensten</a></li><!-- link CAG-->
+							<li><a href="#">Team</a></li><!-- link CAG-->
+							<li><a href="#">Projecten</a></li><!-- link CAG-->
+							<li><a href="#">Publicaties</a></li><!-- link CAG-->
+							<li><a href="#">Wegbeschrijving</a></li><!-- link CAG-->
+							<li><a href="http://www.cagnet.be/showpage.php?pageID=98">Partners</a></li>
+							</ul>
+						<h2>Communicatie</h2>
+							<ul>
+							<li><a href="<?php echo uri("contact");?>">Contact</a></li>
+							<li><a href="http://www.cagnet.be/showpage.php?pageID=19">Nieuwsbrief</a></li><!-- link CAG-->
+							<li><a href="#">English</a></li><!-- link CAG-->
+							<li><a href="#">français</a></li><!-- link CAG-->
+							</ul>
+
+		</div><!-- /.column -->
+	</div><!-- /.column -->
+	
+	<div class="column contact">
+		<h2>Centrum Agrarische Geschiedens</h2>
+		<p>Centrum Agrarische Geschiedenis<br/>
+		Atrechtcollege<br/>
+		Naamsestraat 63<br/>
+		3000 Leuven<br />
+		Belgi&euml;<br/>
+		</p>
+		<p>
+		telefoon : +32 (0)16 32 35 25<br/>
+		fax : +32 (0)16 32 35 26
+		</p>
+		<p>
+		email : <a href="contact@cagnet.be">contact@cagnet.be</a>
+		</p>
+	</div><!-- /.column -->
+	<?php plugin_footer(); ?>		
+</div><!-- end footer -->
+</div><!-- end wrap -->
+</body>
+</html>
