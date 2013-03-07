@@ -57,13 +57,13 @@ body {
 }
 
 #page, #exhibit-sections {
-	width: 100%;
+	
 	margin: 0;
+        overflow: hidden;
 }
 
 #page:nth-child(2) {
-	width: 78%;
-	float: right;
+	
 }
 
 .clearfix{
@@ -461,7 +461,7 @@ address {
 #nav-left {
 	float: left;
 	width: 20%;
-        margin:10px 10px 0 0;
+        margin:10px 10px 0 0;        
 }
 
 #nav-left img {

@@ -191,9 +191,7 @@ p img{float:left; padding-right:10px;padding-bottom:10px; }
 	#primary {margin-right:30px;min-width:70%;padding-bottom:20px;}
 	#secondary {float:right; width: 20%;padding-right:30px;}
 
-	#nav-section{background:#f8c400;padding:5px;}
-
-	#page{float:left; margin-left: 30px;width:750px;}
+	#nav-section{background:#f8c400;padding:5px;}	
 
 	#carousel-block{float:left;width:550px;margin:0;}
 	#wegwijs{float:right;width:175px;padding:20px 0;}
@@ -243,7 +241,7 @@ p img{float:left; padding-right:10px;padding-bottom:10px; }
 		.exhibit_general_list img{border:2px solid #669999;margin:5px;}
 		.exhibit_general_list{text-align:center;}
 
-		.exhibit_tag_list li{clear:both;background-color:#F7F9F9;overflow:hidden;list-style:none;border-bottom:1px solid #fff; padding:10px;display:block;}
+		.exhibit_tag_list li{background-color:#F7F9F9;overflow:hidden;list-style:none;border-bottom:1px solid #fff; padding:10px;display:block;}
 		.exhibit_tag_list img{border:2px solid #669999;margin-right:10px;float:left;}
 
 		#exhibit-sections{margin-left:20px;width:600px;clear:both;}
@@ -304,25 +302,36 @@ p img{float:left; padding-right:10px;padding-bottom:10px; }
 
 /* Print Styles */
 @media print {
+#header, #footer, #search-container,
+#breadcrumb, #nav-left, #primary-nav,
+#header-image, .info,
+.navigation,
+.pagination,
+#exhibit-page-navigation,
+.exhibit-section-nav,
+.exhibit-page-nav {
+    display:none;
+}
+
 body{
-	font:12px Georgia, "Palatino Linotype", "Book Antiqua", "Times New Roman", Times, serif;
+    font:10pt Georgia, "Palatino Linotype", "Book Antiqua", "Times New Roman", Times, serif;
 }
 #content{
-	width:100%;
-	margin:0;
-	float:none;
+    width:100%;
+    margin:0;
+    float:none;
 }
-h1,
-#site-title{
+
+h1,#site-title{
 	font-size:16pt;
 	font-weight:bold;
 }
 h2{
 	font-size:14pt;
-	font-style:italic;
+	
 }
 h3 {
-	font-size:14pt;
+	font-size:12pt;
 }
 h4 {
 	font-weight:bold;
@@ -332,22 +341,16 @@ h5 {
 	font-style:italic;
 	text-transform:uppercase;
 }
-a:link:after {
-	content: " (" attr(href) ") ";
-	font-size:80%;
-}
-#search-container,
-#primary-nav,
-#header-image,
-.navigation,
-.pagination,
-#exhibit-page-navigation,
-.exhibit-section-nav,
-.exhibit-page-nav {
-	display:none;
-}
+
 blockquote {
 	margin:10pt 0 0 0;
 	font-style:italic;
 }
+
+.exhibit-item-caption{
+    font-style:italic;
+    font-size:9pt;
+    font-weight:bold;
+}
+
 }/*end @media print*/
