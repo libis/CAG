@@ -44,10 +44,13 @@ class CsvImport_IndexController extends Omeka_Controller_Action
         }
 
         if (!$form->isValid($this->getRequest()->getPost())) {
+            $this->flashError('Invalid form input. Please see errors below and try again.');
             return;
         }
+
         if (!$form->csv_file->receive()) {
-            return $this->flashError("Error uploading file.  Please try again.");
+            $this->flashError("Error uploading file.  Please try again.");
+            return;
         }
 
         $filePath = $form->csv_file->getFileName();
@@ -56,36 +59,37 @@ class CsvImport_IndexController extends Omeka_Controller_Action
         $file = new CsvImport_File($filePath, $delimiter);
         
         if (!$file->parse()) {
-            return $this->flashError('Your file is incorrectly formatted. '
+            $this->flashError('Your file is incorrectly formatted. '
                 . $file->getErrorString());
+            return;
         }
 
+        $this->session->setExpirationHops(2);
         $this->session->originalFilename = $filename;
         $this->session->filePath = $filePath;
         $this->session->columnDelimiter = $delimiter;
-
         
         $this->session->itemTypeId = $form->getValue('item_type_id');
-        $this->session->itemsArePublic =
-            $form->getValue('items_are_public');
-        $this->session->itemsAreFeatured =
-            $form->getValue('items_are_featured');
+        $this->session->itemsArePublic = $form->getValue('items_are_public');
+        $this->session->itemsAreFeatured = $form->getValue('items_are_featured');
         $this->session->collectionId = $form->getValue('collection_id');
         $this->session->columnNames = $file->getColumnNames();
         $this->session->columnExamples = $file->getColumnExamples();
         $this->session->ownerId = $this->getInvokeArg('bootstrap')->currentuser->id;
 
         if($form->getValue('omeka_csv_export')) {
-            
-            $this->_helper->redirector->goto('omeka-csv');
+            $this->_helper->redirector->goto('check-omeka-csv');
         }
+
         $this->_helper->redirector->goto('map-columns');
     }
     
     public function mapColumnsAction()
     {
         if (!$this->_sessionIsValid()) {
-            return $this->_helper->redirector->goto('index');
+            $this->flash('Import settings expired. Please try again.');
+            $this->_helper->redirector->goto('index');
+            return;
         }
 
         require_once CSV_IMPORT_DIRECTORY . '/forms/Mapping.php';
@@ -100,13 +104,15 @@ class CsvImport_IndexController extends Omeka_Controller_Action
             return;
         }
         if (!$form->isValid($this->getRequest()->getPost())) {
+            $this->flashError('Invalid form input. Please try again.');
             return;
         }
 
         $columnMaps = $form->getMappings();
         if (count($columnMaps) == 0) {
-            return $this->flashError('Please map at least one column to an '
+            $this->flashError('Please map at least one column to an '
                 . 'element, file, or tag.');
+            return;
         }
         
         $csvImport = new CsvImport_Import();
@@ -132,9 +138,37 @@ class CsvImport_IndexController extends Omeka_Controller_Action
         );
 
         $this->session->unsetAll();
-        $this->flashSuccess('Successfully started the import. Reload this page '
+        $this->flashSuccess('Import started. Reload this page '
             . 'for status updates.');
         $this->_helper->redirector->goto('browse');
+    }
+    
+    /**
+     * For import of Omeka.net CSV. Checks if the user didn't read the manual and so didn't make sure all needed Elements are present
+     */
+
+    public function checkOmekaCsvAction()
+    {
+        $elementTable = get_db()->getTable('Element');
+        $skipColumns = array('itemType' , 'collection','tags','public','featured','file');
+        $errors = array();
+        foreach($this->session->columnNames as $columnName){
+            if(!in_array($columnName, $skipColumns)) {
+                $data = explode(':', $columnName);
+                //$data is like array('Element Set Name', 'Element Name');
+                //dig up the element_id
+                $element = $elementTable->findByElementSetNameAndElementName($data[0], $data[1]);
+                if(empty($element)) {                    
+                    $errors[] = array('set'=>$data[0], 'element'=>$data[1]);
+                }                                
+            }            
+        }
+        
+        if(empty($errors)) {
+            $this->_helper->redirector->goto('omeka-csv');
+        } else {
+            $this->view->errors = $errors;
+        }
     }
     
     public function omekaCsvAction()
@@ -196,7 +230,7 @@ class CsvImport_IndexController extends Omeka_Controller_Action
         );
 
         $this->session->unsetAll();
-        $this->flashSuccess('Successfully started the import. Reload this page '
+        $this->flashSuccess('Import started. Reload this page '
             . 'for status updates.');
         $this->_helper->redirector->goto('browse');
     }
@@ -211,7 +245,7 @@ class CsvImport_IndexController extends Omeka_Controller_Action
         $jobDispatcher->setQueueName('imports');
         $jobDispatcher->send('CsvImport_ImportTask',
             array('importId' => $csvImport->id, 'method' => 'undo'));
-        $this->flashSuccess('Successfully started to undo the import. Reload '
+        $this->flashSuccess('Undo import started. Reload '
             . 'this page for status updates.');
         $this->_helper->redirector->goto('browse');
     }
@@ -223,8 +257,7 @@ class CsvImport_IndexController extends Omeka_Controller_Action
             CsvImport_Import::COMPLETED_UNDO
         ) {
             $csvImport->delete();
-            $this->flashSuccess("Successfully cleared the history "
-                . " of the import.");
+            $this->flashSuccess("Cleared import from the history.");
         }
         $this->_helper->redirector->goto('browse');
     }
