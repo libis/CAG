@@ -234,7 +234,7 @@ function digitool_admin_show_item_map($item)
 * @param Item $item, boolean $fiondOnlyOne, int $width,int $height
 * @return html of the thumbnails
 **/
-function digitool_get_thumb($item, $findOnlyOne = false, $linkToView = false,$width="",$class="",$alt=""){
+function digitool_get_thumb($item, $findOnlyOne = false, $linkToView = false,$width="500",$class="",$alt=""){
 
 	$url = get_db()->getTable('DigitoolUrl')->findDigitoolUrlByItem($item, $findOnlyOne);
 
@@ -242,14 +242,15 @@ function digitool_get_thumb($item, $findOnlyOne = false, $linkToView = false,$wi
 		if(!$linkToView){
 			if($findOnlyOne){
 				$thumb = 'http://resolver.lias.be/get_pid?stream&usagetype=THUMBNAIL&pid='.$url->pid;
-
-				return '<img src="'.$thumb.'" width="'.$width.'" class="'.$class.'" alt="'.item('Dublin Core','Title',array(),$item).'">';
+                                $resize = digitool_resize_dimensions($width,$width,$thumb);
+                               	return '<img src="'.$thumb.'" height="'.$resize['height'].'" width="'.$resize['width'].'" class="'.$class.'" alt="'.item('Dublin Core','Title',array(),$item).'">';
 			}
 			//if more then one thumbnail was found
 			else{
 				foreach($url as $u){
 					$thumb = 'http://resolver.lias.be/get_pid?stream&usagetype=THUMBNAIL&pid='.$u->pid;
-					$html.='<img src="'.$thumb.'" width="'.$width.'" /> ';
+					$resize = digitool_resize_dimensions($width,$width,$thumb);
+                                        $html.='<img src="'.$thumb.'" height="'.$resize['height'].'" width="'.$resize['width'].'" /> ';
 				}
 				return $html;
 			}
@@ -257,16 +258,16 @@ function digitool_get_thumb($item, $findOnlyOne = false, $linkToView = false,$wi
 			if($findOnlyOne){
 				$thumb =  'http://resolver.lias.be/get_pid?stream&usagetype=THUMBNAIL&pid='.$url->pid;
 				$view =  'http://resolver.lias.be/get_pid?stream&usagetype=VIEW_MAIN,VIEW&pid='.$url->pid;
-
-				return '<a href="'.$view.'" target="_blank"><img src="'.$thumb.'"  width="'.$width.'" class="'.$class.'" alt="'.item('Dublin Core','Title',array(),$item).'"></a>';
+                                $resize = digitool_resize_dimensions($width,$width,$thumb);
+				return '<a href="'.$view.'" target="_blank"><img src="'.$thumb.'"  height="'.$resize['height'].'" width="'.$resize['width'].'" class="'.$class.'" alt="'.item('Dublin Core','Title',array(),$item).'"></a>';
 			}
 			//if more then one thumbnail was found
 			else{
 				foreach($url as $u){
 					$thumb = 'http://resolver.lias.be/get_pid?stream&usagetype=THUMBNAIL&pid='.$u->pid;
 					$view = 'http://resolver.lias.be/get_pid?stream&usagetype=VIEW_MAIN,VIEW&pid='.$u->pid;
-
-					$html.='<a href="'.$view.'" target="_blank"><img src="'.$thumb.'" width="'.$width.'"></a>';
+                                        $resize = digitool_resize_dimensions($width,$width,$thumb);
+					$html.='<a href="'.$view.'" target="_blank"><img src="'.$thumb.'" height="'.$resize['height'].'" width="'.$resize['width'].'"></a>';
 				}
 				return $html;
 			}
@@ -287,7 +288,7 @@ function digitool_simple_gallery($item,$size=500){
 		$thumb = "http://resolver.lias.be/get_pid?stream&usagetype=THUMBNAIL&pid=".$url[0]->pid;
 		$digi = "http://resolver.lias.be/get_pid?redirect&usagetype=VIEW_MAIN,VIEW&pid=".$url[0]->pid;
                 
-                //$resize = digitool_resize_dimensions($size,$size,$thumb);
+                $resize = digitool_resize_dimensions($size,$size,$thumb);
 		$html.="<div id='image'><a href='".$digi."'><img src='".$thumb."' height='".$resize['height']."' width='".$resize['width']."'/></a></div>";
 		
 		return $html;
@@ -296,9 +297,9 @@ function digitool_simple_gallery($item,$size=500){
 		foreach($url as $u){
 			$thumb = "http://resolver.lias.be/get_pid?stream&usagetype=THUMBNAIL&pid=".$u->pid;
 			$digi = "http://resolver.lias.be/get_pid?redirect&usagetype=VIEW_MAIN,VIEW&pid=".$u->pid;
-
+                        $resize = digitool_resize_dimensions($size,$size,$thumb);    
 			if($i==0){
-				$html.="<div id='gallery-image'><a href='".$digi."'><img src='".$thumb."'  /></a></div>";
+				$html.="<div id='gallery-image'><a href='".$digi."'><img src='".$thumb."' height='".$resize['height']."' width='".$resize['width']."'/></a></div>";
 				$html.="<div id='gallery-thumbnails' style='height: 400px;-moz-column-width: 70px;
  -moz-column-gap: 0px;column-width: 70px;'>";
 			}
