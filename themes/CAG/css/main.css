@@ -931,6 +931,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini{
     margin-bottom:0px;
     margin-top:15px;
     padding:10px 0;
+    clear:both;
 }
 
 .topresults > div {    
@@ -977,7 +978,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini{
 #solr_results dt{float:left;line-height:14px;margin:0 8px 8 10px;text-align:right;width:137px}
 #solr_results .details .metadata dt{font-weight:bold}
 #solr_results .hide,#solr_results .print{height:1px;left:-1000em;position:absolute;top:-1000em;width:1px}
-#solr_results #results{float:right;width:70%}
+#solr_results #results{float:right;width:70%;margin-bottom:1em;}
 
 #solr_results .solr_result_doc dt{float:left;width:125px;font-weight:bold;text-align:right;margin-right:25px}
 #solr_results .solr_facets_container{float:left;width:25%}
