@@ -925,21 +925,24 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini{
     margin-bottom:15px;
 }
 
-.topresults > div {
-    
-    float: left;
-    
-    
+.bottom{
+    border-top:1px solid #CACACA;
+    border-bottom:none;
+    margin-bottom:0px;
+    margin-top:15px;
+    padding:10px 0;
 }
 
-.resultCount {
-    
+.topresults > div {    
+    float: left;    
+}
+
+.resultCount {    
     color: #07614E;
     font-weight:bold;
     font-size: 18px;
     border-right:1px solid #CACACA;
-    width: 145px;
-    
+    width: 145px;    
 }
 
 .resultsPerPage {

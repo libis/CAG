@@ -164,7 +164,22 @@
         </div>
     </div>
 <?php echo relatedTagCloud_get($items); ?>
-
+<div class="topresults bottom">
+        <div class="resultCount"><?php echo __('%s resulaten', $results->response->numFound); ?></div>
+        <?php echo pagination_links(array('partial_file' => 'common/pagination.php','per_page'=>$per_page)); ?> 
+        
+        <div class="resultsPerPage">
+            <form action='<?php echo libis_curPageURL();?>' method="post">
+                <select name="perPage" onchange="this.form.submit()">
+                  <option <?php if($perPage==10){echo 'selected="selected"';}?> value="10">10 resultaten per pagina</option>
+                  <option <?php if($perPage==20){echo 'selected="selected"';}?> value="20">20 resultaten per pagina</option>
+                  <option <?php if($perPage==50){echo 'selected="selected"';}?> value="50">50 resultaten per pagina</option>                  
+                </select>
+            </form>
+        </div>
+        
+           
+    </div>  
 </div>
 <?php
     echo foot();
