@@ -234,7 +234,7 @@ function digitool_admin_show_item_map($item)
 * @param Item $item, boolean $fiondOnlyOne, int $width,int $height
 * @return html of the thumbnails
 **/
-function digitool_get_thumb($item, $findOnlyOne = false, $linkToView = false,$width="500",$class="",$alt=""){
+function digitool_get_thumb($item, $findOnlyOne = false, $linkToView = false,$width="500",$class="",$alt="",$resize=true){
 
 	$url = get_db()->getTable('DigitoolUrl')->findDigitoolUrlByItem($item, $findOnlyOne);
 
@@ -274,6 +274,17 @@ function digitool_get_thumb($item, $findOnlyOne = false, $linkToView = false,$wi
 
 		}
 	}
+
+}
+
+function digitool_get_thumb_for_browse($item, $width="500",$class="",$alt=""){
+
+	$url = get_db()->getTable('DigitoolUrl')->findDigitoolUrlByItem($item, $findOnlyOne);
+
+	if(!empty($url)){
+            $thumb = 'http://resolver.lias.be/get_pid?stream&usagetype=THUMBNAIL&pid='.$url[0]->pid;
+            return '<img src="'.$thumb.'"  width="'.$width.'" class="'.$class.'" alt="'.item('Dublin Core','Title',array(),$item).'">';
+        }
 
 }
 

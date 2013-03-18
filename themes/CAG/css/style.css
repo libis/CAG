@@ -117,9 +117,9 @@ textarea#rights {float:none; display:none;line-height:1.33333em;width: 512px; bo
 div.error {font-size:1.5em; line-height:1.33333em; margin:1.33333em 0;}
 
 /* Microformats */
-.hTagcloud {margin-top:2em;}
+
 .hTagcloud a{line-height:2.0em;vertical-align:bottom;}
-.hTagcloud ul {list-style:none; margin-left:0; padding-left:0; line-height:1.8em;}
+
 	.hTagcloud li {display:inline;margin-right:8px;}
 
 	.popular a {font-size:120%;}

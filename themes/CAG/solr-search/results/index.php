@@ -10,20 +10,17 @@
 ?>
 
 <div id="primary" class="solr_results results">
-    <h3></h3>
-               
+                  
     <div class="topresults">
         <div class="resultCount"><?php echo __('%s resulaten', $results->response->numFound); ?></div>
         <?php echo pagination_links(array('partial_file' => 'common/pagination.php','per_page'=>$per_page)); ?> 
-        <?php $alles = $results->response->numFound; ?>    
+        
         <div class="resultsPerPage">
             <form action='<?php echo libis_curPageURL();?>' method="post">
                 <select name="perPage" onchange="this.form.submit()">
                   <option <?php if($perPage==10){echo 'selected="selected"';}?> value="10">10 resultaten per pagina</option>
                   <option <?php if($perPage==20){echo 'selected="selected"';}?> value="20">20 resultaten per pagina</option>
-                  <option <?php if($perPage==50){echo 'selected="selected"';}?> value="50">50 resultaten per pagina</option>
-                  <option <?php if($perPage==$alles){echo 'selected="selected"';}?> value="<?php echo $alles;?>">Alle resultaten</option>
-                
+                  <option <?php if($perPage==50){echo 'selected="selected"';}?> value="50">50 resultaten per pagina</option>                  
                 </select>
             </form>
         </div>
@@ -65,7 +62,10 @@
             </div>
 
             <?php foreach($results->response->docs as $doc): ?>
-                <?php $item = get_item_by_id(preg_replace ( '/[^0-9]/', '', $doc->__get('id')));?>
+                <?php
+                    $item = get_item_by_id(preg_replace ( '/[^0-9]/', '', $doc->__get('id')));
+                    $items[] = $item->id;
+                ?>
             <div class="item" id="solr_<?php echo $doc->__get('id'); ?>">
                 <div class="details">
                     <div class='resultbody'>                  
@@ -77,7 +77,7 @@
 
                             <?php if(digitool_item_has_digitool_url($item)){ ?>
                                 <div class="image">
-                                    <?php echo digitool_get_thumb($item,true,false,'140');?>
+                                    <?php echo digitool_get_thumb_for_browse($item,'140');?>
                                     <?php //echo SolrSearch_ViewHelpers::createResultImgHtml($image, SolrSearch_ViewHelpers::getDocTitle($doc)); ?>
                                 </div>
                             <?php } ?>
@@ -163,6 +163,8 @@
             <?php endforeach; ?>
         </div>
     </div>
+<?php echo relatedTagCloud_get($items); ?>
+
 </div>
 <?php
     echo foot();
