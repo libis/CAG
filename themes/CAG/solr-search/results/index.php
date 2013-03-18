@@ -87,8 +87,10 @@
 
                                 <div class="title">
                                     <?php $beelden="<table width='300'><th width='120'></th><th></th>";
-                                    if(item('Dublin Core','Title'))
-                                        $beelden.="<tr><td><strong>Titel:</strong></td><td>".link_to_item(item('Dublin Core','Title'))."</td></tr>";
+                                    if(item('Item Type Metadata','Objectnaam'))
+                                        $beelden.="<tr><td><strong>Objectnaam:</strong></td><td>".link_to_item(item('Item Type Metadata','Objectnaam'))."</td></tr>";
+                                     if(item('Dublin Core','Title'))
+                                        $beelden.="<tr><td><strong>Titel:</strong></td><td>".item('Dublin Core','Title')."</td></tr>";
                                     if(item('Dublin Core','Publisher'))
                                         $beelden.="<tr><td><strong>Naam Instelling:</strong></td><td>".item('Dublin Core','Publisher')."</td></tr>";
                                     if(item('Dublin Core','Identifier')){

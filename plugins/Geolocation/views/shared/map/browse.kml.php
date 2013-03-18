@@ -21,17 +21,15 @@
         $locationR = $locations[$item->id];
         foreach($locationR as $location){
         ?>
-        <Placemark>
-            <name><![CDATA[<?php echo item('Dublin Core', 'Title',array('snippet' => 25));?>]]></name>
-            <namewithlink><![CDATA[<?php echo link_to_item(item('Dublin Core', 'Title',array('snippet' => 10)), array('class' => 'bookTitle')); ?>]]></namewithlink>
-
+        <Placemark>            
             <description><![CDATA[<?php
 	            if(digitool_item_has_digitool_url($item)){
 	            	echo link_to_item(digitool_get_thumb($item, true, false,100,"bookImg"));
 	            }
-	            echo "<strong><p class='bookTitle'>".link_to_item(item('Dublin Core', 'Title',array('snippet' => 25)))."</p></strong>";
-	            echo "<div class='bookAuthor'>".$itemDescription."</div>";
-	            //echo "<div class='bookYear'>".item('Item Type Metadata', 'Periode')."</div>";
+                    echo "<strong>".link_to_item(item('Item Type Metadata','Objectnaam',array('snippet' => 30)))."</strong>";
+	            echo "<strong><br>".item('Dublin Core', 'Title',array('snippet' => 30))."</strong>";
+	            echo "<br>".item('Dublin Core', 'Description',array('snippet' => 200))."";
+	            //echo "<div class='bookYear'>".item('Item Type Metadata', 'Periode')."";
 	            ?>
             ]]></description>
             

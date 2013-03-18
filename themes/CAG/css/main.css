@@ -517,6 +517,19 @@ p#simple-pages-breadcrumbs {
 	color: #07614e;
 }
 
+/* geolocation */
+
+.mapsInfoWindow{
+    width:250px;
+    overflow:hidden;
+}
+
+.mapsInfoWindow img{
+    float:left;
+    width:100px;
+    margin: 0 10px 5px 0;
+}
+
 /* footer
 ------------------------------------------------------------------ */
 
