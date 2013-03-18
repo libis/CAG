@@ -1,38 +1,40 @@
 <?php echo '<?xml version="1.0" encoding="UTF-8"?>'; ?>
-<kml xmlns="http://earth.google.com/kml/2.0">
+<kml xmlns="http://earth.google.com/kml/2.2">
     <Document>
         <name>Omeka Items KML</name>
         <?php /* Here is the styling for the balloon that appears on the map */ ?>
         <Style id="item-info-balloon">
             <BalloonStyle>
                 <text><![CDATA[
-                    <div class="geolocation_balloon">
-                        <div class="geolocation_balloon_title">$[namewithlink]</div>
-                        <div class="body">$[description]</div>
-                        <div class="geolocation_balloon_description">$[Snippet]</div>
+                    <div class="mapsInfoWindow img">
+
+                        $[description]
+
                     </div>
                 ]]></text>
             </BalloonStyle>
         </Style>
+
         <?php
         while(loop_items()):
         $item = get_current_item();
-        $location = $locations[$item->id];
+        $locationR = $locations[$item->id];
+        foreach($locationR as $location){
         ?>
         <Placemark>
-            <name><![CDATA[<?php echo item('Dublin Core', 'Title');?>]]></name>
-            <namewithlink><![CDATA[<?php echo link_to_item(item('Dublin Core', 'Title'), array('class' => 'view-item')); ?>]]></namewithlink>
-            <Snippet maxLines="2"><![CDATA[<?php
-            echo item('Dublin Core', 'Description', array('snippet' => 150));
-            ?>]]></Snippet>    
-            <description><![CDATA[<?php 
-            // @since 3/26/08: movies do not display properly on the map in IE6, 
-            // so can't use display_files(). Description field contains the HTML 
-            // for displaying the first file (if possible).
-            if (item_has_thumbnail($item)) {
-                echo link_to_item(item_thumbnail(), array('class' => 'view-item'));                
-            }
-            ?>]]></description>
+            <name><![CDATA[<?php echo item('Dublin Core', 'Title',array('snippet' => 25));?>]]></name>
+            <namewithlink><![CDATA[<?php echo link_to_item(item('Dublin Core', 'Title',array('snippet' => 10)), array('class' => 'bookTitle')); ?>]]></namewithlink>
+
+            <description><![CDATA[<?php
+	            if(digitool_item_has_digitool_url($item)){
+	            	echo link_to_item(digitool_get_thumb($item, true, false,100,"bookImg"));
+	            }
+	            echo "<strong><p class='bookTitle'>".link_to_item(item('Dublin Core', 'Title',array('snippet' => 25)))."</p></strong>";
+	            echo "<div class='bookAuthor'>".$itemDescription."</div>";
+	            //echo "<div class='bookYear'>".item('Item Type Metadata', 'Periode')."</div>";
+	            ?>
+            ]]></description>
+            
             <Point>
                 <coordinates><?php echo $location['longitude']; ?>,<?php echo $location['latitude']; ?></coordinates>
             </Point>
@@ -40,6 +42,6 @@
             <address><![CDATA[<?php echo $location['address']; ?>]]></address>
             <?php endif; ?>
         </Placemark>
-        <?php endwhile; ?>
+        <?php } endwhile; ?>
     </Document>
 </kml>

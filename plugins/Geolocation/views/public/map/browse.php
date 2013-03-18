@@ -1,7 +1,4 @@
 <?php head(array('title' => 'Beeldbank Kaart','bodyid'=>'map','bodyclass' => 'browse')); ?>
-
-
-
 <h1>Beeldbank</h1>
 
 <ul class="items-nav navigation" id="secondary-nav">
@@ -34,5 +31,4 @@
 </div><!-- end link_block -->
 
 </div><!-- end primary -->
-
 <?php foot(); ?>

@@ -1,7 +1,7 @@
 <?php
 define('GOOGLE_MAPS_API_VERSION', '3.x');
-define('GEOLOCATION_MAX_LOCATIONS_PER_PAGE', 200);
-define('GEOLOCATION_DEFAULT_LOCATIONS_PER_PAGE', 10);
+define('GEOLOCATION_MAX_LOCATIONS_PER_PAGE', 4000);
+define('GEOLOCATION_DEFAULT_LOCATIONS_PER_PAGE', 3000);
 
 require_once 'Location.php';
 
@@ -94,7 +94,7 @@ function geolocation_config()
     } else if ($perPage > GEOLOCATION_MAX_LOCATIONS_PER_PAGE) {
         $perPage = GEOLOCATION_MAX_LOCATIONS_PER_PAGE;
     }
-    set_option('geolocation_per_page', $perPage);
+    set_option('geolocation_per_page', GEOLOCATION_MAX_LOCATIONS_PER_PAGE); //$perPage
     set_option('geolocation_add_map_to_contribution_form', $_POST['geolocation_add_map_to_contribution_form']);
     set_option('geolocation_link_to_nav', $_POST['geolocation_link_to_nav']);
 }
@@ -258,6 +258,7 @@ function geolocation_scripts()
     $ht = '';
     $ht .= geolocation_load_google_maps();
     $ht .= js('map');
+    $ht .= js('markerclusterer');
     return $ht;
 }
 
@@ -301,18 +302,15 @@ function geolocation_header($request)
     $module = $request->getModuleName();
     $controller = $request->getControllerName();
     $action = $request->getActionName();
-    if ( ($module == 'geolocation' && $controller == 'map')
-      || ($module == 'contribution' && $controller == 'contribution' && $action == 'contribute' && get_option('geolocation_add_map_to_contribution_form') == '1')):
-?>
-    <!-- Scripts for the Geolocation items/map page -->
-    <?php echo geolocation_scripts(); ?>
-
-    <!-- Styles for the Geolocation items/map page -->
+    //if ( ($module == 'geolocation' && $controller == 'map')
+     // || ($module == 'contribution' && $controller == 'contribution' && $action == 'contribute' && get_option('geolocation_add_map_to_contribution_form') == '1')):
+	?><!-- Scripts for the Geolocation items/map page -->
+	<?php echo geolocation_scripts(); ?>
+	<!-- Styles for the Geolocation items/map page -->
     <link rel="stylesheet" href="<?php echo css('geolocation-items-map'); ?>" />
     <link rel="stylesheet" href="<?php echo css('geolocation-marker'); ?>" />
-
 <?php
-    endif;
+  //  endif;
 }
 
 /**
@@ -423,7 +421,7 @@ function geolocation_google_map_for_item($item = null, $width = '200px', $height
         }
         $center = js_escape($center);
         $options = js_escape($options);
-        echo '<h3>Plaatsbepaling (bij benadering)</h3>';
+        echo '<h3>Plaatsbepaling</h3>';
         echo '<div id="' . $divId . '" class="map"></div>';
 ?>
         <script type="text/javascript">
@@ -738,9 +736,8 @@ function geolocation_append_to_advanced_search($searchFormId = 'advanced-search-
     	    });
 	    });
 	</script>
-
 <?php
     $ht .= ob_get_contents();
     ob_end_clean();
     return $ht;
-}
+}?>
