@@ -78,8 +78,6 @@ display_css();
 	if (self !== top) document.write('<style type="text/css">#normal-title{display:none} html{background:#fff;margin:0 0 100px 0;} #footer {display: none;} .info {display:none;} #header {display: none;} #search-wrap {display: none;}</style>');
 </script><!--iframe changes-->
 
-
-
 </head>
 <body<?php echo isset($bodyid) ? ' id="'.$bodyid.'"' : ''; ?><?php echo isset($bodyclass) ? ' class="'.$bodyclass.'"' : ''; ?>>
 
@@ -97,7 +95,7 @@ display_css();
 				</div>
 	    	</div>
 	    	<div id="search-wrap" class="group">
-				<?php echo simple_search("Zoeken",array('id'=>'simple-search'),uri("items/browse/?sort_field=id")); ?>
+				<?php echo SolrSearch_ViewHelpers::createSearchForm('Zoeken');//echo simple_search("Zoeken",array('id'=>'simple-search'),uri("items/browse/?sort_field=id")); ?>
 			</div><!-- /#search-wrap -->
 
 	<div id="header-nav_bar">

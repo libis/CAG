@@ -72,9 +72,8 @@ a:active { color: #ff3300;}
 
 h3 a {text-decoration:none;}
 
-table {width:100%; margin-bottom:1.3333em;}
-th {text-align:left;font-weight:bold;}
-th, td {padding: 8px;}
+table {margin-bottom:1.3333em;}
+td {padding: 8px;}
 blockquote {margin-left:2.6667em;margin-right:2.6667em;font-style:italic;}
 
 
