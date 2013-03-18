@@ -279,16 +279,17 @@ function digitool_get_thumb($item, $findOnlyOne = false, $linkToView = false,$wi
 /*
  * Creates a simple gallery view for the items/show page
  * */
-function digitool_simple_gallery($item,$width=500){
+function digitool_simple_gallery($item,$size=500){
 
 	$i=0;
 	$url = get_db()->getTable('DigitoolUrl')->findDigitoolUrlByItem($item, false);
 	if(sizeof($url)==1){
 		$thumb = "http://resolver.lias.be/get_pid?stream&usagetype=THUMBNAIL&pid=".$url[0]->pid;
 		$digi = "http://resolver.lias.be/get_pid?redirect&usagetype=VIEW_MAIN,VIEW&pid=".$url[0]->pid;
-
-		$html.="<div id='image'><a href='".$digi."'><img src='".$thumb."'  /></a></div>";
-		//$html.= digitool_get_view(get_current_item(), false,150);
+                
+                //$resize = digitool_resize_dimensions($size,$size,$thumb);
+		$html.="<div id='image'><a href='".$digi."'><img src='".$thumb."' height='".$resize['height']."' width='".$resize['width']."'/></a></div>";
+		
 		return $html;
 	}else{
 		$html .= "<div id='gallery'>";
@@ -312,7 +313,6 @@ function digitool_simple_gallery($item,$width=500){
 
 	<script>
 	jQuery(document).ready(function() {
-
 		jQuery(function() {
 			jQuery(".image").click(function() {
 				var image = jQuery(this).attr("rel");
@@ -423,6 +423,25 @@ function digitool_find_items_with_same_pid($item){
 
 	//if all fails
 	return false;
+}
+
+// Calculates restricted dimensions with a maximum of $goal_width by $goal_height 
+function digitool_resize_dimensions($goal_width,$goal_height,$image) {
+    list($width, $height) = getimagesize($image); 
+    $return = array('width' => $width, 'height' => $height); 
+
+    // If the ratio > goal ratio and the width > goal width resize down to goal width 
+    if ($width/$height > $goal_width/$goal_height && $width > $goal_width) { 
+        $return['width'] = $goal_width; 
+        $return['height'] = $goal_width/$width * $height; 
+    } 
+    // Otherwise, if the height > goal, resize down to goal height 
+    else if ($height > $goal_height) { 
+        $return['width'] = $goal_height/$height * $width; 
+        $return['height'] = $goal_height; 
+    } 
+
+    return $return; 
 }
 
 ?>
