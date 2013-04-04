@@ -7,6 +7,10 @@
   $session = new Zend_Session_Namespace('style');
 
   $perPage = $session->perPage;
+  
+  //uitbreiding solr-geolocation
+  $session->items = "";
+  $session->locations= "";
 ?>
 
 <div id="primary" class="solr_results results">
@@ -27,9 +31,7 @@
         
            
     </div>        
-    <div id="solr_results" class="item-list">  
-
-       
+    <div id="solr_results" class="item-list">
 
         <?php $query = SolrSearch_QueryHelpers::getParams(); ?>
 
@@ -54,9 +56,7 @@
             <?php endif; ?>
         </div>
        
-        <div id="results">
-            
-              
+        <div id="results">              
             <div id="appliedParams">
                 <?php echo SolrSearch_QueryHelpers::removeFacets(); ?>
             </div>
@@ -64,7 +64,8 @@
             <?php foreach($results->response->docs as $doc): ?>
                 <?php
                     $item = get_item_by_id(preg_replace ( '/[^0-9]/', '', $doc->__get('id')));
-                    $items[] = $item->id;
+                    $itemids[] = $item->id;
+                    $itemsGeo[] = $item;
                 ?>
             <div class="item" id="solr_<?php echo $doc->__get('id'); ?>">
                 <div class="details">
@@ -165,8 +166,37 @@
             <?php endforeach; ?>
         </div>
     </div>
-<?php echo relatedTagCloud_get($items); ?>
-<div class="topresults bottom">
+    
+    <!-- BEGIN SOLR GEOLOCATIION -->
+    <?php 
+        //uitbreiding solr-geolocation        
+        $locationSolr = array();   
+        if($itemids){
+                foreach($itemids as $id){
+                    $item = get_item_by_id($id);                    
+                    $loc = geolocation_get_location_for_item($item);
+                    if(!empty($loc)){
+                        $locationsSolr = $locationSolr + $loc;
+                        $center = $loc[$id];
+                    }
+                }
+                $locations = $locationsSolr;             
+         }         
+         $session->items= $itemids;
+         $session->locations= $locations;
+    ?>
+    <?php if(!empty($locationsSolr)){?>
+        <div id="map-block" style="clear:both;">        
+            <?php echo geolocation_google_map('map-display', array('loadKml'=>true),$center);?>
+        </div><!-- end map_block -->
+    <?php } ?>
+    <div id="test" style="display:none;"></div>
+    <!-- END SOLR-GEOLOCATION -->
+    
+    
+    <?php echo relatedTagCloud_get($itemids); ?>
+    
+    <div class="topresults bottom">
         <div class="resultCount"><?php echo __('%s resulaten', $results->response->numFound); ?></div>
         <?php echo pagination_links(array('partial_file' => 'common/pagination.php','per_page'=>$per_page)); ?> 
         
@@ -178,9 +208,7 @@
                   <option <?php if($perPage==50){echo 'selected="selected"';}?> value="50">50 resultaten per pagina</option>                  
                 </select>
             </form>
-        </div>
-        
-           
+        </div>           
     </div>  
 </div>
 <?php

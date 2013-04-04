@@ -51,10 +51,31 @@ OmekaMap.prototype = {
 
         if (bindHtml) {
             google.maps.event.addListener(marker, 'click', function () {
-                var infoWindow = new google.maps.InfoWindow({
-                    content: bindHtml
-                });
-                infoWindow.open(marker.getMap(), marker);
+                bindHtml = bindHtml.replace(/(<([^>]+)>)/ig,"");
+                bindHtml = bindHtml.replace(/ /g,'');
+                /*jQuery('#test').load('/items/map/ .mapsInfoWindow',{id:bindHtml},function(){
+                    var infowindow = new google.maps.InfoWindow({
+                        content: jQuery('#test').html()
+                    });
+                    infowindow.open(marker.getMap(), marker);
+                });*/
+                var infowindow = null;
+                var request = jQuery.ajax(
+                    {
+                        url: '/items/map/',
+                        type: 'POST',                        
+                        data: {id:bindHtml},
+                        async: false,                       
+                        success: function(data){
+                            var result = jQuery(data).find('.mapsInfoWindow').html();
+                                infowindow = new google.maps.InfoWindow({
+                                content: result
+                            });
+                            infowindow.open(marker.getMap(), marker);
+                        }
+                    }
+                );
+                                             
             });
         }
         //for clusterer
@@ -118,10 +139,6 @@ function OmekaMapBrowse(mapDivId, center, options) {
 
     //XML loads asynchronously, so need to call for further config only after it has executed
     this.loadKmlIntoMap(this.options.uri, this.options.params);
-
-    //clusterer (not working at the moment
-   //this.mc = new MarkerClusterer(bmap,this.markers);
-
 }
 
 OmekaMapBrowse.prototype = {

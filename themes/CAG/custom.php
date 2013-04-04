@@ -193,13 +193,28 @@ function Libis_get_exhibit_thumb($exhibit,$props=array()){
 
 	if($exhibit->thumbnail){
 
-		//$item = get_item_by_id($exhibit->thumbnail);
-		//set_current_item($item);
 		$html= '<img class="carousel-image" width="200" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/>';
 
-	    //$html= item_square_thumbnail($props);
-	   // $html = digitool_get_thumb($item,true,false,$props["width"],$props["class"],item('Dublin Core', 'Title'));
-		//$html= digitool_thumbnail($item,true,$props["width"],$props["class"],item('Dublin Core', 'Title',"",$item));
+	}else{
+
+		$html=false;
+	}
+
+	return $html;
+}
+
+/**
+* Custom function to retrieve a thumb of an exhibit
+*
+* Expects a hack in plugin.php of the exhibitBuilder plugin
+*
+* @return html formatting (with images) of the thumb (same as the item thumbnail function)
+*/
+function Libis_get_exhibit_thumb_home($exhibit,$props=array()){
+
+	if($exhibit->thumbnail){
+
+		$html= '<img class="carousel-image" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/>';
 
 	}else{
 

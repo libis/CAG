@@ -7,7 +7,7 @@
             <BalloonStyle>
                 <text><![CDATA[
                     <div class="mapsInfoWindow img">
-
+                        
                         $[description]
 
                     </div>
@@ -16,6 +16,29 @@
         </Style>
 
         <?php
+        //Zend_Session::start();
+        $session = new Zend_Session_Namespace('style');
+        $url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+        if (false !== strpos($url,'solrq')) {
+            $locationSolr = array();        
+            if($session->items){
+                $locations = $session->locations;
+                foreach($session->items as $id){
+                    $item = get_item_by_id($id);
+                    $items[] = $item;
+                    $loc = geolocation_get_location_for_item($item);
+                    if(!empty($loc)){
+                        $locationsSolr = $locationSolr + geolocation_get_location_for_item($item);   
+                    }
+                }
+
+                $locations = $locationsSolr;
+                echo(sizeof($session->items));
+                set_items_for_loop($items);
+            }
+        }
+        
+                
         while(loop_items()):
         $item = get_current_item();
         $locationR = $locations[$item->id];
@@ -23,13 +46,14 @@
         ?>
         <Placemark>            
             <description><![CDATA[<?php
-	            if(digitool_item_has_digitool_url($item)){
+	            /*if(digitool_item_has_digitool_url($item)){
 	            	echo link_to_item(digitool_get_thumb($item, true, false,100,"bookImg"));
 	            }
                     echo "<strong>".link_to_item(item('Item Type Metadata','Objectnaam',array('snippet' => 30)))."</strong>";
 	            echo "<strong><br>".item('Dublin Core', 'Title',array('snippet' => 30))."</strong>";
 	            echo "<br>".item('Dublin Core', 'Description',array('snippet' => 200))."";
-	            //echo "<div class='bookYear'>".item('Item Type Metadata', 'Periode')."";
+	            //echo "<div class='bookYear'>".item('Item Type Metadata', 'Periode')."";*/
+                    echo $item->id;
 	            ?>
             ]]></description>
             

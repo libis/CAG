@@ -26,8 +26,7 @@
         queue_css('reset');
         queue_css('style');
         queue_css('ie');
-        queue_css('styleDropdown');
-        queue_css('feature-carousel');
+        queue_css('styleDropdown');        
         queue_css('skin');
         queue_css('main');
 
@@ -46,35 +45,12 @@
         <!-- JavaScripts -->
         <?php echo queue_js('jquery.collapser'); ?>
         <?php echo queue_js('jquery.dropdown'); ?>
-        <?php echo queue_js('jquery.featureCarousel'); ?>
+        <?php echo queue_js('jquery.roundabout.min'); ?>
         <?php echo queue_js('iframe'); ?>
         <?php echo queue_js('selectivizr'); ?>
-        <?php echo queue_js('jquery.expander'); ?>
+        
 
 <?php echo display_js(); ?>
-        <script type="text/javascript">
-            jQuery(document).ready(function() {
-                jQuery("#carousel2").featureCarousel({
-                    autoPlay: 0,
-                    trackerIndividual:false,
-                    trackerSummation:false,
-                    sidePadding:20
-                });
-                jQuery("#carousel3").featureCarousel({
-                    autoPlay: 0,
-                    trackerIndividual:false,
-                    trackerSummation:false,
-                    sidePadding:20
-                });
-
-
-
-
-
-            });
-
-
-        </script>
         <script language="JavaScript">
             if (self !== top) document.write('<style type="text/css">#normal-title{display:none} html{background:#fff;margin:0 0 100px 0;} #footer {display: none;} .info {display:none;} #header {display: none;} #search-wrap {display: none;}</style>');
         </script><!--iframe changes-->

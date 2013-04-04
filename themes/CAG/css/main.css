@@ -224,13 +224,81 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
 
 /* carrousel
 ------------------------------------------------------------------ */
-
 #carousel-block {
-	width: 70%;
+    width: 70%;
+}
+
+.cycle{
+    clear:both;    
+    overflow:hidden;
+    width:100%;
+    position: relative;
+}
+
+#cycle2{
+    height:370px;
+}
+
+.cycle img{
+    background-image: url(../images/imgbg.png);
+    padding:5px;   
+    max-width:100%;
+    max-height:340px;
+   
+}
+
+.rotator1 li{
+    height:200px;
+    width:300px;
+}
+
+.rotator2 li{
+    width:300px;
+    height:400px;
+}
+
+.rotator1{
+    height: 190px;
+    margin: 0 auto;
+    width: 75%;
+}
+
+.rotator2{
+    height: 350px;
+    margin: 0 auto;
+    width: 75%;
+}
+
+.p1,.n1 {
+    height: 40px;
+    position: absolute;    
+    width: 39px;
+    top: 70px;
+    background:#0055cc;
+    z-index: 300;
+}
+
+.p2,.n2 {
+    height: 40px;
+    position: absolute;    
+    width: 39px;
+    top: 170px;
+    background:#0055cc;
+    z-index: 300;
+}
+
+.cycle .prev {  
+    background: url("../images/arrow-left.png") repeat scroll 0 0 transparent;
+    left: 0;
+}
+
+.cycle .next {
+    background: url("../images/arrow-right.png") repeat scroll 0 0 transparent;
+    right: 0;
 }
 
 #item-block {
-	width: 100%;
+    width: 100%;
 }
 
 /* show-gallery
@@ -519,12 +587,12 @@ p#simple-pages-breadcrumbs {
 
 /* geolocation */
 
-.mapsInfoWindow{
+.infoWindow{
     width:250px;
     overflow:hidden;
 }
 
-.mapsInfoWindow img{
+.infoWindow img{
     float:left;
     width:100px;
     margin: 0 10px 5px 0;

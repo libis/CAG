@@ -321,13 +321,20 @@ function geolocation_header($request)
  *     catch the map coordinates)
  * @return array
  **/
-function geolocation_google_map($divId = 'map', $options = array()) {
-
+function geolocation_google_map($divId = 'map', $options = array(),$center=null) {
+    
     $ht = '';
     $ht .= '<div id="' . $divId . '" class="map"></div>';
 
-    // Load this junk in from the plugin config
-    $center = geolocation_get_center();
+    // addition joris
+    if($center){        
+        $center = array(
+        'latitude'=>  (double) $center[0]['latitude'],
+        'longitude'=> (double) $center[0]['longitude'],
+        'zoomLevel'=> (double) get_option('geolocation_default_zoom_level')-2);
+    }else{
+        $center = geolocation_get_center();        
+    }    
 
     // The request parameters get put into the map options
     $params = array();
@@ -335,12 +342,22 @@ function geolocation_google_map($divId = 'map', $options = array()) {
         $params = array();
     }
     $params = array_merge($params, $_GET);
+    
+    
+    
 
     if ($options['loadKml']) {
         unset($options['loadKml']);
         // This should not be a link to the public side b/c then all the URLs that
         // are generated inside the KML will also link to the public side.
-        $options['uri'] = uri('geolocation/map.kml');
+        /*if($itemids){
+            $kml_url = 'geolocation/map.kml?';
+            $kml_url .= 'ids[]=' . implode('&amp;ids[]=', array_map('urlencode', $itemids));
+            $options['uri'] = uri($kml_url);
+         */   
+       
+            $options['uri'] = uri('geolocation/map.kml');
+         
     }
 
     // Merge in extra parameters from the controller
@@ -352,6 +369,7 @@ function geolocation_google_map($divId = 'map', $options = array()) {
     $options['params'] = $params;
 
     $options = js_escape($options);
+    //print_r($options);
     $center = js_escape($center);
 
     ob_start();

@@ -5,16 +5,16 @@ class Geolocation_MapController extends Omeka_Controller_Action
 {
     public function browseAction()
     {
-       // Need to use a plugin hook here to make sure that this search retrieves
+        // Need to use a plugin hook here to make sure that this search retrieves
         // only items that are on the map.
         $this->_setParam('only_map_items', true);
         $this->_setParam('use_map_per_page', true);
         $results = $this->_helper->searchItems();
-
+        
         $items = $results['items'];
         $totalItems = $results['total_results'];
         $locations = geolocation_get_location_for_item($items);
-       // echo "<pre>";var_dump($locations);echo "</pre>";
+        //echo "<pre>";var_dump($locations);echo "</pre>";
 
         // Make the pagination values accessible from the plugin template
         // helpers.
