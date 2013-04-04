@@ -97,11 +97,12 @@ class SolrSearch_IndexHelpers
         $rc     = get_class($record);
 
         if ($rc === 'SimplePagesPage') {
-            if (simple_pages_is_home_page($record)) {
-                $uri = abs_uri('');
-            } else {
+            //AANGEPASSING JORIS, gaf fatal error bij opslaan simple page die als homepage ingesteld is
+            //if (simple_pages_is_home_page($record)) {
+            //    $uri = abs_uri('');
+            //} else {
                 $uri = uri($record->slug);
-            }
+            //}
 
         } else if ($rc === 'ExhibitSection') {
             $exhibit = $record->getExhibit();
