@@ -24,7 +24,7 @@ function relatedTagCloud_get($itemsBrowse,$size=50){
                 release_object($tagsItem);
 
                 //get the item's tags
-                $tagsItem = get_tags(array('record'=>$item));
+                $tagsItem = get_tags(array('record'=>$item,'sort'=>'most'));
                 //var_dump($tagsItem);
                 $hasTags = true;
                 //saves all current tags so we can remove them from the cloud later
@@ -57,9 +57,7 @@ function relatedTagCloud_get($itemsBrowse,$size=50){
 	}else{               
             
             $tags = array_diff($tags, $doubleTags);
-            usort($tags, function($a, $b) {
-                return strcmp($a['name'], $b['name']);
-            });
+           
             // Sam: Proberen om geheugen te besparen
             release_object($doubleTags);
 
