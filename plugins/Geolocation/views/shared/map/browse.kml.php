@@ -19,7 +19,7 @@
         //Zend_Session::start();
         $session = new Zend_Session_Namespace('style');
         $url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-        if (false !== strpos($url,'solrq')) {
+        if (false !== strpos($url,'solr')) {
             $locationSolr = array();        
             if($session->items){
                 $locations = $session->locations;
