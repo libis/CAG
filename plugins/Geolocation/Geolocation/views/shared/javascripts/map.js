@@ -8,7 +8,6 @@ OmekaMap.prototype = {
 
     map: null,
     mc: null,
-    oms: null,
     mapDivId: null,
     mapSize: 'small',
     markers: [],
@@ -47,18 +46,19 @@ OmekaMap.prototype = {
         }
 
         options.map = this.map;
-        
-        bindHtml = bindHtml.replace(/(<([^>]+)>)/ig,"");
-        bindHtml = bindHtml.replace(/ /g,'');
-        options.title = bindHtml;
 
-        var marker = new google.maps.Marker(options);              
+        var marker = new google.maps.Marker(options);
 
         if (bindHtml) {
-            /*google.maps.event.addListener(marker, 'click', function () {
+            google.maps.event.addListener(marker, 'click', function () {
                 bindHtml = bindHtml.replace(/(<([^>]+)>)/ig,"");
                 bindHtml = bindHtml.replace(/ /g,'');
-                
+                /*jQuery('#test').load('/items/map/ .mapsInfoWindow',{id:bindHtml},function(){
+                    var infowindow = new google.maps.InfoWindow({
+                        content: jQuery('#test').html()
+                    });
+                    infowindow.open(marker.getMap(), marker);
+                });*/
                 var infowindow = null;
                 var request = jQuery.ajax(
                     {
@@ -76,12 +76,10 @@ OmekaMap.prototype = {
                     }
                 );
                                              
-            });*/
+            });
         }
         //for clusterer
         this.mc.addMarker(marker);
-        //spider
-        this.oms.addMarker(marker);
         //return marker;
     },
 
@@ -131,29 +129,6 @@ OmekaMap.prototype = {
         var mcOptions = {gridSize: 50, maxZoom: 15};
         //Construct an empty markerclusterer object
         this.mc = new MarkerClusterer(this.map, [], mcOptions);
-        this.oms = new OverlappingMarkerSpiderfier(this.map);
-        
-        this.oms.addListener('click', function(marker) {
-            //bindHtml = bindHtml.replace(/(<([^>]+)>)/ig,"");
-              //  bindHtml = bindHtml.replace(/ /g,'');
-                
-                var infowindow = null;
-                var request = jQuery.ajax(
-                    {
-                        url: '/items/map/',
-                        type: 'POST',                        
-                        data: {id:marker.getTitle()},
-                        async: false,                       
-                        success: function(data){
-                            var result = jQuery(data).find('.mapsInfoWindow').html();
-                                infowindow = new google.maps.InfoWindow({
-                                content: result
-                            });
-                            infowindow.open(marker.getMap(), marker);
-                        }
-                    }
-                );
-          });
     }
 };
 

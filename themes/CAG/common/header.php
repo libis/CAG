@@ -86,7 +86,7 @@
                                     <!--<li><a href="<?php echo uri('#'); ?>">Albums</a></li>-->
                                 </ul>
                             </li>
-                            <li><a href="<?php echo uri('werktuigen/'); ?>">Werktuigen</a></li>
+                            <!--<li><a href="<?php echo uri('werktuigen/'); ?>">Werktuigen</a></li>-->
                             <li><a href="<?php echo uri('verhalen/'); ?>">Verhalen</a>
                                 <ul class="sub_menu">
                                     <li><a href="<?php echo uri('verhalen/'); ?>">Per tijdvak of per thema</a></li>

@@ -286,14 +286,11 @@ function digitool_get_thumb_for_home($item){
 
     $url = get_db()->getTable('DigitoolUrl')->findDigitoolUrlByItem($item, $findOnlyOne);
 
-    if(!empty($url)){	
-        
-                    $thumb =  'http://resolver.lias.be/get_pid?stream&usagetype=THUMBNAIL&pid='.$url[0]->pid;
-                    $view =  'http://resolver.lias.be/get_pid?stream&usagetype=VIEW_MAIN,VIEW&pid='.$url[0]->pid;
+    if(!empty($url)){        
+        $thumb =  'http://resolver.lias.be/get_pid?stream&usagetype=THUMBNAIL&pid='.$url[0]->pid;
+        $view =  'http://resolver.lias.be/get_pid?stream&usagetype=VIEW_MAIN,VIEW&pid='.$url[0]->pid;
 
-                    return '<a href="'.item_uri("show",$item).'" target="_blank"><img src="'.$thumb.'" alt="'.item('Dublin Core','Title',array(),$item).'"></a>';
-        
-
+        return '<a href="'.item_uri("show",$item).'" target="_blank"><img src="'.$thumb.'" alt="'.item('Dublin Core','Title',array(),$item).'"></a>';
     }
 }
 

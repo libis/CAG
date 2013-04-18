@@ -41,7 +41,7 @@
 	$werk_count=0;
 
 	while (loop_items()):
-		if(item_has_type('Afbeelding')){
+		if(item_has_type('Object')){
 
 			$beeld_count++;
 			$beelden.="<table><tr><th width='150'></th><th='250' ></th></tr>
@@ -116,7 +116,7 @@
 	};//endif instelling/actoren
 
 	//if item-type is 'uitgelicht'
-	if(item_has_type('Werktuig')){
+	if(item_has_type('Concept')){
 		$werk_count++;
 		$werktuigen.="
 					<table><tr><td>";

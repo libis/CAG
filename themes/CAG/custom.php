@@ -249,7 +249,31 @@ function Libis_get_section_thumb($section){
 
 }
 
-
+function Libis_get_similar_objects($item_original){
+    $parent=item('Item Type Metadata','Ouder',array(),$item_original);
+    $titel = item('Dublin Core','Title',array(),$item_original);
+    if($parent){
+        $similars=array();
+        $items = get_items(array('type'=>'16'),10000);
+        foreach($items as $item){
+            if((item('Item Type Metadata','Ouder',array(),$item) == $parent
+                    || item('Dublin Core','Title',array(),$item) == $parent
+                    || item('Item Type Metadata','Ouder',array(),$item) == $titel
+                    ) && $item_original->id != $item->id){
+                if(digitool_item_has_digitool_url($item)){
+                    $similars[] = $item;
+                }    
+            }           
+        }
+        if(!empty($similars))
+            return $similars;
+        else
+            return false;
+        
+    }else{
+        return false;
+    }
+}
 
 function Libis_get_children($current,$treeAnchor,$childtree,$three){
 
@@ -264,12 +288,12 @@ function Libis_get_children($current,$treeAnchor,$childtree,$three){
 			//add the next set of children
 
 			if($child['title'] == $treeAnchor){
-				$html.='<li><span class="plus-min"><a href="'.uri('werktuigen?id='.$child['id']).'"><img src="'.img('min.gif').'"/></span>'.$child['title'].'</a></li>';
+				$html.='<li><span class="plus-min"><a href="'.item_uri('show',get_item_by_id($child['id'])).'"><img src="'.img('min.gif').'"/></span>'.$child['title'].'</a></li>';
 
 				$html.= $childtree;
 
 			}else{
-				$html.='<li><span class="plus-min"><a href="'.uri('werktuigen?id='.$child['id']).'"><img src="'.img('plus.gif').'"/></span>'.$child['title'].'</a></li>';
+				$html.='<li><span class="plus-min"><a href="'.item_uri('show',get_item_by_id($child['id'])).'"><img src="'.img('plus.gif').'"/></span>'.$child['title'].'</a></li>';
 			}
 
 
@@ -306,7 +330,7 @@ function Libis_get_parents($current,$parent,$threeArray){
 	}
 	//attach the tree to the top landbouw
 	$tree ="<li>".Libis_get_children($current,$treeAnchor,$tree,$threeArray)."</li>";
-	$tree ='<li><a href="'.uri('werktuigen?id=48380').'">Landbouw</a></li>'.$tree;
+	$tree ='<li><a href="'.item_uri('show',get_item_by_id(48380)).'">Landbouw</a></li>'.$tree;
 
 	return $tree;
 }
@@ -744,5 +768,82 @@ function libis_curPageURL() {
 		$pageURL .= $_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"];
 	}
 	return $pageURL;
+}
+
+function libis_getTypeOrganisations(){
+    $items = get_items(array('type'=>'15'),10000);
+    $types = array();
+    set_items_for_loop($items);
+    while(loop_items()){
+        if(item("Item Type Metadata","Type Organisatie")!="")        
+            $types[] = item("Item Type Metadata","Type Organisatie");        
+    }    
+    echo "<ul>";
+    foreach($types as $type){        
+        echo "<li><a href='/solr-search/results/?solrfacet=221_s:".$type."'>".$type."</li>";
+    }
+        echo "</ul>";
+     
+}
+
+function libis_get_simple_page_three(){
+    //get page id
+    $parentPage = simple_pages_get_current_page();
+    $parentId = $parentPage->id;
+    
+    //find children pages
+    $findBy = array('parent_id' => $parentId, 'sort' => 'order');
+    $findBy['is_published'] = true;
+    $pages = get_db()->getTable('SimplePagesPage')->findBy($findBy);
+
+    $navLinks = array();
+
+    //loop pages
+    foreach ($pages as $page) {
+        //make url
+        $uri = uri($page->slug);
+
+        $navLinks[0][] = array(
+            'id' => $page->id,
+            'label' => $page->title,
+            'uri' => $uri
+        );
+    }
+    //search children
+    $j=0;
+    while($j<20){
+        $check=false;        
+        for($i=0;$i <= sizeof($navLinks[$j]);$i++){
+            $k=0; 
+            $parent = $navLinks[$j][$i];  
+            if($parent['id']!=''){
+                
+                $findBy = array('parent_id' => $parent['id'], 'sort' => 'order');
+                $findBy['is_published'] = true;
+                $pages=null;
+                $pages = get_db()->getTable('SimplePagesPage')->findBy($findBy);
+                echo "<br>".$parent['id']." - ".sizeof($pages);
+                if($pages){
+                                   
+                    foreach ($pages as $page) {                    
+                        //make url
+                        $uri = uri($page->slug);
+
+                        $navLinks[$j+1][$parent['id']] = array(
+                            'id' => $page->id,
+                            'label' => $page->title,
+                            'uri' => $uri
+                        );
+                        $k++;
+                    }
+                    //extra level of pages found -> continue the loop
+                    //$check = true;
+                }
+            }
+            
+        }
+        $j++;
+    }
+    return $navLinks;
 }
 ?>

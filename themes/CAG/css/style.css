@@ -257,17 +257,9 @@ p img{float:left; padding-right:10px;padding-bottom:10px; }
 		.exhibit-item img {width: 100%;height:auto !important;}
 
 
-		/* == Werktuigen == */
-		.uitgelicht-list {list-style:none;background-color:#F7F9F9;width:250px;padding-left:20px;float:left;}
-		.uitgelicht-list ul{list-style:none;margin-top:0px;margin-left:-25px;-webkit-padding-start: 10px;}
-		.collaps{font-size:15px;position:relative;top:-8px;right:50px;}
-		#tree {margin-left:15px;}
-		.plus-min img{padding-right:5px;font-weight:700;vertical-align:middle;}
+		
 
-		#werktuig {width:550px;}
-
-		/* iframe*/
-		#ifm { width:600px;margin-bottom:30px;float:right;margin-top:-50px;}
+		
 
 		/* == Collections (voorlopig niet gebruikt)== */
 		.collection {border-top:1px solid #669999;padding-top:1.33333em;}

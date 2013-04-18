@@ -21,8 +21,10 @@ if (simple_pages_is_home_page(get_current_simple_page())) {
 	    <?php if (!simple_pages_is_home_page(get_current_simple_page())): ?>
 	    <p id="simple-pages-breadcrumbs"><?php echo simple_pages_display_breadcrumbs(); ?></p>
 	    <?php endif; ?>
+            <div id="page-content">
 	    <h1><?php echo html_escape(simple_page('title')); ?></h1>
 	    <?php echo eval('?>' . simple_page('text')); ?>
+            </div>
     </div>
 </div>
 <?php if (!simple_pages_is_home_page(get_current_simple_page())): ?>

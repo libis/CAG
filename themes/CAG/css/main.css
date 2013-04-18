@@ -423,24 +423,35 @@ table.exhibit_general_list tbody tr td {
 	margin-left: 52%;
 }
 
-#page ul.uitgelicht-list {
-	padding-top: 10px;
-	padding-bottom: 10px;
-	background-color: transparent;
-	padding: 0;
+/* == Concepten == */
+ul.uitgelicht-list {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: transparent;
+    padding: 0;
 }
 
-#page ul.uitgelicht-list h4 {
-	font-size: 160%;
-	margin-bottom: 11px;
+ul.uitgelicht-list h4 {
+    font-size: 160%;
+    margin-bottom: 11px;
 }
 
-#page ul.uitgelicht-list li {
-	margin-bottom: 8px;
+ul.uitgelicht-list li {
+    margin-bottom: 8px;
 }
 
-#page ul.uitgelicht-list li li {
-	margin-left: 30px;
+ul.uitgelicht-list li li {
+    margin-left: 30px;
+}
+
+
+.uitgelicht-list ul{list-style:none;margin-top:0px;margin-left:-20px;-webkit-padding-start: 10px;}
+.collaps{font-size:15px;position:relative;top:-8px;right:50px;}
+#tree {width:250px;float:left;}
+.plus-min img{padding-right:5px;font-weight:700;vertical-align:middle;}
+
+#concept{
+    overflow:hidden;
 }
 
 #wegwijs {
@@ -546,8 +557,7 @@ address {
     margin:0px 0px;
     padding:5px;
     font-weight:700;
-    background-color:#F7F9F9;
-    border:1px solid #CCCC99;
+    background-color:#F7F9F9;    
 }
 
 #nav-left ul.first {
@@ -556,7 +566,7 @@ address {
 }
 
 #nav-left li {
-	margin-bottom: 10px;
+	
 }
 
 #nav-left li:last-child {
@@ -596,6 +606,61 @@ p#simple-pages-breadcrumbs {
     float:left;
     width:100px;
     margin: 0 10px 5px 0;
+}
+
+/* Onderzoekbronnen
+------------------------------------------------------------------ */
+#bronnen-nav ul{
+    font-size:16px;
+    padding: 5px 0 15px 20px;    
+}
+
+#bronnen-nav a{
+    font-weight: normal;
+}
+
+#bronnen-nav ul.first{
+    padding:0 0 15px 0;    
+    font-size:20px;
+}
+
+#bronnen-nav-biblio ul{
+    font-size:16px;
+    padding: 5px 0 15px 0px;    
+}
+
+#bronnen-nav-biblio a{
+    cursor:default;    
+}
+
+#bronnen-nav-biblio a:hover{
+    text-decoration:none;
+}
+
+#bronnen-nav-biblio ul.subnav-2 a{
+    cursor:pointer;    
+}
+
+#bronnen-nav-biblio ul.subnav-2 a:hover{
+    text-decoration:underline;
+}
+
+#bronnen-nav-biblio ul.first{
+    padding:0 0 15px 0;  
+}
+
+#bronnen-nav-biblio ul.subnav-1{
+    font-size:14px;
+    padding-left:10px;
+    
+}
+
+#bronnen-nav-biblio ul.subnav-2{
+    font-size:12px;
+}
+
+#bronnen-nav-biblio ul.subnav-2 #page-content{
+    font-size:12px;
 }
 
 /* footer

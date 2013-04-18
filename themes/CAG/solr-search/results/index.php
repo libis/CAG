@@ -78,20 +78,20 @@
 
                             <?php if(digitool_item_has_digitool_url($item)){ ?>
                                 <div class="image">
-                                    <?php echo digitool_get_thumb_for_browse($item,'140');?>
+                                    <?php echo link_to_item(digitool_get_thumb_for_browse($item,'140'));?>
                                     <?php //echo SolrSearch_ViewHelpers::createResultImgHtml($image, SolrSearch_ViewHelpers::getDocTitle($doc)); ?>
                                 </div>
                             <?php } ?>
 
-                            <!-- AFBEELDING -->
-                            <?php if(item_has_type('Afbeelding')){?>
+                            <!-- OBJECT -->
+                            <?php if(item_has_type('Object')){?>
 
                                 <div class="title">
                                     <?php $beelden="<table width='300'><th width='120'></th><th></th>";
                                     if(item('Item Type Metadata','Objectnaam'))
                                         $beelden.="<tr><td><strong>Objectnaam:</strong></td><td>".link_to_item(item('Item Type Metadata','Objectnaam'))."</td></tr>";
                                      if(item('Dublin Core','Title'))
-                                        $beelden.="<tr><td><strong>Titel:</strong></td><td>".item('Dublin Core','Title')."</td></tr>";
+                                        $beelden.="<tr><td><strong>Titel:</strong></td><td>".link_to_item(item('Dublin Core','Title'))."</td></tr>";
                                     if(item('Dublin Core','Publisher'))
                                         $beelden.="<tr><td><strong>Naam Instelling:</strong></td><td>".item('Dublin Core','Publisher')."</td></tr>";
                                     if(item('Dublin Core','Identifier')){
@@ -137,7 +137,7 @@
                             <?php }?>
 
                             <!-- WERKTUIG -->
-                            <?php if(item_has_type('Werktuig')){?>
+                            <?php if(item_has_type('Concept')){?>
                                 <div class="title">
                                 <?php $werktuigen ="<table><tr><td><strong>
                                              ".link_to_item(item('Dublin Core','Title'))."
@@ -185,7 +185,9 @@
          $session->items= $itemids;
          $session->locations= $locations;
     ?>
-    <?php if(!empty($locationsSolr)){?>
+    
+    <?php if(!empty($locationsSolr)){
+        //var_dump($locationsSolr);?>
         <div id="map-block" style="clear:both;">        
             <?php echo geolocation_google_map('map-display', array('loadKml'=>true),$center);?>
         </div><!-- end map_block -->
@@ -193,8 +195,7 @@
     <div id="test" style="display:none;"></div>
     <!-- END SOLR-GEOLOCATION -->
     
-    
-    <?php echo relatedTagCloud_get($itemids); ?>
+    <?php if(!empty($itemids)){ echo relatedTagCloud_get($itemids);} ?>
     
     <div class="topresults bottom">
         <div class="resultCount"><?php echo __('%s resulaten', $results->response->numFound); ?></div>
