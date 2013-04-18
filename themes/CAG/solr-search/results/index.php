@@ -64,8 +64,7 @@
             <?php foreach($results->response->docs as $doc): ?>
                 <?php
                     $item = get_item_by_id(preg_replace ( '/[^0-9]/', '', $doc->__get('id')));
-                    $itemids[] = $item->id;
-                    $itemsGeo[] = $item;
+                    $itemids[] = $item->id;                    
                 ?>
             <div class="item" id="solr_<?php echo $doc->__get('id'); ?>">
                 <div class="details">
@@ -170,7 +169,8 @@
     <!-- BEGIN SOLR GEOLOCATIION -->
     <?php 
         //uitbreiding solr-geolocation        
-        $locationSolr = array();   
+        $locationSolr = array();
+        
         if($itemids){
                 foreach($itemids as $id){
                     $item = get_item_by_id($id);                    
@@ -180,7 +180,7 @@
                         $center = $loc[$id];
                     }
                 }
-                $locations = $locationsSolr;             
+                $locations = $locationsSolr;                
          }         
          $session->items= $itemids;
          $session->locations= $locations;

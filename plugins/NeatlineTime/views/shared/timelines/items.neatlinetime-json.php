@@ -2,22 +2,31 @@
 /**
  * The shared neatlinetime-json browse view for Items
  */
+$items = get_items_for_loop();
+
 $neatlineTimeEvents = array();
+
 while (loop_items()) {
-    $itemTitle = neatlinetime_get_item_text('item_title');
-    $itemLink = abs_item_uri();
-    $itemDescription = item('Dublin Core', 'Description',array('snippet' => 200));
+    //$itemTitle = neatlinetime_get_item_text('item_title');
+    //$itemLink = abs_item_uri();
+    //$itemDescription = item('Dublin Core', 'Description',array('snippet' => 200));
 
     
     //get dates
-    $itemDates = item('Dublin Core', 'Date','all');
+    //$itemDates = item('Dublin Core', 'Date','all');
+    $neatlineTimeEvent['start'] = '2012-01-01';
+   // $neatlineTimeEvent['title'] = $itemTitle;
+    //$neatlineTimeEvent['link'] = $itemLink;
+    //$neatlineTimeEvent['classname'] = neatlinetime_item_class();
+    //$neatlineTimeEvent['description'] = $itemDescription;
+    $neatlineTimeEvents[] = $neatlineTimeEvent;
 
     /*if ($file = get_db()->getTable('File')->findWithImages(item('id'), 0)) {
         $fileUrl = file_display_uri($file, 'square_thumbnail'); 
     }*/
-    if (!empty($itemDates)) {
+    /*if (!empty($itemDates)) {
       foreach ($itemDates as $itemDate) {
-          
+            /*
             $itemDescription .= $itemDate ."<br>";
 
             $neatlineTimeEvent = array();
@@ -31,17 +40,17 @@ while (loop_items()) {
             		$second_half = substr($itemDate,4);
             		$itemDate = "January 01 ".$first_half." 00:00:00 GMT-0600/January 01 ".$second_half." 00:00:00 GMT-0600";
             	}
-            }
+            } 
             $dateArray = explode('/', $itemDate);
+           
 
-
-            if ($dateArray[0]) {
-                $neatlineTimeEvent['start'] = $dateArray[0];
+            if ($dateArray[0]){
+                $neatlineTimeEvent['start'] = '2012-01-01';//$dateArray[0];
 
                 if (count($dateArray) == 2) {
-                    $neatlineTimeEvent['end'] = $dateArray[1];
+                    //   $neatlineTimeEvent['end'] = $dateArray[1];
                 }
-
+                  
                 $neatlineTimeEvent['title'] = $itemTitle;
                 $neatlineTimeEvent['link'] = $itemLink;
                 $neatlineTimeEvent['classname'] = neatlinetime_item_class();
@@ -58,7 +67,7 @@ while (loop_items()) {
                 if ($fileUrl) {
                     $neatlineTimeEvent['image'] = $fileUrl;
                 }
-                */
+                
                 $neatlineTimeEvent['description'] = $itemDescription;
                 $neatlineTimeEvents[] = $neatlineTimeEvent;
             }
@@ -88,9 +97,10 @@ while (loop_items()) {
             }
         }
          
-             */
+            
     }
-}
+}*/
+   
 }
 $neatlineTimeArray = array();
 $neatlineTimeArray['dateTimeFormat'] = "iso8601";
