@@ -332,8 +332,8 @@ function digitool_simple_gallery($item,$size=500){
 		$thumb = "http://resolver.lias.be/get_pid?stream&usagetype=THUMBNAIL&pid=".$url[0]->pid;
 		$digi = "http://resolver.lias.be/get_pid?redirect&usagetype=VIEW_MAIN,VIEW&pid=".$url[0]->pid;
                 
-                $resize = digitool_resize_dimensions($size,$size,$thumb);
-		$html.="<div id='image'><a href='".$digi."'><img src='".$thumb."' height='".$resize['height']."' width='".$resize['width']."'/></a></div>";
+                //$resize = digitool_resize_dimensions($size,$size,$thumb);
+		$html.="<div id='image'><a href='".$digi."'><img src='".$thumb."' /></a></div>";
 		
 		return $html;
 	}else{
@@ -341,9 +341,9 @@ function digitool_simple_gallery($item,$size=500){
 		foreach($url as $u){
 			$thumb = "http://resolver.lias.be/get_pid?stream&usagetype=THUMBNAIL&pid=".$u->pid;
 			$digi = "http://resolver.lias.be/get_pid?redirect&usagetype=VIEW_MAIN,VIEW&pid=".$u->pid;
-                        $resize = digitool_resize_dimensions($size,$size,$thumb);    
+                        //$resize = digitool_resize_dimensions($size,$size,$thumb);    
 			if($i==0){
-				$html.="<div id='gallery-image'><a href='".$digi."'><img src='".$thumb."' height='".$resize['height']."' width='".$resize['width']."'/></a></div>";
+				$html.="<div id='gallery-image'><a href='".$digi."'><img src='".$thumb."'/></a></div>";
 				$html.="<div id='gallery-thumbnails' style='height: 400px;-moz-column-width: 70px;
  -moz-column-gap: 0px;column-width: 70px;'>";
 			}

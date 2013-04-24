@@ -311,6 +311,11 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
 
 }
 
+#itemfiles img{
+    max-width:400px;
+    max-height:400px;
+}
+
 #gallery-image img{
 	float:left;
 	max-width:500px;
