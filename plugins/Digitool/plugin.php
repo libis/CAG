@@ -1,10 +1,14 @@
 <?php
 
 require_once 'DigitoolUrl.php';
+require_once dirname(__FILE__).'/helpers/CurlHelper.php';
 
 // Add plugin hooks.
 add_plugin_hook('install', 'digitool_install');
 add_plugin_hook('uninstall', 'digitool_uninstall');
+// add plugin hooks (configuration)
+add_plugin_hook('config_form', 'digitool_config_form');
+add_plugin_hook('config', 'digitool_config');
 add_plugin_hook('admin_append_to_items_show_secondary', 'digitool_admin_show_item_map');
 
 //add_plugin_hook('after_save_item', 'digitool_save_url');
@@ -21,6 +25,11 @@ function digitool_install()
     `pid` VARCHAR(100) NOT NULL ,
     INDEX (`item_id`)) ENGINE = MYISAM";
     $db->query($sql);
+
+    set_option('digitool_proxy','');
+    set_option('digitool_cgi','');
+    set_option('digitool_thumb','');
+    set_option('digitool_view','');
 }
 
 /**
@@ -28,23 +37,46 @@ function digitool_install()
  */
 function digitool_uninstall(){
     // Drop the url table.
-	$db = get_db();
-	$db->query("DROP TABLE $db->DigitoolUrl");
+    $db = get_db();
+    $db->query("DROP TABLE $db->DigitoolUrl");
+
+    delete_option('digitool_proxy');
+    delete_option('digitool_cgi');
+    delete_option('digitool_thumb');
+    delete_option('digitool_view');
+}
+//link to config_form.php
+function digitool_config_form() {
+	include('config_form.php');
+}
+//process the config_form
+function digitool_config() {
+	//get the POST variables from config_form and set them in the DB
+	if($_POST["proxy"])
+		set_option('digitool_proxy',$_POST['proxy']);
+
+	if($_POST["cgi"])
+		set_option('digitool_cgi',$_POST['cgi']);
+
+        if($_POST["thumb"])
+                set_option('digitool_thumb',$_POST['thumb']);
+
+        if($_POST["view"])
+                set_option('digitool_view',$_POST['view']);
 }
 
 function digitool_admin_form($item){
-	ob_start();
-
-	echo js("jquery.pagination");
-	?><link rel="stylesheet" href="<?php echo css('pagination'); ?>" /><?php
-		//$html.="<form method='post' action=''>";
-	if(digitool_item_has_digitool_url($item)){
-	?>
-	<div>
-	<b>Digitool images currently associated with this item:</b><br>
-	<br><?php echo digitool_get_thumb($item,false,true,'100px');?>
-	<br><br><label>Remove current digitool images?</label><input type="checkbox" name="delete" value="yes"/>
-	</div>
+    ob_start();
+    echo js("jquery.pagination");
+    ?><link rel="stylesheet" href="<?php echo css('pagination'); ?>" />
+    <?php
+    if(digitool_item_has_digitool_url($item)){
+    ?>
+    <div>
+    <b>Digitool images currently associated with this item:</b><br>
+    <br><?php echo digitool_get_thumb($item,false,true,'100px');?>
+    <br><br><label>Remove current digitool images?</label><input type="checkbox" name="delete" value="yes"/>
+    </div>
     <br><br>
     <?php }?>
 
@@ -89,7 +121,7 @@ function digitool_admin_form($item){
 		jQuery('.digi-child').live("click", function(event) {
 			event.preventDefault();
 			jQuery('#wait').show('slow');
-			jQuery.get('<?php echo uri("digitool/index/childcgi");?>',{ child: jQuery('.digi-child').val()} , function(data) {
+			jQuery.get('<?php echo uri("digitool/index/childcgi/");?>',{ child: jQuery('.digi-child').val()} , function(data) {
 				jQuery('#wait').hide('slow');
 				jQuery('.result-child').html(data);
 			});
@@ -145,32 +177,32 @@ function digitool_admin_form($item){
 
 function digitool_save_url($item){
 
-	//handle delete first
-	if(isset($_POST['delete']) && ($_POST['delete'] == 'yes'))
-	{
-		$urlToDelete = get_db()->getTable('DigitoolUrl')->findDigitoolUrlByItem($item, false);
-		foreach($urlToDelete as $u){
-			$u->delete();
-		}
+    //handle delete first
+    if(isset($_POST['delete']) && ($_POST['delete'] == 'yes'))
+    {
+            $urlToDelete = get_db()->getTable('DigitoolUrl')->findDigitoolUrlByItem($item, false);
+            foreach($urlToDelete as $u){
+                    $u->delete();
+            }
 
-	}
+    }
 
-	if(!$_POST['pid']){
-		return;
-	}
+    if(!$_POST['pid']){
+            return;
+    }
 
-	$post = $_POST;
+    $post = $_POST;
 
-	//TODO:zie files-form.php voor code meerdere digitool files
+    //TODO:zie files-form.php voor code meerdere digitool files
 
-	//create view url out of thumb url
+    //create view url out of thumb url
 
 
-	//save to db
-	$url = new DigitoolUrl;
-	$url->item_id = $item->id;
+    //save to db
+    $url = new DigitoolUrl;
+    $url->item_id = $item->id;
 
-	$url->saveForm($post);
+    $url->saveForm($post);
 }
 
 
@@ -179,21 +211,20 @@ function digitool_save_url($item){
 * Add a Map tab to the edit item page
 * @return array
 **/
-function digitool_item_form_tabs($tabs)
-{
-	// insert the map tab before the Miscellaneous tab
-	$item = get_current_item();
-	$ttabs = array();
-	foreach($tabs as $key => $html) {
-		if ($key == 'Tags') {
-			$ht = '';
-			$ht .= digitool_admin_form($item);
-			$ttabs['Digitool'] = $ht;
-		}
-		$ttabs[$key] = $html;
-	}
-	$tabs = $ttabs;
-	return $tabs;
+function digitool_item_form_tabs($tabs){
+    // insert the map tab before the Miscellaneous tab
+    $item = get_current_item();
+    $ttabs = array();
+    foreach($tabs as $key => $html) {
+            if ($key == 'Tags') {
+                    $ht = '';
+                    $ht .= digitool_admin_form($item);
+                    $ttabs['Digitool'] = $ht;
+            }
+            $ttabs[$key] = $html;
+    }
+    $tabs = $ttabs;
+    return $tabs;
 }
 
 /**
@@ -203,11 +234,8 @@ function digitool_item_form_tabs($tabs)
 * If this function is used with AJAX, this parameter may need to be set to true.
 * @return string
 */
-function digitool_scripts()
-{
+function digitool_scripts(){
 	$ht = '';
-	//$ht .= geolocation_load_google_maps();
-	$ht .= js('map');
 	$ht .= js('jquery.pagination');
 	//$ht .= css('pagination');
 	return $ht;
@@ -218,8 +246,7 @@ function digitool_scripts()
 * @param Item $item
 * @return void
 **/
-function digitool_admin_show_item_map($item)
-{
+function digitool_admin_show_item_map($item){
 	$html = digitool_scripts()
 	. '<div class="info-panel">'
 	. '<h2>Digitool</h2>'
@@ -236,14 +263,13 @@ function digitool_admin_show_item_map($item)
 **/
 function digitool_get_thumb_url($item){
     $url = get_db()->getTable('DigitoolUrl')->findDigitoolUrlByItem($item, true);
-   
+
     if(!empty($url)){
-        return 'http://resolver.lias.be/get_pid?stream&usagetype=THUMBNAIL&pid='.$url->pid;
+        return get_option('digitool_thumb').$url->pid;
     }else{
         return false;
     }
 }
-
 
 /**
 * Shows an item's digitool url thumbnails
@@ -255,40 +281,40 @@ function digitool_get_thumb($item, $findOnlyOne = false, $linkToView = false,$wi
 	$url = get_db()->getTable('DigitoolUrl')->findDigitoolUrlByItem($item, $findOnlyOne);
 
 	if(!empty($url)){
-		if(!$linkToView){
-			if($findOnlyOne){
-				$thumb = 'http://resolver.lias.be/get_pid?stream&usagetype=THUMBNAIL&pid='.$url->pid;
-                                $resize = digitool_resize_dimensions($width,$width,$thumb);
-                               	return '<img src="'.$thumb.'" height="'.$resize['height'].'" width="'.$resize['width'].'" class="'.$class.'" alt="'.item('Dublin Core','Title',array(),$item).'">';
-			}
-			//if more then one thumbnail was found
-			else{
-				foreach($url as $u){
-					$thumb = 'http://resolver.lias.be/get_pid?stream&usagetype=THUMBNAIL&pid='.$u->pid;
-					$resize = digitool_resize_dimensions($width,$width,$thumb);
-                                        $html.='<img src="'.$thumb.'" height="'.$resize['height'].'" width="'.$resize['width'].'" /> ';
-				}
-				return $html;
-			}
-		}else{
-			if($findOnlyOne){
-				$thumb =  'http://resolver.lias.be/get_pid?stream&usagetype=THUMBNAIL&pid='.$url->pid;
-				$view =  'http://resolver.lias.be/get_pid?stream&usagetype=VIEW_MAIN,VIEW&pid='.$url->pid;
-                                $resize = digitool_resize_dimensions($width,$width,$thumb);
-				return '<a href="'.$view.'" target="_blank"><img src="'.$thumb.'"  height="'.$resize['height'].'" width="'.$resize['width'].'" class="'.$class.'" alt="'.item('Dublin Core','Title',array(),$item).'"></a>';
-			}
-			//if more then one thumbnail was found
-			else{
-				foreach($url as $u){
-					$thumb = 'http://resolver.lias.be/get_pid?stream&usagetype=THUMBNAIL&pid='.$u->pid;
-					$view = 'http://resolver.lias.be/get_pid?stream&usagetype=VIEW_MAIN,VIEW&pid='.$u->pid;
-                                        $resize = digitool_resize_dimensions($width,$width,$thumb);
-					$html.='<a href="'.$view.'" target="_blank"><img src="'.$thumb.'" height="'.$resize['height'].'" width="'.$resize['width'].'"></a>';
-				}
-				return $html;
-			}
+            if(!$linkToView){
+                    if($findOnlyOne){
+                            $thumb = get_option('digitool_thumb').$url->pid;
+                            $resize = digitool_resize_dimensions($width,$width,$thumb);
+                            return '<img src="'.$thumb.'" height="'.$resize['height'].'" width="'.$resize['width'].'" class="'.$class.'" alt="'.item('Dublin Core','Title',array(),$item).'">';
+                    }
+                    //if more then one thumbnail was found
+                    else{
+                            foreach($url as $u){
+                                    $thumb = get_option('digitool_thumb').$u->pid;
+                                    $resize = digitool_resize_dimensions($width,$width,$thumb);
+                                    $html.='<img src="'.$thumb.'" height="'.$resize['height'].'" width="'.$resize['width'].'" /> ';
+                            }
+                            return $html;
+                    }
+            }else{
+                    if($findOnlyOne){
+                            $thumb =  get_option('digitool_thumb').$url->pid;
+                            $view =  get_option('digitool_view').$url->pid;
+                            $resize = digitool_resize_dimensions($width,$width,$thumb);
+                            return '<a href="'.$view.'" target="_blank"><img src="'.$thumb.'"  height="'.$resize['height'].'" width="'.$resize['width'].'" class="'.$class.'" alt="'.item('Dublin Core','Title',array(),$item).'"></a>';
+                    }
+                    //if more then one thumbnail was found
+                    else{
+                            foreach($url as $u){
+                                    $thumb = get_option('digitool_thumb').$u->pid;
+                                    $view = get_option('digitool_view').$u->pid;
+                                    $resize = digitool_resize_dimensions($width,$width,$thumb);
+                                    $html.='<a href="'.$view.'" target="_blank"><img src="'.$thumb.'" height="'.$resize['height'].'" width="'.$resize['width'].'"></a>';
+                            }
+                            return $html;
+                    }
 
-		}
+            }
 	}
 
 }
@@ -302,9 +328,9 @@ function digitool_get_thumb_for_home($item){
 
     $url = get_db()->getTable('DigitoolUrl')->findDigitoolUrlByItem($item, $findOnlyOne);
 
-    if(!empty($url)){        
-        $thumb =  'http://resolver.lias.be/get_pid?stream&usagetype=THUMBNAIL&pid='.$url[0]->pid;
-        $view =  'http://resolver.lias.be/get_pid?stream&usagetype=VIEW_MAIN,VIEW&pid='.$url[0]->pid;
+    if(!empty($url)){
+        $thumb =  get_option('digitool_thumb').$url[0]->pid;
+        $view =  get_option('digitool_view').$url[0]->pid;
 
         return '<a href="'.item_uri("show",$item).'" target="_blank"><img src="'.$thumb.'" alt="'.item('Dublin Core','Title',array(),$item).'"></a>';
     }
@@ -315,7 +341,7 @@ function digitool_get_thumb_for_browse($item, $width="500",$class="",$alt=""){
 	$url = get_db()->getTable('DigitoolUrl')->findDigitoolUrlByItem($item, $findOnlyOne);
 
 	if(!empty($url)){
-            $thumb = 'http://resolver.lias.be/get_pid?stream&usagetype=THUMBNAIL&pid='.$url[0]->pid;
+            $thumb = get_option('digitool_view').$url[0]->pid;
             return '<img src="'.$thumb.'"  width="'.$width.'" class="'.$class.'" alt="'.item('Dublin Core','Title',array(),$item).'">';
         }
 
@@ -329,21 +355,21 @@ function digitool_simple_gallery($item,$size=500){
 	$i=0;
 	$url = get_db()->getTable('DigitoolUrl')->findDigitoolUrlByItem($item, false);
 	if(sizeof($url)==1){
-		$thumb = "http://resolver.lias.be/get_pid?stream&usagetype=THUMBNAIL&pid=".$url[0]->pid;
-		$digi = "http://resolver.lias.be/get_pid?redirect&usagetype=VIEW_MAIN,VIEW&pid=".$url[0]->pid;
-                
-                //$resize = digitool_resize_dimensions($size,$size,$thumb);
-		$html.="<div id='image'><a href='".$digi."'><img src='".$thumb."' /></a></div>";
-		
+		$thumb = get_option('digitool_thumb').$url[0]->pid;
+		$digi = get_option('digitool_view').$url[0]->pid;
+
+                $resize = digitool_resize_dimensions($size,$size,$thumb);
+		$html.="<div id='image'><a href='".$digi."'><img height='".$resize['height']."' width='".$resize['width']."' src='".$thumb."' /></a></div>";
+
 		return $html;
 	}else{
 		$html .= "<div id='gallery'>";
 		foreach($url as $u){
-			$thumb = "http://resolver.lias.be/get_pid?stream&usagetype=THUMBNAIL&pid=".$u->pid;
-			$digi = "http://resolver.lias.be/get_pid?redirect&usagetype=VIEW_MAIN,VIEW&pid=".$u->pid;
-                        //$resize = digitool_resize_dimensions($size,$size,$thumb);    
+			$thumb = get_option('digitool_thumb').$u->pid;
+			$digi = get_option('digitool_view').$u->pid;
+                        $resize = digitool_resize_dimensions($size,$size,$thumb);
 			if($i==0){
-				$html.="<div id='gallery-image'><a href='".$digi."'><img src='".$thumb."'/></a></div>";
+				$html.="<div id='gallery-image'><a href='".$digi."'><img height='".$resize['height']."' width='".$resize['width']."' src='".$thumb."'/></a></div>";
 				$html.="<div id='gallery-thumbnails' style='height: 400px;-moz-column-width: 70px;
  -moz-column-gap: 0px;column-width: 70px;'>";
 			}
@@ -387,13 +413,13 @@ function digitool_get_view($item, $findOnlyOne = false,$width="500",$height="100
 
 	if(!empty($url)){
 		if($findOnlyOne){
-			$view = 'http://resolver.lias.be/get_pid?stream&usagetype=VIEW_MAIN,VIEW&pid='.$url->pid;
+			$view = get_option('digitool_view').$url->pid;
 			return '<img src="'.$view.'" width="'.$width.'" height="'.$height.'" />';
 		}
 		//if more then one thumbnail was found
 		else{
 			foreach($url as $u){
-				$view = 'http://resolver.lias.be/get_pid?stream&usagetype=VIEW_MAIN,VIEW&pid='.$u->pid;
+				$view = get_option('digitool_view').$u->pid;
 				$html.='<img src="'.$view.'" width="'.$width.'" height="'.$height.'" />';
 			}
 			return $html;
@@ -470,23 +496,34 @@ function digitool_find_items_with_same_pid($item){
 	return false;
 }
 
-// Calculates restricted dimensions with a maximum of $goal_width by $goal_height 
+// Calculates restricted dimensions with a maximum of $goal_width by $goal_height
 function digitool_resize_dimensions($goal_width,$goal_height,$image) {
-    list($width, $height) = getimagesize($image); 
-    $return = array('width' => $width, 'height' => $height); 
+    //user CurlHelper to get image
+    $curl = new cURL();
+    $curl->setproxy(get_option(digitool_proxy));
+    $imageString = $curl->get($image);
+    
+    //print_r($imageString);die();
+    $new_image = ImageCreateFromString($imageString);
+    imagejpeg($new_image, "temp.jpg",100);
+    
+    // Get new dimensions
+    list($width, $height) = getimagesize("temp.jpg");
+        
+    $return = array('width' => $width, 'height' => $height);
 
-    // If the ratio > goal ratio and the width > goal width resize down to goal width 
-    if ($width/$height > $goal_width/$goal_height && $width > $goal_width) { 
-        $return['width'] = $goal_width; 
-        $return['height'] = $goal_width/$width * $height; 
-    } 
-    // Otherwise, if the height > goal, resize down to goal height 
-    else if ($height > $goal_height) { 
-        $return['width'] = $goal_height/$height * $width; 
-        $return['height'] = $goal_height; 
-    } 
+    // If the ratio > goal ratio and the width > goal width resize down to goal width
+    if ($width/$height > $goal_width/$goal_height && $width > $goal_width) {
+        $return['width'] = $goal_width;
+        $return['height'] = $goal_width/$width * $height;
+    }
+    // Otherwise, if the height > goal, resize down to goal height
+    else if ($height > $goal_height) {
+        $return['width'] = $goal_height/$height * $width;
+        $return['height'] = $goal_height;
+    }
 
-    return $return; 
+    return $return;
 }
 
 ?>

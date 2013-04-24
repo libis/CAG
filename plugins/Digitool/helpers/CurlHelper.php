@@ -52,7 +52,7 @@ class cURL {
 	
 
 	function getHttpStatus()   {
-       return $this->_status;
+            return $this->_status;
    	} 
 
 	function error($error) {
