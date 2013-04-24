@@ -13,6 +13,10 @@
         <!-- Meta -->
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="description" content="<?php echo settings('description'); ?>" />
+        
+        <meta property='og:title' content='<?php echo $title;?>'/>
+        <meta property='og:url' content='<?php echo uri();?>'/>
+        <meta property='og:description' content=''/>    
         <?php 
             if($og){echo $og;}
         ?>
