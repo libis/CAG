@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
     <head>
 
         <?php
@@ -13,7 +13,10 @@
         <!-- Meta -->
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="description" content="<?php echo settings('description'); ?>" />
-        <link rel="shortcut icon" href="<?php echo img('favicon.ico') ?>" />
+        <?php 
+            if($og){echo $og;}
+        ?>
+        <link rel="shortcut icon" href="<?php echo img('favicon.ico') ?>" />       
 
 <?php echo auto_discovery_link_tag(); ?>
 

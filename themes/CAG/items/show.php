@@ -1,4 +1,11 @@
-<?php head(array('title' => item('Dublin Core', 'Title'), 'bodyid'=>'items','bodyclass' => 'show')); ?>
+<!-- Open Graph Meta Tags for Facebook and LinkedIn Sharing !-->
+<?php if (digitool_get_thumb_url(get_current_item())) : 
+    $og="<meta property='og:image' content='".digitool_get_thumb_url(get_current_item())."'/>";
+    
+endif; ?>
+
+<!-- End Open Graph Meta Tags !-->
+<?php head(array('title' => item('Dublin Core', 'Title'), 'bodyid'=>'items','bodyclass' => 'show','og'=>$og)); ?>
 
 
 <div id="primary">
@@ -137,19 +144,19 @@ if(item_has_type('Concept')){?>
     <br>
 
     <!-- The following returns all of the files associated with an item. -->
-		<?php if(item_has_files()||digitool_item_has_digitool_url(get_current_item())){?>
+        <?php if(item_has_files()||digitool_item_has_digitool_url(get_current_item())){?>
 
-			<div id="itemfiles" class="element">
-				<?php if(item_has_files()){ ?>
-		   		<div class="element-text"><?php echo display_files_for_item(); ?></div>
-				<?php } ?>
-				<?php if (digitool_item_has_digitool_url(get_current_item())){?>
-			 		<div class="element-text"> <?php //echo digitool_get_thumb(get_current_item(),false,true,500);?>
-						<?php echo digitool_simple_gallery($item,500);?>
-					</div>
-				<?php } ?>
-		</div>
-		<?php } ?>
+                <div id="itemfiles" class="element">
+                        <?php if(item_has_files()){ ?>
+                        <div class="element-text"><?php echo display_files_for_item(); ?></div>
+                        <?php } ?>
+                        <?php if (digitool_item_has_digitool_url(get_current_item())){?>
+                                <div class="element-text"> <?php //echo digitool_get_thumb(get_current_item(),false,true,500);?>
+                                        <?php //echo digitool_simple_gallery($item,500);?>
+                                </div>
+                        <?php } ?>
+        </div>
+        <?php } ?>
 
 	<div class="clearfix"></div>
     <?php if(item('Dublin Core','Identifier') != ""){?>

@@ -230,6 +230,22 @@ function digitool_admin_show_item_map($item)
 
 
 /**
+* Shows the digitool urls on the admin show page in the secondary column
+* @param Item $item
+* @return void
+**/
+function digitool_get_thumb_url($item){
+    $url = get_db()->getTable('DigitoolUrl')->findDigitoolUrlByItem($item, true);
+   
+    if(!empty($url)){
+        return 'http://resolver.lias.be/get_pid?stream&usagetype=THUMBNAIL&pid='.$url->pid;
+    }else{
+        return false;
+    }
+}
+
+
+/**
 * Shows an item's digitool url thumbnails
 * @param Item $item, boolean $fiondOnlyOne, int $width,int $height
 * @return html of the thumbnails
@@ -372,13 +388,13 @@ function digitool_get_view($item, $findOnlyOne = false,$width="500",$height="100
 	if(!empty($url)){
 		if($findOnlyOne){
 			$view = 'http://resolver.lias.be/get_pid?stream&usagetype=VIEW_MAIN,VIEW&pid='.$url->pid;
-			return '<img src="'.$view.'" width="'.$width.'" height="'.$height.'" /><br><br>';
+			return '<img src="'.$view.'" width="'.$width.'" height="'.$height.'" />';
 		}
 		//if more then one thumbnail was found
 		else{
 			foreach($url as $u){
 				$view = 'http://resolver.lias.be/get_pid?stream&usagetype=VIEW_MAIN,VIEW&pid='.$u->pid;
-				$html.='<img src="'.$view.'" width="'.$width.'" height="'.$height.'" /><br><br><br><br>';
+				$html.='<img src="'.$view.'" width="'.$width.'" height="'.$height.'" />';
 			}
 			return $html;
 		}
