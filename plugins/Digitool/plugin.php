@@ -503,7 +503,7 @@ function digitool_resize_dimensions($goal_width,$goal_height,$image) {
     $curl->setproxy(get_option(digitool_proxy));
     $imageString = $curl->get($image);
     
-    var_dump($imageString);die();
+    var_dump($imageString);
     $new_image = ImageCreateFromString($imageString);
     imagejpeg($new_image, "temp.jpg",100);
     
