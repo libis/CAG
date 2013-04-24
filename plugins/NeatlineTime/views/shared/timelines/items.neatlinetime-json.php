@@ -2,13 +2,11 @@
 /**
  * The shared neatlinetime-json browse view for Items
  */
-$items = get_items_for_loop();
-
 $neatlineTimeEvents = array();
 
 while (loop_items()) {
     $itemTitle = neatlinetime_get_item_text('item_title');
-    $itemLink = abs_item_uri();
+    $itemLink = item_uri();
     $itemDescription = item('Dublin Core', 'Description',array('snippet' => 200));
 
     
@@ -16,7 +14,7 @@ while (loop_items()) {
     //$itemDates = item('Dublin Core', 'Date','all');
     $neatlineTimeEvent['start'] = '2012-01-01';
     $neatlineTimeEvent['title'] = $itemTitle;
-   $neatlineTimeEvent['link'] = $itemLink;
+    $neatlineTimeEvent['link'] = $itemLink;
     $neatlineTimeEvent['classname'] = neatlinetime_item_class();
     $neatlineTimeEvent['description'] = $itemDescription;
     $neatlineTimeEvents[] = $neatlineTimeEvent;

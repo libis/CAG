@@ -1,4 +1,4 @@
-<?php head(array('title' => html_escape('Summary of ' . exhibit('title')),'bodyid'=>'exhibit','bodyclass'=>'summary')); ?>
+<?php head(array('title' => html_escape(exhibit('title')),'bodyid'=>'exhibit','bodyclass'=>'summary')); ?>
 <div id="primary">
 <div id="breadcrumb">
     <ul>
