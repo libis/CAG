@@ -16,7 +16,7 @@
 <div id="primary" class="solr_results results">
                   
     <div class="topresults">
-        <div class="resultCount"><?php echo __('%s resulaten', $results->response->numFound); ?></div>
+        <div class="resultCount"><?php echo __('%s resultaten', $results->response->numFound); ?></div>
         <?php echo pagination_links(array('partial_file' => 'common/pagination.php','per_page'=>$per_page)); ?> 
         
         <div class="resultsPerPage">

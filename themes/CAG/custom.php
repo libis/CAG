@@ -846,4 +846,39 @@ function libis_get_simple_page_three(){
     }
     return $navLinks;
 }
+
+/**
+ * Output a tag string given an Item, Exhibit, or a set of tags. -> AANGEPAST VOOR FLANDRICA
+ *
+ * @internal Any record that has the Taggable module can be passed to this function *
+ * @param string|null $link The URL to use for links to the tags (if null, tags aren't linked) *
+ * @return string HTML
+ */
+function Libis_tag_string($recordOrTags = null, $link=null)
+{
+	if (!$recordOrTags) {
+		$recordOrTags = array();
+	}
+
+	if ($recordOrTags instanceof Omeka_Record) {
+		$tags = $recordOrTags->Tags;
+	} else {
+		$tags = $recordOrTags;
+	}
+
+	$tagString = '';
+	if (!empty($tags)) {
+		$tagStrings = array();
+		foreach ($tags as $key=>$tag) {
+			if (!$link) {
+				$tagStrings[$key] = html_escape($tag['name']);
+			} else {
+				$tagStrings[$key] = "<a href='" . html_escape($link.urlencode('"'.$tag['name'].'"')) . "' rel='tag'>".html_escape($tag['name'])."</a>, ";
+			}
+		}
+		$tagString = join("",$tagStrings);
+                $tagString = substr_replace($tagString ,"",-2);
+	}
+	return $tagString;
+}
 ?>

@@ -187,7 +187,12 @@ if(item_has_type('Concept')){?>
 	<?php if (item_has_tags()): ?>
 	<div id="item-tags" class="element">
 		<h3>Trefwoorden</h3>
-		<div class="element-text"><?php echo item_tags_as_string(); ?></div>
+		<div class="element-text">
+                <?php
+                    $tags = get_tags(array('record' => $item), 20);
+                    natcasesort($tags);
+                    echo Libis_tag_string($tags,uri('solr-search/results/?style=gallery&solrfacet=tag:'));
+                ?></div>
 	</div>
 	<?php endif;?>
 
