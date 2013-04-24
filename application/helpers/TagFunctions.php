@@ -153,7 +153,7 @@ function tag_cloud($recordOrTags = null, $link = null, $maxClasses = 9)
         $class = str_repeat('v', $size) . ($size ? '-' : '') . 'popular';
         $html .= '<li class="' . $class . '">';
         if ($link) {
-            $html .= '<a href="' . html_escape($link . '?tags=' . urlencode($tag['name'])) . '">';
+            $html .= '<a href="' . html_escape($link .'%22'. urlencode($tag['name'])) .'%22">';
         }
         $html .= html_escape($tag['name']);
         if ($link) {
