@@ -15,7 +15,7 @@
         <meta name="description" content="<?php echo settings('description'); ?>" />
         
         <meta property='og:title' content='<?php echo $title;?>'/>
-        <meta property='og:url' content='<?php echo 'http://www.hetvirtueleland.be/cag_test/items/show/34753/';?>'/>
+        <meta property='og:url' content='<?php echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];?>'/>
         <meta property='og:description' content=''/>    
         <?php 
             if($og){echo $og;}
