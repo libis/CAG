@@ -119,6 +119,7 @@ if(item_has_type('Concept')){?>
             ?>
             </p></span>
         <?php } ?>
+            <?php echo plugin_append_to_items_show(); ?>
 </div>
 
 
@@ -146,16 +147,16 @@ if(item_has_type('Concept')){?>
     <!-- The following returns all of the files associated with an item. -->
         <?php if(item_has_files()||digitool_item_has_digitool_url(get_current_item())){?>
 
-                <div id="itemfiles" class="element">
-                        <?php if(item_has_files()){ ?>
-                        <div class="element-text"><?php echo display_files_for_item(); ?></div>
-                        <?php } ?>
-                        <?php if (digitool_item_has_digitool_url(get_current_item())){?>
-                                <div class="element-text"> <?php //echo digitool_get_thumb(get_current_item(),false,true,500);?>
-                                        <?php //echo digitool_simple_gallery($item,500);?>
-                                </div>
-                        <?php } ?>
-        </div>
+            <div id="itemfiles" class="element">
+                <?php if(item_has_files()){ ?>
+                <div class="element-text"><?php echo display_files_for_item(); ?></div>
+                <?php } ?>
+                <?php if (digitool_item_has_digitool_url(get_current_item())){?>
+                        <div class="element-text"> <?php //echo digitool_get_thumb(get_current_item(),false,true,500);?>
+                                <?php echo digitool_simple_gallery($item,500);?>
+                        </div>
+                <?php } ?>
+            </div>
         <?php } ?>
 
 	<div class="clearfix"></div>

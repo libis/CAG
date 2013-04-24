@@ -29,5 +29,6 @@
 		</div>
 	<?php endwhile; ?>
 </div>
+<?php addThis_add(); ?>
 </div>
 <?php foot(); ?>
