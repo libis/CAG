@@ -50,34 +50,11 @@ OmekaMap.prototype = {
         
         bindHtml = bindHtml.replace(/(<([^>]+)>)/ig,"");
         bindHtml = bindHtml.replace(/ /g,'');
-        options.title = bindHtml;
+        //options.title = bindHtml;
+        options.snippet = bindHtml;
 
         var marker = new google.maps.Marker(options);              
-
-        if (bindHtml) {
-            /*google.maps.event.addListener(marker, 'click', function () {
-                bindHtml = bindHtml.replace(/(<([^>]+)>)/ig,"");
-                bindHtml = bindHtml.replace(/ /g,'');
-                
-                var infowindow = null;
-                var request = jQuery.ajax(
-                    {
-                        url: '/items/map/',
-                        type: 'POST',                        
-                        data: {id:bindHtml},
-                        async: false,                       
-                        success: function(data){
-                            var result = jQuery(data).find('.mapsInfoWindow').html();
-                                infowindow = new google.maps.InfoWindow({
-                                content: result
-                            });
-                            infowindow.open(marker.getMap(), marker);
-                        }
-                    }
-                );
-                                             
-            });*/
-        }
+        
         //for clusterer
         this.mc.addMarker(marker);
         //spider
@@ -92,8 +69,7 @@ OmekaMap.prototype = {
             zoom: this.center.zoomLevel,
             streetViewControl: false,
             center: new google.maps.LatLng(this.center.latitude, this.center.longitude),
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            
+            mapTypeId: google.maps.MapTypeId.ROADMAP,            
             navigationControl: true,
             mapTypeControl: true
         };
@@ -142,7 +118,7 @@ OmekaMap.prototype = {
                     {
                         url: '/items/map/',
                         type: 'POST',                        
-                        data: {id:marker.getTitle()},
+                        data: {id:marker.snippet},
                         async: false,                       
                         success: function(data){
                             var result = jQuery(data).find('.mapsInfoWindow').html();
