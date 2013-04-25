@@ -142,7 +142,7 @@ if(item_has_type('Concept')){?>
            		);
             ?>
 	</ul>
-    <br>
+    
 
     <!-- The following returns all of the files associated with an item. -->
         <?php if(item_has_files()||digitool_item_has_digitool_url(get_current_item())){?>
