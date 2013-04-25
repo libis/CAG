@@ -519,9 +519,9 @@ function digitool_resize_dimensions($goal_width,$goal_height,$imageurl) {
 
     $vo_http_response = $vo_http_client->request();
     $image = $vo_http_response->getBody();
-    var_dump($image);    
+    //var_dump($image);    
     
-    $new_image = ImageCreateFromString($raw);
+    $new_image = imageCreateFromString($image);
     imagejpeg($new_image, "temp.jpg",100);
     
     // Get new dimensions
