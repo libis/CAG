@@ -350,31 +350,38 @@ function digitool_get_thumb_for_browse($item, $width="500",$class="",$alt=""){
 /*
  * Creates a simple gallery view for the items/show page
  * */
-function digitool_simple_gallery($item,$size=500){
+function digitool_simple_gallery($item,$size=500,$type='object'){
 
 	$i=0;
 	$url = get_db()->getTable('DigitoolUrl')->findDigitoolUrlByItem($item, false);
 	if(sizeof($url)==1){
 		$thumb = get_option('digitool_thumb').$url[0]->pid;
-		$digi = get_option('digitool_view').$url[0]->pid;
+		$link = get_option('digitool_view').$url[0]->pid;
 
                 $resize = digitool_resize_dimensions($size,$size,$thumb);
-		$html.="<div id='image'><a href='".$digi."'><img height='".$resize['height']."' width='".$resize['width']."' src='".$thumb."' /></a></div>";
+		$html.="<div id='image'><a href='".$link."'><img height='".$resize['height']."' width='".$resize['width']."' src='".$thumb."' /></a></div>";
 
 		return $html;
 	}else{
 		$html .= "<div id='gallery'>";
 		foreach($url as $u){
 			$thumb = get_option('digitool_thumb').$u->pid;
-			$digi = get_option('digitool_view').$u->pid;
+			$link = get_option('digitool_view').$u->pid;
+                        if($type='concept'){
+                            $altItem_id = digitool_find_items_with_same_pid(null,$u->pid);
+                            $altItem = get_item_by_id($altItem_id);
+                            $link = item_uri('show',$altItem);
+                        }
                         $resize = digitool_resize_dimensions($size,$size,$thumb);
+                        
+                        
 			if($i==0){
-				$html.="<div id='gallery-image'><a href='".$digi."'><img height='".$resize['height']."' width='".$resize['width']."' src='".$thumb."'/></a></div>";
-				$html.="<div id='gallery-thumbnails' style='height: 400px;-moz-column-width: 70px;
+                            $html.="<div id='gallery-image'><a href='".$link."'><img height='".$resize['height']."' width='".$resize['width']."' src='".$thumb."'/></a></div>";
+                            $html.="<div id='gallery-thumbnails' style='height: 400px;-moz-column-width: 70px;
  -moz-column-gap: 0px;column-width: 70px;'>";
 			}
 			$width = 50;
-			$html.= "<a href='#' rel='".$thumb."' name='".$digi."' class='image'><img src='".$thumb."' class='thumb' width='".$width."' border='0'/></a>";
+			$html.= "<a href='#' rel='".$thumb."' name='".$link."' class='image'><img src='".$thumb."' class='thumb' width='".$width."' border='0'/></a>";
                         
 			$i++;
 		}
@@ -470,16 +477,17 @@ function digitool_thumbnail($item,$fileFirst = true, $size = "150",$class="",$al
 	return false;
 }
 
-function digitool_find_items_with_same_pid($item){
+function digitool_find_items_with_same_pid($item=null,$pid=null){
 
 	$db=get_db();
-	$url = $db->getTable('DigitoolUrl')->findDigitoolUrlByItem($item, true);
-
+        if($pid == null){
+            $url = $db->getTable('DigitoolUrl')->findDigitoolUrlByItem($item, true);
+            $pid = $url->pid;
+        }
 	//echo $url->pid;
-
 	$select = $db->query("SELECT item_id
 		FROM omeka_digitool_urls
-		WHERE pid = '".$url->pid."'
+		WHERE pid = '".$pid."'
 		ORDER BY item_id ASC
 	");
 
