@@ -499,9 +499,11 @@ function digitool_find_items_with_same_pid($item){
 // Calculates restricted dimensions with a maximum of $goal_width by $goal_height
 function digitool_resize_dimensions($goal_width,$goal_height,$image) {
     //user CurlHelper to get image
+    echo $image.'<br>';
     $curl = new cURL();
     $curl->setproxy(get_option('digitool_proxy'));
     $imageString = $curl->get($image);
+    echo $curl->error;
     
     var_dump($imageString);
     $new_image = ImageCreateFromString($imageString);
