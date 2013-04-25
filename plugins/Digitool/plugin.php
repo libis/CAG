@@ -525,10 +525,9 @@ function digitool_resize_dimensions($goal_width,$goal_height,$imageurl) {
     //imagejpeg($new_image, "temp.jpg",100);
     
     // Get new dimensions
-    list($width, $height) = getimagesize($new_image);
+    $width = imagesx($new_image);
+    $height = imagesy($new_image);
         
-    $return = array('width' => $width, 'height' => $height);
-
     // If the ratio > goal ratio and the width > goal width resize down to goal width
     if ($width/$height > $goal_width/$goal_height && $width > $goal_width) {
         $return['width'] = $goal_width;
