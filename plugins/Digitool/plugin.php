@@ -498,36 +498,32 @@ function digitool_find_items_with_same_pid($item){
 
 // Calculates restricted dimensions with a maximum of $goal_width by $goal_height
 function digitool_resize_dimensions($goal_width,$goal_height,$imageurl) {
-    //user CurlHelper to get image
-    echo $image.'<br>';
-    /*$curl = new cURL();
-    $curl->setproxy(get_option('digitool_proxy'));
-    $string = $curl->get($image);
-    
-    list($header, $image) = explode("\r\n\r\n", $string, 2);
-    
-     * 
-     */
-    $vo_http_client = new Zend_Http_Client();
-    $config = array(
-                    'adapter'    => 'Zend_Http_Client_Adapter_Proxy',
-                    'proxy_host' => get_option('digitool_proxy'),
-                    'proxy_port' => 8080
-    );
-    $vo_http_client->setConfig($config);
-    $vo_http_client->setUri($imageurl);
+    //using this because curl didn't work
+    if($_SERVER['REMOTE_ADDR'] != '127.0.0.1'){
+        $vo_http_client = new Zend_Http_Client();
+        $config = array(
+                        'adapter'    => 'Zend_Http_Client_Adapter_Proxy',
+                        'proxy_host' => get_option('digitool_proxy'),
+                        'proxy_port' => 8080
+        );
+        $vo_http_client->setConfig($config);
+        $vo_http_client->setUri($imageurl);
 
-    $vo_http_response = $vo_http_client->request();
-    $image = $vo_http_response->getBody();
-    //echo($image);    
-    
-    $new_image = imageCreateFromString($image);
-    //imagejpeg($new_image, "temp.jpg",100);
-    
-    // Get new dimensions
-    $width = imagesx($new_image);
-    $height = imagesy($new_image);
+        $vo_http_response = $vo_http_client->request();
+        $image = $vo_http_response->getBody();
+        //echo($image);    
+
+        $new_image = imageCreateFromString($image);
         
+        // Get new dimensions
+        $width = imagesx($new_image);
+        $height = imagesy($new_image);
+    }else{
+        $size = getimagesize($imageurl);
+        //var_dump($size);
+        $width = $size[0];
+        $height = $size[1];
+    }    
     // If the ratio > goal ratio and the width > goal width resize down to goal width
     if ($width/$height > $goal_width/$goal_height && $width > $goal_width) {
         $return['width'] = $goal_width;
@@ -538,7 +534,7 @@ function digitool_resize_dimensions($goal_width,$goal_height,$imageurl) {
         $return['width'] = $goal_height/$height * $width;
         $return['height'] = $goal_height;
     }
-
+    
     return $return;
 }
 
