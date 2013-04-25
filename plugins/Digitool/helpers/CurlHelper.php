@@ -36,8 +36,8 @@ class cURL {
 		if ( isset($this->userpw) ) curl_setopt($process, CURLOPT_USERPWD, $this->userpw );
 		if ( isset($this->port) ) curl_setopt($process, CURLOPT_PORT,$this->port);		
 		curl_setopt($process, CURLOPT_HEADER, 0);
-		curl_setopt($process,CURLOPT_ENCODING , $this->compression);
-		curl_setopt($process, CURLOPT_TIMEOUT, 30);
+		//curl_setopt($process,CURLOPT_ENCODING , $this->compression);
+		//curl_setopt($process, CURLOPT_TIMEOUT, 30);
 		if ($this->proxy) curl_setopt($process, CURLOPT_PROXY, $this->proxy);		
 		if ($this->proxy) curl_setopt($process,CURLOPT_PROXYPORT, 8080); 
 //		if ($this->proxy) curl_setopt($process, CURLOPT_HTTPPROXYTUNNEL, 1);
