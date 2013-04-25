@@ -1083,8 +1083,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini{
 .resultCount {    
     color: #07614E;
     font-weight:bold;
-    font-size: 18px;
-    border-right:1px solid #CACACA;
+    font-size: 18px;    
     width: 145px;    
 }
 
@@ -1104,6 +1103,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini{
     width:250px;
     color:#000;
     margin-top:1px;
+    border-left:1px solid #CACACA;
 }
 
 .listNav li {
