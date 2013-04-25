@@ -44,7 +44,8 @@ while (loop_items()) {
                 $neatlineTimeEvent['title'] = $itemTitle;
                 $neatlineTimeEvent['link'] = $itemLink;
                 $neatlineTimeEvent['classname'] = neatlinetime_item_class();
-
+                $neatlineTimeEvent['description'] = $itemDescription;
+                $neatlineTimeEvents[] = $neatlineTimeEvent;
                 //image - Joris
                 /*if(digitool_item_has_digitool_url(get_current_item())){
                 	$imgUrl = digitool_get_thumb_url(get_current_item());
@@ -62,11 +63,7 @@ while (loop_items()) {
                 $neatlineTimeEvents[] = $neatlineTimeEvent;
                  * 
                  */
-            }
-         
-            $neatlineTimeEvent['description'] = $itemDescription;
-            $neatlineTimeEvents[] = $neatlineTimeEvent;
-            
+            }           
         }
          
             
