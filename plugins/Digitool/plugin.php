@@ -508,42 +508,18 @@ function digitool_resize_dimensions($goal_width,$goal_height,$image) {
     
      * 
      */
-    $headers[] = 'Accept: text/html,text/xhtml+xml,text/xml';
-	$headers[] = 'Connection: Keep-Alive';
-	$headers[] = 'Content-type: text/xml;charset=UTF-8';
-	$user_agent = 'Mozilla/5.0 (Windows NT 6.1; rv:10.0) Gecko/20100101 Firefox/10.0';
+    $vo_http_client = new Zend_Http_Client();
+    $config = array(
+                    'adapter'    => 'Zend_Http_Client_Adapter_Proxy',
+                    'proxy_host' => get_option('digitool_proxy'),
+                    'proxy_port' => 8080
+    );
+    $vo_http_client->setConfig($config);
+    $vo_http_client->setUri($imagePath);
 
-
-	$ch = curl_init($image);
-
-	//set options
-	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-	curl_setopt($ch, CURLOPT_USERAGENT, $user_agent);
-
-	curl_setopt($ch, CURLOPT_HEADER, 1);
-
-	curl_setopt($ch, CURLOPT_PROXY,get_option('digitool_proxy'));        
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
-
-	//get data and close connection
-        header("Content-Type: image/jpeg");
-	$data = curl_exec($ch);
-         var_dump($data);
-         echo curl_error($ch);
-	// Sam: status toegevoegd voor geen foutmeldingen 
-	$status = curl_getinfo($ch,CURLINFO_HTTP_CODE);
-	if($status ==200)
-	{
-		
-               
-                die(curl_error($ch));
-		curl_close($ch);
-		
-	}
-	//die(curl_error($ch));
-	curl_close($ch);
-        
+    $vo_http_response = $vo_http_client->request();
+    $image = $vo_http_response->getBody();
+    var_dump($image);    
     
     $new_image = ImageCreateFromString($raw);
     imagejpeg($new_image, "temp.jpg",100);
