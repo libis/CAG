@@ -500,13 +500,22 @@ function digitool_find_items_with_same_pid($item){
 function digitool_resize_dimensions($goal_width,$goal_height,$image) {
     //user CurlHelper to get image
     echo $image.'<br>';
-    $curl = new cURL();
+    /*$curl = new cURL();
     $curl->setproxy(get_option('digitool_proxy'));
     $string = $curl->get($image);
-    //echo $curl->error();
+    
     list($header, $image) = explode("\r\n\r\n", $string, 2);
-    var_dump($image);
-    $new_image = ImageCreateFromString($image);
+    
+     * 
+     */
+    $ch = curl_init (,$image);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
+    $raw=curl_exec($ch);
+    curl_close ($ch);
+    var_dump($raw);
+    $new_image = ImageCreateFromString($raw);
     imagejpeg($new_image, "temp.jpg",100);
     
     // Get new dimensions
