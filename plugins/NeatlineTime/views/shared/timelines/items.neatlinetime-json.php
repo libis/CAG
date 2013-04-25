@@ -35,11 +35,11 @@ while (loop_items()) {
            
 
             if ($dateArray[0]){
-                $neatlineTimeEvent['start'] = '2012-01-01';//$dateArray[0];
+                $neatlineTimeEvent['start'] = $dateArray[0];//$dateArray[0];
 
-                if (count($dateArray) == 2) {
+                //if (count($dateArray) == 2) {
                     //   $neatlineTimeEvent['end'] = $dateArray[1];
-                }
+                //}
                   
                 $neatlineTimeEvent['title'] = $itemTitle;
                 $neatlineTimeEvent['link'] = $itemLink;
