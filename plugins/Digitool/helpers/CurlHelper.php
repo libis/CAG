@@ -29,13 +29,15 @@ class cURL {
 		$this->user_agent = $user_agent;
 	}	
 
-	function get($url) {
-		$process = curl_init($url);
+	function get() {
+		$process = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($process, CURLOPT_HTTPHEADER, $this->headers);
 		curl_setopt($process, CURLOPT_USERAGENT, $this->user_agent);
 		if ( isset($this->userpw) ) curl_setopt($process, CURLOPT_USERPWD, $this->userpw );
 		if ( isset($this->port) ) curl_setopt($process, CURLOPT_PORT,$this->port);		
-		curl_setopt($process, CURLOPT_HEADER, 0);
+		curl_setopt($process, CURLOPT_HEADER, 1);
+                curl_setopt($process, CURLOPT_BINARYTRANSFER, 1);
 		//curl_setopt($process,CURLOPT_ENCODING , $this->compression);
 		//curl_setopt($process, CURLOPT_TIMEOUT, 30);
 		if ($this->proxy) curl_setopt($process, CURLOPT_PROXY, $this->proxy);		
