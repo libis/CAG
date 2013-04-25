@@ -497,7 +497,7 @@ function digitool_find_items_with_same_pid($item){
 }
 
 // Calculates restricted dimensions with a maximum of $goal_width by $goal_height
-function digitool_resize_dimensions($goal_width,$goal_height,$image) {
+function digitool_resize_dimensions($goal_width,$goal_height,$imageurl) {
     //user CurlHelper to get image
     echo $image.'<br>';
     /*$curl = new cURL();
@@ -515,7 +515,7 @@ function digitool_resize_dimensions($goal_width,$goal_height,$image) {
                     'proxy_port' => 8080
     );
     $vo_http_client->setConfig($config);
-    $vo_http_client->setUri($imagePath);
+    $vo_http_client->setUri($imageurl);
 
     $vo_http_response = $vo_http_client->request();
     $image = $vo_http_response->getBody();
