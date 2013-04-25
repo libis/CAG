@@ -22,13 +22,13 @@ while (loop_items()) {
             $neatlineTimeEvent = array();
             $itemDate = preg_replace("/[^0-9]/","", $itemDate);
             if(strlen($itemDate)==4){
-            	$itemDate = "January 01 ".$itemDate." 00:00:00 GMT-0600";
+            	$itemDate = $itemDate."-01-01";
             }
             else{
             	if(strlen($itemDate)==8){
             		$first_half = substr($itemDate,0,4);
             		$second_half = substr($itemDate,4);
-            		$itemDate = "January 01 ".$first_half." 00:00:00 GMT-0600/January 01 ".$second_half." 00:00:00 GMT-0600";
+            		$itemDate = $first_half."-01-01/".$second_half."-01-01";
             	}
             } 
             $dateArray = explode('/', $itemDate);
@@ -51,29 +51,21 @@ while (loop_items()) {
                 	$imgUrl = digitool_get_thumb_url(get_current_item());
                 }
                    
-                $neatlineTimeEvent['image'] = $imgUrl;
-                 
-               
+                $neatlineTimeEvent['image'] = $imgUrl;              
 
                 if ($fileUrl) {
                     $neatlineTimeEvent['image'] = $fileUrl;
-                }
-                
-                $neatlineTimeEvent['description'] = $itemDescription;
-                $neatlineTimeEvents[] = $neatlineTimeEvent;
-                 * 
-                 */
+                }                
+                 
+                */
             }           
-        }
-         
-            
+        }            
     }
 }
 
 $neatlineTimeArray = array();
 $neatlineTimeArray['dateTimeFormat'] = "iso8601";
 $neatlineTimeArray['events'] = $neatlineTimeEvents;
-
 $neatlinetimeJson = json_encode($neatlineTimeArray);
 
 echo $neatlinetimeJson;
