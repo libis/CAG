@@ -508,14 +508,42 @@ function digitool_resize_dimensions($goal_width,$goal_height,$image) {
     
      * 
      */
-    $ch = curl_init ($image);
-    curl_setopt($ch, CURLOPT_HEADER, 0);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
-    curl_setopt($ch, CURLOPT_PROXY, get_option('digitool_proxy'));	
-    $raw=curl_exec($ch);
-    curl_close ($ch);
-    var_dump($raw);
+    $headers[] = 'Accept: text/html,text/xhtml+xml,text/xml';
+	$headers[] = 'Connection: Keep-Alive';
+	$headers[] = 'Content-type: text/xml;charset=UTF-8';
+	$user_agent = 'Mozilla/5.0 (Windows NT 6.1; rv:10.0) Gecko/20100101 Firefox/10.0';
+
+
+	$ch = curl_init($image);
+
+	//set options
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+	curl_setopt($ch, CURLOPT_USERAGENT, $user_agent);
+
+	curl_setopt($ch, CURLOPT_HEADER, 0);
+
+	curl_setopt($ch, CURLOPT_PROXY,get_option('digitool_proxy'));
+
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
+
+	//get data and close connection
+	$data = curl_exec($ch);
+         var_dump($data);
+	// Sam: status toegevoegd voor geen foutmeldingen 
+	$status = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+	if($status ==200)
+	{
+		
+               
+                die(curl_error($ch));
+		curl_close($ch);
+		
+	}
+	//die(curl_error($ch));
+	curl_close($ch);
+        
+    
     $new_image = ImageCreateFromString($raw);
     imagejpeg($new_image, "temp.jpg",100);
     
