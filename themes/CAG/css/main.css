@@ -307,15 +307,6 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
 	width:570px;
 }
 
-#gallery-image{
-
-}
-
-#itemfiles img{
-    max-width:400px;
-    max-height:400px;
-}
-
 #gallery-image img{
 	float:left;
 	max-width:500px;
