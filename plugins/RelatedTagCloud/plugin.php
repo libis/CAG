@@ -63,7 +63,7 @@ function relatedTagCloud_get($itemsBrowse,$size=50){
 
             if(empty($tags))
                     return " ";
-            $tags = tag_cloud($tags, uri('items/browse/'));
+            $tags = tag_cloud($tags, uri('solr-search/results/?style=gallery&solrfacet=tag:'));
             return $tags;
 	}
 }
