@@ -500,7 +500,7 @@ function digitool_find_items_with_same_pid($item){
 function digitool_resize_dimensions($goal_width,$goal_height,$image) {
     //user CurlHelper to get image
     $curl = new cURL();
-    $curl->setproxy(get_option(digitool_proxy));
+    $curl->setproxy(get_option('digitool_proxy'));
     $imageString = $curl->get($image);
     
     var_dump($imageString);
