@@ -508,10 +508,11 @@ function digitool_resize_dimensions($goal_width,$goal_height,$image) {
     
      * 
      */
-    $ch = curl_init (,$image);
+    $ch = curl_init ($image);
     curl_setopt($ch, CURLOPT_HEADER, 0);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
+    curl_setopt($ch, CURLOPT_PROXY, get_option('digitool_proxy'));	
     $raw=curl_exec($ch);
     curl_close ($ch);
     var_dump($raw);
