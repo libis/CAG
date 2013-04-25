@@ -520,15 +520,17 @@ function digitool_resize_dimensions($goal_width,$goal_height,$image) {
 	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 	curl_setopt($ch, CURLOPT_USERAGENT, $user_agent);
 
-	curl_setopt($ch, CURLOPT_HEADER, 0);
+	curl_setopt($ch, CURLOPT_HEADER, 1);
 
 	curl_setopt($ch, CURLOPT_PROXY,get_option('digitool_proxy'));        
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
 
 	//get data and close connection
+        header("Content-Type: image/jpeg");
 	$data = curl_exec($ch);
          var_dump($data);
+         echo curl_error($ch);
 	// Sam: status toegevoegd voor geen foutmeldingen 
 	$status = curl_getinfo($ch,CURLINFO_HTTP_CODE);
 	if($status ==200)
