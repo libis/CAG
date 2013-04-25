@@ -341,7 +341,7 @@ function digitool_get_thumb_for_browse($item, $width="500",$class="",$alt=""){
 	$url = get_db()->getTable('DigitoolUrl')->findDigitoolUrlByItem($item, $findOnlyOne);
 
 	if(!empty($url)){
-            $thumb = get_option('digitool_view').$url[0]->pid;
+            $thumb = get_option('digitool_thumb').$url[0]->pid;
             return '<img src="'.$thumb.'"  width="'.$width.'" class="'.$class.'" alt="'.item('Dublin Core','Title',array(),$item).'">';
         }
 
