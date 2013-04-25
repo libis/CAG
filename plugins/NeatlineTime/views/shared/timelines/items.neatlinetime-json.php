@@ -22,20 +22,22 @@ while (loop_items()) {
             $neatlineTimeEvent = array();
             $itemDate = preg_replace("/[^0-9]/","", $itemDate);
             if(strlen($itemDate)==4){
-            	$itemDate = $itemDate."-01-01";
+            	$date = $itemDate."-01-01";
             }
             else{
             	if(strlen($itemDate)==8){
             		$first_half = substr($itemDate,0,4);
             		$second_half = substr($itemDate,4);
             		$itemDate = $first_half."-01-01/".$second_half."-01-01";
+                        $dateArray = explode('/', $itemDate);
+                        $date = $dateArray[0];
             	}
             } 
-            $dateArray = explode('/', $itemDate);
+           
            
 
-            if ($dateArray[0]){
-                $neatlineTimeEvent['start'] = $dateArray[0];//$dateArray[0];
+            if ($date){
+                $neatlineTimeEvent['start'] = $date;//$dateArray[0];
 
                 //if (count($dateArray) == 2) {
                     //   $neatlineTimeEvent['end'] = $dateArray[1];
