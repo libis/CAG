@@ -41,7 +41,7 @@ class SolrSearch_ResultsController extends Omeka_Controller_Action
     	if(empty($session->style)){
     		$session = new Zend_Session_Namespace('style');
     		//$logger->log(print_r($session), Zend_Log::INFO);
-    		$session->perPage="5";    		
+    		$session->perPage="10";    		
     	}
 
     	//$session = Zend_Registry::get('session');
