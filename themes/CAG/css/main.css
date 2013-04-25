@@ -310,7 +310,7 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
 #gallery-image img{
 	float:left;
 	max-width:500px;
-	max-height:800px;
+	max-height:500px;
 	margin-bottom:20px;
 	padding-right:9px;
 	border-right:1px dashed #F8C400;

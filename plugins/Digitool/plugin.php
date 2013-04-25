@@ -375,7 +375,7 @@ function digitool_simple_gallery($item,$size=500){
 			}
 			$width = 50;
 			$html.= "<a href='#' rel='".$thumb."' name='".$digi."' class='image'><img src='".$thumb."' class='thumb' width='".$width."' border='0'/></a>";
-
+                        
 			$i++;
 		}
 		$html .= "</div></div>";

@@ -7,7 +7,7 @@
   $session = new Zend_Session_Namespace('style');
 
   $perPage = get_option('solr_search_rows');//$session->perPage;
-  echo $perPage;
+  
   //uitbreiding solr-geolocation
   $session->items = "";
   $session->locations= "";

@@ -37,6 +37,7 @@ if(item_has_type('Concept')){?>
         <?php } ?>
 
         <!-- The following returns all of the images associated with an item. -->
+        
         <?php if(item_has_files()||digitool_item_has_digitool_url(get_current_item())){?>
             <h4>Afbeeldingen</h4><br>
             <div id="itemfiles" class="element">
@@ -44,15 +45,17 @@ if(item_has_type('Concept')){?>
                 <div class="element-text"><?php echo display_files_for_item(); ?></div>
                 <?php } ?>
                 <?php if (digitool_item_has_digitool_url(get_current_item())){?>
-                        <?php
-                                $altItem_id = digitool_find_items_with_same_pid(get_current_item());
-                                $altItem = get_item_by_id($altItem_id);
-                        ?>
-                        <div class="element-text"><?php echo link_to_item(digitool_get_thumb(get_current_item(),false,false,400),array(),'show',$altItem);?></div>
+                     <?php
+                        $altItem_id = digitool_find_items_with_same_pid(get_current_item());
+                        $altItem = get_item_by_id($altItem_id);
+                    ?>
+                    <div class="element-text"> <?php //echo digitool_get_thumb(get_current_item(),false,true,500);?>
+                        <?php echo digitool_simple_gallery($item,500);?>
+                    </div>
                 <?php } ?>
             </div>
-        <?php } ?>
-
+        <?php } ?>    
+            <div class="clearfix"></div>    
         <?php if(item('Item Type Metadata','Algemene beschrijving')){?>
             <h4>Algemene Beschrijving</h4>
             <span class="werktuigblock"><p >
