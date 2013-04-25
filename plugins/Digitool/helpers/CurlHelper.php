@@ -31,7 +31,7 @@ class cURL {
 
 	function get() {
 		$process = curl_init();
-                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($process, CURLOPT_URL, $url);
 		curl_setopt($process, CURLOPT_HTTPHEADER, $this->headers);
 		curl_setopt($process, CURLOPT_USERAGENT, $this->user_agent);
 		if ( isset($this->userpw) ) curl_setopt($process, CURLOPT_USERPWD, $this->userpw );
