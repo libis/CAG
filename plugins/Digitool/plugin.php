@@ -332,7 +332,7 @@ function digitool_get_thumb_for_home($item){
         $thumb =  get_option('digitool_thumb').$url[0]->pid;
         $view =  get_option('digitool_view').$url[0]->pid;
 
-        return '<a href="'.item_uri("show",$item).'" target="_blank"><img src="'.$thumb.'" alt="'.item('Dublin Core','Title',array(),$item).'"></a>';
+        return '<a href="'.item_uri("show",$item).'" ><img src="'.$thumb.'" alt="'.item('Dublin Core','Title',array(),$item).'"></a>';
     }
 }
 
