@@ -629,7 +629,8 @@ p#simple-pages-breadcrumbs {
     cursor:default;    
 }
 
-#bronnen-nav-biblio a:hover{
+#bronnen-nav-biblio a:hover,#bronnen-nav-biblio a:focus{
+    color:#006666;
     text-decoration:none;
 }
 
