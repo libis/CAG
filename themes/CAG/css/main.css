@@ -1187,7 +1187,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini{
 }
 
 #solr_results .resultbody .textfields{
-    
+    margin-bottom:5px;
     overflow:hidden;
 }
 
