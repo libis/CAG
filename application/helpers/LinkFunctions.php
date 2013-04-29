@@ -39,7 +39,7 @@ function link_to($record, $action=null, $text=null, $props = array(), $queryPara
         $url = uri($urlOptions, $route, $queryParams, true);
     }
 
-    if (!$text) {
+    if ($text === null) {
         $text = __('View');
     }
 
@@ -374,7 +374,15 @@ function nav(array $links, $maxDepth = 0)
             $nav .= '">' . html_escape($text);
         } else {
             // If the uri is the current uri, then give it the 'current' class
-            $nav .= (is_current_uri($uri) ? ' current':'') . '">' . '<a href="' . html_escape($uri) . '">' . html_escape($text) . '</a>';
+            //joris hack
+                
+                if(substr(html_escape($text), -3) != '000'){
+                    $nav .= (is_current_uri($uri) ? ' current':'') . '">' . '<a href="' . html_escape($uri) . '">' . html_escape($text) . '</a>';
+                }else{
+                    $text = substr_replace(html_escape($text),"",-3);
+                    $nav .= (is_current_uri($uri) ? ' current':'') . '">' .html_escape($text);
+                }
+           //end hack     
         }
 
         // Display the subnavigation links if they exist and if the max depth has not been reached
