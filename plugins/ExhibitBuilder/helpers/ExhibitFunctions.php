@@ -477,9 +477,9 @@ function exhibit_builder_exhibit_display_item($displayFilesOptions = array(), $l
         $html = display_file($file, $displayFilesOptions, $fileWrapperClass);
     } else {
     	if(digitool_item_has_digitool_url($item))
-       	 	$html = link_to_item(digitool_get_thumb($item,true), array(), 'show', $item);
+       	 	$html = link_to_item(digitool_get_thumb($item,true,false,400), array(), 'show', $item);
         else
-        $html = link_to_item(digitool_get_thumb($item,true), array(), 'show', $item);
+        $html = link_to_item(digitool_get_thumb($item,true,false,400), array(), 'show', $item);
 
     }
 
