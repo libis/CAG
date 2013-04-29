@@ -72,9 +72,13 @@ function simple_pages_get_links_for_children_pages($parentId = null, $currentDep
         $subNavLinks = simple_pages_get_links_for_children_pages($page->id, $currentDepth + 1, $sort, $requiresIsPublished, $requiresIsAddToPublicNav);
         if (count($subNavLinks) > 0) {
             //hack voor biblio *joris
-            $content = simple_page('text');
-            if(!empty($content)){
+            
+            $content = $page->text;
+            
+            if($content==""){
                $title = $page->title."000";
+            }else{
+                $title = $page->title;
             }
             //end hack
             $subNavClass = 'subnav-' . ($currentDepth + 1);
