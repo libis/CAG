@@ -37,7 +37,7 @@
 		</div>
 	</div><!-- /.column -->
 	<div class="column contact">
-		Atrechtcollege<br/>
+		<p>Atrechtcollege<br/>
 		Naamsestraat 63<br/>
 		3000 Leuven<br />
 		Belgi&euml;<br/>
