@@ -8,7 +8,7 @@
         $navArray[__('Plugins')] = uri('plugins');
     }
     if (has_permission('Themes', 'browse')) {
-        $navArray[__('Themes')] = uri('themes/');
+        $navArray[__('Themes')] = uri('themes');
     }
     if (has_permission('Users','browse')) {
         $navArray[__('Users')] = uri('users');

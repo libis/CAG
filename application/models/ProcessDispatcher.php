@@ -26,7 +26,7 @@ class ProcessDispatcher
     static public function startProcess($className, $user = null, $args = null, $lastPhase = 'initializeRoutes')
     {
         $cliPath = self::getPHPCliPath();
-                
+               
         if (!$user) {
             $user = Omeka_Context::getInstance()->getCurrentUser();
         }
@@ -47,6 +47,7 @@ class ProcessDispatcher
         self::_fork($command);
         
         return $process;
+         
     }
 
     /**

@@ -77,6 +77,9 @@ Omeka.Items.changeItemType = function (changeItemTypeUrl, itemId) {
             success: function (response) {
                 var form = jQuery('#type-metadata-form');
                 form.hide();
+                form.find('textarea').each(function () {
+                    tinyMCE.execCommand('mceRemoveControl', true, this.id);
+                });
                 form.html(response);
                 form.trigger('omeka:elementformload');
                 form.slideDown(1000, function () {
@@ -320,6 +323,9 @@ Omeka.Items.elementFormRequest = function (fieldDiv, params, elementFormPartialU
         dataType: 'html',
         data: params,
         success: function (response) {
+            fieldDiv.find('textarea').each(function () {
+                tinyMCE.execCommand('mceRemoveControl', false, this.id);
+            });
             fieldDiv.html(response);
             fieldDiv.trigger('omeka:elementformload');
         }
@@ -329,17 +335,26 @@ Omeka.Items.elementFormRequest = function (fieldDiv, params, elementFormPartialU
 /**
  * Set up add/remove element buttons for ElementText inputs.
  *
+ * @param {Element} element The element to search at and below.
  * @param {string} elementFormPartialUrl AJAX URL for form inputs.
  * @param {string} itemId Current Item ID.
  */
-Omeka.Items.makeElementControls = function (elementFormPartialUrl, itemId) {
+Omeka.Items.makeElementControls = function (element, elementFormPartialUrl, itemId) {
     var addSelector = '.add-element';
     var removeSelector = '.remove-element';
     var fieldSelector = 'div.field';
     var inputBlockSelector = 'div.input-block';
+    var context = jQuery(element);
+    var fields;
+
+    if (context.is(fieldSelector)) {
+        fields = context;
+    } else {
+        fields = context.find(fieldSelector);
+    }
 
     // Show remove buttons for fields with 2 or more inputs.
-    jQuery('div.field').each(function () {
+    fields.each(function () {
         var removeButtons = jQuery(this).find(removeSelector);
         if (removeButtons.length > 1) {
             removeButtons.show();
@@ -347,7 +362,7 @@ Omeka.Items.makeElementControls = function (elementFormPartialUrl, itemId) {
     });
 
     // When an add button is clicked, make an AJAX request to add another input.
-    jQuery(addSelector).click(function (event) {
+    context.find(addSelector).click(function (event) {
         event.preventDefault();
         var fieldDiv = jQuery(this).parents(fieldSelector);
 
@@ -355,7 +370,7 @@ Omeka.Items.makeElementControls = function (elementFormPartialUrl, itemId) {
     });
 
     // When a remove button is clicked, remove that input from the form.
-    jQuery(removeSelector).click(function (event) {
+    context.find(removeSelector).click(function (event) {
         event.preventDefault();
         var removeButton = jQuery(this);
 
@@ -368,7 +383,11 @@ Omeka.Items.makeElementControls = function (elementFormPartialUrl, itemId) {
             return;
         }
 
-        removeButton.parents(inputBlockSelector).remove();
+        var inputBlock = removeButton.parents(inputBlockSelector);
+        inputBlock.find('textarea').each(function () {
+            tinyMCE.execCommand('mceRemoveControl', false, this.id);
+        });
+        inputBlock.remove();
 
         // Hide remove buttons for fields with one input.
         jQuery(fieldSelector).each(function () {
@@ -415,32 +434,29 @@ Omeka.Items.enableWysiwygCheckbox = function (checkbox) {
     var textarea = jQuery(checkbox).parents('.input-block').find('textarea');
     if (textarea.length) {
         var textareaId = textarea.attr('id');
-        if (checkbox.checked) {
-            textarea.addClass('html-editor');
-        }
-        // Whenever the checkbox is toggled, toggle the WYSIWYG editor.
-        jQuery(checkbox).click(function () {
+        var enableIfChecked = function () {
             if (checkbox.checked) {
                 tinyMCE.execCommand("mceAddControl", false, textareaId);
             } else {
                 tinyMCE.execCommand("mceRemoveControl", false, textareaId);
             }
-        });
+        };
+
+        enableIfChecked();
+
+        // Whenever the checkbox is toggled, toggle the WYSIWYG editor.
+        jQuery(checkbox).click(enableIfChecked);
     }
 };
 
 /**
  * Enable the WYSIWYG editor for "html-editor" fields on the form, and allow
  * checkboxes to create editors for more fields.
+ *
+ * @param {Element} element The element to search at and below.
  */
-Omeka.Items.enableWysiwyg = function () {
-    jQuery('div.inputs input[type="checkbox"]').each(function () {
+Omeka.Items.enableWysiwyg = function (element) {
+    jQuery(element).find('div.inputs input[type="checkbox"]').each(function () {
         Omeka.Items.enableWysiwygCheckbox(this);
-    });
-
-    Omeka.wysiwyg({
-        mode: "specific_textareas",
-        editor_selector: "html-editor",
-        forced_root_block: ""
     });
 };

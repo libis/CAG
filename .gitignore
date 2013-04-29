@@ -11,4 +11,7 @@
 /pathsTom.php
 /_notes/
 /Capfile
+!/application/helpers/LinkFunctions.php
+!/admin/
+!/application/
 /config/

@@ -18,23 +18,11 @@ class ItemRss2
     public function render(array $records)
     {
         $entries = array();
-        //aanpassing joris
-    	$items = recent_items(3);
-		
-		foreach ($items as $item) {
-			set_current_item($item);
-           	if(item_has_type("Still Image")){
-	            $entries[] = $this->itemToRss($item);
-			}
-            release_object($item);
-	    }
-
-		$exhibits = exhibit_builder_recent_exhibits($num = 3);
-
-		foreach($exhibits as $exhibit){
-			$entries[] = $this->exhibitToRss($exhibit);    
-		}
-        //einde aanpassing        
+        foreach ($records as $record) {
+            $entries[] = $this->itemToRss($record);
+            release_object($record);
+        }
+                
         $headers = $this->buildRSSHeaders();
         $headers['entries'] = $entries;
         $feed = Zend_Feed::importArray($headers, 'rss');
@@ -101,20 +89,5 @@ class ItemRss2
         }
 
         return $entry;        
-    }
-    
-    //aanpassing joris
-    protected function exhibitToRSS($exhibit){
-    
-    	$entry = array();
-    	// Title is a CDATA section, so no need for extra escaping.    
-    	$entry['title'] = strip_formatting($exhibit->title);    
-    	$entry['description'] = $exhibit->description;    	 
-    
-    	$entry['link'] = uri("exhibits/show/").$exhibit->slug;//xml_escape(link_to_exhibit($exhibit));
-        	     
-    	//$entry['lastUpdate'] = "";
-    
-    	return $entry;
     }
 }

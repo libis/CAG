@@ -854,3 +854,16 @@ body#login #footer {padding:18px; margin:0 auto;width: 414px;}
 
 * + html #footer {padding-bottom:18px;}
 }
+
+/* geolocation - Joris */
+
+.infoWindow{
+    width:250px;
+    overflow:hidden;
+}
+
+.infoWindow img{
+    float:left;
+    width:100px;
+    margin: 0 10px 5px 0;
+}

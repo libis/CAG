@@ -176,8 +176,8 @@ class ItemSearch
             FROM $db->Item i 
             INNER JOIN $db->ElementText etx ON etx.record_id = i.id
             INNER JOIN $db->RecordType rty ON rty.id = etx.record_type_id AND rty.name = 'Item'
-            WHERE MATCH (etx.text) AGAINST ($quotedTerms IN BOOLEAN MODE)";
-        // IN BOOLEAN MODE toegevoegd door Sam
+            WHERE MATCH (etx.text) AGAINST ($quotedTerms)";
+        
         return $query;
     }
     
