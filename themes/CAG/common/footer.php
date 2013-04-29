@@ -8,7 +8,7 @@
 						<h2>Website</h2>
 							<ul>
 							<li><a href="<?php echo uri('over/')?>">Over deze website</a></li>
-							<li><a href="mailto:Toon.toelen@icag.kuleuven.be">Technische problemen</a></li> <!-- link CAG-->
+							<li><a href="mailto:bert.woestenborghs@cagnet.be">Technische problemen</a></li> <!-- link CAG-->
 							<li><a href="<?php echo uri('copyright/');?>">Copyright en disclaimer</a></li>
 
 							<!-- <li><a href="<?php echo uri("sitemap/");?>">Sitemap</a></li> -->
