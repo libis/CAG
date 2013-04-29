@@ -625,23 +625,6 @@ p#simple-pages-breadcrumbs {
     padding: 5px 0 15px 0px;    
 }
 
-#bronnen-nav-biblio a{
-    cursor:default;    
-}
-
-#bronnen-nav-biblio a:hover,#bronnen-nav-biblio a:focus{
-    color:#006666;
-    text-decoration:none;
-}
-
-#bronnen-nav-biblio ul.subnav-2 a{
-    cursor:pointer;    
-}
-
-#bronnen-nav-biblio ul.subnav-2 a:hover{
-    text-decoration:underline;
-}
-
 #bronnen-nav-biblio ul.first{
     padding:0 0 15px 0;  
 }

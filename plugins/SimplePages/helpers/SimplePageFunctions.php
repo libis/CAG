@@ -66,11 +66,19 @@ function simple_pages_get_links_for_children_pages($parentId = null, $currentDep
         } else {
             $uri = uri($page->slug);
         }
-
+        
+         
+        
         $subNavLinks = simple_pages_get_links_for_children_pages($page->id, $currentDepth + 1, $sort, $requiresIsPublished, $requiresIsAddToPublicNav);
         if (count($subNavLinks) > 0) {
+            //hack voor biblio *joris
+            $content = simple_page('text');
+            if(!empty($content)){
+               $title = $page->title."000";
+            }
+            //end hack
             $subNavClass = 'subnav-' . ($currentDepth + 1);
-            $navLinks[$page->title] = array('uri' => $uri, 'subnav_attributes' => array('class' => $subNavClass), 'subnav_links' => $subNavLinks);
+            $navLinks[$title] = array('uri' => $uri, 'subnav_attributes' => array('class' => $subNavClass), 'subnav_links' => $subNavLinks);
         } else {
             $navLinks[$page->title] = $uri;
         }

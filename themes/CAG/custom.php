@@ -449,19 +449,12 @@ function Libis_get_simple_pages_nav($parentId = 0, $currentDepth = null, $sort =
 	}
 	//loop through all toplevel pages
 	while (loop_simple_pages()):
-    	//$html .="<li><a href='".uri(simple_page('slug'))."'>".simple_page('title')."</a></li>";
-    	//if menu item equal or is a child of current page display children
-    	if(simple_page('id') == $currentPage->id || simple_page('id') == $ancestorPage->id){
-    		//get links to child pages
-    		//echo simple_page('id');
-
-			$childPageLinks = simple_pages_get_links_for_children_pages($ancestorPage->id, null, $sort, $requiresIsPublished, $requiresIsAddToPublicNav);
-			//contruct a nav menu
-    		//$html .= "<ul class='second'>";
-        	$html .= nav($childPageLinks, $currentDepth);
-        	//$html .= "</ul>";
-
-    	}
+           
+            //if menu item equal or is a child of current page display children
+            if(simple_page('id') == $currentPage->id || simple_page('id') == $ancestorPage->id){
+                $childPageLinks = simple_pages_get_links_for_children_pages($ancestorPage->id, null, $sort, $requiresIsPublished, $requiresIsAddToPublicNav);
+                $html .= nav($childPageLinks, $currentDepth);
+            }
     endwhile;
 
     $html .="</ul>";
