@@ -11,6 +11,7 @@
   //uitbreiding solr-geolocation
   $session->items = "";
   $session->locations= "";
+  $session->from= ''; 
 ?>
 
 <div id="primary" class="solr_results results">
@@ -214,6 +215,7 @@
                 $locations = $locationsSolr;                
          }         
          $session->items= $itemids;
+         $session->from= 'solr';
          $session->locations= $locations;
     ?>
     

@@ -19,16 +19,23 @@
         //Zend_Session::start();
         $session = new Zend_Session_Namespace('style');
         $url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-        if (false !== strpos($url,'solr')) {
+        
+        if ($session->from == 'solr' || $session->from == 'show') {
             $locationSolr = array();        
             if($session->items){
                 $locations = $session->locations;
                 foreach($session->items as $id){
                     $item = get_item_by_id($id);
                     $items[] = $item;
-                    $loc = geolocation_get_location_for_item($item);
-                    if(!empty($loc)){
-                        $locationsSolr = $locationSolr + geolocation_get_location_for_item($item);   
+                    $locs = geolocation_get_location_for_item($item);
+                    if(!empty($locs)){
+                        if(sizeof($locs)>1){
+                            foreach($locs as $loc){
+                                $locationsSolr = $locationSolr + $loc; 
+                            }
+                        }else{
+                             $locationsSolr = $locationSolr + $locs;
+                        }    
                     }
                 }
 
@@ -37,8 +44,7 @@
                 set_items_for_loop($items);
             }
         }
-        
-                
+       
         while(loop_items()):
         $item = get_current_item();
         $locationR = $locations[$item->id];

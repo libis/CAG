@@ -200,6 +200,30 @@ if(item_has_type('Concept')){?>
 	<?php endif;?>
 
 	<?php echo plugin_append_to_items_show(); ?>
+        <?php 
+            $session = new Zend_Session_Namespace('style');
+            $session->from= '';    
+            $loc = geolocation_get_location_for_item(get_current_item(), false);
+            if(!empty($loc)){
+                if(sizeof($loc)>1){
+                    $center = $loc[0][$id];
+                }else{
+                    $center = $loc[$id];
+                }
+                $itemids[] = get_current_item()->id;
+                $session->items= $itemids;
+                $session->from= 'show';
+                $session->locations= geolocation_get_location_for_item(get_current_item(), false);
+                ?>
+                <div id="map-block" style="clear:both;">        
+                <?php echo geolocation_google_map('map-display', array('loadKml'=>true),$center);?>
+                </div><!-- end map_block -->
+                <?php
+            }        
+            
+           
+        ?>
+        
 	<br>
 	<?php
 		$nummer= item('Dublin Core','Identifier');

@@ -14,7 +14,7 @@ add_plugin_hook('define_acl', 'geolocation_define_acl');
 add_plugin_hook('define_routes', 'geolocation_add_routes');
 add_plugin_hook('after_save_form_item', 'geolocation_save_location');
 add_plugin_hook('admin_append_to_items_show_secondary', 'geolocation_admin_show_item_map');
-add_plugin_hook('public_append_to_items_show', 'geolocation_public_show_item_map');
+//add_plugin_hook('public_append_to_items_show', 'geolocation_public_show_item_map');
 add_plugin_hook('admin_append_to_advanced_search', 'geolocation_admin_append_to_advanced_search');
 add_plugin_hook('public_append_to_advanced_search', 'geolocation_public_append_to_advanced_search');
 add_plugin_hook('item_browse_sql', 'geolocation_item_browse_sql');
@@ -427,7 +427,7 @@ function geolocation_google_map_for_item($item = null, $width = '200px', $height
     }
 </style>
 <?php
-    $location = geolocation_get_location_for_item($item, true);
+    $location = geolocation_get_location_for_item($item, false);
     // Only set the center of the map if this item actually has a location
     // associated with it
     if ($location) {
@@ -444,10 +444,10 @@ function geolocation_google_map_for_item($item = null, $width = '200px', $height
         echo '<div id="' . $divId . '" class="map"></div>';
 ?>
         <script type="text/javascript">
-        //<![CDATA[
-            var <?php echo Inflector::variablize($divId); ?>OmekaMapSingle = new OmekaMapSingle(<?php echo js_escape($divId); ?>, <?php echo $center; ?>, <?php echo $options; ?>);
-        //]]>
-        </script>
+    //<![CDATA[
+        var <?php echo Inflector::variablize($divId); ?>OmekaMapBrowse = new OmekaMapBrowse(<?php echo js_escape($divId); ?>, <?php echo $center; ?>, <?php echo $options; ?>);
+    //]]>
+    </script>
 <?php
     } else {
 ?>
