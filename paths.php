@@ -180,7 +180,7 @@ function _define_web_root()
 $dir = trim(dirname($_SERVER['SCRIPT_NAME']), '\,/');
 
 /* Added by TomV. Evaluating the $_SERVER['SCRIPT_NAME'] is not sufficient if mod_rewrite is used the root .htaccess (dynamic virtual host) */
-$script_dir = explode('/',trim(dirname($_SERVER['SCRIPT_NAME']), '\,/'));
+/*$script_dir = explode('/',trim(dirname($_SERVER['SCRIPT_NAME']), '\,/'));
  $request_dir = explode('/',trim($_SERVER['REQUEST_URI'], '\,/'));
 
 $i = 0;
@@ -191,7 +191,7 @@ $dir .= $dirp."/";
 ++$i;
 }
 }
-$dir = rtrim($dir, '/');
+$dir = rtrim($dir, '/');*/
 /* End addatings of TomV */
 
 
