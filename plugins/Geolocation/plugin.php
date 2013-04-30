@@ -586,7 +586,7 @@ function geolocation_public_show_item_map($width = null, $height = null, $item =
     }
 
     if (!$height) {
-        $height = get_option('geolocation_item_map_height') ? get_option('geolocation_item_map_height') : '300px';
+        $height = get_option('geolocation_item_map_height') ? get_option('geolocation_item_map_height') : '400px';
     }
 
     if (!$item) {
