@@ -24,9 +24,7 @@ if(item_has_type('Concept')){?>
     
     <div id="concept">
         <!--<base target="_parent">
-        <h1 id="normal-title">Werktuigen - <?php echo (item('Dublin Core','Title'))?></h1>
-        -->    
-	    
+       	    
         <h4><?php echo ucfirst(item('Dublin Core','Title'));?></h4>
         <p><br><?php echo (item('Item Type Metadata','Scope'))?></p>
 
@@ -176,9 +174,13 @@ if(item_has_type('Concept')){?>
     <?php if(item('Dublin Core','Provenance') != ""){?>
    		<h3>Instelling:</h3><p><?php echo (item('Dublin Core','Provenance'));?></p>
     <?php } ?>
-    <?php if(item('Dublin Core','Title') != ""){?>
-   	 	<h3>Objectnaam:</h3><p><?php echo (item('Dublin Core','Title'));?></p>
+    <!-- moet objectnaam worden -->            
+    <?php if(item('Item Type Metadata','Objectnaam') != ""){?>
+   	 	<h3>Objectnaam:</h3><p><?php echo ucfirst(item('Item Type Metadata','Objectnaam'));?></p>
     <?php } ?>
+    <?php if(item('Dublin Core','Title') != ""){?>
+   	 	<h3>Titel:</h3><p><?php echo ucfirst(item('Dublin Core','Title'));?></p>
+    <?php } ?>            
 
     <?php if(item('Dublin Core','Date') != ""){?>
     	<h3>Datering:</h3><p><?php echo (item('Dublin Core','Date'));?></p>

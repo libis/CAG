@@ -52,7 +52,7 @@
 			endif;
 			$beelden.="</td><td><table><th width='120'></th><th></th>";
 			if(item('Dublin Core','Title'))
-			$beelden.="<tr><td><strong>Titel:</strong></td><td>".link_to_item(item('Dublin Core','Title'))."</td></tr>";
+			$beelden.="<tr><td><strong>Titel:</strong></td><td>".link_to_item(ucfirst(item('Dublin Core','Title')))."</td></tr>";
 			if(item('Dublin Core','Publisher'))
 			$beelden.="<tr><td><strong>Naam Instelling:</strong></td><td>".item('Dublin Core','Publisher')."</td></tr>";
 			if(item('Dublin Core','Identifier')){
