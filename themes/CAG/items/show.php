@@ -90,6 +90,7 @@ if(item_has_type('Concept')){?>
             <?php foreach($items as $item){?>           
                 <li>
                 <?php echo link_to_item(digitool_get_thumb_for_home($item),array(),'show',$item);?>
+                <span class="similar-title"><?php echo link_to_item(item('Dublin Core','Title',array(),$item),array(),'show',$item);?></span>
                 </li>
             <?php }; ?>
             </ul>

@@ -450,6 +450,19 @@ ul.uitgelicht-list li li {
     overflow:hidden;
 }
 
+.similar-title{
+    padding:0.3em;
+    background:#F5D96E;
+    text-transform:uppercase;
+    font-size:1.2em;
+    position:absolute;
+    top:10px;
+    left:-10px;
+    -moz-box-shadow:    1px 1px 2px 0 #999;
+    -webkit-box-shadow: 1px 1px 2px 0 #999;
+    box-shadow:         1px 1px 2px 0 #999;
+}
+
 #wegwijs {
 	width: 26%;
 	background-color: #f8c400;
