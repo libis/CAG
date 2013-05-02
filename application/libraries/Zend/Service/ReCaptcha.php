@@ -487,7 +487,16 @@ HTML;
                             'remoteip'   => $this->_ip,
                             'challenge'  => $challengeField,
                             'response'   => $responseField);
-
+        
+         // toegevoegd door Sam
+        $config = array(
+		'adapter'    => 'Zend_Http_Client_Adapter_Proxy',
+		'proxy_host' => 'icts-http-gw.cc.kuleuven.be',
+		'proxy_port' => 8080
+		);
+	$httpClient->setConfig($config);
+	// einde aanpassing door Sam
+        
         /* Make the POST and return the response */
         return $httpClient->setUri(self::VERIFY_SERVER)
                           ->setParameterPost($postParams)
