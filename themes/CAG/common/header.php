@@ -89,7 +89,7 @@
                                     <li><a href="<?php echo uri('beeldbank/'); ?>">Zoeken</a></li>
                                     <!--<li><a href="<?php echo uri('items/advanced-search/'); ?>">Geavanceerd Zoeken</a></li>-->
                                     <li><a href="<?php echo uri('items/map/'); ?>">Kaart</a></li>
-                                    <!-- <li><a href="<?php echo uri('beeldbank/tijdlijn/'); ?>">Tijdlijn</a></li>-->
+                                    <li><a href="<?php echo uri('/neatline-time/timelines/show/1'); ?>">Tijdlijn</a></li>
                                     <!--<li><a href="<?php echo uri('#'); ?>">Albums</a></li>-->
                                 </ul>
                             </li>
