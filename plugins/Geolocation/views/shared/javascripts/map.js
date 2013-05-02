@@ -112,11 +112,11 @@ OmekaMap.prototype = {
         this.oms.addListener('click', function(marker) {
             //bindHtml = bindHtml.replace(/(<([^>]+)>)/ig,"");
               //  bindHtml = bindHtml.replace(/ /g,'');
-                
+                //alert(document.location.hostname);
                 var infowindow = null;
                 var request = jQuery.ajax(
                     {
-                        url: '/items/map/',
+                        url: document.location,
                         type: 'POST',                        
                         data: {id:marker.snippet},
                         async: false,                       
