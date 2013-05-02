@@ -114,10 +114,17 @@ OmekaMap.prototype = {
               //  bindHtml = bindHtml.replace(/ /g,'');
                 //alert(document.location.hostname);
                 var infowindow = null;
-                //alert(window.location.hostname);
+                
+                var pathArray = window.location.pathname.split( '/' );
+                if(pathArray[1].search("test")>=0){
+                    url = 'http://'+window.location.hostname+'/cag_test/items/map/'
+                }else{
+                    url = 'http://'+window.location.hostname+'/items/map/'
+                }
+                                
                 var request = jQuery.ajax(
                     {
-                        url: 'http://'+window.location.hostname+'/items/map/',
+                        url: url,
                         type: 'POST',                        
                         data: {id:marker.snippet},
                         async: false,                       
