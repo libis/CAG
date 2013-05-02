@@ -114,9 +114,10 @@ OmekaMap.prototype = {
               //  bindHtml = bindHtml.replace(/ /g,'');
                 //alert(document.location.hostname);
                 var infowindow = null;
+                alert(window.location.hostname);
                 var request = jQuery.ajax(
                     {
-                        url: document.location,
+                        url: 'http://'+window.location.hostname+'/items/map/',
                         type: 'POST',                        
                         data: {id:marker.snippet},
                         async: false,                       
