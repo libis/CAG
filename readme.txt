@@ -1,4 +1,4 @@
-<img src="https://travis-ci.org/libis/CAG.png">
+https://travis-ci.org/libis/CAG.png
 The files contained in these directories are part of Omeka.
 Copyright (C) 2008-2011 Roy Rosenzweig Center for History and New Media
 
