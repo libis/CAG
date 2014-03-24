@@ -137,12 +137,12 @@ function digitool_get_thumb_admin($item,$link=false){
         $html="<ul>";
         foreach($digis as $digi){
             if($link){
-                $html.='<li><a href="/admin/digitool/index/'.$u->id.'"><img src="'.$thumb.'" width="100" /></a><br> ';
+                $html.='<li><a href="/admin/digitool/index/'.$u->id.'"><img src="'.$digi->get_thumb().'" width="100" /></a><br> ';
             }else{
                 $html.='<li><img src="'.$digi->get_thumb().'" width="100" /><br> ';
             }    
-            $html.= button_to(url('digitool/index/delete-confirm/' . $digi->id),
-                null, __('Delete'),array('class' => 'delete-confirm')).'</li>';                
+            //$html.= button_to(url('digitool/index/delete-confirm/' . $digi->id),
+                //null, __('Delete'),array('class' => 'delete-confirm')).'</li>';                
 
         }
         $html .="</ul>";
