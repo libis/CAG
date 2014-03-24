@@ -1,11 +1,11 @@
-/application
+
 /db.ini
-/admin
+
 /archive
-/install
+
 /nbproject
 .htaccess
-/admin/.htaccess
+
 /archive
 /verhaal
 /pathsTom.php
