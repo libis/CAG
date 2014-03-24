@@ -7,6 +7,7 @@ class ApcPlugin extends Omeka_Plugin_AbstractPlugin
     
     function hookDefineRoutes($args){
             $router = $args['router'];
+            //add route
             $router->addRoute(
                 'apc_index',
                 new Zend_Controller_Router_Route(
