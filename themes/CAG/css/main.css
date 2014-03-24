@@ -235,22 +235,22 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
 #header-nav a:hover{text-decoration: underline;}
 
 /* LEVEL ONE */
-.navigation li a { display: inline; padding: 4px 8px;}
-.navigation li { display: inline;}
-.navigation li:last-child a { border-right: none; } /* Doesn't work in IE */
-.navigation li.hover,
-.navigation li:hover { position: relative; }
-.navigation li:hover > ul { visibility: visible; }
+#header-nav .navigation li a { display: inline; padding: 4px 8px;}
+#header-nav .navigation li {}
+#header-nav .navigation li:last-child a { border-right: none; } /* Doesn't work in IE */
+#header-nav .navigation li.hover,
+#header-nav .navigation li:hover { position: relative; }
+#header-nav .navigation li:hover > ul { visibility: visible; }
 
 /* LEVEL TWO */
-.navigation li ul {visibility: hidden;display:block;z-index: 100000;position: absolute; top: 16px; left: 40px;}
-.navigation li ul li {display:block;height:10px; float: none;}
+#header-nav .navigation li ul {visibility: hidden;display:block;z-index: 100000;position: absolute; top: 16px; left: 40px;}
+#header-nav .navigation li ul li {display:block;height:20px; float: none;}
 									  
 /* IE 6 & 7 Needs Inline Block */
-.navigation li ul li a { width: 180px;display: inline-block; background: #f8c400;} 
+#header-nav .navigation li ul li a { width: 180px;display: inline-block; background: #f8c400;} 
 
 /* LEVEL THREE */
-.navigation ul li:hover > ul { visibility: hidden; }
+#header-nav .navigation ul li:hover > ul { visibility: hidden; }
 
 /* index */
 .in_de_kijker{

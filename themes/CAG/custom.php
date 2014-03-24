@@ -761,7 +761,7 @@ function libis_curPageURL() {
 }
 
 function libis_get_type_organisations(){
-    $items = get_records('Item',array('type'=>'15'),10000);
+    $items = get_records('Item',array('type'=>'Actor'),10000);
     
     $types = array();
    

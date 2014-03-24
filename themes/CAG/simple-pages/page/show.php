@@ -9,9 +9,12 @@
 	<?php if($title != "Home" && $title != "Beeldbank" && $title != "Werktuigen" && $title != "Alle verhalen"){ ?>
             <div id="nav-left">		
                 <?php 
-                    //if(Libis_get_simple_pages_nav())
-                        //echo Libis_get_simple_pages_nav();
-                    echo simple_pages_navigation(metadata('simple_pages_page', 'parent_id'));
+                    if(metadata('simple_pages_page', 'parent_id')==0){
+                        echo simple_pages_navigation(null);
+                    }else{
+                        echo simple_pages_navigation(metadata('simple_pages_page', 'parent_id'));
+                    }
+                    
                 ?>
             </div>	
 	<?php } ?>
