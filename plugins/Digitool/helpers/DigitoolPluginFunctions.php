@@ -431,6 +431,19 @@ function digitool_resize_dimensions($goal_width,$goal_height,$imageurl) {
     return $return;
 }
 
+
+/**
+* Loads extra javascript needed in admin section
+*
+* @param bool $pageLoaded Whether or not the page is already loaded.
+* If this function is used with AJAX, this parameter may need to be set to true.
+* @return string
+*/
+function digitool_scripts(){       
+    queue_js_file('jquery.pagination');
+    head_js();       
+}
+
 /**
  * Check if an image exists in the folder images/digitool and if not creates one using imageMagick
  * @param pid
@@ -616,4 +629,6 @@ function resize($pid,$opts=null){
 	# return cache file path
 	return str_replace($_SERVER['DOCUMENT_ROOT'],'',$newPath);
 }
+
+
 ?>

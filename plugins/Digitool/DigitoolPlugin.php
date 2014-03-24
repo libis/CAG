@@ -13,14 +13,13 @@ require_once DIGITOOL_DIR.'/helpers/DigitoolPluginFunctions.php';
 
 class DigitoolPlugin extends Omeka_Plugin_AbstractPlugin
 {
-    
+    //'admin_items_show_sidebar',
     protected $_hooks = array(
         'install',
         'uninstall',
         'define_routes',
         'config_form',
-        'config',            
-        'admin_items_show_sidebar',
+        'config',        
         'after_save_item'
     );
 
@@ -124,15 +123,13 @@ class DigitoolPlugin extends Omeka_Plugin_AbstractPlugin
     * Shows the digitool urls on the admin show page in the secondary column
     * @param Item $item
     * @return void
-    **/
-    public function hookAdminItemsShowSidebar($item){
-            $html = digitool_scripts()
-            . '<div class="info-panel">'
-            . '<h2>Digitool</h2>'
-            . digitool_get_thumb_admin($item,false,true,'100px')
+    
+    public function hookAdminItemsShowSidebar($item,$view){
+            $html = '<div class="panel"><h2>Digitool</h2>'
+            . '<img src="'.digitool_get_thumb_url($item).'">'
             . '<br><br></div>';
-            echo $html;
-    }
+            return $html;
+    }**/
 
     /**
     * Add a tab to the edit item page
@@ -142,20 +139,6 @@ class DigitoolPlugin extends Omeka_Plugin_AbstractPlugin
         $item = $args['item'];
         $tabs['Digitool'] = digitool_admin_form($item);       
         return $tabs;
-    }
-
-    /**
-    * Returns the html for loading the javascripts used by the plugin.
-    *
-    * @param bool $pageLoaded Whether or not the page is already loaded.
-    * If this function is used with AJAX, this parameter may need to be set to true.
-    * @return string
-    */
-    public function digitool_scripts(){
-            $ht = '';
-            $ht .= js('jquery.pagination');
-            //$ht .= css('pagination');
-            return $ht;
     }
 
 }
