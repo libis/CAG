@@ -562,22 +562,25 @@ img.src = element.src;
     }
 
     // Move to the left if left button clicked
-    $(options.leftButtonTag).live('click',function () {
+    $(document).on('click',options.leftButtonTag,function () {
       initiateMove(false,1);
     });
 
     // Move to right if right button clicked
-    $(options.rightButtonTag).live('click',function () {
+    $(document).on('click',options.rightButtonTag,function () {
       initiateMove(true,1);
     });
 
     // These are the click and hover events for the features
     pluginData.featuresContainer.find(".carousel-feature")
-      .click(function () {
+      .click(function (event) {        
         var position = $(this).data('position');
-        if (position == 2) {
-          initiateMove(true,1);
+        
+        if (position == 2) {   
+            event.preventDefault();
+            initiateMove(true,1);
         } else if (position == pluginData.totalFeatureCount) {
+             event.preventDefault();
           initiateMove(false,1);
         }
       })
@@ -608,15 +611,18 @@ img.src = element.src;
 
     // Add event listener to all clicks within the features container
     // This is done to disable any links that aren't within the center feature
-    $("a", pluginData.containerIDTag).live("click", function (event) {
+    $(document).on("click",("a", pluginData.containerIDTag), function (event) {
+      
       // travel up to the container
       var $parents = $(this).parentsUntil(pluginData.containerIDTag);
       // now check each of the feature divs within it
       $parents.each(function () {
-        var position = $(this).data('position');
+      var position = $(this).data('position');
+      
         // if there are more than just feature divs within the container, they will
         // not have a position and it may come back as undefined. Throw these out
-        if (position != undefined) {
+        if (position != undefined) {       
+           
           // if any of the links on a feature OTHER THAN the center feature were clicked,
           // initiate a carousel move but then throw the link action away
           if (position != 1) {
@@ -625,10 +631,9 @@ img.src = element.src;
             } else if (position == 2) {
               initiateMove(true,1);
             }
-            event.preventDefault();
-            return false;
+           
           // if the position WAS the center (i.e. 1), fire callback
-          } else {
+          } else {             
             options.clickedCenter($(this));
           }
         }
@@ -636,7 +641,7 @@ img.src = element.src;
     });
 
     // Did someone click one of the individual trackers?
-    $(".tracker-individual-blip", pluginData.containerIDTag).live("click",function () {
+    $(document).on("click",(".tracker-individual-blip", pluginData.containerIDTag),function () {
       // grab the position # that was clicked
       var goTo = $(this).attr("id").substring(8);
       // find out where that feature # actually is in the carousel right now
@@ -658,8 +663,8 @@ img.src = element.src;
     });
     
     /****************
-PUBLIC FUNCTIONS
-****************/
+    PUBLIC FUNCTIONS
+    ****************/
     this.initialize = function () {
       // Call the preloader and pass in our callback, which is just a slew of function calls
       // that should only be executed after the images have been loaded

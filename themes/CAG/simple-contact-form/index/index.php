@@ -1,5 +1,5 @@
-<?php head(); ?>
-<h1><?php echo settings('simple_contact_form_contact_page_title'); ?></h1>
+<?php echo head(); ?>
+<h1><?php echo html_escape(get_option('simple_contact_form_contact_page_title')); ?></h1>
 <div id="primary">
     
 <div id="simple-contact">
@@ -26,7 +26,7 @@
 		<div class="field">
 		  <?php 
 		    echo $this->formLabel('message', 'Bericht: ');
-		    if($_GET['text'])
+		    if(isset($_GET['text']))
 		    	$message = $_GET['text'];
 		    	
 		    echo $this->formTextarea('message', $message, array('class'=>'textinput')); ?>
@@ -49,4 +49,4 @@
 </div>
 
 </div>
-<?php foot(); ?>
+<?php echo foot(); ?>

@@ -2,19 +2,23 @@
 class DigitoolUrlTable extends Omeka_Db_Table
 {
     /**
-     * Returns a location (or array of locations) for an item (or array of items)
-     * @param array|Item|int $item An item or item id, or an array of items or item ids
+     * Returns digitool urls for an item
+     * @param Item $item An item or item id, or an array of items or item ids
      * @param boolean $findOnlyOne Whether or not to return only one location if it exists for the item
-     * @return array|Location A location or an array of locations
+     * @return array of digitool url objects
      **/
-    public function findDigitoolUrlByItem($item, $findOnlyOne = false)
+    public function findDigitoolUrlByItem($item)
     {
+        if(!$item){
+            return false;
+        }
+        
         $db = get_db();
 
         if (($item instanceof Item) && !$item->exists()) {
-            return array();
+            return false;
         } else if (is_array($item) && !count($item)) {
-            return array();
+            return false;
         }
 
         // Create a SELECT statement for the Location table
@@ -35,12 +39,29 @@ class DigitoolUrlTable extends Omeka_Db_Table
         // Get the DigitoolUrls
         $urls = $this->fetchObjects($select);
 
-        // If only a single image is requested, return the first one found.
-        if ($findOnlyOne) {
-            return current($urls);
-        }
-
         //otherwise return the whole table
         return $urls;
+    }
+    
+    /**
+     * Returns digitool urls for an item
+     * @param int $pid pid of the DigitoolUrl
+     * @param Item $item An item
+     * @param boolean $findOnlyOne Whether or not to return only one location if it exists for the item
+     * @return array of digitool url objects
+     **/
+    public function findDigitoolUrlByPid($pid, $item)
+    {
+        $db = get_db();
+        
+        //echo $url->pid;
+	$select = $db->query("SELECT id
+		FROM omeka_digitool_urls
+		WHERE pid = '".$pid."' AND item_id = '".$item->id."'		
+	");
+
+	$id = $select->fetchAll();
+
+        return $id[0]['id'];
     }
 }

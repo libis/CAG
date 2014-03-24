@@ -1,17 +1,16 @@
 <?php
 require_once("Curl.php");
-$vs_base = "http://libis-t-rosetta-1.libis.kuleuven.be/lias/cgi/";
+$vs_base = get_option('digitool_cgi');
 
 $va_items = array();
 if (unicode_strlen($search) > 0) {
 $html .="<table>";
-	try {
-		//
-		// Get up to 50 suggestions as ATOM feed
-		//
-//				$vs_data = @file_get_contents($vs_base."find_pid?search=".urlencode($ps_query).'%25&max_results=50');
+	try {		
 		$cc = new cURL();
-		$cc->setproxy('icts-http-gw.cc.kuleuven.be:8080');
+                $proxy = get_option('digitool_proxy');
+                if($proxy){
+                    $cc->setproxy($proxy);
+                }    
 		$vs_data = $cc->get($vs_base."find_pid?search=".urlencode($ps_query).'%25&max_results=50&filter=partitionc:CAG,%20standaardcollectie');
 		
 		if ( $cc->getHttpStatus() == "200"){

@@ -1,4 +1,4 @@
-<?php head(array('bodyid'=>'home', 'bodyclass' =>'two-col')); ?>
+<?php echo head(array('bodyid'=>'home', 'bodyclass' =>'two-col')); ?>
 
 <div id="frontpage">
     <?php if ($homepageText = get_theme_option('Homepage Text')): ?>
@@ -6,89 +6,108 @@
 
     <?php endif; ?>
 
-  	<div id="carousel-block">
+    <div id="carousel-block">
+        <h2>Welkom op Het Virtuele Land - Centrum Agrarische Geschiedenis</h2>
+        <p>Het Centrum Agrarische Geschiedenis is het expertisecentrum voor het agrarische erfgoed in Vlaanderen.
+        We bestuderen de geschiedenis en het erfgoed van landbouw, platteland en voeding, vanaf 1750 tot en met vandaag.</p>
+        
+        <h2>In de kijker</h2>
+        <div id="item-block" class="kijker-block">
+            <?php
+                echo libis_get_featured_news();                
+            ?>
+           
+        </div>    
+        
+        <div id="meer_nieuws"><p><a href=""><img src="<?php echo img('arrow-right.png');?>">Meer nieuws</a></p></div>
+        
+        <div id="carousel-container">
+            <div id="item-block">
+                <h2><?php echo __('Objecten uit onze erfgoedbank'); ?></h2>		
+                <?php
+                    $items = Libis_get_random_featured_items('10');    
+                ?>       
+                <div class="cycle" id="cycle2">
+                    <ul class="rotator2">
+                    <?php foreach(loop('items',$items) as $item):?> 
+                        <li>
+                           <a href="<?php echo url("items/show/".$item->id);?>"><img class="carousel-image" src="<?php echo digitool_get_thumb_url($item);?>"></a>
 
+                        </li>
+                    <?php endforeach; ?>
+                    </ul>
+                    <a href="#" class="prev p2"></a>
+                    <a href="#" class="next n2"></a>
+                    <div class="description"></div>
+                    <div class="thumbnail"></div>
+                </div>  
+            </div>   
 
+            <div id="item-block">
+                <h2><?php echo __('Verhalen'); ?></h2>
+                <?php
+                    //get the 10 latest exhibits
+                    $exhibits = exhibit_builder_recent_exhibits(10);
+                ?>            
+                <div class="cycle" id="cycle1">
+                <ul class="rotator1">
+                    <?php foreach($exhibits as $exhibit) {
+                        if (libis_get_exhibit_thumb($exhibit)):?>
+                            <li>
+                                <?php echo exhibit_builder_link_to_exhibit($exhibit,LIBIS_get_exhibit_thumb($exhibit,array('class'=>'thumbnail carousel-image','height'=>'150','width'=>'150'))); ?>
+                            </li>
+                        <?php endif;?>	
+                    <?php } ?>
+                </ul>
+                <a href="#" class="prev p1"></a>
+                <a href="#" class="next n1"></a>
+                <div class="description"></div>
+                <div class="thumbnail"></div>
+                </div>   
 
-	<!-- Recente Verhalen -->
-
-    <div id="item-block">
-        <h2>Recente Verhalen</h2>
-        <?php
-        //get the 10 latest exhibits
-        $exhibits = exhibit_builder_recent_exhibits(10); ?>
-
-		<table>
-        <tr class="block-tr"><td class="block-td">
-		<div id="carousel-container">
-
-			<div class="carouselclass" id="carousel2">
-				<?php foreach($exhibits as $exhibit) {
-
-					if (Libis_get_exhibit_thumb($exhibit)):?>
-						<div class="carousel-feature">
-							<?php echo exhibit_builder_link_to_exhibit($exhibit,LIBIS_get_exhibit_thumb($exhibit,array('class'=>'thumbnail carousel-image','height'=>'150','width'=>'150'))); ?>
-						</div>
-					<?php endif;?>
-				<?php } ?>
-		</div>
-
+                <br>	
+            </div>       
+        </div>             
     </div>
+    
+    <div id="wegwijs2"></div>
+    <script>jQuery("#wegwijs2").load('/telex/ #wegwijs');</script>
 
-		</td>
-		<td>
-			<p>Description of the slideshow</p>
-		</td>
-	</tr>
-	</table>
+    <script>
+        /*
+	jQuery(document).ready(function() {            
+	    jQuery("#carousel2").featureCarousel({
+	        autoPlay: 0,
+	        trackerIndividual:false,
+	        trackerSummation:false,
+	        sidePadding:20
+	    });
+	    jQuery("#carousel3").featureCarousel({
+	        autoPlay: 0,
+	        trackerIndividual:false,
+	        trackerSummation:false,
+	        sidePadding:20
+	    });
+	});
+        */
+      
+    jQuery(document).ready(function($) {
 
-	</div>
+        $('.rotator1').roundabout({
+          btnNext: ".n1",
+          btnPrev: ".p1",
+          minScale:0.2,
+          maxScale:0.8
+        });
 
-	<!-- Random Items -->
-    <div id="item-block">
-        <h2>Recente objecten</h2>
+         $('.rotator2').roundabout({
+          btnNext: ".n2",
+          btnPrev: ".p2",
+          minScale:0.2,
+          maxScale:0.8
+         });
+    });
 
-		</td>
-		<td>
-			<!-- TEST CAROUSEL -->
-    <?php
-    $items = Libis_get_random_featured_items('10');
-    set_items_for_loop($items);
- 	if (has_items_for_loop()): ?>
-    <table>
-        <tr class="block-tr"><td class="block-td">
-    <div id="carousel-container">
-
-		<div class="carouselclass" id="carousel3">
-        <?php while (loop_items()):
-
-			if (item_has_thumbnail()):?>
-			<div class="carousel-feature">
-				<?php echo link_to_item(item_square_thumbnail(array('alt'=>item('Dublin Core', 'Title'),'class'=>'thumbnail carousel-image','height'=>'150','width'=>'150'))); ?>
-			</div>
-	        <?php
-	        endif;?>
-        <?php endwhile; ?>
-		</div>
-
-    </div>
-	 <?php endif;?>
-    <!-- END TEST CAROUSEL -->
-		</td>
-		<td>
-			<p>Description of the slideshow</p>
-		</td>
-	</tr></table>
-	</div>
-
-
-  </div>
-
-<div id="wegwijs">
-    <a href="wegwijs/"/><img alt="Wegwijs op deze website" src="<?php echo (img('wegwijs.gif'));?>" width="155" height="100"></a>
+    </script>
 </div>
-
-
-
-
-<?php foot(); ?>
+<?php echo foot(); ?>

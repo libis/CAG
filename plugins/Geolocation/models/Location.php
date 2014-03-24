@@ -1,10 +1,10 @@
 <?php
-require_once 'LocationTable.php';
+
 /**
  * Location
  * @package: Omeka
  */
-class Location extends Omeka_Record
+class Location extends Omeka_Record_AbstractRecord
 {
     public $item_id;
     public $latitude;
@@ -16,7 +16,7 @@ class Location extends Omeka_Record
     protected function _validate()
     {
         if (empty($this->item_id)) {
-            $this->addError('item_id', 'Location requires an item id.');
+            $this->addError('item_id', __('Location requires an item id.'));
         }
     }
 }

@@ -1,4 +1,0 @@
-<FilesMatch "^zend_cache">
- Order Allow,Deny
- Deny from all
-</FilesMatch>

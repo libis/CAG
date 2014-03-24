@@ -7,37 +7,46 @@
 //echo js('jquery');
         ?>
 
-        <title><?php echo settings('site_title');
-        echo isset($title) ? ' | ' . $title : ''; ?></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <?php if ( $description = option('description')): ?>
+        <meta name="description" content="<?php echo $description; ?>" />
+        <?php endif; ?>
+        <?php
+        if (isset($title)) {
+            $titleParts[] = strip_formatting($title);
+        }
+        $titleParts[] = option('site_title');
+        ?>
+        <title><?php echo implode(' &middot; ', $titleParts); ?></title>
 
         <!-- Meta -->
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="description" content="<?php echo settings('description'); ?>" />
-        
-        <meta property='og:title' content='<?php echo $title;?>'/>
+              
+        <meta property='og:title' content='<?php echo implode(' &middot; ', $titleParts); ?>'/>
         <meta property='og:url' content='<?php echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];?>'/>
         <meta property='og:description' content=''/>    
         <?php 
-            if($og){echo $og;}
+            //if($og){echo $og;}
         ?>
         <link rel="shortcut icon" href="<?php echo img('favicon.ico') ?>" />       
 
-<?php echo auto_discovery_link_tag(); ?>
+<?php echo auto_discovery_link_tags(); ?>
 
         <!-- Plugin Stuff -->
 
-<?php plugin_header(); ?>
+<?php fire_plugin_hook('public_head', array('view'=>$this)); ?>
 
         <!-- Stylesheets -->
         <?php
-        queue_css('reset');
-        queue_css('style');
-        queue_css('ie');
-        queue_css('styleDropdown');        
-        queue_css('skin');
-        queue_css('main');
-
-        display_css();
+        queue_css_file('reset');
+        queue_css_file('style');
+        queue_css_file('ie');      
+        queue_css_file('skin');
+        queue_css_file('main');
+        queue_css_file('geolocation-items-map');
+        queue_css_file('geolocation-marker');
+        queue_css_file('feature-carousel');
+        echo head_css();
         ?>
 
 <?php if ($headerBackground = get_theme_option('Header Background')): ?>
@@ -50,14 +59,17 @@
 <?php endif; ?>
 
         <!-- JavaScripts -->
-        <?php echo queue_js('jquery.collapser'); ?>
-        <?php echo queue_js('jquery.dropdown'); ?>
-        <?php echo queue_js('jquery.roundabout.min'); ?>
-        <?php echo queue_js('iframe'); ?>
-        <?php echo queue_js('selectivizr'); ?>
-        
+        <?php queue_js_file('jquery.collapser'); ?>   
+        <?php queue_js_file('jquery.roundabout'); ?>       
+        <?php queue_js_file('iframe'); ?>
+        <?php queue_js_file('selectivizr'); ?>
+        <?php queue_js_url("http://maps.google.com/maps/api/js?sensor=false");
+            queue_js_file('map');
+            queue_js_file('markerclusterer');
+            queue_js_file('spider');
+        ?>       
+        <?php echo head_js(); ?>
 
-<?php echo display_js(); ?>
         <script language="JavaScript">
             if (self !== top) document.write('<style type="text/css">#normal-title{display:none} html{background:#fff;margin:0 0 100px 0;} #footer {display: none;} .info {display:none;} #header {display: none;} #search-wrap {display: none;}</style>');
         </script><!--iframe changes-->
@@ -69,61 +81,24 @@
             <div id="header">
                 <div id="site-title">
                     <div id="header-title">
-                        <h1 class="header">Het Virtuele Land</h1>
-                        <h2 class="header">Erfgoedbank landbouw, platteland en voeding</h2>
-                        <a class="cag-link" href="http://www.cagnet.be/"><h3 class="header">Centrum<br/>Agrarische<br/>Geschiedenis</h3></a>
+                        <h1 class="header">Centrum Agrarische Geschiedenis - Het Virtuele Land</h1>
+                        <h2 class="header">Erfgoedbank landbouw, platteland en voeding</h2>                       
                     </div>
                 </div>
                 <div id="search-wrap" class="group">
-<?php echo SolrSearch_ViewHelpers::createSearchForm('Zoeken'); //echo simple_search("Zoeken",array('id'=>'simple-search'),uri("items/browse/?sort_field=id"));  ?>
+                <?php echo search_form(array('submit_value'=>'Zoeken','form_attributes'=> array('id'=>'simple-search')));  ?>
                 </div><!-- /#search-wrap -->
 
                 <div id="header-nav_bar">
 
                     <div id="header-nav">
 
-                        <ul class="header_nav dropdown">
-                            <li><a href="<?php echo uri('#'); ?>">Home</a></li>
-                            <li><a href="<?php echo uri('beeldbank/'); ?>">Beeldbank</a>
-                                <ul class="sub_menu">
-                                    <li><a href="<?php echo uri('beeldbank/'); ?>">Zoeken</a></li>
-                                    <!--<li><a href="<?php echo uri('items/advanced-search/'); ?>">Geavanceerd Zoeken</a></li>-->
-                                    <li><a href="<?php echo uri('items/map/'); ?>">Kaart</a></li>
-                                    <li><a href="<?php echo uri('/neatline-time/timelines/show/1'); ?>">Tijdlijn</a></li>
-                                    <!--<li><a href="<?php echo uri('#'); ?>">Albums</a></li>-->
-                                </ul>
-                            </li>
-                            <!--<li><a href="<?php echo uri('werktuigen/'); ?>">Werktuigen</a></li>-->
-                            <li><a href="<?php echo uri('verhalen/'); ?>">Verhalen</a>
-                                <ul class="sub_menu">
-                                    <li><a href="<?php echo uri('verhalen/'); ?>">Per tijdvak of per thema</a></li>
-                                    <li><a href="<?php echo uri('verhalen/mensen/'); ?>">    Boer &amp; Co</a></li>
-                                    <li><a href="<?php echo uri('verhalen/middenveld/'); ?>">Middenveld en beleid</a></li>
-                                    <li><a href="<?php echo uri('verhalen/oogst/'); ?>">Een rijke oogst</a></li>
-                                    <li><a href="<?php echo uri('verhalen/landschap/'); ?>">Boerderij en landschap</a></li>
-                                    <li><a href="<?php echo uri('verhalen/industrie/'); ?>">Industrie en wetenschap</a></li>
-                                    <li><a href="<?php echo uri('verhalen/eetcultuur/'); ?>">Eetcultuur</a></li>
-                                    <li><a href="<?php echo uri('verhalen/identiteit/'); ?>">Identiteit en beeldvorming</a></li>
-                                    <li><a href="<?php echo uri('alle-verhalen/'); ?>">Alle verhalen</a></li>
-
-                                </ul>
-                            </li>
-                            <li><a href="<?php echo uri('bronnen/'); ?>">Onderzoeksbronnen</a>
-                                <ul class="sub_menu">
-                                    <li><a href="<?php echo uri('bronnen/bibliografie/'); ?>">Bibliografie</a></li>
-                                    <li><a href="<?php echo uri('bronnen/archiefgids/'); ?>">Archiefgids</a></li>
-                                    <li><a href="<?php echo uri('bronnen/rapporten/'); ?>">Rapporten</a></li>
-                                   <!--   <li><a href="<?php echo uri('#'); ?>">Tijdschriften</a></li>
-                                    <li><a href="<?php echo uri('#'); ?>">Rekeningen</a></li>
-                                    <li><a href="<?php echo uri('#'); ?>">Beleidsmakers</a></li>-->
-                                </ul>
-                            </li>
-                            <li><a href="<?php echo uri('actoren/'); ?>">Actoren</a></li>
-                            <li><a href="<?php echo uri('contact/'); ?>">Contact</a></li>
-                        </ul>
-
+                      
+                            <?php echo public_nav_main(); ?>  
                     </div>
+                    
                 </div>
-
+                  
             </div>
+            
             <div id="content" class="group">

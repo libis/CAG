@@ -7,11 +7,11 @@
 		<div class="column left">
 						<h2>Website</h2>
 							<ul>
-							<li><a href="<?php echo uri('over/')?>">Over deze website</a></li>
+							<li><a href="<?php echo url('over/')?>">Over deze website</a></li>
 							<li><a href="mailto:contact@cagnet.be">Technische problemen</a></li> <!-- link CAG-->
-							<li><a href="<?php echo uri('copyright/');?>">Copyright en disclaimer</a></li>
+							<li><a href="<?php echo url('copyright/');?>">Copyright en disclaimer</a></li>
 
-							<!-- <li><a href="<?php echo uri("sitemap/");?>">Sitemap</a></li> -->
+							<!-- <li><a href="<?php echo url("sitemap/");?>">Sitemap</a></li> -->
 							</ul>
 		</div><!-- /.column -->
 		<div class="column right">
@@ -28,7 +28,7 @@
 		<div class="column  right ">
 		<h2>Communicatie</h2>
 							<ul>
-							<li><a href="<?php echo uri("contact/");?>">Contact</a></li>
+							<li><a href="<?php echo url("contact/");?>">Contact</a></li>
 							<li><a href="http://www.cagnet.be/showpage.php?pageID=19">Nieuwsbrief</a></li><!-- link CAG-->
 							<li><a href="http://www.cagnet.be/showpage.php?pageID=33">Publicaties</a></li><!-- link CAG-->
 							<li><a href="http://www.cagnet.be/showpage.php?pageID=26">English</a></li><!-- link CAG-->
@@ -47,7 +47,7 @@
 		email : <a href="mailto:contact@cagnet.be">contact@cagnet.be</a>
 		</p>
 	</div><!-- /.column -->
-	<?php plugin_footer(); ?>
+	<?php fire_plugin_hook('public_footer'); ?>
 </div><!-- end footer -->
 </div><!-- end wrap -->
 <p class="info">Inhoud: <a href="http://www.cagnet.be">Centrum Agrarische Geschiedenis</a> - Ontwerp en realisatie: <a href="http://www.libis.be">LIBIS</a> - Vormgeving: <a href="http://www.blau.be">Blau</a></p>

@@ -18,14 +18,13 @@ function Libis_get_random_featured_items($num = '10', $withImage = true)
     // Build the select query.
     $select = $table->getSelect();
     $select->from(array(), 'RAND() as rand');
-    $select->where('i.item_type_id = 6');
+    $select->where('items.item_type_id = 6');
     $select->order('rand DESC');
     $select->limit($num);
 
     // If we only want items with derivative image files, join the File table.
     if ($withImage) {
-        $select->joinLeft(array('f'=>"$db->DigitoolUrls"), 'f.item_id = i.id', array());
-
+        $select->joinLeft(array('f'=>"$db->DigitoolUrls"), 'f.item_id = items.id', array());
     }
 
     // Fetch some items with our select.
@@ -100,10 +99,11 @@ function Libis_display_random_featured_exhibit()
 */
 function Libis_get_exhibits($tag = "")
 {
-	if($tag == ""){
-		$exhibits = exhibit_builder_get_exhibits(array('sort_field'=>'id','sort_dir'=>'d'));
+	$html="";
+        if($tag == ""){
+		$exhibits = get_records('Exhibit',array('sort_field'=>'id','sort_dir'=>'d'));
 	}else{
-		$exhibits = exhibit_builder_get_exhibits(array('tags' =>$tag));
+		$exhibits = get_records('Exhibit',array('tags' =>$tag));
 		//if there were no exhibits found
 		if(empty($exhibits)){
 			return "<p>We're sorry but there were no stories found with this tag</p>";
@@ -115,41 +115,38 @@ function Libis_get_exhibits($tag = "")
 
 		//foreach($exhibits as $exhibit) {
 
-			$html.= '<td>';
-			//set current exhibit
-			$exhibit = exhibit_builder_get_exhibit_by_id(100010);
-		    exhibit_builder_set_current_exhibit($exhibit);
+                $html.= '<td>';
+                //set current exhibit
+                $exhibit = get_record_by_id('Exhibit',100010);
+               
+                if($exhibit->thumbnail){
+                            $html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="150" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/>');
+                }
+                //takes care of the link and text
+                $html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
+                $html.= '</td>';
 
-		    if($exhibit->thumbnail){
-				$html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="150" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/>');
-		    }
-		    //takes care of the link and text
-		    $html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
-			$html.= '</td>';
+                $html.= '<td>';
+                //set current exhibit
+                $exhibit = get_record_by_id('Exhibit',100140);
+               
+                if($exhibit->thumbnail){
+                        $html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="150" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/>');
+                }
+                //takes care of the link and text
+                $html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
+                $html.= '</td>';
 
-			$html.= '<td>';
-			//set current exhibit
-			$exhibit = exhibit_builder_get_exhibit_by_id(100140);
-			exhibit_builder_set_current_exhibit($exhibit);
-
-			if($exhibit->thumbnail){
-				$html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="150" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/>');
-			}
-			//takes care of the link and text
-			$html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
-			$html.= '</td>';
-
-			$html.= '<td>';
-			//set current exhibit
-			$exhibit = exhibit_builder_get_exhibit_by_id(100150);
-			exhibit_builder_set_current_exhibit($exhibit);
-
-			if($exhibit->thumbnail){
-				$html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="150" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/>');
-			}
-			//takes care of the link and text
-			$html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
-			$html.= '</td>';
+                $html.= '<td>';
+                //set current exhibit
+                $exhibit = get_record_by_id('Exhibit',100150);
+                
+                if($exhibit->thumbnail){
+                        $html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="150" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/>');
+                }
+                //takes care of the link and text
+                $html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
+                $html.= '</td>';
 
 		//}
 
@@ -161,9 +158,9 @@ function Libis_get_exhibits($tag = "")
 
 		foreach($exhibits as $exhibit) {
 
-			$html.= '<li>';
-			//set current exhibit
-		    exhibit_builder_set_current_exhibit($exhibit);
+                    $html.= '<li>';
+                    //set current exhibit
+		    //exhibit_builder_set_current_exhibit($exhibit);
 
 		    if($exhibit->thumbnail){
 		    	//$item = get_item_by_id($exhibit->thumbnail);
@@ -173,8 +170,8 @@ function Libis_get_exhibits($tag = "")
 		    }
 		    //takes care of the link and text
 		    $html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
-			$html.= '<p>'.truncate(exhibit('description', array(), $exhibit),280).'</p>';
-
+                    //$html.= '<p>'.truncate(exhibit('description', array(), $exhibit),280).'</p>';
+                    $html.= '<p>'.metadata($exhibit,'description',array('snippet'=>'280')).'</p>';    
 		    $html.= '</li>';
 
 		}
@@ -189,7 +186,7 @@ function Libis_get_exhibits($tag = "")
 *
 * @return html formatting (with images) of the thumb (same as the item thumbnail function)
 */
-function Libis_get_exhibit_thumb($exhibit,$props=array()){
+function libis_get_exhibit_thumb($exhibit,$props=array()){
 
 	if($exhibit->thumbnail){
 
@@ -434,7 +431,7 @@ function Libis_get_simple_pages_nav($parentId = 0, $currentDepth = null, $sort =
 {
 	$html = '';
 
-	$currentPage = get_current_simple_page();
+	$currentPage = get_current_record('simple page');
 	$ancestorPage = simple_pages_earliest_ancestor_page($currentPage->id);
 
 	//gets all toplevel pages
@@ -729,8 +726,8 @@ function truncate($text, $length = 100, $ending = '...', $exact = false, $consid
 }
 
 //returns the proper name/title of an exhibit tag
-function Libis_breadcrumb_tag($exhibit){    
-    $tag = html_escape(tag_string($exhibit));
+function libis_breadcrumb_tag($exhibit){    
+    $tag = tag_string($exhibit,null);
 
     if($tag == 'algemeen'){
         return false;
@@ -751,9 +748,9 @@ function Libis_breadcrumb_tag($exhibit){
 //get current url
 function libis_curPageURL() {
 	$pageURL = 'http';
-	if ($_SERVER["HTTPS"] == "on") {
-		$pageURL .= "s";
-	}
+	if ( isset( $_SERVER["HTTPS"] ) && strtolower( $_SERVER["HTTPS"] ) == "on" ) {
+            $pageURL .= "s";
+        }
 	$pageURL .= "://";
 	if ($_SERVER["SERVER_PORT"] != "80") {
 		$pageURL .= $_SERVER["HTTP_HOST"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
@@ -763,17 +760,19 @@ function libis_curPageURL() {
 	return $pageURL;
 }
 
-function libis_getTypeOrganisations(){
-    $items = get_items(array('type'=>'15'),10000);
+function libis_get_type_organisations(){
+    $items = get_records('Item',array('type'=>'15'),10000);
+    
     $types = array();
-    set_items_for_loop($items);
-    while(loop_items()){
-        if(item("Item Type Metadata","Type Organisatie")!="")        
-            $types[] = item("Item Type Metadata","Type Organisatie");        
+   
+    foreach($items as $item){
+        $type = metadata($item,array("Item Type Metadata","Type Organisatie"));
+        if($type !="")        
+            $types[] = $type;        
     }    
     echo "<ul>";
     foreach($types as $type){        
-        echo "<li><a href='".uri("/solr-search/results/?solrfacet=222_s:%22".$type."%22 AND itemtype:%22Actor%22")."'>".$type."</li>";
+        echo "<li><a href='".url("/solr-search/results/?facet=221_s:%22".$type."%22 AND itemtype:%22Actor%22")."'>".$type."</li>";
     }
         echo "</ul>";
      
@@ -873,5 +872,30 @@ function Libis_tag_string($recordOrTags = null, $link=null)
                 $tagString = substr_replace($tagString ,"",-2);
 	}
 	return $tagString;
+}
+
+function libis_get_featured_news(){
+    $html="";
+    $nieuws = get_records('Item',array('type'=>'Nieuwsbericht','featured'=>true,'sort_field'=>'added','sort_dir'=>'d'),3);
+    $agenda = get_records('Item',array('type'=>'Agendapunt','featured'=>true,'sort_field'=>'added','sort_dir'=>'d'),3);
+    $items = array_merge($nieuws,$agenda);
+    usort($items, function($a, $b)
+    {
+        return strcmp($b->added,$a->added);
+    });
+    $items = array_slice($items , 0 , 3 );
+    foreach($items as $item){
+        $html .= "<div class='in_de_kijker'>";
+        if($item->hasThumbnail()):
+            $html .= link_to_item(item_image('square_thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
+        endif;
+                      
+        $html .= "<h4>".metadata($item,array('Dublin Core','Title'))."</h4>
+                <p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p>";
+        $html .= "<div class='lees_meer'>".link_to_item(__("Lees verder"),array(),'show', $item)."</div></div>";
+        
+    }
+    
+    return $html;
 }
 ?>

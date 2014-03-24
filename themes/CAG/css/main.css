@@ -26,6 +26,22 @@ h1,h2,h3,h4,h5,h6 {
 
 }
 
+h1 {font-size:1.3em; color:#fff; padding:2px 0px 2px 5px; margin-bottom:0.666667em; line-height:1.333333em;background-color:#669999;}
+h2 {
+    font-size:1.1em;
+    color:#fff;
+    padding:4px 0px 4px 10px;
+    margin-bottom:.75em;
+    line-height:1.2em;
+    background-color:#669999;
+    border-radius:3px;
+     clear:both;
+}
+h3 {font-size:1.1em;color:#669999; margin-bottom:.25em; line-height:1em; font-weight:normal;}
+h4 {font-size:1.1em;color:#669999; line-height:1.5em; font-weight:bold;}
+h5, h6 {font-size:1.0em;color:#669999; line-height:1.3333em; font-weight:bold;}
+h6 {font-weight:normal;color:#669999; font-style:italic; color: #777;}
+
 /* page
 ------------------------------------------------------------------ */
 
@@ -78,29 +94,20 @@ body {
 }
 
 #header-title h1.header {
-	background-color: transparent;
-	/* Aangepast DINWeb-Medium */
-	font: 45px/1em sans-serif;
-	position: absolute;
-	top: 15px;
-	left: 15px;
-	margin: 0;
-	padding: 0;
-}
-
-#header-nav ul.header_nav.dropdown li a {
-	font-size: 13px;
+    background-color: transparent;
+    /* Aangepast DINWeb-Medium */
+    font: 35px/1em sans-serif;	
+    padding: 15px 10px 0 ;	
+    margin-bottom:15px;
+    letter-spacing: -1px;
+    text-shadow: #333 0.05em 0.05em 0.08em
 }
 
 #header-title h2.header {
-	background-color: transparent;
-	/* Aangepast: DINWeb-Medium */
-	font: 20px/1px sans-serif;
-	position: absolute;
-	top: 75px;
-	left: 18px;
-	margin: 0;
-	padding: 0;
+    background-color: transparent;
+    /* Aangepast: DINWeb-Medium */
+    font: 20px/1px sans-serif;	
+    text-shadow: #333 0.08em 0.08em 0.1em;
 }
 
 #site-title img.logo {
@@ -151,8 +158,6 @@ body {
 	margin-bottom: 2em;
 }
 
-
-
 div#header {
 	position: relative;
 	height: 235px;
@@ -160,15 +165,13 @@ div#header {
 	width: 940px;
 }
 
-.hTagcloud {clear:both;padding-top: 1.5em;}
-.hTagcloud ul {
-	
-	line-height: 1.8em;
-        
+.hTagcloud {clear:both;}
+.hTagcloud ul {	
+	line-height: 1.8em;        
 }
 
-#submit_search, #submit_search_advanced {
-	background-color: #9f7c15;
+#submit_search, #submit_search_advanced,#simple-search input[type="submit"] {	
+        background-color: #9f7c15;
 	border-style: none;
 	font: bold 12px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
 	color: #fff;
@@ -183,7 +186,7 @@ div#header {
 	cursor: pointer;
 }
 
-input#search.textinput, #advanced-search-form .inputs input {
+input#query, #advanced-search-form .inputs input {
 	height: 20px;
 	border: 2px solid #cda21f;
 	width: 180px;
@@ -207,7 +210,11 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
 	border: 2px solid #795f0e;
 }
 
-#header-nav ul.header_nav.dropdown {
+#header-nav .navigation a{
+	font-size: 13px;
+}
+
+#header-nav .navigation {
 	height: 22px;
 	margin: 11px 0 0;
 	padding-top: 11px;
@@ -222,11 +229,96 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
 	_background-image: url(../images/yellow-transparant.gif);
 }
 
+#header-nav ul{margin-left:-40px;padding:5px 5px; }
+#header-nav li{display:inline; }
+#header-nav a{font-size:12px;;font-weight: bold;text-decoration: none;}
+#header-nav a:hover{text-decoration: underline;}
+
+/* LEVEL ONE */
+.navigation li a { display: inline; padding: 4px 8px;}
+.navigation li { display: inline;}
+.navigation li:last-child a { border-right: none; } /* Doesn't work in IE */
+.navigation li.hover,
+.navigation li:hover { position: relative; }
+.navigation li:hover > ul { visibility: visible; }
+
+/* LEVEL TWO */
+.navigation li ul {visibility: hidden;display:block;z-index: 100000;position: absolute; top: 16px; left: 40px;}
+.navigation li ul li {display:block;height:10px; float: none;}
+									  
+/* IE 6 & 7 Needs Inline Block */
+.navigation li ul li a { width: 180px;display: inline-block; background: #f8c400;} 
+
+/* LEVEL THREE */
+.navigation ul li:hover > ul { visibility: hidden; }
+
+/* index */
+.in_de_kijker{
+    border: 3px solid #F8C400;
+    border-radius: 3px;
+    width:190px;
+    margin:5px 6px 5px 0px;
+    padding:5px;
+    float:left;
+}
+.kijker-block .in_de_kijker:last-child{
+    margin-right:0;
+}
+
+.in_de_kijker img{
+    float:left;
+    margin-right:5px;
+}
+
+.in_de_kijker .lees_meer{
+    text-align: right;
+}
+
+#meer_nieuws{
+    clear:both;
+    float: right;
+}
+#meer_nieuws img{
+    width:15px;
+    
+}
+
+#wegwijs {
+	width: 26%;
+	padding: 1% 1% 1.2%;
+	border-radius: 3px;
+        border: 3px solid #f8c400;
+	/* toegevoegd door Sam */	
+	overflow: auto;
+}
+
+#primary #wegwijs a {
+	padding: 0;
+	color: #fff;
+	border-bottom-style: none;
+	/* Toegevoegd door Sam */
+	/*font-size: 100%;
+	line-height: 22px;
+	display: block;*/
+	font-weight: normal;
+	font-style: normal;
+}
+
+#primary #wegwijs a:hover, #primary #wegwijs a:focus {
+	color: #f8efce;
+}
+
 /* carrousel
 ------------------------------------------------------------------ */
 #carousel-block {
     width: 70%;
+    clear:both;
 }
+#carousel-container {
+    position: relative;   
+    width: 100%;
+}
+
 
 .cycle{
     clear:both;    
@@ -462,33 +554,6 @@ ul.uitgelicht-list li li {
     -webkit-box-shadow: 1px 1px 2px 0 #999;
     box-shadow:         1px 1px 2px 0 #999;
 }
-
-#wegwijs {
-	width: 26%;
-	background-color: #f8c400;
-	padding: 1% 1% 1.2%;
-	border-radius: 4px;
-	/* toegevoegd door Sam */
-	max-height: 500px;
-	overflow: auto;
-}
-
-#primary #wegwijs a {
-	padding: 0;
-	color: #fff;
-	border-bottom-style: none;
-	/* Toegevoegd door Sam */
-	/*font-size: 100%;
-	line-height: 22px;
-	display: block;*/
-	font-weight: normal;
-	font-style: normal;
-}
-
-#primary #wegwijs a:hover, #primary #wegwijs a:focus {
-	color: #f8efce;
-}
-
 
 .item-description table tbody tr td table td:first-child {
 	width: 30%;

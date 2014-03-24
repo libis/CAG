@@ -1,4 +1,4 @@
-$(function(){
+jQuery(function(){
 
     var config = {    
          sensitivity: 1, // number = sensitivity threshold (must be 1 or higher)    
