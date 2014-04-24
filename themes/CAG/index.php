@@ -79,7 +79,7 @@
         <?php echo libis_get_news(); ?>
         <?php echo libis_get_agenda(); ?>
         <div id="wegwijs-social">
-            <?php echo social_bookmarking_toolbar(url("/"), option('site_title'), get_theme_option('Homepage Text')); ?>
+            <?php echo addThis_add(); ?>
         </div>    
     </div>
     
