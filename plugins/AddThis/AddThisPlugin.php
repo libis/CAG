@@ -5,22 +5,16 @@
  * The button script can also be adjusted in the configuration menu
  */
 
-    class AddThisPlugin extends Omeka_Plugin_AbstractPlugin
-    {
+class AddThisPlugin extends Omeka_Plugin_AbstractPlugin
+{
 
-         // Define Hooks
-        protected $_hooks = array(
-            'install',
-            'uninstall',
-            'config_form',
-            'config'
-        );
-
-        //Add filters
-        protected $_filters = array(
-            'public_navigation_main'
-        );
-
+    // Define Hooks
+    protected $_hooks = array(
+        'install',
+        'uninstall',
+        'config_form',
+        'config'
+    );      
 
     //link to config_form.php
     public function hookConfigForm() {
@@ -28,10 +22,9 @@
     }
 
     //process the config_form
-    public function hookConfig($args) {
-            $post = $args['post'];
+    public function hookConfig() {
             //set script
-            set_option('addThis_script',$post['addThis_script']);
+            set_option('addThis_script',$_POST['addThis_script']);
     }
 
     //handle the installation
