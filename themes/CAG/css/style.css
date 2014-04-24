@@ -68,7 +68,7 @@ a:active { color: #ff3300;}
 h3 a {text-decoration:none;}
 
 table {margin-bottom:1.3333em;}
-td {padding: 8px;}
+
 blockquote {margin-left:2.6667em;margin-right:2.6667em;font-style:italic;}
 
 
@@ -80,9 +80,7 @@ blockquote {margin-left:2.6667em;margin-right:2.6667em;font-style:italic;}
 	.navigation li {/*display:inline;*/}
 	.navigation a {text-decoration:none;}
 
-.item-pagination {overflow:hidden;width:512px; margin-bottom:1.5em;border-top:1px solid #ccc; padding-top:1.5em;}
-.item-pagination li.previous {display:block;float:left; width:48%;}
-.item-pagination li.next {float:right; display:block;width: 48%; text-align:right}
+
 
 /* Forms */
 legend {font-size:1em;}
@@ -179,8 +177,7 @@ p img{float:left; padding-right:10px;padding-bottom:10px; }
 
 	#nav-section{background:#f8c400;padding:5px;}	
 
-	#carousel-block{float:left;width:550px;margin:0;}
-	#wegwijs{float:right;width:175px;padding:20px 0;}
+	#carousel-block{float:left;width:550px;margin:0;}	
 
 	#secondary-nav {margin-bottom:1em;border-top:1px solid #ccc;; border-bottom:1px solid #ccc;margin-bottom:0;padding:5px;  }
 	#secondary-nav li {padding:0.5em 0;}
@@ -203,8 +200,7 @@ p img{float:left; padding-right:10px;padding-bottom:10px; }
 		#browse-left {float:left;width:70%;padding-bottom:20px;}
 		#browse-right {float:right; width: 20%;padding-right:30px;}
 		.toggle:hover{text-decoration:underline;}
-
-		.item-description th,td{padding:0px;}
+		
 		.item-description img{width:100px; height:100px;  border:2px solid #669999;}
 
 		#featured-item {width:100%; clear:both;}

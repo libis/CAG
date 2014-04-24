@@ -3,7 +3,7 @@
 
   $pageTitle = __('Browse Items'); //TODO: Should this be browse items?
   echo head(array('title' => $pageTitle, 'id' => 'items', 'bodyclass' => 'browse'));
-  
+  $view='default';
   $session = new Zend_Session_Namespace('pagination_help');
   $per_page = $session->per_page;
   
@@ -89,10 +89,8 @@ jQuery(document).ready(function() {
       
         <div id="results">              
             <div id="appliedParams">
-                <ul>
-
                 <!-- Get the applied facets. -->
-                <?php foreach (SolrSearch_Helpers_Facet::parseFacets() as $f): ?>
+                <?php foreach (SolrSearch_Helpers_Facet::parseFacets() as $f): ?>               
                   <span class="appliedFilter">
 
                     <!-- Facet label. -->
@@ -110,12 +108,96 @@ jQuery(document).ready(function() {
               
                 <?php //echo SolrSearch_QueryHelpers::removeFacets(); ?>
             </div>
+            
+            
+            <?php 
+            //KIES VIEW
+            if(isset($_GET['facet'])){
+                $facet = $_GET['facet'];
+                
+                if(strpos($facet,'itemtype:("Nieuwsbericht" OR "Agendapunt")') !== false) {
+                    $view = 'nieuws';
+                }
+                if(strpos($facet,'itemtype:"Publicatie"') !== false) {
+                    $view = 'publicatie';
+                }
+                if(strpos($facet,'itemtype:"Project"') !== false) {
+                    $view = 'project';
+                }                    
+            }            
+            
+            //VIEW = NIEUWS EN AGENDA
+            if($view=='nieuws'){
+                $featured="";$nieuws ="";$agenda="";
+                foreach($results->response->docs as $doc):
+                   $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id'))); 
 
-            <?php foreach($results->response->docs as $doc): ?>
-                <?php
-                    $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id')));
-                    
-                                          
+                   if($item->getItemType()->name == 'Nieuwsbericht' ||$item->getItemType()->name == 'Agendapunt'){
+                       $html = "<div class='in_de_kijker' id='solr_".$doc->__get('id')."'>";                        
+                       if($item->hasThumbnail()):
+                           $html .= link_to_item(item_image('square_thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
+                       endif;
+                       $html .= "<h4>".metadata($item,array('Dublin Core','Title'))."</h4>
+                       <p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p> </div>";
+
+                       if($item->featured==1){$featured .= $html;}
+                       else{
+                           if($item->getItemType()->name == 'Nieuwsbericht'){$nieuws .=$html;}
+                           if($item->getItemType()->name == 'Agendapunt'){$agenda .=$html;}
+                       }
+                   }
+                endforeach;
+                
+                if($featured){
+                    echo "<div class='nieuws-kolom'><h2>In de kijker</h2>".$featured."</div>";
+                }
+                if($nieuws){
+                    echo "<div class='nieuws-kolom'><h2>Nieuws</h2>".$nieuws."</div>";
+                }
+                if($agenda){
+                    echo "<div class='nieuws-kolom'><h2>Agenda</h2>".$agenda."</div>";
+                }
+            }
+            
+            //VIEW = PUBLICATIE (PUBLICATIE, PROJECT)
+            if($view=='publicatie' || $view=='project'){
+                echo '<div id="info"></div>';
+                if($view == 'publicatie'){?>                    
+                    <script>jQuery("#info").load('/info/ #publicatie');</script>
+                <?php }
+                if($view == 'project'){?>
+                    <script>jQuery("#info").load('/info/ #project');</script>
+                <?php } ?>  
+                <table id='publicatie-tabel'><tr>
+                <?php        
+                $side = 'left';
+                foreach($results->response->docs as $doc):
+                   $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id'))); 
+
+                   if($item->getItemType()->name == 'Publicatie' ||$item->getItemType()->name == 'Project'){
+                       $html = "<td><div class='publicatie' id='solr_".$doc->__get('id')."'>";                        
+                       if($item->hasThumbnail()):
+                           $html .= link_to_item(item_image('square_thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
+                       endif;
+                       $html .= "<div class='publicatie-text'><h4>".metadata($item,array('Dublin Core','Title'))."</h4>
+                       <p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p> </div></div></td>";
+                      
+                       if($side == 'left'){
+                           $side = 'right';
+                       }else{
+                           $side = 'left';
+                           $html .= "</tr><tr>";
+                       }
+                       echo $html;
+                   }
+                endforeach;
+                echo "</tr></table>";
+            }
+                
+            //VIEW = DEFAULT (OBJECT, COLLECTIE, CONCEPT)
+            if($view=='default'){
+                foreach($results->response->docs as $doc):                   
+                    $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id')));                                         
                 ?>
                 <div class="item" id="solr_<?php echo $doc->__get('id'); ?>">
                     <div class="details">
@@ -132,31 +214,41 @@ jQuery(document).ready(function() {
                                         <?php //echo SolrSearch_ViewHelpers::createResultImgHtml($image, SolrSearch_ViewHelpers::getDocTitle($doc)); ?>
                                     </div>
                                 <?php } ?>
-                               
+
                                 <!-- OBJECT -->
                                 <?php if($item->getItemType()->name == 'Object'){?>
 
                                     <div class="title">
                                         <?php $beelden="<table width='300'><th width='120'></th><th></th>";
-                                        if(metadata($item,array('Item Type Metadata','Objectnaam')))
-                                            $beelden.="<tr><td><strong>Objectnaam:</strong></td><td>".link_to_item(ucfirst(metadata($item,array('Item Type Metadata','Objectnaam'))))."</td></tr>";
-                                         if(metadata($item,array('Dublin Core','Title')))
-                                            $beelden.="<tr><td><strong>Titel:</strong></td><td>".link_to_item(ucfirst(metadata($item,array('Dublin Core','Title'))))."</td></tr>";
-                                        if(metadata($item,array('Dublin Core','Publisher')))
-                                            $beelden.="<tr><td><strong>Naam Instelling:</strong></td><td>".metadata($item,array('Dublin Core','Publisher'))."</td></tr>";
+                                        if(metadata($item,array('Dublin Core','Title')))
+                                          $beelden.="<tr><td><strong>Titel:</strong></td><td>".link_to_item(ucfirst(metadata($item,array('Dublin Core','Title'))))."</td></tr>";
+                                        
                                         if(metadata($item,array('Dublin Core','Identifier'))){
                                             $identifier = metadata($item,array('Dublin Core','Identifier'));
                                             $beelden.="<tr><td><strong>Nummer:</strong></td><td>".$identifier."</td></tr>";
                                         }
+                                        
+                                        if(metadata($item,array('Item Type Metadata','Objectnaam')))
+                                            $beelden.="<tr><td><strong>Objectnaam:</strong></td><td>".link_to_item(ucfirst(metadata($item,array('Item Type Metadata','Objectnaam'))))."</td></tr>";
+                                        
+                                        if(metadata($item,array('Dublin Core','Publisher')))
+                                            $beelden.="<tr><td><strong>Naam Instelling:</strong></td><td>".metadata($item,array('Dublin Core','Publisher'))."</td></tr>";
+                                       
                                         if(metadata($item,array('Dublin Core','Type')))
                                             $beelden.="<tr><td><strong>Objectcategorie:</strong></td><td>".metadata($item,array('Dublin Core','Type'))."</td></tr>";
+                                        
+                                        if(metadata($item,array('Dublin Core','Description')))
+                                            $beelden.="<tr><td><strong>Beschrijving:</strong></td><td>".metadata($item,array('Dublin Core','Description'),array('snippet'=>200))."</td></tr>";
+                                       
+                                        
                                         $beelden.="</table></td></tr></table>";
+                                        
                                         echo $beelden;
                                         ?>
                                     </div>
                                 <?php } ?>
 
-                                <!-- Actor -->
+                                <!-- Collectie -->
                                 <?php if($item->getItemType()->name == 'Collectie'){                                                   
                                     if(digitool_item_has_digitool_url($item)){ ?>
                                     <div class="image">
@@ -165,7 +257,7 @@ jQuery(document).ready(function() {
                                     </div>
                                     <?php }
                                     $actoren= "<table><th width='120'></th><th></th>";
-                                    
+
                                     if(metadata($item,array('Item Type Metadata','Naam instelling')))
                                         $actoren.= "<tr><td><strong>Naam Instelling:</strong></td><td>".metadata($item,array('Item Type Metadata','Naam instelling'))."</td></tr>";
                                     if(metadata($item,array('Item Type Metadata','Straat + Nr')))
@@ -184,13 +276,15 @@ jQuery(document).ready(function() {
                                         $actoren.= "<tr><td><strong>Website:</strong></td><td>".metadata($item,array('Item Type Metadata','Website'))."</td></tr>";
                                     if(metadata($item,array('Item Type Metadata','E-mail')))
                                         $actoren.= "<tr><td><strong>E-mail:</strong></td><td>".metadata($item,array('Item Type Metadata','E-mail'))."</td></tr>";
-
+                                    if(metadata($item,array('Dublin Core','Description')))
+                                           $actoren.="<tr><td><strong>Beschrijving:</strong></td><td>".metadata($item,array('Dublin Core','Description'),array('snippet'=>200))."</td></tr>";
+                                       
                                     $actoren .="</table>";//.plugin_append_to_items_browse_each();
                                 ?>
                                     <div class="title"><?php echo $actoren; ?></div>
                                 <?php }?>
 
-                                <!-- WERKTUIG -->
+                                <!-- concept -->
                                 <?php if($item->getItemType()->name == 'Concept'){?>
                                     <div class="title">
                                     <?php $werktuigen ="<table><tr><td><strong>
@@ -219,7 +313,7 @@ jQuery(document).ready(function() {
                                         }?>    
                                     </div>
                                 <?php } ?>    
-                               
+
                                 <? }else{ ?>                      
                                     <div class="title">
                                         <h3><a href="<?php echo $doc->url; ?>" class="result-title">
@@ -238,7 +332,7 @@ jQuery(document).ready(function() {
                                         <?php endforeach; ?>
                                       </ul>
                                     <?php endif; ?>
-                                    
+
                                     <div class='textfields'>    
                                         <?php $tags = $doc->__get('tag');?> 
                                         <?php if($tags){ ?>
@@ -264,6 +358,7 @@ jQuery(document).ready(function() {
                     </div>
                 </div>
             <?php endforeach; ?>
+            <?php } ?>
         </div>
     </div>
     

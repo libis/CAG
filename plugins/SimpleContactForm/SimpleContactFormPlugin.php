@@ -99,6 +99,18 @@ function hookDefineRoutes($args)
 	        )
 	    )
 	);
+        
+        $router->addRoute(
+	    'simple_contact_form_bestel', 
+	    new Zend_Controller_Router_Route(
+	        SIMPLE_CONTACT_FORM_PAGE_PATH.'bestel', 
+	        array(
+	            'module'       => 'simple-contact-form', 
+	            'controller'   => 'index', 
+	            'action'       => 'bestel', 
+	        )
+	    )
+	);
 
 }
 

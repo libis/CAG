@@ -15,11 +15,10 @@
         <div id="item-block" class="kijker-block">
             <?php
                 echo libis_get_featured_news();                
-            ?>
-           
+            ?>           
         </div>    
         
-        <div id="meer_nieuws"><p><a href=""><img src="<?php echo img('arrow-right.png');?>">Meer nieuws</a></p></div>
+        <div id="meer_nieuws"><p><a href='<?php echo url('solr-search/results?q=&facet=itemtype:("Nieuwsbericht" OR "Agendapunt")') ?>'><img src="<?php echo img('arrow-right.png');?>">Meer nieuws</a></p></div>
         
         <div id="carousel-container">
             <div id="item-block">
@@ -70,27 +69,22 @@
         </div>             
     </div>
     
-    <div id="wegwijs2"></div>
-    <script>jQuery("#wegwijs2").load('/telex/ #wegwijs');</script>
-
+    <div id="wegwijs">
+        <div class="logo" ><center><img src="<?php echo (img("cag_logo.jpg"));?>" /></center></div>
+        <div class="wegwijs-block">
+            <h2>Nieuwsbrief</h2>
+            <div id="inschrijven"><a href="<?php echo url("nieuwsbrief")?>">Inschrijven</a></div>
+            <div class="lees_meer"><a href="">Nieuwsbrief archief</a></div>
+        </div>
+        <?php echo libis_get_news(); ?>
+        <?php echo libis_get_agenda(); ?>
+        <div id="wegwijs-social">
+            <?php echo social_bookmarking_toolbar(url("/"), option('site_title'), get_theme_option('Homepage Text')); ?>
+        </div>    
+    </div>
+    
     <script>
-        /*
-	jQuery(document).ready(function() {            
-	    jQuery("#carousel2").featureCarousel({
-	        autoPlay: 0,
-	        trackerIndividual:false,
-	        trackerSummation:false,
-	        sidePadding:20
-	    });
-	    jQuery("#carousel3").featureCarousel({
-	        autoPlay: 0,
-	        trackerIndividual:false,
-	        trackerSummation:false,
-	        sidePadding:20
-	    });
-	});
-        */
-      
+          
     jQuery(document).ready(function($) {
 
         $('.rotator1').roundabout({

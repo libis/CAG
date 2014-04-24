@@ -111,46 +111,48 @@ function Libis_get_exhibits($tag = "")
 	}
 	//tag 'algemeen' has different formatting then the others
 	if($tag=="algemeen"){
-		$html.= '<table class="exhibit_general_list"><tr>';
+		$html.= '<center><table class="exhibit_general_list"><tr>';
 
 		//foreach($exhibits as $exhibit) {
 
                 $html.= '<td>';
                 //set current exhibit
                 $exhibit = get_record_by_id('Exhibit',100010);
-               
+                //$html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
+                $html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, 'Landbouw')).'</p>';
                 if($exhibit->thumbnail){
                             $html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="150" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/>');
                 }
                 //takes care of the link and text
-                $html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
+               
                 $html.= '</td>';
 
-                $html.= '<td>';
+                /*$html.= '<td>';
                 //set current exhibit
                 $exhibit = get_record_by_id('Exhibit',100140);
-               
+                 $html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
                 if($exhibit->thumbnail){
                         $html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="150" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/>');
                 }
                 //takes care of the link and text
-                $html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
-                $html.= '</td>';
+               
+                $html.= '</td>';*/
 
                 $html.= '<td>';
                 //set current exhibit
                 $exhibit = get_record_by_id('Exhibit',100150);
-                
+                //$html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
+                $html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, 'Voedsel')).'</p>';
                 if($exhibit->thumbnail){
                         $html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="150" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/>');
                 }
                 //takes care of the link and text
-                $html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
+                
                 $html.= '</td>';
 
 		//}
 
-		$html.= '</tr></table>';
+		$html.= '</tr></table></center>';
 		return $html;
 	}
 	else{
@@ -246,16 +248,16 @@ function Libis_get_section_thumb($section){
 
 }
 
-function Libis_get_similar_objects($item_original){
-    $parent=item('Item Type Metadata','Ouder',array(),$item_original);
-    $titel = item('Dublin Core','Title',array(),$item_original);
+function libis_get_similar_objects($item_original){
+    $parent=metadata($item_original, array('Item Type Metadata','Ouder'));
+    $titel = metadata($item_original, array('Dublin Core','Title'));
     if($parent){
         $similars=array();
-        $items = get_items(array('type'=>'16'),10000);
+        $items = get_records('Item',array('type'=>'16'),10000);
         foreach($items as $item){
-            if((item('Item Type Metadata','Ouder',array(),$item) == $parent
-                    || item('Dublin Core','Title',array(),$item) == $parent
-                    || item('Item Type Metadata','Ouder',array(),$item) == $titel
+            if((metadata($item, array('Item Type Metadata','Ouder')) == $parent
+                    || metadata($item, array('Dublin Core','Title')) == $parent
+                    || metadata($item, array('Item Type Metadata','Ouder')) == $titel
                     ) && $item_original->id != $item->id){
                 if(digitool_item_has_digitool_url($item)){
                     $similars[] = $item;
@@ -892,10 +894,48 @@ function libis_get_featured_news(){
                       
         $html .= "<h4>".metadata($item,array('Dublin Core','Title'))."</h4>
                 <p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p>";
-        $html .= "<div class='lees_meer'>".link_to_item(__("Lees verder"),array(),'show', $item)."</div></div>";
+        $html .= "<div class='lees_meer'>".link_to_item(__("Lees verder.."),array(),'show', $item)."</div></div>";
         
     }
     
+    return $html;
+}
+
+function libis_get_news(){
+    $html = "<div class='wegwijs-block'>";   
+    $html .="<h2>Recent Nieuwsberichten</h2>";
+    $nieuws = get_records('Item',array('type'=>'Nieuwsbericht','featured'=>true,'sort_field'=>'added','sort_dir'=>'d'),3);
+    foreach($nieuws as $item){
+        $html .= "<div class='wegwijs-item'>";
+        if($item->hasThumbnail()):
+            $html .= link_to_item(item_image('square_thumbnail', array('width'=>'60'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
+        endif;
+                      
+        $html .= link_to_item("<h4>".metadata($item,array('Dublin Core','Title'))."</h4>",array(), 'show', $item);
+        $html .= "<p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p>";
+        $html .= "</div>";
+        
+    }
+    $html .= '<div class="lees_meer"><a href="'.url('solr-search/results?q=&facet=itemtype:("Nieuwsbericht" OR "Agendapunt")').'">Lees meer..</a></div></div>';
+    return $html;
+}
+
+function libis_get_agenda(){
+    $html = "<div class='wegwijs-block'>";   
+    $html .="<h2>Agenda</h2>";
+    $agenda = get_records('Item',array('type'=>'Agendapunt','featured'=>true,'sort_field'=>'added','sort_dir'=>'d'),3);
+    foreach($agenda as $item){
+        $html .= "<div class='wegwijs-item'>";
+        if($item->hasThumbnail()):
+            $html .= link_to_item(item_image('square_thumbnail', array('width'=>'60'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
+        endif;
+                      
+        $html .= link_to_item("<h4>".metadata($item,array('Dublin Core','Title'))."</h4>",array(), 'show', $item);
+        $html .= "<p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p>";
+        $html .= "</div>";
+        
+    }
+    $html .= '<div class="lees_meer"><a href="'.url('solr-search/results?q=&facet=itemtype:("Nieuwsbericht" OR "Agendapunt")').'">Lees meer..</a></div></div>';
     return $html;
 }
 ?>

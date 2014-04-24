@@ -116,7 +116,7 @@ function exhibit_builder_link_to_exhibit_item($text = null, $props = array(), $i
 
     $uri = exhibit_builder_exhibit_item_uri($item);
     $text = (!empty($text) ? $text : strip_formatting(metadata($item, array('Dublin Core', 'Title'))));
-    $html = '<a href="' . html_escape($uri) . '" '. tag_attributes($props) . '>' . $text . '</a>';
+    $html = '<a href="' . html_escape($uri) . '" '. tag_attributes($props) . '>' .link_to_item(digitool_get_thumb($item,true,false,400), array(), 'show', $item) . '</a>';
     $html = apply_filters('exhibit_builder_link_to_exhibit_item', $html, array('text' => $text, 'props' => $props, 'item' => $item));
     return $html;
 }

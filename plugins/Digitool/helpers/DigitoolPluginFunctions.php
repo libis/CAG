@@ -209,7 +209,7 @@ function digitool_get_thumb_for_home($item){
         $thumb =  $digis[0]->get_thumb();
         $view =  $digis[0]->get_view();
 
-        return '<a href="'.item_uri("show",$item).'" ><img src="'.$thumb.'" alt="'.item('Dublin Core','Title',array(),$item).'"></a>';
+        return '<a href="'.url($item).'" ><img src="'.$thumb.'" alt="'.metadata($item,array('Dublin Core','Title')).'"></a>';
     }
 }
 
@@ -238,7 +238,7 @@ function digitool_simple_gallery($item,$size=500,$type='object'){
                 $view =  $digis[0]->get_view();
 
                 $resize = digitool_resize_dimensions($size,$size,$thumb);
-		$html.="<div id='image'><a href='".$link."'><img height='".$resize['height']."' width='".$resize['width']."' src='".$thumb."' /></a></div>";
+		$html ="<div id='image'><a href='".$view."'><img height='".$resize['height']."' width='".$resize['width']."' src='".$thumb."' /></a></div>";
 
 		return $html;
 	}else{
@@ -370,11 +370,11 @@ function digitool_find_items_with_same_pid($item=null,$pid=null){
                 ORDER BY item_id ASC
         ");
 
-	$items = $select->fetchAll();
+	$s_items = $select->fetchAll();
 
-	foreach($items as $item){
-            if($item['item_id'] != $item->id){
-                return $item['item_id'];
+	foreach($s_items as $s_item){
+            if($s_item['item_id'] != $item->id){
+                return $s_item['item_id'];
             }
 	}
 
@@ -417,6 +417,10 @@ function digitool_resize_dimensions($goal_width,$goal_height,$imageurl) {
         $width = $size[0];
         $height = $size[1];
     }    
+    
+    $return['width'] = $width;
+    $return['height'] = $height;        
+    
     // If the ratio > goal ratio and the width > goal width resize down to goal width
     if ($width/$height > $goal_width/$goal_height && $width > $goal_width) {
         $return['width'] = $goal_width;
@@ -425,10 +429,10 @@ function digitool_resize_dimensions($goal_width,$goal_height,$imageurl) {
     // Otherwise, if the height > goal, resize down to goal height
     else if ($height > $goal_height) {
         $return['width'] = $goal_height/$height * $width;
-        $return['height'] = $goal_height;
+        $return['height'] = $goal_height;        
     }
     
-    return $return;
+    
 }
 
 

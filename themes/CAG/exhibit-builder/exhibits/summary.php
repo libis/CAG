@@ -15,23 +15,18 @@
 </div>
 <br>
 <div id="exhibit-sections">	
-	
 	<h2>Inhoudstafel</h2>	
-	<?php $i=1; ?>
-	    <?php set_exhibit_pages_for_loop_by_exhibit(); ?>
-        <?php foreach (loop('exhibit_page') as $exhibitPage): ?>
-	    	<div class="exhibit-sections-item">
-    		<?php //echo(Libis_get_section_thumb(get_current_exhibit_section()));?>
-              
-        <?php echo exhibit_builder_page_summary($exhibitPage); ?>
-          
-    		<!--<h3><a href="<?php echo exhibit_builder_exhibit_uri(get_current_exhibit(), get_current_exhibit_section()); ?>"><?php echo ($i.". ".html_escape(exhibit_section('title'))); ?></a></h3>
-			<?php echo exhibit_section('description'); ?>
-			<?php $i++;?>
-		-->
-		</div>
-	<?php endforeach; ?>
+        <div class="exhibit-sections-item">
+        <ul id="inhoudstafel">
+            <?php set_exhibit_pages_for_loop_by_exhibit(); ?>
+            <?php foreach (loop('exhibit_page') as $exhibitPage): ?>
+            
+            <?php echo exhibit_builder_page_summary($exhibitPage); ?>
+           
+            <?php endforeach; ?>
+        </ul>	
+        </div>        
 </div>
-<?php addThis_add(); ?>
+<?php //addThis_add(); ?>
 </div>
 <?php echo foot(); ?>

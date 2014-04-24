@@ -290,7 +290,7 @@ function exhibit_builder_link_to_parent_page($text = null, $props = array(), $ex
             $props['class'] = 'parent-page';
         }
         if ($text === null) {
-            $text = '&uarr; ' . metadata($parentPage, 'title');
+            $text = metadata($parentPage, 'title');
         }
         return exhibit_builder_link_to_exhibit($exhibit, $text, $props, $parentPage);
     }

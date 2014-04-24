@@ -124,7 +124,7 @@ class SocialBookmarkingPlugin extends Omeka_Plugin_AbstractPlugin
             $url = record_url($item, 'show', true);
             $title = strip_formatting(metadata($item, array('Dublin Core', 'Title')));
             $description = strip_formatting(metadata($item, array('Dublin Core', 'Description')));
-            echo '<h2>' . __('Social Bookmarking') . '</h2>';
+            
             echo social_bookmarking_toolbar($url, $title, $description);
         }
     }

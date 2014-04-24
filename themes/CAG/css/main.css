@@ -72,10 +72,28 @@ body {
 	padding-left: 20px;
 }
 
-#page, #exhibit-sections {
-	
+#page, #exhibit-sections {	
 	margin: 0;
         overflow: hidden;
+}
+
+#inhoudstafel{   
+    font-size:120%;
+}
+
+#exhibit-page h2{
+    clear:none;
+    overflow: hidden;
+}
+
+.text-image-left{
+    overflow:hidden;
+}
+
+#exhibit-sections ul li ul{    
+    margin:10px 0 15px 25px;
+    font-size:12px;
+    list-style: disc outside none; 
 }
 
 #page:nth-child(2) {
@@ -170,7 +188,7 @@ div#header {
 	line-height: 1.8em;        
 }
 
-#submit_search, #submit_search_advanced,#simple-search input[type="submit"] {	
+#submit_search,#beeldbank-search input[type="submit"], #submit_search_advanced,#simple-search input[type="submit"] {	
         background-color: #9f7c15;
 	border-style: none;
 	font: bold 12px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
@@ -257,7 +275,7 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
     border: 3px solid #F8C400;
     border-radius: 3px;
     width:190px;
-    margin:5px 6px 5px 0px;
+    margin:5px 6px 10px 0px;
     padding:5px;
     float:left;
 }
@@ -267,7 +285,7 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
 
 .in_de_kijker img{
     float:left;
-    margin-right:5px;
+    margin:0 5px 8px 0;
 }
 
 .in_de_kijker .lees_meer{
@@ -275,37 +293,89 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
 }
 
 #meer_nieuws{
-    clear:both;
-    float: right;
-}
-#meer_nieuws img{
-    width:15px;
-    
+    clear:both;    
+    text-align: right; 
+    margin-bottom:10px;
 }
 
-#wegwijs {
-	width: 26%;
-	padding: 1% 1% 1.2%;
-	border-radius: 3px;
-        border: 3px solid #f8c400;
-	/* toegevoegd door Sam */	
-	overflow: auto;
+#meer_nieuws img{
+    width:15px;
+    margin-left:542px;
+    padding:0;
+}
+
+#wegwijs{
+    float:right;
+    width: 28%;   
+}
+
+#wegwijs .logo{
+    margin-bottom:10px;
+}
+    
+.wegwijs-block {    
+    padding: 5px;
+    margin-bottom:10px;
+    border-radius: 3px;
+    border: 3px solid #f8c400; 
+    /* toegevoegd door Sam */	
+    overflow: auto;
+}
+
+#inschrijven{
+    width:50%;
+    text-align:center;
+    background-color: #669999;
+    border-radius: 3px;   
+    font-size: 1em;
+    font-weight:bold;
+    text-transform: uppercase;
+    line-height: 1.2em;
+    margin: 1.5em auto;
+    padding: 4px 4px;
+}
+
+#inschrijven a{
+    color: #FFFFFF;
+}
+
+.wegwijs-block img{
+    float:left;    
+    margin:0 5px 8px 0;
+}
+
+.wegwijs-item{
+    clear:both;
+    margin-bottom:10px;
+}
+
+.lees_meer{
+    text-align:right;
+    clear:both;
+    margin-top:5px;
+    padding-top:5px;
+    border-top:1px dotted #F0ECEC;
 }
 
 #primary #wegwijs a {
-	padding: 0;
-	color: #fff;
-	border-bottom-style: none;
-	/* Toegevoegd door Sam */
-	/*font-size: 100%;
-	line-height: 22px;
-	display: block;*/
-	font-weight: normal;
-	font-style: normal;
+    padding: 0;
+    color: #fff;
+    border-bottom-style: none;
+    /* Toegevoegd door Sam */
+    /*font-size: 100%;
+    line-height: 22px;
+    display: block;*/
+    font-weight: normal;
+    font-style: normal;
 }
 
 #primary #wegwijs a:hover, #primary #wegwijs a:focus {
 	color: #f8efce;
+}
+
+#wegwijs-social{
+    margin-top:10px;
+    float:right;
 }
 
 /* carrousel
@@ -393,6 +463,23 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
     width: 100%;
 }
 
+/* show */
+#geolocation{
+    margin-bottom:10px;
+}
+#geolocation h2{
+    display:none;
+}
+
+.addthis_toolbox{
+    float:right;
+    
+}
+
+.item-pagination {overflow:hidden;clear:both; margin-bottom:0.5em 0;padding-top:1.5em;}
+.item-pagination li.previous {display:block;float:left; width:48%;}
+.item-pagination li.next {float:right; display:block;width: 48%; text-align:right}
+
 /* show-gallery
 -------------------------------------------------------------------*/
 #gallery{
@@ -416,6 +503,23 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
 #gallery-thumbnails img{
 	padding: 0 0 10px 10px;
 	min-height:40px;
+}
+
+/* kaart */
+.map-right{
+    width:260px;
+    float:right;
+    text-align:right;
+    margin-bottom:10px;
+}
+.map-left{
+    width:500px;
+    float:left;
+    
+}
+
+#map-block{
+    clear:both;
 }
 
 /* text
@@ -447,7 +551,7 @@ span.breadcrumb {
 }
 
 /* toegevoegd door Sam */
-#page h1 {display:none;}
+#page h1 {}
 
 #primary h2 {
 	line-height: 150%;
@@ -570,7 +674,16 @@ address {
 
 #form-instructions {
 	margin-bottom: 20px;
-	background-color: #f0ecec;
+	background-color: #F7F9F9;
+}
+
+#form-instructions img{
+    float:right;
+}
+
+#flash{
+    margin-bottom:5px;
+    color:red;
 }
 
 #contact-form .field {
@@ -592,6 +705,8 @@ address {
 
 #contact-form textarea {
 	height: 180px;
+        font-weight: normal;
+        font-size:110%;
 }
 
 #contact-form input:hover, #contact-form input:focus, #contact-form textarea:hover, #contact-form textarea:focus {
@@ -610,13 +725,36 @@ address {
 	background-color: #f8c400;
 }
 
+#publicatie-persoon{
+    float:left;
+    width:28%;    
+}
+
+#publicatie-bestelling{    
+    overflow:hidden;
+    padding:10px;
+}
+#contact-form table{
+    border-collapse: separate;
+    border-spacing:10px;
+    background:#F7F9F9;
+}
+
+#contact-form td{
+    text-align:left;
+}
+
+#contact-form th{
+    text-align:left;
+}
+
 /* nav-left
 ------------------------------------------------------------------ */
 
 #nav-left {
 	float: left;
 	width: 20%;
-        margin:10px 10px 0 0;        
+        margin:0px 10px 0 0;        
 }
 
 #nav-left img {
@@ -640,11 +778,13 @@ address {
 }
 
 #nav-left li {
-	
+    padding:4px 0;
+    border-bottom:1px dotted #C7CACA;
 }
 
 #nav-left li:last-child {
-	margin-bottom: 0px;
+    margin-bottom: 0px;
+    border:none;
 }
 
 #primary #nav-left a {
@@ -808,6 +948,57 @@ ul.navigation_footer {
 }
 
 /* solr */
+.nieuws-kolom{
+    width:200px;
+    float:left;
+    margin:0 5px;
+    overflow:hidden;
+}
+
+#results .nieuws-kolom h2{
+    font-size:100%;   
+}
+.nieuws-kolom .in_de_kijker{
+    float:none;
+    overflow:hidden;
+    width:92%;    
+    margin:5px 0;
+}
+
+#publicatie-tabel{
+    width:100%;
+    border-collapse: collapse;
+    border-style: hidden;
+}
+
+#publicatie-tabel td{
+    width:50%;
+    border: 10px solid white;
+}
+
+.publicatie{    
+    width:100%;
+    background-color: #F7F9F9;
+    border-bottom: 1px solid #FFFFFF;
+    float:left;
+    border: 1px solid #F8C400;
+    border-radius: 3px;
+    padding:5px 0;
+}
+
+.publicatie-text{
+    
+}
+
+.publicatie img{
+    padding:0px 5px 0px 5px;
+    float:left;
+}
+
+#info{
+    margin-bottom:10px;
+}
+
 .clearfix{
     *zoom:1
 }
@@ -1182,7 +1373,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini{
 #solr_results dt{float:left;line-height:14px;margin:0 8px 8 10px;text-align:right;width:137px}
 #solr_results .details .metadata dt{font-weight:bold}
 #solr_results .hide,#solr_results .print{height:1px;left:-1000em;position:absolute;top:-1000em;width:1px}
-#solr_results #results{float:right;width:70%;margin-bottom:1em;}
+#solr_results #results{float:right;width:71%;margin-bottom:1em;}
 
 #solr_results .solr_result_doc dt{float:left;width:125px;font-weight:bold;text-align:right;margin-right:25px}
 #solr_results .solr_facets_container{float:left;width:25%}

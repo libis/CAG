@@ -5,7 +5,11 @@
 ?>
 
 <div id="primary">
-<h1>Beeldbank</h1>
+<p id="simple-pages-breadcrumbs">
+    <a href="/">Home</a> > <a href="/beeldbank">Beeldbank</a>
+    > Erfgoed op de kaart
+</p>
+<h1>Erfgoed op de kaart</h1>
 
 <ul class="items-nav navigation" id="secondary-nav">
 	<?php //echo custom_nav_items(); ?>
@@ -20,7 +24,19 @@
 	?>
 </ul>
 <br>
-<h3>Aantal beelden op de kaart: <?php echo $totalItems; ?> </h3>
+<div class="map-left">
+    <div id="info"></div>
+    <script>jQuery("#info").load('/info/ #kaart');</script>
+</div>
+<div class="map-right">
+    <form id="beeldbank-search" method="get" action="/solr-search/results/" name="search-form">
+    <input id="query" type="text" title="Search" value="" name="q">
+    <input type='hidden' name='facet' value='itemtype:"Object"'>
+    <input type="submit" value="Zoeken" name="">
+    </form><br>
+    <h6>Aantal beelden op de kaart: <?php echo $totalItems; ?> </h6>
+</div>
+
 <br>
 <div id="map-block">
     <?php echo $this->googleMap('map-display', array('loadKml'=>true));?>    

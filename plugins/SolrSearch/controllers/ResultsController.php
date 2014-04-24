@@ -61,7 +61,7 @@ class SolrSearch_ResultsController
 
         // Execute the query.
         $results = $this->_search($start, $limit);
-        var_dump($results->response);
+        
         $max_page = intval($results->response->numFound/$limit);
         if($page > $max_page){$page = $max_page;}
         // Set the pagination.
