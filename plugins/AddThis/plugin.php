@@ -24,7 +24,7 @@
 
     //link to config_form.php
     public function hookConfigForm() {
-            include('config_form.php');
+        require dirname(__FILE__) .'/config_form.php';
     }
 
     //process the config_form
@@ -47,7 +47,7 @@
     }
 
     //the plug-in's output
-    function addThis_add() {
+    public function addThis_add() {
 
         echo "<div id='add_this_block'>".(get_option('addThis_script'))."</div>";
 

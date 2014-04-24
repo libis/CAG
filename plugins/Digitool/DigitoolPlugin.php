@@ -59,8 +59,7 @@ class DigitoolPlugin extends Omeka_Plugin_AbstractPlugin
         delete_option('digitool_view');
     }
     //link to config_form.php
-    public function hookConfigForm() {
-        echo "test";
+    public function hookConfigForm() {        
         require dirname(__FILE__) .'/config_form.php';
     }
     //process the config_form
