@@ -26,7 +26,7 @@
 <br>
 <div class="map-left">
     <div id="info"></div>
-    <script>jQuery("#info").load('/info/ #kaart');</script>
+    <script>jQuery("#info").load('<?php echo url('info');?> #kaart');</script>
 </div>
 <div class="map-right">
     <form id="beeldbank-search" method="get" action="/solr-search/results/" name="search-form">

@@ -163,10 +163,10 @@ jQuery(document).ready(function() {
             if($view=='publicatie' || $view=='project'){
                 echo '<div id="info"></div>';
                 if($view == 'publicatie'){?>                    
-                    <script>jQuery("#info").load('/info/ #publicatie');</script>
+                    <script>jQuery("#info").load('<?php echo url('info');?> #publicatie');</script>
                 <?php }
                 if($view == 'project'){?>
-                    <script>jQuery("#info").load('/info/ #project');</script>
+                    <script>jQuery("#info").load('<?php echo url('info');?> #project');</script>
                 <?php } ?>  
                 <table id='publicatie-tabel'><tr>
                 <?php        

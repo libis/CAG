@@ -65,7 +65,7 @@ class SimpleContactForm_IndexController extends Omeka_Controller_AbstractActionC
             
             $publicatie = isset($_POST['publicatie']) ? $_POST['publicatie'] : '';
                      
-	   // $captchaObj = $this->_setupCaptcha();
+	    $captchaObj = $this->_setupCaptcha();
                
 	    if ($this->getRequest()->isPost()) {    		
     		// If the form submission is valid, then send out the email
@@ -78,13 +78,13 @@ class SimpleContactForm_IndexController extends Omeka_Controller_AbstractActionC
 	    
 	    // Render the HTML for the captcha itself.
 	    // Pass this a blank Zend_View b/c ZF forces it.
-           /*if ($captchaObj) {
+            if ($captchaObj) {
                 $captcha = $captchaObj->render(new Zend_View);
             } else {
                 $captcha = '';
-            }*/
+            }
 
-            $this->view->assign(compact('naam','voornaam','email','straat','postcode','gemeente','publicatie','land'));
+            $this->view->assign(compact('naam','voornaam','email','straat','postcode','gemeente','publicatie','land','captcha'));
         }
 	
 	public function thankyouAction()
