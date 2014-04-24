@@ -4,6 +4,8 @@
  * You will be able to configure where to show it (items or collections)
  * The button script can also be adjusted in the configuration menu
  */
+//HELPERS
+require_once dirname(__FILE__) .'/helpers/AddThisPluginFunctions.php';
 
 class AddThisPlugin extends Omeka_Plugin_AbstractPlugin
 {
@@ -36,14 +38,7 @@ class AddThisPlugin extends Omeka_Plugin_AbstractPlugin
     //handle the uninstallation
     public function hookUninstall() {
         // Delete the plugin options
-       delete_option('addThis_script');				
+       delete_option('addThis_script');       
     }
-
-    //the plug-in's output
-    public function addThis_add() {
-
-        echo "<div id='add_this_block'>".(get_option('addThis_script'))."</div>";
-
-    }
-
+  
 }
