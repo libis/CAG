@@ -105,7 +105,7 @@ class DigitoolPlugin extends Omeka_Plugin_AbstractPlugin
 
     public function hookAfterSaveItem($item){
 
-        if(!$_POST['pid']){
+        if(!isset($_POST['pid'])){
             return false;
         }
 
