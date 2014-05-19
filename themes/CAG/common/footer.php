@@ -17,20 +17,20 @@
 		<div class="column right">
 						<h2>Organisatie</h2>
 							<ul>
-							<li><a href="http://www.cagnet.be/showpage.php?pageID=1">Missie en visie</a></li><!-- link CAG-->
-							<li><a href="http://www.cagnet.be/showpage.php?pageID=2">Diensten</a></li><!-- link CAG-->
-							<li><a href="http://www.cagnet.be/showpage.php?pageID=3">Team</a></li><!-- link CAG-->
-							<li><a href="http://www.cagnet.be/showpage.php?pageID=6">Projecten</a></li><!-- link CAG-->
-							<li><a href="http://www.cagnet.be/showpage.php?pageID=70">Wegbeschrijving</a></li><!-- link CAG-->
-							<li><a href="http://www.cagnet.be/showpage.php?pageID=98">Partners</a></li>
+							<li><a href="<?php echo url('over/missie/'); ?>">Missie en visie</a></li>
+							<li><a href="<?php echo url('werking/'); ?>">Diensten</a></li>
+							<li><a href="<?php echo url('team/'); ?>">Team</a></li>
+							<li><a href="<?php echo url('werking/projecten/'); ?>">Projecten</a></li>
+							<li><a href="<?php echo url('contact/'); ?>">Wegbeschrijving</a></li>
+							<li><a href="<?php echo url('over/partners/'); ?>">Partners</a></li>
 							</ul>
 		</div><!-- /.column -->
 		<div class="column  right ">
 		<h2>Communicatie</h2>
 							<ul>
 							<li><a href="<?php echo url("contact/");?>">Contact</a></li>
-							<li><a href="http://www.cagnet.be/showpage.php?pageID=19">Nieuwsbrief</a></li><!-- link CAG-->
-							<li><a href="http://www.cagnet.be/showpage.php?pageID=33">Publicaties</a></li><!-- link CAG-->
+							<li><a href="<?php echo url('nieuwsbriefarchief/'); ?>">Nieuwsbrief</a></li>
+							<li><a href="<?php echo url('bronnen/eigenpublicaties/'); ?>">Publicaties</a></li>
 							<li><a href="http://www.cagnet.be/showpage.php?pageID=26">English</a></li><!-- link CAG-->
 							<li><a href="http://www.cagnet.be/showpage.php?pageID=25 ">français</a></li><!-- link CAG-->
 							</ul>
