@@ -144,9 +144,8 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
             $mailer = Swift_Mailer::newInstance(
               Swift_SmtpTransport::newInstance('smtp.kuleuven.be')
             );
-            // Use AntiFlood to re-connect after 100 emails
-            $mailer->registerPlugin(new Swift_Plugins_AntiFloodPlugin(100));
-            // And specify a time in seconds to pause for (30 secs)
+           
+            //100 mails/30 seconden
             $mailer->registerPlugin(new Swift_Plugins_AntiFloodPlugin(100, 30));
             
             //loop through contacts
