@@ -140,11 +140,10 @@ jQuery(document).ready(function() {
                        $html .= "<h4>".metadata($item,array('Dublin Core','Title'))."</h4>
                        <p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p> </div>";
 
-                       if($item->featured==1){$featured .= $html;}
-                       else{
-                           if($item->getItemType()->name == 'Nieuwsbericht'){$nieuws .=$html;}
-                           if($item->getItemType()->name == 'Agendapunt'){$agenda .=$html;}
-                       }
+                       if($item->featured==1){$featured .= $html;}                       
+                       if($item->getItemType()->name == 'Nieuwsbericht'){$nieuws .=$html;}
+                       if($item->getItemType()->name == 'Agendapunt'){$agenda .=$html;}
+                      
                    }
                 endforeach;
                 
