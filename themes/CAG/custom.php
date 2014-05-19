@@ -903,8 +903,8 @@ function libis_get_featured_news(){
 
 function libis_get_news(){
     $html = "<div class='wegwijs-block'>";   
-    $html .="<h2>Recent Nieuwsberichten</h2>";
-    $nieuws = get_records('Item',array('type'=>'Nieuwsbericht','featured'=>true,'sort_field'=>'added','sort_dir'=>'d'),3);
+    $html .="<h2>Recente Nieuwsberichten</h2>";
+    $nieuws = get_records('Item',array('type'=>'Nieuwsbericht','recent'=>true,'sort_field'=>'added','sort_dir'=>'d'),5);
     foreach($nieuws as $item){
         $html .= "<div class='wegwijs-item'>";
         if($item->hasThumbnail()):
