@@ -774,7 +774,7 @@ function libis_get_type_organisations(){
     }    
     echo "<ul>";
     foreach($types as $type){        
-        echo "<li><a href='".url("/solr-search/results/?facet=221_s:%22".$type."%22 AND itemtype:%22Actor%22")."'>".$type."</li>";
+        echo "<li><a href='".url("/solr-search/results/?facet=226_s:%22".$type."%22 AND itemtype:%22Collectie%22")."'>".$type."</li>";
     }
         echo "</ul>";
      
