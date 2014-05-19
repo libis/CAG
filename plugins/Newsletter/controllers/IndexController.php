@@ -115,7 +115,7 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
             //get record to save
             $item = get_record_by_id('Item',$id);
             
-            //$item->delete();
+            $item->delete();
         }
         
         public function sendAction(){
@@ -269,7 +269,7 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                     $text = $db->getTable('ElementText')->fetchObject($select);                    
                     $item = get_record_by_id('Item',$text->record_id);
                     
-                    //$item->delete();
+                    $item->delete();
                    
                     $html = "Het uitschrijven is gelukt. Je bent niet langer geregistreerd op onze nieuwsbrief.";
                     
