@@ -13,9 +13,7 @@ define('NEWSLETTER_CONTACT_PAGE_INSTRUCTIONS', 'Please send us your comments and
 define('NEWSLETTER_THANKYOU_PAGE_TITLE', 'Thank You For Your Feedback');
 define('NEWSLETTER_THANKYOU_PAGE_MESSAGE', 'We appreciate your comments and suggestions.');
 define('NEWSLETTER_ADMIN_NOTIFICATION_EMAIL_SUBJECT', 'A User Has Contacted You');
-define('NEWSLETTER_ADMIN_NOTIFICATION_EMAIL_MESSAGE_HEADER', 'A user has sent you the following message:');
 define('NEWSLETTER_USER_NOTIFICATION_EMAIL_SUBJECT', 'Thank You');
-define('NEWSLETTER_USER_NOTIFICATION_EMAIL_MESSAGE_HEADER', 'Thank you for sending us the following message:');
 define('NEWSLETTER_ADD_TO_MAIN_NAVIGATION', 1);
 define('NEWSLETTER_DIR', dirname(__FILE__));
 
@@ -52,7 +50,7 @@ class NewsletterPlugin extends Omeka_Plugin_AbstractPlugin
                 Always make sure that the e-mail field is present, as well as Newsletter-contact-Newsletter and ewsletter-contact-Activiteiten.";
 
             //add elements
-            $contactemail = get_db()->getTable('Element')->findByElementSetNameAndElementName('Item Type Metadata', 'E-mail');
+            $contactemail = new Element;
             $contactnieuwsbrief = new Element;
             $contactactiviteiten = new Element;
 
@@ -70,6 +68,15 @@ class NewsletterPlugin extends Omeka_Plugin_AbstractPlugin
             try{
                 $contactactiviteiten->save();
                 $elements[]= $contactactiviteiten;
+            }catch(Exception $e){
+                $problem .= $e->getMessage();
+            }
+            
+            $contactemail->element_set_id = 3;
+            $contactemail->name = 'Email';            
+            try{
+                $contactemail->save();
+                $elements[]= $contactemail;
             }catch(Exception $e){
                 $problem .= $e->getMessage();
             }
@@ -93,9 +100,7 @@ class NewsletterPlugin extends Omeka_Plugin_AbstractPlugin
             set_option('newsletter_reply_from_email', get_option('administrator_email'));
             set_option('newsletter_forward_to_email', get_option('administrator_email'));
             set_option('newsletter_forward_to_email_admin_notification_email_subject', NEWSLETTER_ADMIN_NOTIFICATION_EMAIL_SUBJECT);
-            set_option('newsletter_admin_notification_email_message_header', NEWSLETTER_ADMIN_NOTIFICATION_EMAIL_MESSAGE_HEADER);
             set_option('newsletter_user_notification_email_subject', NEWSLETTER_USER_NOTIFICATION_EMAIL_SUBJECT);
-            set_option('newsletter_user_notification_email_message_header', NEWSLETTER_USER_NOTIFICATION_EMAIL_MESSAGE_HEADER);
             set_option('newsletter_contact_page_title', NEWSLETTER_CONTACT_PAGE_TITLE);
             set_option('newsletter_contact_page_instructions', NEWSLETTER_CONTACT_PAGE_INSTRUCTIONS);
             set_option('newsletter_thankyou_page_title', NEWSLETTER_THANKYOU_PAGE_TITLE);
