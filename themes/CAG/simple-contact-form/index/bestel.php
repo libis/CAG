@@ -58,20 +58,57 @@
                 <?php
                 $pubs = get_records('Item',array('featured'=>true,'type'=>'Publicatie'));
                 foreach($pubs as $pub){?>
-                <tr>
+                <tr class="publication-tr">
                 <?php 
-                    $titel = metadata($pub,array('Dublin Core','Title'));
+                    $titel = link_to_item(metadata($pub,array('Dublin Core','Title')), array('target'=>'_blank'),'show', $pub);
                     $prijs = metadata($pub,array('Item Type Metadata','Prijs'));
                     echo "<td>".$titel."</td>";
-                    echo "<td>".$prijs. "&euro;</td>";
-                    echo "<td>".$this->formText('publicatie['.$titel.'][aantal]', '0', array('class'=>'textinput','size'=>'3'))."</td>";
-                    echo "<td>".$this->formText('publicatie['.$titel.'][bedrag]', '0', array('class'=>'textinput','size'=>'3'))." &euro;</td>";
+                    echo "<td><div class='bestel-prijs'>".$prijs."</div> &euro;<input type='hidden' name='publicatie[".$titel."][prijs]' value='".$prijs."'></td>";
+                    echo "<td>".$this->formText('publicatie['.$titel.'][aantal]', '0', array('class'=>'textinput bestel-input','size'=>'3'))."</td>";
+                    echo "<td><div class='bestel-bedrag'>0</div> &euro;</td>";
                 ?>
-                </tr>                  
-                <?php } ?>
+                </tr>  
+                
+                <?php } ?>               
             </table>    
-                  
+            <b>Totaal: <div id="bestel-totaal">0</div> &euro;</b>   
     </div>    
+        
+    <script>
+        jQuery( document ).ready(function() {
+            var totaal;
+            jQuery(".publication-tr").each(function(){              
+               var prijs = jQuery(this).find('.bestel-input');               
+               var bedrag =  jQuery(this).find(".bestel-bedrag");
+               var nieuwBedrag;
+               
+               var ppe = jQuery(this).find(".bestel-prijs").html();
+               prijs.data('oldVal',prijs.val());
+
+               prijs.bind("propertychange keyup input paste",function(event){
+                    // If value has changed...
+                    if (prijs.data('oldVal') != prijs.val()) {
+                        // Updated stored value
+                        prijs.data('oldVal', prijs.val());
+                        nieuwBedrag = prijs.val()*ppe;               
+                        bedrag.html(nieuwBedrag);
+                    }
+                    getTotal();
+               });          
+               
+            });
+                       
+            function getTotal(){
+                var totaal = 0;
+                jQuery(".bestel-bedrag").each(function(){
+                    var number = jQuery(this).text();
+                    totaal = totaal + Number(number);
+                });
+                jQuery("#bestel-totaal").html(totaal);
+            }
+            
+        });
+    </script>
 
     <fieldset>
         <?php if ($captcha): ?>
@@ -85,6 +122,7 @@
         </div>	    
     </fieldset>
     </form>
+    
 </div>
 
 </div>

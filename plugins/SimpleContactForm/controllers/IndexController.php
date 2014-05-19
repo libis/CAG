@@ -63,15 +63,37 @@ class SimpleContactForm_IndexController extends Omeka_Controller_AbstractActionC
             $gemeente = isset($_POST['gemeente']) ? $_POST['gemeente'] : '';
             $land = isset($_POST['land']) ? $_POST['land'] : '';
             
-            $publicatie = isset($_POST['publicatie']) ? $_POST['publicatie'] : '';
-                     
+            $publicatie = isset($_POST['publicatie']) ? $_POST['publicatie'] : '';            
+                                 
 	    $captchaObj = $this->_setupCaptcha();
                
 	    if ($this->getRequest()->isPost()) {    		
     		// If the form submission is valid, then send out the email
     		if ($this->_validateBestelFormSubmission($captchaObj)) {
-		    $this->sendBestelEmailNotification($naam,$voornaam,$email,$straat,$gemeente,$postcode,$land,$publicatie);
+		    
+                    $message= "<h3>Bestelling publicaties</h3>";
+                    $message .= $voornaam." ".$naam."<br><br>";
+                    $message .= "Adres:<br>";
+                    $message .= $straat."<br>";
+                    $message .= $postcode." ".$gemeente."<br>";
+                    $message .= $land."<br><br>";
+                    $message .= "<h5>Publicaties</h5>
+                        <table>
+                            <tr>
+                            <th>Titel</th><th>Prijs</th><th>Aantal</th><th>Bedrag</th>
+                            </tr>";
+                    $total=0;
+                    foreach( $publicatie as $key => $value) {
+                            $bedrag = $value['prijs']*$value['aantal'];
+                            $message .= "<tr><td>".$key."</td><td>".$value['prijs']." &euro</td><td>".$value['aantal']."</td><td>".$bedrag." &euro</td></tr>";
+                            $total = $total + $bedrag;
+                    }
+                    $message .= "</table>";
+                    $message .= "<p>Totaal bedrag: ".$total."</p>";
+                 
+                    $this->sendBestelEmailNotification($voornaam." ".$naam,$email,$message);
 	            $url = WEB_ROOT."/".SIMPLE_CONTACT_FORM_PAGE_PATH."thankyou";
+                                       
                     $this->_helper->redirector->goToUrl($url);                 
     		}
 	    }
@@ -196,40 +218,29 @@ class SimpleContactForm_IndexController extends Omeka_Controller_AbstractActionC
         }
     }
     
-     protected function sendBestelEmailNotification($naam,$voornaam,$email,$straat,$gemeente,$postcode,$land,$publicatie) {
-	$message= "<h3>Bestelling publicaties</h3>";
-        $message .= $voornaam." ".$naam."<br><br>";
-        $message .= "Adres:<br>";
-        $message .= $straat."<br>";
-        $message .= $postcode." ".$gemeente."<br>";
-        $message .= $land."<br><br>";
-        $message .= "<h5>Publicaties</h5><table> <tr><th>Titel</th><th>Aantal</th><th>Bedrag</th></tr>";
-        foreach( $publicatie as $key => $value) {
-                $message .= "<tr><td>".$key."</td><td>".$value['aantal']."</td><td>".$value['bedrag']." &euro</td></tr>";
-                echo $message;
-        }
-        $message .= "</table>";
-        
-        //notify the admin
+     protected function sendBestelEmailNotification($naam,$email,$message) {
+	//notify the admin
 	//use the admin email specified in the plugin configuration.
         $forwardToEmail = get_option('simple_contact_form_forward_to_email');
+        
         if (!empty($forwardToEmail)) {
             $mail = new Zend_Mail();
             $mail->setBodyText(get_option('simple_contact_form_admin_notification_email_message_header') . "\n\n" . $message);
-            $mail->setFrom($email, $voornaam." ".$naam);
+            $mail->setFrom($email, $naam);
             $mail->addTo($forwardToEmail);
-            $mail->setSubject(get_option('site_title') . ' - ' . get_option('simple_contact_form_admin_notification_email_subject'));
+            $mail->setSubject(get_option('site_title') . ' - ' . get_option('simple_contact_form_admin_notification_email_subject'). ' - Bestelling');
             $mail->send();		
         }
 
         //notify the user who sent the message
         $replyToEmail = get_option('simple_contact_form_reply_from_email');
+        
         if (!empty($replyToEmail)) {
             $mail = new Zend_Mail();
             $mail->setBodyText(get_option('simple_contact_form_user_notification_email_message_header') . "\n\n" . $message);
             $mail->setFrom($replyToEmail);
-            $mail->addTo($email, $voornaam." ".$naam);
-            $mail->setSubject(get_option('site_title') . ' - ' . get_option('simple_contact_form_user_notification_email_subject'));
+            $mail->addTo($email, $naam);
+            $mail->setSubject(get_option('site_title') . ' - ' . get_option('simple_contact_form_user_notification_email_subject').'- Bestelling');
             $mail->send();
         }
     }

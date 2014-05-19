@@ -733,11 +733,23 @@ address {
 #publicatie-bestelling{    
     overflow:hidden;
     padding:10px;
+    font-size:15px;
+    vertical-align: bottom;
 }
 #contact-form table{
     border-collapse: separate;
-    border-spacing:10px;
-    background:#F7F9F9;
+   
+    background:#F7F9F9;   
+    border:1px solid #669999;
+    
+}
+
+#publicatie-bestelling td,#publicatie-bestelling th{padding:10px;}
+#publicatie-bestelling th{background-color:#669999;color:#fff;}
+#publicatie-bestelling td{border:1px solid #fff;vertical-align: middle}
+
+.bestel-prijs,.bestel-bedrag,#bestel-totaal{
+    display:inline;
 }
 
 #contact-form td{
