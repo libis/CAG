@@ -73,8 +73,8 @@
         <div class="logo" ><center><img src="<?php echo (img("cag_logo.jpg"));?>" /></center></div>
         <div class="wegwijs-block">
             <h2>Nieuwsbrief</h2>
-            <div id="inschrijven"><a href="<?php echo url("nieuwsbrief")?>">Inschrijven</a></div>
-            <div class="lees_meer"><a href="">Nieuwsbrief archief</a></div>
+            <div id="inschrijven"><a href="<?php echo url("newsletter/index/register")?>">Inschrijven</a></div>
+            <div class="lees_meer"><a href="<?php echo url("nieuwsbriefarchief")?>">Nieuwsbrief archief</a></div>
         </div>
         <?php echo libis_get_news(); ?>
         <?php echo libis_get_agenda(); ?>
