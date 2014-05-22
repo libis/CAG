@@ -249,12 +249,42 @@ endif; ?>
 
 <!-- PUBLICATIE -->
 <?php if($type == 'Publicatie'):?>
+     <h1><?php echo metadata('item', array('Dublin Core', 'Title')); ?></h1>
+    
+    <!-- The following returns all of the files associated with an item. -->
+    <?php if (metadata('item', 'has files')): ?>
+    <div id="itemfiles" class="element">       
+        <div class="element-text"><?php echo files_for_item(); ?></div>
+    </div>
+    <?php endif; ?>
+
+    <?php if(metadata('item', array('Dublin Core','Creator')) != ""){?>
+    <h3>Auteur</h3><p><?php echo (metadata('item', array('Dublin Core','Creator')));?></p>
+    <?php } ?>
+    <?php if(metadata('item', array('Dublin Core','Date')) != ""){?>
+    <h3>Datum</h3><p><?php echo (metadata('item', array('Dublin Core','Date')));?></p>
+    <?php } ?>
+    <?php if(metadata('item', array('Item Type Metadata','Prijs')) != ""){?>
+    <h3>Prijs</h3><p><?php echo (metadata('item', array('Item Type Metadata','Prijs')));?> &euro;</p>
+    <?php }?>    
+    
 
 <?php endif;?>
 
 <!-- PROJECT -->
 <?php if($type == 'Project'):?>
+     <h1><?php echo metadata('item', array('Dublin Core', 'Title')); ?></h1>
+    
+    <!-- The following returns all of the files associated with an item. -->
+    <?php if (metadata('item', 'has files')): ?>
+    <div id="itemfiles" class="element">       
+        <div class="element-text"><?php echo files_for_item(); ?></div>
+    </div>
+    <?php endif; ?>
 
+    <?php if(metadata('item', array('Dublin Core','Description')) != ""){?>
+    	<p><?php echo (metadata('item', array('Dublin Core','Description')));?></p>
+    <?php } ?>
 <?php endif;?>
 
 
