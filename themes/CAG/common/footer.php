@@ -8,7 +8,7 @@
 						<h2>Website</h2>
 							<ul>
 							<li><a href="<?php echo url('over/')?>">Over deze website</a></li>
-							<li><a href="mailto:contact@cagnet.be">Technische problemen</a></li> <!-- link CAG-->
+							<li><a href="mailto:diantha.osseweijer@cagnet.be">Technische problemen</a></li> <!-- link CAG-->
 							<li><a href="<?php echo url('copyright/');?>">Copyright en disclaimer</a></li>
 
 							<!-- <li><a href="<?php echo url("sitemap/");?>">Sitemap</a></li> -->
