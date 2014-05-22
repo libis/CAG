@@ -137,8 +137,8 @@ jQuery(document).ready(function() {
                        if($item->hasThumbnail()):
                            $html .= link_to_item(item_image('square_thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
                        endif;
-                       $html .= "<h4>".metadata($item,array('Dublin Core','Title'))."</h4>
-                       <p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p> </div>";
+                       $html .=link_to_item("<h4>".metadata($item,array('Dublin Core','Title'))."</h4>",array(),'show',$item).
+                       "<p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p> </div>";
 
                        if($item->featured==1){$featured .= $html;}                       
                        if($item->getItemType()->name == 'Nieuwsbericht'){$nieuws .=$html;}
