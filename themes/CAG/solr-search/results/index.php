@@ -258,7 +258,7 @@ jQuery(document).ready(function() {
                                     $actoren= "<table><th width='120'></th><th></th>";
 
                                     if(metadata($item,array('Item Type Metadata','Naam instelling')))
-                                        $actoren.= "<tr><td><strong>Naam Instelling:</strong></td><td>".metadata($item,array('Item Type Metadata','Naam instelling'))."</td></tr>";
+                                        $actoren.= "<tr><td><strong>Naam Instelling:</strong></td><td>".link_to_item(metadata($item,array('Item Type Metadata','Naam instelling')),array(),'show',$item)."</td></tr>";
                                     if(metadata($item,array('Item Type Metadata','Straat + Nr')))
                                         $actoren.= "<tr><td><strong>Straat + Nr:</strong></td><td>".metadata($item,array('Item Type Metadata','Straat + Nr'))."</td></tr>";
                                     if(metadata($item,array('Item Type Metadata','Postcode')))
@@ -273,8 +273,8 @@ jQuery(document).ready(function() {
                                         $actoren.= "<tr><td><strong>Fax:</strong></td><td>".metadata($item,array('Item Type Metadata','Fax'))."</td></tr>";
                                     if(metadata($item,array('Item Type Metadata','Website')))
                                         $actoren.= "<tr><td><strong>Website:</strong></td><td>".metadata($item,array('Item Type Metadata','Website'))."</td></tr>";
-                                    if(metadata($item,array('Item Type Metadata','E-mail')))
-                                        $actoren.= "<tr><td><strong>E-mail:</strong></td><td>".metadata($item,array('Item Type Metadata','E-mail'))."</td></tr>";
+                                    if(metadata($item,array('Item Type Metadata','Email')))
+                                        $actoren.= "<tr><td><strong>E-mail:</strong></td><td>".metadata($item,array('Item Type Metadata','Email'))."</td></tr>";
                                     if(metadata($item,array('Dublin Core','Description')))
                                            $actoren.="<tr><td><strong>Beschrijving:</strong></td><td>".metadata($item,array('Dublin Core','Description'),array('snippet'=>200))."</td></tr>";
                                        

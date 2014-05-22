@@ -8,30 +8,36 @@ endif; ?>
 <?php echo head(array('title' => metadata('item', array('Dublin Core', 'Title')), 'bodyclass' => 'items show')); ?>
 
 <div id="primary">
-<!-- OBJECT -->
-<?php if($type == 'Object'):?>
+<?php if($type == 'Object'):?>    
     <p id="simple-pages-breadcrumbs">
         <a href="/">Home</a> > <a href="/beeldbank">Beeldbank</a> > <a href="/beeldbank">Objecten</a>
         > <?php echo metadata('item', array('Item Type Metadata','Objectnaam')); ?>
     </p>
+<?php else:?>
+    <p id="simple-pages-breadcrumbs">
+        <a href="/">Home</a> > <a href='<?php echo url('/solr-search/results?facet=itemtype:"'.$type.'"');?>'><?php echo $type?></a>
+        > <?php echo metadata('item', array('Dublin Core','Title')); ?>
+    </p>
+<?php endif;?>
     
-
+    
+<!-- OBJECT -->
+<?php if($type == 'Object'):?>
     <!-- The following returns all of the files associated with an item. -->
-        <?php if(metadata('item', 'has files') || digitool_item_has_digitool_url($item)){?>
+    <?php if(metadata('item', 'has files') || digitool_item_has_digitool_url($item)):?>
+        <div id="itemfiles" class="element">
+            <?php if (metadata('item', 'has files')): ?>
+            <div class="element-text"><?php echo files_for_item(); ?></div>
+            <?php endif; ?>
+            <?php if (digitool_item_has_digitool_url($item)):?>
+                    <div class="element-text"> <?php //echo digitool_get_thumb(get_current_item(),false,true,500);?>
+                            <?php echo digitool_simple_gallery($item,500);?>
+                    </div>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
 
-            <div id="itemfiles" class="element">
-                <?php if (metadata('item', 'has files')): ?>
-                <div class="element-text"><?php echo files_for_item(); ?></div>
-                <?php endif; ?>
-                <?php if (digitool_item_has_digitool_url($item)):?>
-                        <div class="element-text"> <?php //echo digitool_get_thumb(get_current_item(),false,true,500);?>
-                                <?php echo digitool_simple_gallery($item,500);?>
-                        </div>
-                <?php endif; ?>
-            </div>
-        <?php } ?>
-
-	<div class="clearfix"></div>
+    <div class="clearfix"></div>
     <?php if(metadata('item',array('Dublin Core','Identifier')) != ""){?>
     	<h3>CAG-objectnummer:</h3><p><?php echo (metadata('item',array('Dublin Core','Identifier')));?></p>
     <?php } ?>
@@ -60,28 +66,7 @@ endif; ?>
     	<h3>Plaats:</h3><p><?php echo (metadata('item', array('Dublin Core','Spatial Coverage')));?></p>
     <?php } ?>
 
-    <!-- The following prints a list of all tags associated with the item -->
-	<?php if (metadata('item', 'has tags')): ?>
-	<div id="item-tags" class="element">
-		 <h3>Trefwoorden</h3>
-		<div class="element-text">
-                <?php
-                    $tags = $item->Tags;
-                    //natcasesort($tags);
-                 
-                    if(is_array($tags)){
-                        foreach($tags as $tag){
-                            echo "<a href='".url("solr-search/results?q=&facet=tag:\"".$tag."\"")."'>".$tag."</a>";
-                            if ($tag !== end($tags))
-                                echo ', ';
-                        }
-                    }else{
-                        echo "<a href='".url("solr-search/results?q=&facet=tag:\"".$tags."\"")."'>".$tags."</a>";
-                    }
-                ?>
-                </div>                                              
-	</div>
-	<?php endif;?>	
+    
         
         
 	<br>
@@ -193,17 +178,73 @@ endif; ?>
 
 <!-- COLLECTIE -->
 <?php if($type == 'Collectie'):?>
+    <!-- The following returns all of the files associated with an item. -->
+    <?php if(metadata('item', 'has files') || digitool_item_has_digitool_url($item)):?>
+        <div id="itemfiles" class="element">
+            <?php if (metadata('item', 'has files')): ?>
+            <div class="element-text"><?php echo files_for_item(); ?></div>
+            <?php endif; ?>
+            <?php if (digitool_item_has_digitool_url($item)):?>
+                    <div class="element-text"> <?php //echo digitool_get_thumb(get_current_item(),false,true,500);?>
+                            <?php echo digitool_simple_gallery($item,500);?>
+                    </div>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+
+    <div class="clearfix"></div>
+    
+    <?php if(metadata($item,array('Item Type Metadata','Naam instelling')))?>
+        <h1><?php echo metadata($item,array('Item Type Metadata','Naam instelling'))?></h1>
+    <?php if(metadata($item,array('Item Type Metadata','Straat + Nr')))?>
+        <h3>Straat + Nr:</h3><p><?php echo metadata($item,array('Item Type Metadata','Straat + Nr'))?></p>
+    <?php if(metadata($item,array('Item Type Metadata','Postcode')))?>
+        <h3>Postcode:</h3><p><?php echo metadata($item,array('Item Type Metadata','Postcode'))?></p>
+    <?php if(metadata($item,array('Item Type Metadata','Stad')))?>
+        <h3>Stad:</h3><p><?php echo metadata($item,array('Item Type Metadata','Stad'))?></p>
+    <?php if(metadata($item,array('Item Type Metadata','Provincie')))?>
+        <h3>Provincie:</h3><p><?php echo metadata($item,array('Item Type Metadata','Provincie'))?></p>
+    <?php if(metadata($item,array('Item Type Metadata','Telefoon')))?>
+        <h3>Telefoon:</h3><p><?php echo metadata($item,array('Item Type Metadata','Telefoon'))?></p>
+    <?php if(metadata($item,array('Item Type Metadata','Fax')))?>
+        <h3>Fax:</h3><p><?php echo metadata($item,array('Item Type Metadata','Fax'))?></p>
+    <?php if(metadata($item,array('Item Type Metadata','Website')))?>
+        <h3>Website:</h3><p><?php echo metadata($item,array('Item Type Metadata','Website'))?></p>
+    <?php if(metadata($item,array('Item Type Metadata','Email')))?>
+        <h3>E-mail:</h3><p><?php echo metadata($item,array('Item Type Metadata','Email'))?></p>
 
 <?php endif;?>
 
 <!-- NIEUWSBERICHT -->
 <?php if($type == 'Nieuwsbericht'):?>
+    <h1><?php echo metadata('item', array('Dublin Core', 'Title')); ?></h1>
+    
+    <!-- The following returns all of the files associated with an item. -->
+    <?php if (metadata('item', 'has files')): ?>
+    <div id="itemfiles" class="element">       
+        <div class="element-text"><?php echo files_for_item(); ?></div>
+    </div>
+    <?php endif; ?>
 
+    <?php if(metadata('item', array('Dublin Core','Description')) != ""){?>
+    	<p><?php echo (metadata('item', array('Dublin Core','Description')));?></p>
+    <?php } ?>
 <?php endif;?>
 
 <!-- AGENDAPUNT -->
 <?php if($type == 'Agendapunt'):?>
+    <h1><?php echo metadata('item', array('Dublin Core', 'Title')); ?></h1>
+    
+    <!-- The following returns all of the files associated with an item. -->
+    <?php if (metadata('item', 'has files')): ?>
+    <div id="itemfiles" class="element">       
+        <div class="element-text"><?php echo files_for_item(); ?></div>
+    </div>
+    <?php endif; ?>
 
+    <?php if(metadata('item', array('Dublin Core','Description')) != ""){?>
+    	<p><?php echo (metadata('item', array('Dublin Core','Description')));?></p>
+    <?php } ?>
 <?php endif;?>
 
 <!-- PUBLICATIE -->
@@ -217,6 +258,28 @@ endif; ?>
 <?php endif;?>
 
 
+<!-- The following prints a list of all tags associated with the item -->
+<!-- The following prints a list of all tags associated with the item -->
+<?php if (metadata('item', 'has tags')): ?>
+<div id="item-tags" class="element">
+    <h3>Trefwoorden</h3>
+    <div class="element-text">
+    <?php
+        $tags = $item->Tags;
+      
+        if(is_array($tags)):
+            foreach($tags as $tag):
+                echo "<a href='".url("solr-search/results?q=&facet=tag:\"".$tag."\"")."'>".$tag."</a>";
+                if ($tag !== end($tags))
+                    echo ', ';
+            endforeach;
+        else:
+            echo "<a href='".url("solr-search/results?q=&facet=tag:\"".$tags."\"")."'>".$tags."</a>";
+        endif;
+    ?>
+    </div>                                              
+</div>
+<?php endif;?>	
 
 <?php fire_plugin_hook('public_items_show', array('view' => $this, 'item' => $item)); ?>
 
