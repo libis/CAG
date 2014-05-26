@@ -31,7 +31,7 @@ $formAttributes['method'] = 'GET';
 <br>
 <div class="map-left">
     <div id="info"></div>
-    <script>jQuery("#info").load('<?php echo url('info');?> #kaart');</script>
+    <script>jQuery("#info").load('<?php echo url('info-kaart');?> #kaart');</script>
 </div>
 <div class="map-right">   
     <form id="beeldbank-search" <?php echo tag_attributes($formAttributes); ?>>        
