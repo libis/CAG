@@ -4,6 +4,11 @@
      $session->from= 'browse'; 
 ?>
 
+<?php
+$formAttributes['action'] = $_SERVER['REQUEST_URI'];
+$formAttributes['method'] = 'GET';
+?>
+
 <div id="primary">
 <p id="simple-pages-breadcrumbs">
     <a href="/">Home</a> > <a href="/beeldbank">Beeldbank</a>
@@ -28,11 +33,16 @@
     <div id="info"></div>
     <script>jQuery("#info").load('<?php echo url('info');?> #kaart');</script>
 </div>
-<div class="map-right">
-    <form id="beeldbank-search" method="get" action="/solr-search/results/" name="search-form">
-    <input id="query" type="text" title="Search" value="" name="q">
-    <input type='hidden' name='facet' value='itemtype:"Object"'>
-    <input type="submit" value="Zoeken" name="">
+<div class="map-right">   
+    <form id="beeldbank-search" <?php echo tag_attributes($formAttributes); ?>>        
+        <?php
+            echo $this->formText(
+                'search',
+                @$_REQUEST['search'],
+                array('id' => 'query', 'size' => '40')
+            );
+        ?>        
+        <input type="submit" class="submit" name="submit_search" id="submit_search_advanced" value="<?php echo __('Search'); ?>" />      
     </form><br>
     <h6>Aantal beelden op de kaart: <?php echo $totalItems; ?> </h6>
 </div>
@@ -44,6 +54,18 @@
 
 </div><!-- end primary -->
 <div id="handle"></div>
+<div id="search_block">
+    <?php //echo search_form(array('form_attributes'=>array('action'=>$_SERVER['REQUEST_URI'])));
+//echo items_search_form(array('id'=>'search'), $_SERVER['REQUEST_URI']); ?>
+</div><!-- end search_block -->
 
+
+
+<?php echo js_tag('items-search'); ?>
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        Omeka.Search.activateSearchButtons();
+    });
+</script>
 
 <?php echo foot(); ?>
