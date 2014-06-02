@@ -162,10 +162,10 @@ jQuery(document).ready(function() {
             if($view=='publicatie' || $view=='project'){
                 echo '<div id="info"></div>';
                 if($view == 'publicatie'){?>                    
-                    <script>jQuery("#info").load('<?php echo url('info-publicatie');?> #publicatie');</script>
+                    <?php echo libis_get_simple_page_content('info-publicatie (zoekresultaten)'); ?>
                 <?php }
                 if($view == 'project'){?>
-                    <script>jQuery("#info").load('<?php echo url('info-project');?> #project');</script>
+                    <?php echo libis_get_simple_page_content('info-project (zoekresultaten)'); ?>
                 <?php } ?>  
                 <table id='publicatie-tabel'><tr>
                 <?php        
