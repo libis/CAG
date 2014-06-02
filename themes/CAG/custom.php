@@ -961,7 +961,7 @@ function libis_get_publicaties($pub_tag){
         endforeach;
         
     }
-    $html .= "</ul><div class='lees_meer'><a href='".url('solr-search/results?q=&facet=itemtype:"Publicatie" AND tag:"'.$tag.'"')."'>Lees meer..</a></div>";
+    $html .= "</ul><div class='lees_meer'><a href='".url('solr-search/results?q=&facet=itemtype:"Publicatie" AND tag:"'.$pub_tag.'"')."'>Lees meer..</a></div>";
     return $html;
 }
 
