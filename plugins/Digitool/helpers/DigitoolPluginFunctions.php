@@ -242,14 +242,14 @@ function digitool_simple_gallery($item,$size=500,$type='object'){
 
 		return $html;
 	}else{
-		$html .= "<div id='gallery'>";
+		$html = "<div id='gallery'>";
 		foreach($digis as $digi){
 			$thumb =  $digi->get_thumb();
                         $link =  $digi->get_view();
                         if($type='concept'){
-                            $altItem_id = digitool_find_items_with_same_pid(null,$u->pid);
-                            $altItem = get_item_by_id($altItem_id);
-                            $link = item_uri('show',$altItem);
+                            $altItem_id = digitool_find_items_with_same_pid(null,$digi->pid);
+                            $altItem = get_record_by_id('item',$altItem_id);
+                            $link = url($altItem);
                         }
                         $resize = digitool_resize_dimensions($size,$size,$thumb);
                         
