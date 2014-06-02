@@ -938,4 +938,9 @@ function libis_get_agenda(){
     $html .= "<div class='lees_meer'><a href='".url('solr-search/results?q=&facet=itemtype:("Nieuwsbericht" OR "Agendapunt")')."'>Lees meer..</a></div></div>";
     return $html;
 }
+
+function libis_get_simple_page_content($title){
+    $page = get_record('SimplePagesPage',array('title'=>$title));
+    return $page->text;
+}
 ?>
