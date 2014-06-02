@@ -30,8 +30,7 @@ $formAttributes['method'] = 'GET';
 </ul>
 <br>
 <div class="map-left">
-    <div id="info"></div>
-    <script>jQuery("#info").load('<?php echo url('info-kaart');?> #kaart');</script>
+   <?php echo libis_get_simple_page_content('info-kaart'); ?>
 </div>
 <div class="map-right">   
     <form id="beeldbank-search" <?php echo tag_attributes($formAttributes); ?>>        
