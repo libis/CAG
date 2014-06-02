@@ -939,9 +939,9 @@ function libis_get_agenda(){
     return $html;
 }
 
-function libis_get_projects(){
+function libis_get_projects($lopend = true){
     $html="<ul>";
-    $items = get_records('Item',array('type'=>'Project','sort_field'=>'added','sort_dir'=>'d'),100);
+    $items = get_records('Item',array('type'=>'Project','featured'=>$lopend,'sort_field'=>'added','sort_dir'=>'d'),100);
     foreach($items as $item){                             
         $html .= "<li>".link_to_item("<strong>".metadata($item,array('Dublin Core','Title'))."</strong>",array(), 'show', $item)."</li>";       
     }
@@ -951,7 +951,7 @@ function libis_get_projects(){
 
 function libis_get_publicaties($pub_tag){
     $html="<ul>";
-    $items = get_records('Item',array('type'=>'Publicatie','sort_field'=>'added','sort_dir'=>'d'),100);
+    $items = get_records('Item',array('type'=>'Publicatie','featured'=>true,'sort_field'=>'added','sort_dir'=>'d'),100);
     foreach($items as $item){  
         $tags = $item->Tags;
         foreach($tags as $tag):
