@@ -949,11 +949,17 @@ function libis_get_projects(){
     return $html;
 }
 
-function libis_get_publicaties(){
+function libis_get_publicaties($pub_tag){
     $html="<ul>";
     $items = get_records('Item',array('type'=>'Publicatie','sort_field'=>'added','sort_dir'=>'d'),100);
-    foreach($items as $item){                             
-        $html .= "<li>".link_to_item("<strong>".metadata($item,array('Dublin Core','Title'))."</strong>",array(), 'show', $item)."</li>";       
+    foreach($items as $item){  
+        $tags = $item->Tags;
+        foreach($tags as $tag):
+            if($pub_tag == $tag->name):
+                $html .= "<li>".link_to_item("<strong>".metadata($item,array('Dublin Core','Title'))."</strong>",array(), 'show', $item)."</li>";       
+            endif;
+        endforeach;
+        
     }
     $html .= "</ul><div class='lees_meer'><a href='".url('solr-search/results?q=&facet=itemtype:"Publicatie"')."'>Lees meer..</a></div>";
     return $html;
