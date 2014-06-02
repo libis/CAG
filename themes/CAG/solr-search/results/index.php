@@ -173,12 +173,12 @@ jQuery(document).ready(function() {
                 foreach($results->response->docs as $doc):
                    $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id'))); 
 
-                   if($item->getItemType()->name == 'Publicatie' ||$item->getItemType()->name == 'Project'){
+                   if($item->getItemType()->name == 'Publicatie' || $item->getItemType()->name == 'Project'){
                        $html = "<td><div class='publicatie' id='solr_".$doc->__get('id')."'>";                        
                        if($item->hasThumbnail()):
                            $html .= link_to_item(item_image('square_thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
                        endif;
-                       $html .= "<div class='publicatie-text'><h4>".metadata($item,array('Dublin Core','Title'))."</h4>
+                       $html .= "<div class='publicatie-text'><h4>".link_to_item(metadata($item,array('Dublin Core','Title')),array(), 'show', $item)."</h4>
                        <p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p> </div></div></td>";
                       
                        if($side == 'left'){
