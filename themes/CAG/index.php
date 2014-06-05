@@ -30,7 +30,7 @@
                     <ul class="rotator2">
                     <?php foreach(loop('items',$items) as $item):?> 
                         <li>
-                           <a href="<?php echo url("items/show/".$item->id);?>"><img class="carousel-image" src="<?php echo digitool_get_thumb_url($item);?>"></a>
+                           <a href="<?php echo url("items/show/".$item->id);?>"><div class="cycle-container"><img class="carousel-image" src="<?php echo digitool_get_thumb_url($item);?>"></div></a>
 
                         </li>
                     <?php endforeach; ?>
