@@ -290,8 +290,7 @@ jQuery(document).ready(function() {
                                                  ".link_to_item(metadata($item,array('Dublin Core','Title')))."
                                                  </strong></td></tr>
                                                  <tr><td>".metadata($item,array('Item Type Metadata','Scope'))."</td></tr></table>";
-
-                                    $werktuigen .= plugin_append_to_items_browse_each();
+                                
                                     echo $werktuigen;?>
                                     </div>
                                 <?php } ?>
