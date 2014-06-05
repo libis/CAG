@@ -40,7 +40,7 @@ class Omeka_Captcha {
         $captcha = new Zend_Captcha_ReCaptcha(array(
             'pubKey' => $publicKey,
             'privKey' => $privateKey,
-            'ssl' => $ssl));
+            'ssl' => $ssl,'lang'=>'nl'));
 
         return $captcha;
     }
