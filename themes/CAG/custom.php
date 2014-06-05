@@ -951,7 +951,7 @@ function libis_get_projects($lopend = true){
 
 function libis_get_publicaties($pub_tag){
     $html="<ul>";
-    $items = get_records('Item',array('type'=>'Publicatie','featured'=>true,'sort_field'=>'added','sort_dir'=>'d'),100);
+    $items = get_records('Item',array('type'=>'Publicatie','sort_field'=>'added','sort_dir'=>'d'),100);
     foreach($items as $item){  
         $tags = $item->Tags;
         foreach($tags as $tag):
