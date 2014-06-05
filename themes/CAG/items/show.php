@@ -8,18 +8,18 @@ endif; ?>
 <?php echo head(array('title' => metadata('item', array('Dublin Core', 'Title')), 'bodyclass' => 'items show')); ?>
 
 <div id="primary">
-<?php if($type == 'Object'):?>    
-    <p id="simple-pages-breadcrumbs">
-        <a href="/">Home</a> > <a href="/beeldbank">Beeldbank</a> > <a href="/beeldbank">Objecten</a>
+<p id="simple-pages-breadcrumbs">
+<?php if($type == 'Object'):?>   
+        <a href="/">Home</a> > <a href="/beeldbank">Beeldbank</a> > <a href='<?php echo url('/solr-search/results?facet=itemtype:"'.$type.'"');?>'>Objecten</a>
         > <?php echo metadata('item', array('Item Type Metadata','Objectnaam')); ?>
-    </p>
-<?php else:?>
-    <p id="simple-pages-breadcrumbs">
+<?php elseif($type == 'Concept'):?> 
+        <a href="/">Home</a> > <a href="/beeldbank">Beeldbank</a> > <a href='<?php echo url('/solr-search/results?facet=itemtype:"'.$type.'"');?>'>Concepten</a>
+        > <?php echo ucfirst(metadata('item', array('Dublin Core','Title'))); ?>
+<?php else:?>        
         <a href="/">Home</a> > <a href='<?php echo url('/solr-search/results?facet=itemtype:"'.$type.'"');?>'><?php echo $type?></a>
         > <?php echo metadata('item', array('Dublin Core','Title')); ?>
-    </p>
 <?php endif;?>
-    
+</p>   
     
 <!-- OBJECT -->
 <?php if($type == 'Object'):?>
@@ -81,11 +81,7 @@ endif; ?>
 <?php endif;?>
 
 <!-- CONCEPT -->
-<?php if($type == 'Concept'):?>
-    <p id="simple-pages-breadcrumbs">
-        <a href="/">Home</a> > <a href="/beeldbank">Beeldbank</a> > <a href="/beeldbank">Concepten</a>
-        > <?php echo metadata('item', array('Dublin Core','Title')); ?>
-    </p>
+<?php if($type == 'Concept'):?>   
        
     <h3><?php echo ucfirst(metadata($item, array('Dublin Core','Title')));?></h3>       
     <br>
