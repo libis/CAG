@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
     <head>
-
-        <?php
-//Aangepast door Sam. Deze wordt al geladen door de javascript hieronder
-//echo js('jquery');
-        ?>
-
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?php if ( $description = option('description')): ?>
@@ -72,8 +66,10 @@
 
         <script language="JavaScript">
             if (self !== top) document.write('<style type="text/css">#normal-title{display:none} html{background:#fff;margin:0 0 100px 0;} #footer {display: none;} .info {display:none;} #header {display: none;} #search-wrap {display: none;}</style>');
+            var RecaptchaOptions = {
+                lang : 'nl'
+             };    
         </script><!--iframe changes-->
-
     </head>
     <body<?php echo isset($bodyid) ? ' id="' . $bodyid . '"' : ''; ?><?php echo isset($bodyclass) ? ' class="' . $bodyclass . '"' : ''; ?>>
 
