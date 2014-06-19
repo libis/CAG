@@ -74,7 +74,7 @@ endif; ?>
 	<br>
 	<?php
             $nummer= metadata('item', array('Dublin Core','Identifier'));
-            $link= url("contact")."/?aanvraag=true&id=".$nummer;
+            $link= url("contact")."/?aanvraag=1&id=".$nummer;
 	?>
 	<p>Klik <a href="<?php echo $link;?>">hier</a> om een hogeresolutieversie van bovenstaande afbeelding aan te vragen.</p>
 	<br>

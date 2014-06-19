@@ -4,7 +4,7 @@
     
 <div id="simple-contact">
 	<div id="form-instructions">
-             <img src="<?php echo (img("cag_logo.jpg"));?>">
+             <img width="250" src="<?php echo (img("cag_logo.png"));?>">
             <?php
                 echo get_option('simple_contact_form_contact_page_instructions');                
             ?>           
@@ -27,7 +27,7 @@
                 <?php if(isset($_GET['aanvraag'])&& $_GET['aanvraag'] == 1){?>
                 <div class="field">
                     <input type="hidden" name="aanvraag" value="true">
-                    <table style="background:none;">
+                    <table id="motivatie-tabel" style="border:none;background:none;">
                     <?php 
                         echo $this->formLabel('motivatie', 'Motivatie: (verplicht) ');
                         ?>

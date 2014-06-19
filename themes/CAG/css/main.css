@@ -760,11 +760,13 @@ address {
     vertical-align: bottom;
 }
 #contact-form table{
-    border-collapse: separate;
-   
+    border-collapse: separate;   
     background:#F7F9F9;   
-    border:1px solid #669999;
-    
+    border:1px solid #669999;    
+}
+
+#motivatie-tabel td{
+    padding:5px 3px 5px 0;
 }
 
 #publicatie-bestelling td,#publicatie-bestelling th{padding:10px;}
