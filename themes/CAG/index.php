@@ -76,9 +76,7 @@
        
         <?php echo libis_get_news(); ?>
         <?php echo libis_get_agenda(); ?>
-        <div id="wegwijs-social">
-            <?php echo add_this_add(); ?>
-        </div>    
+        
     </div>
     
     <script>

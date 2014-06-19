@@ -41,6 +41,7 @@
 		</div>
 	</div><!-- /.column -->
 	<div class="column contact">
+               
 		<p>Atrechtcollege<br/>
 		Naamsestraat 63<br/>
 		3000 Leuven<br />
@@ -50,6 +51,7 @@
 		telefoon : +32 (0)16 32 35 25 <br />
 		email : <a href="mailto:contact@cagnet.be">contact@cagnet.be</a>
 		</p>
+                 <?php echo add_this_add(); ?>
 	</div><!-- /.column -->
 	<?php fire_plugin_hook('public_footer'); ?>
 </div><!-- end footer -->

@@ -361,11 +361,6 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
 	color: #f8efce;
 }
 
-#wegwijs-social{
-    margin-top:10px;
-    float:right;
-}
-
 /* carrousel
 ------------------------------------------------------------------ */
 #carousel-block {
@@ -474,11 +469,6 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
 }
 #geolocation h2{
     display:none;
-}
-
-.addthis_toolbox{
-    float:right;
-    
 }
 
 .item-pagination {overflow:hidden;clear:both; margin-bottom:0.5em 0;padding-top:1.5em;}
