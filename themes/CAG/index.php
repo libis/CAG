@@ -7,7 +7,7 @@
     <?php endif; ?>
 
     <div id="carousel-block">
-        <h1>Welkom op Het Virtuele Land - Centrum Agrarische Geschiedenis</h1>
+        <h1>Welkom op HetVirtueleLand - Centrum Agrarische Geschiedenis</h1>
         <p>Het Centrum Agrarische Geschiedenis is het expertisecentrum voor het agrarische erfgoed in Vlaanderen.
         We bestuderen de geschiedenis en het erfgoed van landbouw, platteland en voeding, vanaf 1750 tot en met vandaag.</p>
         
