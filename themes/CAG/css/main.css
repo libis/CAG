@@ -326,22 +326,6 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
     overflow: auto;
 }
 
-#inschrijven{
-    width:50%;
-    text-align:center;
-    background-color: #669999;
-    border-radius: 3px;   
-    font-size: 1em;
-    font-weight:bold;
-    text-transform: uppercase;
-    line-height: 1.2em;
-    margin: 1.5em auto;
-    padding: 4px 4px;
-}
-
-#inschrijven a{
-    color: #FFFFFF;
-}
 
 .wegwijs-block img{
     float:left;    
@@ -936,7 +920,7 @@ ul.navigation_footer {
 	display: inline;
 }
 
-#footer .column.logo {
+#footer .column.nieuwsbrief {
 	width: 23%;
 	padding-left: 2%;
 }
@@ -947,6 +931,30 @@ ul.navigation_footer {
 	padding: 0;
 	font-size: 13px;
 }
+
+#inschrijven{
+    width:50%;
+    text-align:center;
+    background-color: #669999;
+    color:#fff;
+    border-radius: 3px;   
+    font-size: 1em;
+    font-weight:bold;    
+    line-height: 1.2em;
+    text-transform: uppercase;
+    margin: 1.5em auto 0.5em auto;
+    padding: 6px 4px;
+}
+
+.archief-link{
+    text-align: center;
+}
+
+#inschrijven a{
+    color: #FFFFFF;
+}
+
+
 
 #footer ul {
 	margin-bottom: 1.5em;

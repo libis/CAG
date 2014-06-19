@@ -71,11 +71,7 @@
     
     <div id="wegwijs">
         <div class="logo" ><center><img src="<?php echo (img("cag_logo.png"));?>" /></center></div>
-        <div class="wegwijs-block">
-            <h2>Nieuwsbrief</h2>
-            <div id="inschrijven"><a href="<?php echo url("newsletter/index/register")?>">Inschrijven</a></div>
-            <div class="lees_meer"><a href="<?php echo url("nieuwsbriefarchief")?>">Nieuwsbrief archief</a></div>
-        </div>
+       
         <?php echo libis_get_news(); ?>
         <?php echo libis_get_agenda(); ?>
         <div id="wegwijs-social">

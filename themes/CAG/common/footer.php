@@ -1,7 +1,11 @@
 </div>
 <div id="footer" class="group">
-	<div class="column logo">
-		<img src="<?php echo (img("cag.gif"));?>" />
+	<div class="column nieuwsbrief">
+           
+                <h2>Nieuwsbrief</h2>
+                <div id="inschrijven"><a href="<?php echo url("newsletter/index/register")?>">Inschrijven</a></div>
+                <div class="archief-link"><a href="<?php echo url("nieuwsbriefarchief")?>">Nieuwsbrief archief</a></div>
+           
 	</div><!-- /.column -->
 	<div class="column links">
 		<div class="column left">
