@@ -214,10 +214,7 @@ p img{float:left; padding-right:10px;padding-bottom:10px; }
 
 		.thumbnail img {width: 100px; height:100px; border:2px solid #669999; margin:0 5px; margin-bottom:10px;float:left;}
 
-		 /* == Exhibits / Verhalen == */
-		.thema-table {background-color:#F7F9F9;}
-		.thema-table td{padding:20px;border:solid 2px #fff;text-align:center;}
-
+		 /* == Exhibits / Verhalen == */		
 		 #exhibit_description img{float:left; padding-right:10px; padding-bottom:10px;overflow:hidden;}
 
 		.exhibit_general_list img{border:2px solid #669999;margin:5px;}

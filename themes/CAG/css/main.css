@@ -96,6 +96,17 @@ body {
     list-style: disc outside none; 
 }
 
+.thema-table {
+    background-color:#F7F9F9;
+}
+.thema-table td{
+    padding:20px;
+    border:solid 2px #fff;
+    text-align:center;
+    width:50%;
+}
+
+
 #page:nth-child(2) {
 	
 }
