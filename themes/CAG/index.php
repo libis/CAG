@@ -21,27 +21,7 @@
         <div id="meer_nieuws"><p><a href='<?php echo url('solr-search/results?q=&facet=itemtype:("Nieuwsbericht" OR "Agendapunt")') ?>'><img src="<?php echo img('arrow-right.png');?>">Meer nieuws</a></p></div>
         
         <div id="carousel-container">
-            <div id="item-block">
-                <h2><?php echo __('Objecten uit onze erfgoedbank'); ?></h2>		
-                <?php
-                    $items = Libis_get_random_featured_items('10');    
-                ?>       
-                <div class="cycle" id="cycle2">
-                    <ul class="rotator2">
-                    <?php foreach(loop('items',$items) as $item):?> 
-                        <li>
-                           <a href="<?php echo url("items/show/".$item->id);?>"><div class="cycle-container"><img class="carousel-image" src="<?php echo digitool_get_thumb_url($item);?>"></div></a>
-
-                        </li>
-                    <?php endforeach; ?>
-                    </ul>
-                    <a href="#" class="prev p2"></a>
-                    <a href="#" class="next n2"></a>
-                    <div class="description"></div>
-                    <div class="thumbnail"></div>
-                </div>  
-            </div>   
-
+            
             <div id="item-block">
                 <h2><?php echo __('Verhalen'); ?></h2>
                 <?php
@@ -65,7 +45,29 @@
                 </div>   
 
                 <br>	
-            </div>       
+            </div> 
+            
+            <div id="item-block">
+                <h2><?php echo __('Objecten uit onze erfgoedbank'); ?></h2>		
+                <?php
+                    $items = Libis_get_random_featured_items('10');    
+                ?>       
+                <div class="cycle" id="cycle2">
+                    <ul class="rotator2">
+                    <?php foreach(loop('items',$items) as $item):?> 
+                        <li>
+                           <a href="<?php echo url("items/show/".$item->id);?>"><div class="cycle-container"><img class="carousel-image" src="<?php echo digitool_get_thumb_url($item);?>"></div></a>
+
+                        </li>
+                    <?php endforeach; ?>
+                    </ul>
+                    <a href="#" class="prev p2"></a>
+                    <a href="#" class="next n2"></a>
+                    <div class="description"></div>
+                    <div class="thumbnail"></div>
+                </div>  
+            </div>   
+      
         </div>             
     </div>
     
