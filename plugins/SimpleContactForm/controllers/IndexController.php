@@ -227,7 +227,7 @@ class SimpleContactForm_IndexController extends Omeka_Controller_AbstractActionC
             $mail = new Zend_Mail();
             $mail->setBodyText(get_option('simple_contact_form_admin_notification_email_message_header') . "\n\n" . $message);
             $mail->setFrom($email, $naam);
-            $mail->addTo($forwardToEmail);
+            $mail->addTo("kristel.janssens@icag.kuleuven.be");
             $mail->setSubject(get_option('site_title') . ' - ' . get_option('simple_contact_form_admin_notification_email_subject'). ' - Bestelling');
             $mail->send();		
         }
