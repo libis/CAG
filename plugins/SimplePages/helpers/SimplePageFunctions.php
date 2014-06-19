@@ -118,7 +118,7 @@ function simple_pages_display_breadcrumbs($pageId = null, $seperator=' > ', $inc
                 $pageLinks[] = '<a href="' . public_url($bPage->slug) .  '">' . html_escape($bPage->title) . '</a>';
             }
         }
-        $pageLinks[] = '<a href="'. public_url('') . '">' . __('Home') . '</a>';
+        $pageLinks[] = '<a href="'. public_url('') . '">' . 'Home' . '</a>';
 
         // create the bread crumb
         $html .= implode(html_escape($seperator), array_reverse($pageLinks));
