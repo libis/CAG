@@ -271,14 +271,35 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
 #header-nav .navigation ul li:hover > ul { visibility: hidden; }
 
 /* index */
+#frontpage-top{
+    margin-bottom:30px;
+}
+#intro{
+    width:60%;
+}
+
+.logo img{
+     width:250px;
+     float:right;
+}
+
 .in_de_kijker{
     border: 3px solid #fce697;
     border-radius: 10px;
-    width:190px;
+    width:22.7%;
     margin:5px 6px 10px 0px;
     padding:5px;
-    float:left;
+    float:left;    
 }
+
+.in_de_kijker_text{
+    height:180px;
+}
+
+.nieuws-knoppen{
+    height:207px;
+}
+
 .kijker-block .in_de_kijker:last-child{
     margin-right:0;
 }
@@ -292,6 +313,24 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
     text-align: right;
 }
 
+.in_de_kijker .overzicht-link{
+    width:70%;
+    text-align:center;
+    background-color: #669999;
+    color:#fff;
+    border-radius: 3px;   
+    font-size: 1em;
+    font-weight:bold;    
+    line-height: 1.2em;
+    text-transform: uppercase;
+    margin: 50px auto 50px auto;
+    padding: 6px 4px;
+}
+
+.overzicht-link a{
+    color:#fff;
+}
+
 #meer_nieuws{
     clear:both;    
     text-align: right; 
@@ -300,22 +339,11 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
 
 #meer_nieuws img{
     width:15px;
-    margin-left:542px;
+    margin-left:810px;
     padding:0;
 }
 
-#wegwijs{
-    float:right;
-    width: 28%;   
-}
 
-#wegwijs .logo{
-    margin-bottom:10px;   
-}
-
-.logo img{
-     width:100%;
-}
     
 .wegwijs-block {    
     padding: 5px;
