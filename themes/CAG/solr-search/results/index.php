@@ -115,7 +115,10 @@ jQuery(document).ready(function() {
             if(isset($_GET['facet'])){
                 $facet = $_GET['facet'];
                 
-                if(strpos($facet,'itemtype:("Nieuwsbericht" OR "Agendapunt")') !== false) {
+                if(strpos($facet,'itemtype:("Nieuwsbericht" OR "Agendapunt")') !== false ||
+                   strpos($facet,'itemtype:"Nieuwsbericht"') !== false ||     
+                   strpos($facet,'itemtype:"Agendapunt"') !== false     
+                        ) {
                     $view = 'nieuws';
                 }
                 if(strpos($facet,'itemtype:"Publicatie"') !== false) {
