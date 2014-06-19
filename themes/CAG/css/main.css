@@ -310,7 +310,11 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
 }
 
 #wegwijs .logo{
-    margin-bottom:10px;
+    margin-bottom:10px;   
+}
+
+.logo img{
+     width:100%;
 }
     
 .wegwijs-block {    

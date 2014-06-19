@@ -70,7 +70,7 @@
     </div>
     
     <div id="wegwijs">
-        <div class="logo" ><center><img src="<?php echo (img("cag_logo.jpg"));?>" /></center></div>
+        <div class="logo" ><center><img src="<?php echo (img("cag_logo.png"));?>" /></center></div>
         <div class="wegwijs-block">
             <h2>Nieuwsbrief</h2>
             <div id="inschrijven"><a href="<?php echo url("newsletter/index/register")?>">Inschrijven</a></div>
