@@ -272,8 +272,8 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
 
 /* index */
 .in_de_kijker{
-    border: 3px solid #F8C400;
-    border-radius: 3px;
+    border: 3px solid #fce697;
+    border-radius: 10px;
     width:190px;
     margin:5px 6px 10px 0px;
     padding:5px;
@@ -320,8 +320,8 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
 .wegwijs-block {    
     padding: 5px;
     margin-bottom:10px;
-    border-radius: 3px;
-    border: 3px solid #f8c400; 
+    border-radius: 10px;
+    border: 3px solid #fce697; 
     /* toegevoegd door Sam */	
     overflow: auto;
 }
