@@ -11,7 +11,9 @@ endif; ?>
 <p id="simple-pages-breadcrumbs">
 <?php if($type == 'Object'):?>   
         <a href="/">Home</a> > <a href="/beeldbank">Beeldbank</a> > <a href='<?php echo url('/solr-search/results?facet=itemtype:"'.$type.'"');?>'>Objecten</a>
+        <?php if(metadata('item', array('Item Type Metadata','Objectnaam'))): ?>
         > <?php echo metadata('item', array('Item Type Metadata','Objectnaam')); ?>
+        <?php endif;?>
 <?php elseif($type == 'Concept'):?> 
         <a href="/">Home</a> > <a href="/beeldbank">Beeldbank</a> > <a href='<?php echo url('/solr-search/results?facet=itemtype:"'.$type.'"');?>'>Concepten</a>
         > <?php echo ucfirst(metadata('item', array('Dublin Core','Title'))); ?>
