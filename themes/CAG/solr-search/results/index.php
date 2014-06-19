@@ -196,7 +196,7 @@ jQuery(document).ready(function() {
                 echo "</tr></table>";
             }
                 
-            //VIEW = DEFAULT (OBJECT, COLLECTIE, CONCEPT)
+            //VIEW = DEFAULT (OBJECT, COLLECTIE, AlGEMENE INFO)
             if($view=='default'){
                 foreach($results->response->docs as $doc):                   
                     $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id')));                                         

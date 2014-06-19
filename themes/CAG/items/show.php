@@ -14,8 +14,8 @@ endif; ?>
         <?php if(metadata('item', array('Item Type Metadata','Objectnaam'))): ?>
         > <?php echo metadata('item', array('Item Type Metadata','Objectnaam')); ?>
         <?php endif;?>
-<?php elseif($type == 'Concept'):?> 
-        <a href="/">Home</a> > <a href="/beeldbank">Beeldbank</a> > <a href='<?php echo url('/solr-search/results?facet=itemtype:"'.$type.'"');?>'>Concepten</a>
+<?php elseif($type == 'Algemene info'):?> 
+        <a href="/">Home</a> > <a href="/beeldbank">Beeldbank</a> > <a href='<?php echo url('/solr-search/results?facet=itemtype:"'.$type.'"');?>'>Algemene info</a>
         > <?php echo ucfirst(metadata('item', array('Dublin Core','Title'))); ?>
 <?php else:?>        
         <a href="/">Home</a> > <a href='<?php echo url('/solr-search/results?facet=itemtype:"'.$type.'"');?>'><?php echo $type?></a>
@@ -83,7 +83,7 @@ endif; ?>
 <?php endif;?>
 
 <!-- CONCEPT -->
-<?php if($type == 'Concept'):?>   
+<?php if($type == 'Algemene info'):?>   
        
     <h3><?php echo ucfirst(metadata($item, array('Dublin Core','Title')));?></h3>       
     <br>
