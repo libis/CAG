@@ -1044,36 +1044,6 @@ ul.navigation_footer {
     margin:5px 0;
 }
 
-#publicatie-tabel{
-    width:100%;
-    border-collapse: collapse;
-    border-style: hidden;
-}
-
-#publicatie-tabel td{
-    width:50%;
-    border: 10px solid white;
-}
-
-.publicatie{    
-    width:100%;
-    background-color: #F7F9F9;
-    border-bottom: 1px solid #FFFFFF;
-    float:left;
-    border: 1px solid #F8C400;
-    border-radius: 3px;
-    padding:5px 0;
-}
-
-.publicatie-text{
-    
-}
-
-.publicatie img{
-    padding:0px 5px 0px 5px;
-    float:left;
-}
-
 #info{
     margin-bottom:10px;
 }
