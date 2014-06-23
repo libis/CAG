@@ -556,6 +556,13 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
     clear:both;
 }
 
+#collecties label{
+    font-weight:bold;
+}
+#collecties td{
+    padding: 5px;
+}
+
 /* text
 ------------------------------------------------------------------ */
 

@@ -35,12 +35,6 @@ del {
     text-decoration: line-through;
 }
 
-/* tables still need 'cellspacing="0"' in the markup */
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-}
-
 ul{
 	-webkit-margin-before:0px;
 -webkit-margin-after: 0px;
@@ -66,8 +60,6 @@ a:hover {  color: #669999;}
 a:active { color: #ff3300;}
 
 h3 a {text-decoration:none;}
-
-table {margin-bottom:1.3333em;}
 
 blockquote {margin-left:2.6667em;margin-right:2.6667em;font-style:italic;}
 

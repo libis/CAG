@@ -194,23 +194,51 @@ endif; ?>
     
     <?php if(metadata($item,array('Item Type Metadata','Naam instelling')))?>
         <h1><?php echo metadata($item,array('Item Type Metadata','Naam instelling'))?></h1>
-    <?php if(metadata($item,array('Item Type Metadata','Straat + Nr')))?>
-        <h3>Straat + Nr:</h3><p><?php echo metadata($item,array('Item Type Metadata','Straat + Nr'))?></p>
-    <?php if(metadata($item,array('Item Type Metadata','Postcode')))?>
-        <h3>Postcode:</h3><p><?php echo metadata($item,array('Item Type Metadata','Postcode'))?></p>
-    <?php if(metadata($item,array('Item Type Metadata','Stad')))?>
-        <h3>Stad:</h3><p><?php echo metadata($item,array('Item Type Metadata','Stad'))?></p>
-    <?php if(metadata($item,array('Item Type Metadata','Provincie')))?>
-        <h3>Provincie:</h3><p><?php echo metadata($item,array('Item Type Metadata','Provincie'))?></p>
-    <?php if(metadata($item,array('Item Type Metadata','Telefoon')))?>
-        <h3>Telefoon:</h3><p><?php echo metadata($item,array('Item Type Metadata','Telefoon'))?></p>
-    <?php if(metadata($item,array('Item Type Metadata','Fax')))?>
-        <h3>Fax:</h3><p><?php echo metadata($item,array('Item Type Metadata','Fax'))?></p>
-    <?php if(metadata($item,array('Item Type Metadata','Website')))?>
-        <h3>Website:</h3><p><?php echo metadata($item,array('Item Type Metadata','Website'))?></p>
-    <?php if(metadata($item,array('Item Type Metadata','Email')))?>
-        <h3>E-mail:</h3><p><?php echo metadata($item,array('Item Type Metadata','Email'))?></p>
-
+    
+    <table id="collecties">
+        <tr>       
+        <?php if(metadata($item,array('Item Type Metadata','Type Organisatie'))):?>
+            <td><label>Collectietype:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Type Organisatie'))?></td>
+        </tr>
+         <?php endif; ?>
+        <tr>       
+        <?php if(metadata($item,array('Item Type Metadata','Collectiefocus'))):?>
+            <td><label>Collectiefocus:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Collectiefocus'))?></td>
+        </tr>
+        <?php endif; ?>
+        <tr>       
+        <?php if(metadata($item,array('Item Type Metadata','Erfgoeddragers'))):?>
+            <td><label>Erfgoeddragers:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Erfgoeddragers'))?></td>
+        </tr>
+        <?php endif; ?>
+        <tr>       
+        <?php if(metadata($item,array('Item Type Metadata','Beschrijving'))):?>
+            <td><label>Beschrijving:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Beschrijving'))?></td>
+        </tr>
+        <?php endif; ?>
+        <tr>
+            <?php if(metadata($item,array('Item Type Metadata','Straat + Nr')))?>
+            <td><label>Adresgegevens:</label></td>
+            <td><?php echo metadata($item,array('Item Type Metadata','Straat + Nr'))?><br>
+                <?php echo metadata($item,array('Item Type Metadata','Postcode'))?>, <?php echo metadata($item,array('Item Type Metadata','Stad'))?><br>
+                <?php echo metadata($item,array('Item Type Metadata','Provincie'))?><br>
+            </td>
+        </tr><tr>       
+        <?php if(metadata($item,array('Item Type Metadata','Telefoon'))):?>
+            <td><label>Telefoon:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Telefoon'))?></td>
+        </tr>
+        <?php endif; ?>
+        <tr>
+        <?php if(metadata($item,array('Item Type Metadata','Website'))):?>
+            <td><label>Website:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Website'))?></td>
+        </tr>
+        <?php endif; ?>
+        <tr>
+        <?php if(metadata($item,array('Item Type Metadata','Email'))):?>
+            <td><label>E-mail:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Email'))?></td>
+        </tr>
+        <?php endif; ?>
+    </table>
 <?php endif;?>
 
 <!-- NIEUWSBERICHT -->
