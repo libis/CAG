@@ -115,18 +115,14 @@ jQuery(document).ready(function() {
             if(isset($_GET['facet'])){
                 $facet = $_GET['facet'];
                 
-                if(strpos($facet,'itemtype:("Nieuwsbericht" OR "Agendapunt")') !== false ||
-                   strpos($facet,'itemtype:"Nieuwsbericht"') !== false ||     
-                   strpos($facet,'itemtype:"Agendapunt"') !== false     
-                        ) {
+                if(strpos($facet,'Agendapunt') !== false || 
+                    strpos($facet,'Nieuwsbericht') !== false) {
                     $view = 'nieuws';
                 }
-                if(strpos($facet,'itemtype:"Publicatie"') !== false) {
+                if(strpos($facet,'Publicatie') !== false || 
+                    strpos($facet,'Project') !== false) {
                     $view = 'publicatie';
-                }
-                if(strpos($facet,'itemtype:"Project"') !== false) {
-                    $view = 'project';
-                }                    
+                }                                 
             }            
             
             //VIEW = NIEUWS EN AGENDA
@@ -162,38 +158,35 @@ jQuery(document).ready(function() {
             }
             
             //VIEW = PUBLICATIE (PUBLICATIE, PROJECT)
-            if($view=='publicatie' || $view=='project'){
-                echo '<div id="info"></div>';
-                if($view == 'publicatie'){?>                    
-                    <?php echo libis_get_simple_page_content('info-publicatie (zoekresultaten)'); ?>
-                <?php }
-                if($view == 'project'){?>
-                    <?php echo libis_get_simple_page_content('info-project (zoekresultaten)'); ?>
-                <?php } ?>  
-                <table id='publicatie-tabel'><tr>
-                <?php        
-                $side = 'left';
+            if($view=='publicatie'){
+                $featured="";$pub ="";$project="";
                 foreach($results->response->docs as $doc):
                    $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id'))); 
 
-                   if($item->getItemType()->name == 'Publicatie' || $item->getItemType()->name == 'Project'){
-                       $html = "<td><div class='publicatie' id='solr_".$doc->__get('id')."'>";                        
+                   if($item->getItemType()->name == 'Publicatie' ||$item->getItemType()->name == 'Project'){
+                       $html = "<div class='in_de_kijker' id='solr_".$doc->__get('id')."'>";                        
                        if($item->hasThumbnail()):
                            $html .= link_to_item(item_image('square_thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
                        endif;
-                       $html .= "<div class='publicatie-text'><h4>".link_to_item(metadata($item,array('Dublin Core','Title')),array(), 'show', $item)."</h4>
-                       <p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p> </div></div></td>";
+                       $html .=link_to_item("<h4>".metadata($item,array('Dublin Core','Title'))."</h4>",array(),'show',$item).
+                       "<p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p> </div>";
+
+                       if($item->featured==1){$featured .= $html;}                       
+                       if($item->getItemType()->name == 'Publicatie'){$pub .=$html;}
+                       if($item->getItemType()->name == 'Project'){$project .=$html;}
                       
-                       if($side == 'left'){
-                           $side = 'right';
-                       }else{
-                           $side = 'left';
-                           $html .= "</tr><tr>";
-                       }
-                       echo $html;
                    }
                 endforeach;
-                echo "</tr></table>";
+                
+                if($featured){
+                    echo "<div class='nieuws-kolom'><h2>In de kijker</h2>".$featured."</div>";
+                }
+                if($pub){
+                    echo "<div class='nieuws-kolom'><h2>Publicaties</h2>".$pub."</div>";
+                }
+                if($project){
+                    echo "<div class='nieuws-kolom'><h2>Projecten</h2>".$project."</div>";
+                }
             }
                 
             //VIEW = DEFAULT (OBJECT, COLLECTIE, AlGEMENE INFO)
