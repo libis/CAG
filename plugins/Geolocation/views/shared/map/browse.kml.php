@@ -18,7 +18,7 @@
          <?php
         //Zend_Session::start();
         $session = new Zend_Session_Namespace('pagination_help');
-        var_dump($session->from);
+       
         $url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
         $locationsArray = array();
         if ($session->from == 'solr' || $session->from == 'show') {
