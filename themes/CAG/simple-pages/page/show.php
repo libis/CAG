@@ -8,7 +8,7 @@
 <div id="primary">
      <p id="simple-pages-breadcrumbs"><?php echo simple_pages_display_breadcrumbs(); ?></p>
 	<?php if($title != "Home" && $title != "Beeldbank" && $title != "Werktuigen" && $title != "Alle verhalen"){ ?>
-            <div id="nav-left">		
+            <div id="nav-left" class="nav-left-simple">		
                 <?php 
                     if(metadata('simple_pages_page', 'parent_id')==0){
                         echo simple_pages_navigation(null);

@@ -851,6 +851,10 @@ address {
 	color: #07614e;
 }
 
+.nav-left-simple .navigation li ul li ul{
+    display:none;
+}
+
 /* breadcrumbs
 ------------------------------------------------------------------ */
 
