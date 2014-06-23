@@ -16,8 +16,8 @@
         <h2>In de kijker</h2>
         <div id="item-block" class="kijker-block">
             <div class="in_de_kijker nieuws-knoppen">
-                <div class='overzicht-link'><a href='".url('solr-search/results?q=&facet=itemtype:("Nieuwsbericht" OR "Agendapunt")')."'>Nieuwsberichten</a></div>
-                <div class='overzicht-link'><a href='".url('solr-search/results?q=&facet=itemtype:("Nieuwsbericht" OR "Agendapunt")')."'>Agenda</a></div>
+                <div class='overzicht-link'><a href='<?php echo url('solr-search/results?q=&facet=itemtype:("Nieuwsbericht" OR "Agendapunt")'); ?>'>Nieuwsberichten</a></div>
+                <div class='overzicht-link'><a href='<?php echo url('solr-search/results?q=&facet=itemtype:("Nieuwsbericht" OR "Agendapunt")'); ?>'>Agenda</a></div>
             </div>
             <?php
                 echo libis_get_featured_news();                
