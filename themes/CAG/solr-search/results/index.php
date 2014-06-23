@@ -386,7 +386,7 @@ jQuery(document).ready(function() {
                 echo $map->googleMap('map-display', array('loadKml'=>true));?>
             </div><!-- end map_block -->
         <?php } ?>
-        <div id="test" style="display:none;"></div>
+        <div id="handle" style="display:none;"></div>
         <!-- END SOLR-GEOLOCATION -->
     
         <?php //if(!empty($itemids)){//echo relatedTagCloud_get($itemids);} ?>
