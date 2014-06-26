@@ -940,12 +940,25 @@ function libis_get_agenda(){
 }
 
 function libis_get_projects($lopend = true){
-    $html="<ul>";
+    $html="<table class='thema-table'><tr>";
+    $i=0;
     $items = get_records('Item',array('type'=>'Project','featured'=>$lopend,'sort_field'=>'added','sort_dir'=>'d'),100);
-    foreach($items as $item){                             
-        $html .= "<li>".link_to_item("<strong>".metadata($item,array('Dublin Core','Title'))."</strong>",array(), 'show', $item)."</li>";       
+    foreach($items as $item){
+        if($i==2):
+            $html="</tr><tr>";
+            $i=0;
+        endif;
+        $html .= "<td style='text-align: left;'><p>";
+        if($item->hasThumbnail()):
+            $html .= link_to_item(item_image('square_thumbnail', array('width'=>'95'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
+        elseif(digitool_item_has_digitool_url()):
+            $html .= link_to_item(digitool_get_thumb($item,true,false,95), array('class' => 'item-thumbnail'), 'show', $item);
+        endif;
+        $html .= link_to_item("<strong>".metadata($item,array('Dublin Core','Title'))."</strong>",array(), 'show', $item)."</p></td>";       
+        $i++;
+        
     }
-    $html .= "</ul><div class='lees_meer'><a href='".url('solr-search/results?q=&facet=itemtype:"Project"')."'>Lees meer..</a></div>";
+    $html .= "</tr></table><div class='lees_meer'><a href='".url('solr-search/results?q=&facet=itemtype:"Project"')."'>Lees meer..</a></div>";
     return $html;
 }
 
