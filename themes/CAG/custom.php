@@ -945,7 +945,7 @@ function libis_get_projects($lopend = true){
     $items = get_records('Item',array('type'=>'Project','featured'=>$lopend,'sort_field'=>'added','sort_dir'=>'d'),100);
     foreach($items as $item){
         if($i==2):
-            $html="</tr><tr>";
+            $html .="</tr><tr>";
             $i=0;
         endif;
         $html .= "<td style='text-align: left;'><p>";
