@@ -71,28 +71,20 @@ var NeatlineTime = {
         Timeline.createBandInfo({
             eventSource: eventSource,
             width: "80%",
-            intervalUnit: Timeline.DateTime.MONTH,
+            intervalUnit: Timeline.DateTime.YEAR,
             intervalPixels: 100,
-            zoomIndex: 10,
+            zoomIndex: 2,
             zoomSteps: new Array(
-              {pixelsPerInterval: 280, unit: Timeline.DateTime.HOUR},
-              {pixelsPerInterval: 140, unit: Timeline.DateTime.HOUR},
-              {pixelsPerInterval: 70, unit: Timeline.DateTime.HOUR},
-              {pixelsPerInterval: 35, unit: Timeline.DateTime.HOUR},
-              {pixelsPerInterval: 400, unit: Timeline.DateTime.DAY},
-              {pixelsPerInterval: 200, unit: Timeline.DateTime.DAY},
               {pixelsPerInterval: 100, unit: Timeline.DateTime.DAY},
-              {pixelsPerInterval: 50, unit: Timeline.DateTime.DAY},
-              {pixelsPerInterval: 400, unit: Timeline.DateTime.MONTH},
-              {pixelsPerInterval: 200, unit: Timeline.DateTime.MONTH},
-              {pixelsPerInterval: 100, unit: Timeline.DateTime.MONTH} // DEFAULT zoomIndex
+              {pixelsPerInterval: 100, unit: Timeline.DateTime.MONTH},
+              {pixelsPerInterval: 100, unit: Timeline.DateTime.YEAR} // DEFAULT zoomIndex
             )
         }),
         Timeline.createBandInfo({
             overview: true,
             eventSource: eventSource,
             width: "20%",
-            intervalUnit: Timeline.DateTime.YEAR,
+            intervalUnit: Timeline.DateTime.DECADE,
             intervalPixels: 200
         })
     ];
@@ -101,25 +93,25 @@ var NeatlineTime = {
     bandInfos[1].highlight = true;
     tl = Timeline.create(document.getElementById(timelineId), bandInfos);
      
-    /*tl.getBand(1).addOnScrollListener(function(timeline){
+    tl.getBand(1).addOnScrollListener(function(timeline){
         tl.loadJSON(
             event_source_url(
-                "/matter/recent",
+                url,
                 tl.getBand(0).getMinDate(),
                 tl.getBand(0).getMaxDate(),
-                function(xml,url){eventSource.loadJSON(xml,url)}
+                function(json,url){eventSource.loadJSON(json,url)}
             )
         )
-    });*/
+    });
 
 
    
-    tl.loadJSON(timelineData, function(json, url) {
+    /*tl.loadJSON(timelineData, function(json, url) {
         if (json.events.length > 0) {
             eventSource.loadJSON(json, url);
             tl.getBand(0).setCenterVisibleDate(eventSource.getEarliestDate());
         }
-    });
+    });*/
 
   }
 };
