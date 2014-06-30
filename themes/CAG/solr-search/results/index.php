@@ -203,7 +203,7 @@ jQuery(document).ready(function() {
                    $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id'))); 
 
                    if($item->getItemType()->name == 'Publicatie'){
-                       $html = "<div class='in_de_kijker' id='solr_".$doc->__get('id')."'>";                        
+                       $html = "<div class='in_de_kijker two-col-kijker' id='solr_".$doc->__get('id')."'>";                        
                        if($item->hasThumbnail()):
                            $html .= link_to_item(item_image('square_thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
                        endif;
@@ -211,7 +211,7 @@ jQuery(document).ready(function() {
                        "<p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p> </div>";
 
                        if($item->featured==1){$featured .= $html;}                       
-                       if($item->getItemType()->name == 'Publicatie'){$pub .=$html;}                       
+                       else{$pub .=$html;}                       
                       
                    }
                 endforeach;
@@ -231,7 +231,7 @@ jQuery(document).ready(function() {
                    $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id'))); 
 
                    if($item->getItemType()->name == 'Project'){
-                       $html = "<div class='in_de_kijker' id='solr_".$doc->__get('id')."'>";                        
+                       $html = "<div class='in_de_kijker two-col-kijker' id='solr_".$doc->__get('id')."'>";                        
                        if($item->hasThumbnail()):
                            $html .= link_to_item(item_image('square_thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
                        endif;
