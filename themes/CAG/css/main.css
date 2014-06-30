@@ -111,6 +111,16 @@ body {
 	
 }
 
+#page-content ul{
+    list-style-type: square;
+    margin-left: 20px;
+}
+
+#page-content ul li {
+    
+    padding-left: 5px;
+}
+
 .clearfix{
 	clear:both;
 }
