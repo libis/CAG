@@ -625,6 +625,19 @@ span.breadcrumb {
 	border:0;
 }
 
+.exhibit_tag_list{
+    margin:0!important;
+    list-style:none!important;
+}
+.exhibit_tag_list li{
+    background-color:#F7F9F9;
+    overflow:hidden;
+    list-style:none;
+    border-bottom:1px solid #fff;
+    padding:10px!important;
+    display:block;
+}
+
 #exhibit-sections div.exhibit-sections-item {
 	padding: 10px;
 	margin-bottom: 10px;
