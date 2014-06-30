@@ -344,7 +344,7 @@ jQuery(document).ready(function() {
                                 <?php }?>
 
                                 <!-- concept -->
-                                <?php if($item->getItemType()->name == 'Concept'){?>
+                                <?php if($item->getItemType()->name == 'Algemene info'){?>
                                     <div class="title">
                                     <?php $werktuigen ="<table><tr><td><strong>
                                                  ".link_to_item(metadata($item,array('Dublin Core','Title')))."
