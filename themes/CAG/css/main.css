@@ -1039,25 +1039,22 @@ ul.navigation_footer {
 }
 
 .two-col-nieuws{
-    width:314px;
+    width:423px;
 }
 
 #results .nieuws-kolom h2{
     font-size:100%;   
 }
 .nieuws-kolom .in_de_kijker{
-    float:none;
+    float:left;
     overflow:hidden;
-    width:92%;    
-    
+    width:190px;
+    height:150px;
+    margin:0 10px 10px 0;
 }
 
-.two-col-kijker{    
-    width:94.6%!important;       
-}
-
-.nieuws-kolom:last-child{
-    margin:0;
+.in_de_kijker.even{
+    margin-right:0;
 }
 
 #info{

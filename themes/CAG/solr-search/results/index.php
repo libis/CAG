@@ -199,25 +199,38 @@ jQuery(document).ready(function() {
             //VIEW = PUBLICATIE (PUBLICATIE)
             if($view=='publicatie'){
                 $featured="";$pub ="";
+                $i='odd';
+                
                 foreach($results->response->docs as $doc):
+                   $class='in_de_kijker'; 
                    $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id'))); 
-
+                    
                    if($item->getItemType()->name == 'Publicatie'){
-                       $html = "<div class='in_de_kijker two-col-kijker' id='solr_".$doc->__get('id')."'>";                        
+                       if($item->featured==0){
+                           if($i == 'odd'){
+                               $class = 'in_de_kijker odd';
+                               $i='even';
+                           }else{
+                               $class = 'in_de_kijker even';
+                               $i = 'odd';
+                           }
+                       }
+                       $html = "<div class='".$class."' id='solr_".$doc->__get('id')."'>";                        
                        if($item->hasThumbnail()):
                            $html .= link_to_item(item_image('square_thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
                        endif;
                        $html .=link_to_item("<h4>".metadata($item,array('Dublin Core','Title'))."</h4>",array(),'show',$item).
                        "<p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p> </div>";
 
-                       if($item->featured==1){$featured .= $html;}                       
-                       else{$pub .=$html;}                       
-                      
+                       if($item->featured==1){$featured .= $html;}
+                       else{
+                        $pub .=$html;                        
+                       }
                    }
                 endforeach;
                 
                 if($featured){
-                    echo "<div class='nieuws-kolom two-col-nieuws'><h2>In de kijker</h2>".$featured."</div>";
+                    echo "<div class='nieuws-kolom'><h2>In de kijker</h2>".$featured."</div>";
                 }
                 if($pub){
                     echo "<div class='nieuws-kolom two-col-nieuws'><h2>Publicaties</h2>".$pub."</div>";
@@ -227,11 +240,23 @@ jQuery(document).ready(function() {
             //VIEW = Project(PROJECT)
             if($view=='project'){
                 $featured="";$project="";
+                $i='odd';
+                 
                 foreach($results->response->docs as $doc):
+                   $class='in_de_kijker';  
                    $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id'))); 
 
                    if($item->getItemType()->name == 'Project'){
-                       $html = "<div class='in_de_kijker two-col-kijker' id='solr_".$doc->__get('id')."'>";                        
+                       if($item->featured==0){
+                           if($i == 'odd'){
+                               $class = 'in_de_kijker odd';
+                               $i='even';
+                           }else{
+                               $class = 'in_de_kijker even';
+                               $i = 'odd';
+                           }
+                       }
+                       $html = "<div class='".$class."' id='solr_".$doc->__get('id')."'>";                        
                        if($item->hasThumbnail()):
                            $html .= link_to_item(item_image('square_thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
                        endif;
@@ -246,7 +271,7 @@ jQuery(document).ready(function() {
                 endforeach;
                 
                 if($featured){
-                    echo "<div class='nieuws-kolom two-col-nieuws'><h2>Lopende projecten</h2>".$featured."</div>";
+                    echo "<div class='nieuws-kolom'><h2>Lopende projecten</h2>".$featured."</div>";
                 }
                 if($project){
                     echo "<div class='nieuws-kolom two-col-nieuws'><h2>Afgelopen projecten</h2>".$project."</div>";
