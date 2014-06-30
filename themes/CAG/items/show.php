@@ -132,7 +132,7 @@ endif; ?>
         $items = libis_get_similar_objects($item);
         
         if($items){?>
-            <br><h3>Gelijkaardige concepten</h3>
+            <br><h3>Meer algemene info</h3>
                         
             <div class="cycle" id="cycle2">
             <ul class="rotator2">    
