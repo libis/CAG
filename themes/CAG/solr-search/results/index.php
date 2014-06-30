@@ -217,10 +217,10 @@ jQuery(document).ready(function() {
                 endforeach;
                 
                 if($featured){
-                    echo "<div class='nieuws-kolom two-col'><h2>In de kijker</h2>".$featured."</div>";
+                    echo "<div class='nieuws-kolom two-col-nieuws'><h2>In de kijker</h2>".$featured."</div>";
                 }
                 if($pub){
-                    echo "<div class='nieuws-kolom two-col'><h2>Publicaties</h2>".$pub."</div>";
+                    echo "<div class='nieuws-kolom two-col-nieuws'><h2>Publicaties</h2>".$pub."</div>";
                 }
             }
             
@@ -246,10 +246,10 @@ jQuery(document).ready(function() {
                 endforeach;
                 
                 if($featured){
-                    echo "<div class='nieuws-kolom two-col'><h2>Lopende projecten</h2>".$featured."</div>";
+                    echo "<div class='nieuws-kolom two-col-nieuws'><h2>Lopende projecten</h2>".$featured."</div>";
                 }
                 if($project){
-                    echo "<div class='nieuws-kolom two-col'><h2>Afgelopen projecten</h2>".$project."</div>";
+                    echo "<div class='nieuws-kolom two-col-nieuws'><h2>Afgelopen projecten</h2>".$project."</div>";
                 }
             }
                 
