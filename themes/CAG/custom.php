@@ -121,7 +121,7 @@ function Libis_get_exhibits($tag = "")
                 //$html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
                 $html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, 'Landbouw')).'</p>';
                 if($exhibit->thumbnail){
-                            $html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="150" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/>');
+                            $html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="200" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/>');
                 }
                 //takes care of the link and text
                
@@ -144,7 +144,7 @@ function Libis_get_exhibits($tag = "")
                 //$html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
                 $html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, 'Voedsel')).'</p>';
                 if($exhibit->thumbnail){
-                        $html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="150" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/>');
+                        $html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="200" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/>');
                 }
                 //takes care of the link and text
                 
