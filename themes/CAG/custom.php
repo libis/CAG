@@ -111,48 +111,24 @@ function Libis_get_exhibits($tag = "")
 	}
 	//tag 'algemeen' has different formatting then the others
 	if($tag=="algemeen"){
-		$html.= '<center><table class="exhibit_general_list"><tr>';
-
-		//foreach($exhibits as $exhibit) {
-
-                $html.= '<td>';
-                //set current exhibit
-                $exhibit = get_record_by_id('Exhibit',100010);
-                //$html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
-                $html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, 'Landbouw')).'</p>';
+		$html.= '<center><table class="exhibit_general_list"><tr><td>';
+                //get current exhibit
+                $exhibit = get_record_by_id('Exhibit',100010);               
+                $html.= '<p><a href="'.url("verhalen/landbouw").'">Landbouw</a></p>';
                 if($exhibit->thumbnail){
-                            $html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="200" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/>');
+                            $html.= '<a href="'.url("verhalen/landbouw").'"><img width="200" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/></a>';
                 }
-                //takes care of the link and text
-               
-                $html.= '</td>';
-
-                /*$html.= '<td>';
-                //set current exhibit
-                $exhibit = get_record_by_id('Exhibit',100140);
-                 $html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
-                if($exhibit->thumbnail){
-                        $html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="150" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/>');
-                }
-                //takes care of the link and text
-               
-                $html.= '</td>';*/
-
-                $html.= '<td>';
-                //set current exhibit
+                               
+                $html.= '</td><td>';               
+              
+                //get current exhibit
                 $exhibit = get_record_by_id('Exhibit',100150);
-                //$html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
-                $html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, 'Voeding')).'</p>';
+                $html.= '<p><a href="'.url("verhalen/voeding").'">Voeding</a></p>';
                 if($exhibit->thumbnail){
-                        $html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="200" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/>');
+                        $html.= '<a href="'.url("verhalen/voeding").'"><img width="200" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/></a>';
                 }
-                //takes care of the link and text
-                
-                $html.= '</td>';
-
-		//}
-
-		$html.= '</tr></table></center>';
+                //takes care of the link and text                
+		$html.= '</td></tr></table></center>';
 		return $html;
 	}
 	else{
