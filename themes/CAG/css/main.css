@@ -1038,6 +1038,13 @@ ul.navigation_footer {
     overflow:hidden;
 }
 
+.two-col{
+    width:305px;
+    float:left;
+    margin:0 5px;
+    overflow:hidden;
+}
+
 #results .nieuws-kolom h2{
     font-size:100%;   
 }
@@ -1045,6 +1052,13 @@ ul.navigation_footer {
     float:none;
     overflow:hidden;
     width:92%;    
+    margin:5px 0;
+}
+
+.two-col .in_de_kijker{
+    float:none;
+    overflow:hidden;
+    width:95%;    
     margin:5px 0;
 }
 

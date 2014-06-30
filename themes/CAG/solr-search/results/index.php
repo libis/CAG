@@ -119,10 +119,17 @@ jQuery(document).ready(function() {
                     strpos($facet,'Nieuwsbericht') !== false) {
                     $view = 'nieuws';
                 }
-                if(strpos($facet,'Publicatie') !== false || 
-                    strpos($facet,'Project') !== false) {
+               
+                if(strpos($facet,'Publicatie') !== false) {
                     $view = 'publicatie';
-                }                                 
+                }
+                if(strpos($facet,'Project') !== false) {
+                    $view = 'project';
+                }
+                 if(strpos($facet,'Publicatie') !== false && 
+                    strpos($facet,'Project') !== false) {
+                    $view = 'pubpro';
+                }
             }            
             
             //VIEW = NIEUWS EN AGENDA
@@ -157,8 +164,8 @@ jQuery(document).ready(function() {
                 }
             }
             
-            //VIEW = PUBLICATIE (PUBLICATIE, PROJECT)
-            if($view=='publicatie'){
+            //VIEW = PUBLICATIE (PUBLICATIE && PROJECT)
+            if($view=='pubpro'){
                 $featured="";$pub ="";$project="";
                 foreach($results->response->docs as $doc):
                    $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id'))); 
@@ -186,6 +193,63 @@ jQuery(document).ready(function() {
                 }
                 if($project){
                     echo "<div class='nieuws-kolom'><h2>Projecten</h2>".$project."</div>";
+                }
+            }
+            
+            //VIEW = PUBLICATIE (PUBLICATIE)
+            if($view=='publicatie'){
+                $featured="";$pub ="";
+                foreach($results->response->docs as $doc):
+                   $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id'))); 
+
+                   if($item->getItemType()->name == 'Publicatie'){
+                       $html = "<div class='in_de_kijker' id='solr_".$doc->__get('id')."'>";                        
+                       if($item->hasThumbnail()):
+                           $html .= link_to_item(item_image('square_thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
+                       endif;
+                       $html .=link_to_item("<h4>".metadata($item,array('Dublin Core','Title'))."</h4>",array(),'show',$item).
+                       "<p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p> </div>";
+
+                       if($item->featured==1){$featured .= $html;}                       
+                       if($item->getItemType()->name == 'Publicatie'){$pub .=$html;}                       
+                      
+                   }
+                endforeach;
+                
+                if($featured){
+                    echo "<div class='nieuws-kolom two-col'><h2>In de kijker</h2>".$featured."</div>";
+                }
+                if($pub){
+                    echo "<div class='nieuws-kolom two-col'><h2>Publicaties</h2>".$pub."</div>";
+                }
+            }
+            
+            //VIEW = Project(PROJECT)
+            if($view=='project'){
+                $featured="";$project="";
+                foreach($results->response->docs as $doc):
+                   $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id'))); 
+
+                   if($item->getItemType()->name == 'Project'){
+                       $html = "<div class='in_de_kijker' id='solr_".$doc->__get('id')."'>";                        
+                       if($item->hasThumbnail()):
+                           $html .= link_to_item(item_image('square_thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
+                       endif;
+                       $html .=link_to_item("<h4>".metadata($item,array('Dublin Core','Title'))."</h4>",array(),'show',$item).
+                       "<p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p> </div>";
+
+                       if($item->featured==1):$featured .= $html;
+                       else: $project .=$html;
+                       endif;
+                      
+                   }
+                endforeach;
+                
+                if($featured){
+                    echo "<div class='nieuws-kolom two-col'><h2>Lopende projecten</h2>".$featured."</div>";
+                }
+                if($project){
+                    echo "<div class='nieuws-kolom two-col'><h2>Afgelopen projecten</h2>".$project."</div>";
                 }
             }
                 
