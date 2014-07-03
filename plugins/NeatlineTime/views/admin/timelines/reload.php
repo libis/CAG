@@ -17,11 +17,11 @@ echo head(array('bodyclass' => 'timelines primary',
 
 <script>
     jQuery(document).ready(function(){
-        jQuery("#result-reload").click(function(){
+        jQuery("#reload").click(function(){
             i = 0;
             interval = setInterval(function() {
                  i = ++i % 4;
-                 jQuery("#result").html("loading"+Array(i+1).join("."));
+                 jQuery("#result-reload").html("loading"+Array(i+1).join("."));
             }, 500);
             var url = "<?php echo url('/neatline-time/timelines/items/'.$timeline->id.'?output=neatlinetime-json'); ?>"; 
             
