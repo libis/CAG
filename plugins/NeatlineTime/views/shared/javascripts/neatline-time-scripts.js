@@ -92,26 +92,16 @@ var NeatlineTime = {
     bandInfos[1].syncWith = 0;
     bandInfos[1].highlight = true;
     tl = Timeline.create(document.getElementById(timelineId), bandInfos);
-     
-    tl.getBand(1).addOnScrollListener(function(timeline){
-        tl.loadJSON(
-            event_source_url(
-                url,
-                tl.getBand(0).getMinDate(),
-                tl.getBand(0).getMaxDate(),
-                function(json,url){eventSource.loadJSON(json,url)}
-            )
-        )
-    });
+    
 
 
    
-    /*tl.loadJSON(timelineData, function(json, url) {
+    tl.loadJSON(timelineData, function(json, url) {
         if (json.events.length > 0) {
             eventSource.loadJSON(json, url);
             tl.getBand(0).setCenterVisibleDate(eventSource.getEarliestDate());
         }
-    });*/
+    });
 
   }
 };

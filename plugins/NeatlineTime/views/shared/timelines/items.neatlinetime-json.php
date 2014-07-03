@@ -34,11 +34,18 @@ foreach ($items as $item) {
                 $neatlineTimeEvent['link'] = $itemLink;
                 $neatlineTimeEvent['classname'] = neatlinetime_item_class($item);
 
-                if ($fileUrl) {
+                /*if ($fileUrl) {
                     $neatlineTimeEvent['image'] = $fileUrl;
-                }
+                }*/
 
                 $neatlineTimeEvent['description'] = $itemDescription;
+                
+                 //image - Joris
+                if(digitool_item_has_digitool_url($item)){
+                    $imgUrl = digitool_get_thumb_url($item);
+                }
+                   
+                $neatlineTimeEvent['image'] = $imgUrl;   
                 $neatlineTimeEvents[] = $neatlineTimeEvent;
             }
         }

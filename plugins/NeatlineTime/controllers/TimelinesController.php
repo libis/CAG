@@ -69,6 +69,18 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_AbstractActionCo
         $this->view->neatline_time_timeline = $timeline;
         $this->view->items = $items;
     }
+    
+    public function reloadAction()
+    {
+        $timeline = $this->_helper->db->findById();
+        $this->view->timeline = $timeline;
+        $this->view->saved = false;
+        if($_POST):
+            if(file_put_contents(FILES_DIR.'/data_'.$timeline->id.'.json',$_POST['json'])):
+                $this->view->saved = true;
+            endif;
+        endif;
+    }
 
     /**
      * Sets the add success message

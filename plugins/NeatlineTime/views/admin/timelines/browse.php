@@ -36,7 +36,10 @@ echo head($head);
                         <?php if (is_allowed($timeline, 'query')): ?>
                         <li><?php echo link_to($timeline, 'query', __('Edit Item Query')); ?></li>
                         <?php endif; ?>
-
+                        <?php if (is_allowed($timeline, 'reload')): ?>
+                        <li><?php echo link_to($timeline, 'reload', __('Reload Timeline (json)')); ?></li>
+                        <?php endif; ?>
+                            
                         <?php if (is_allowed($timeline, 'delete')): ?>
                         <li><?php echo link_to($timeline, 'delete-confirm', __('Delete'), array('class' => 'delete-confirm')); ?></li>
                         <?php endif; ?>
