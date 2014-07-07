@@ -283,9 +283,14 @@ endif; ?>
         <div class="element-text"><?php echo files_for_item(); ?></div>
     </div>
     <?php endif; ?>
-
+    <?php if(metadata('item', array('Dublin Core','Description')) != ""){?>
+    <h3>Beschrijving</h3><p><?php echo (metadata('item', array('Dublin Core','Description')));?></p>
+    <?php } ?>
     <?php if(metadata('item', array('Dublin Core','Creator')) != ""){?>
-    <h3>Auteur</h3><p><?php echo (metadata('item', array('Dublin Core','Creator')));?></p>
+    <h3>Auteur</h3><p><?php echo (metadata('item', array('Dublin Core','Creator'),array('delimiter'=>', ')));?></p>
+    <?php } ?>
+    <?php if(metadata('item', array('Dublin Core','Publisher')) != ""){?>
+    <h3>uitgever</h3><p><?php echo (metadata('item', array('Dublin Core','Publisher')));?></p>
     <?php } ?>
     <?php if(metadata('item', array('Dublin Core','Date')) != ""){?>
     <h3>Datum</h3><p><?php echo (metadata('item', array('Dublin Core','Date')));?></p>
