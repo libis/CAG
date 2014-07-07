@@ -118,7 +118,7 @@ class Omeka_Storage_Adapter_Filesystem implements Omeka_Storage_Adapter_AdapterI
         }else{
              die("<br>test_store<br>".$dest." ".$this->_getAbsPath($dest)."<br><br>");
         }*/
-        $path = realpath("/www/libis/web/cag-staging/current/files/");        
+        $path = realpath("/www/libis/web/lias_html/cag-staging/current/files/");        
         $status = $this->_rename($source, $path.$dest);
 
         if(!$status) {
