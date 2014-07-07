@@ -118,10 +118,8 @@ class Omeka_Storage_Adapter_Filesystem implements Omeka_Storage_Adapter_AdapterI
         }else{
              die("<br>test_store<br>".$dest." ".$this->_getAbsPath($dest)."<br><br>");
         }*/
-        
-        
-        
-        $status = $this->_rename($source, realpath($this->_getAbsPath($dest)));
+        $path = realpath("/www/libis/web/cag-staging/current/files/");        
+        $status = $this->_rename($source, $path.$dest);
 
         if(!$status) {
             throw new Omeka_Storage_Exception('Unable to store file.');
