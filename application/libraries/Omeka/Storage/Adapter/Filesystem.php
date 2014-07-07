@@ -113,13 +113,16 @@ class Omeka_Storage_Adapter_Filesystem implements Omeka_Storage_Adapter_AdapterI
      */
     public function store($source, $dest)
     {
-        if (strpos($dest,'original') !== false) {
+        /*if (strpos($dest,'original') !== false) {
             echo "test";
         }else{
              die("<br>test_store<br>".$dest." ".$this->_getAbsPath($dest)."<br><br>");
-        }
+        }*/
         
-        $status = $this->_rename($source, $this->_getAbsPath($dest));
+        $path = $this->_getAbsPath($dest);
+        $path = str_replace("/www/libis","/nas",$path);
+        
+        $status = $this->_rename($source, $path);
 
         if(!$status) {
             throw new Omeka_Storage_Exception('Unable to store file.');
