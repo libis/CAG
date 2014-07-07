@@ -113,6 +113,7 @@ class Omeka_Storage_Adapter_Filesystem implements Omeka_Storage_Adapter_AdapterI
      */
     public function store($source, $dest)
     {
+        die("<br>test_store<br>".$dest." ".$this->_getAbsPath($dest)."<br><br>");
         $status = $this->_rename($source, $this->_getAbsPath($dest));
 
         if(!$status) {
