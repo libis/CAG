@@ -290,7 +290,7 @@ endif; ?>
     <h3>Auteur</h3><p><?php echo (metadata('item', array('Dublin Core','Creator'),array('delimiter'=>', ')));?></p>
     <?php } ?>
     <?php if(metadata('item', array('Dublin Core','Publisher')) != ""){?>
-    <h3>uitgever</h3><p><?php echo (metadata('item', array('Dublin Core','Publisher')));?></p>
+    <h3>Uitgever</h3><p><?php echo (metadata('item', array('Dublin Core','Publisher')));?></p>
     <?php } ?>
     <?php if(metadata('item', array('Dublin Core','Date')) != ""){?>
     <h3>Datum</h3><p><?php echo (metadata('item', array('Dublin Core','Date')));?></p>
