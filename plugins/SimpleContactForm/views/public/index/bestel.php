@@ -56,7 +56,7 @@
             <table>
                 <tr><th>Titel</th><th>Prijs</th><th>Aantal</th><th>Bedrag</th></tr>
                 <?php
-                $pubs = get_records('Item',array('featured'=>true,'type'=>'Publicatie'));
+                $pubs = get_records('Item',array('featured'=>true,'type'=>'Publicatie'),5000);
                 foreach($pubs as $pub){?>
                 <tr>
                 <?php 
