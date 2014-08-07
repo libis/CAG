@@ -1019,7 +1019,17 @@ ul.navigation_footer {
     color: #FFFFFF;
 }
 
+#add_this_block{
+    margin-bottom:10px;
+}
 
+#add_this_block a, #add_this_block a:hover, #footer a:focus{
+    border:none;
+}
+
+#logo_vla a, #logo_vla a:hover, #footer a:focus {
+    border:none;
+}
 
 #footer ul {
 	margin-bottom: 1.5em;

@@ -246,7 +246,7 @@ p img{float:left; padding-right:10px;padding-bottom:10px; }
 		.sitemap .sub_menu {margin-left:20px;list-style:none;}
 
 /* == Footer == */
-#footer {clear:both;  padding-top:5px; margin:25px 5px 5px 5px; border-top:1px solid #CCCC99;}
+#footer {clear:both; border-top:1px solid #CCCC99;}
 #footer ul {float:left; width:70%; text-align:left;}
 #footer ul li {list-style:none;}
 #footer-text{text-align:right;padding-right:30px;}
