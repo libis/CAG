@@ -186,9 +186,7 @@ p img{float:left; padding-right:10px;padding-bottom:10px; }
 
 
 
-		/* == Items == */
-		.browse .item {background-color:#F7F9F9;border-bottom:1px solid #fff;padding-top:1em;padding-left:1em;}
-
+		/* == Items == */               
 		#browse-left {float:left;width:70%;padding-bottom:20px;}
 		#browse-right {float:right; width: 20%;padding-right:30px;}
 		.toggle:hover{text-decoration:underline;}

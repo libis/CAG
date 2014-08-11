@@ -304,28 +304,22 @@ jQuery(document).ready(function() {
 
                                     <div class="title">
                                         <?php $beelden="<table width='300'><th width='120'></th><th></th>";
+                                         if(metadata($item,array('Item Type Metadata','Objectnaam')))
+                                            $beelden.="<tr><td><strong>Objectnaam:</strong></td><td>".link_to_item(ucfirst(metadata($item,array('Item Type Metadata','Objectnaam'))))."</td></tr>";
+                                        
                                         if(metadata($item,array('Dublin Core','Title')))
                                           $beelden.="<tr><td><strong>Titel:</strong></td><td>".link_to_item(ucfirst(metadata($item,array('Dublin Core','Title'))))."</td></tr>";
                                         
                                         if(metadata($item,array('Dublin Core','Identifier'))){
                                             $identifier = metadata($item,array('Dublin Core','Identifier'));
-                                            $beelden.="<tr><td><strong>Nummer:</strong></td><td>".$identifier."</td></tr>";
+                                            $beelden.="<tr><td><strong>Objectnummer:</strong></td><td>".$identifier."</td></tr>";
                                         }
-                                        
-                                        if(metadata($item,array('Item Type Metadata','Objectnaam')))
-                                            $beelden.="<tr><td><strong>Objectnaam:</strong></td><td>".link_to_item(ucfirst(metadata($item,array('Item Type Metadata','Objectnaam'))))."</td></tr>";
-                                        
-                                        if(metadata($item,array('Dublin Core','Publisher')))
-                                            $beelden.="<tr><td><strong>Naam Instelling:</strong></td><td>".metadata($item,array('Dublin Core','Publisher'))."</td></tr>";
-                                       
-                                        if(metadata($item,array('Dublin Core','Type')))
-                                            $beelden.="<tr><td><strong>Objectcategorie:</strong></td><td>".metadata($item,array('Dublin Core','Type'))."</td></tr>";
                                         
                                         if(metadata($item,array('Dublin Core','Description')))
                                             $beelden.="<tr><td><strong>Beschrijving:</strong></td><td>".metadata($item,array('Dublin Core','Description'),array('snippet'=>200))."</td></tr>";
                                        
                                         
-                                        $beelden.="</table></td></tr></table>";
+                                        $beelden.="</table>";
                                         
                                         echo $beelden;
                                         ?>
@@ -371,11 +365,16 @@ jQuery(document).ready(function() {
                                 <!-- concept -->
                                 <?php if($item->getItemType()->name == 'Algemene info'){?>
                                     <div class="title">
-                                    <?php $werktuigen ="<table><tr><td><strong>
-                                                 ".link_to_item(metadata($item,array('Dublin Core','Title')))."
-                                                 </strong></td></tr>
-                                                 <tr><td>".metadata($item,array('Item Type Metadata','Scope'))."</td></tr></table>";
-                                
+                                    <?php 
+                                        $werktuigen="<table width='300'><th width='120'></th><th></th>";
+                                        
+                                        if(metadata($item,array('Dublin Core','Title')))
+                                            $werktuigen.="<tr><td><strong>Naam:</strong></td><td>".link_to_item(ucfirst(metadata($item,array('Dublin Core','Title'))))."</td></tr>";
+                                        if(metadata($item,array('Item Type Metadata','Scope')))
+                                            $werktuigen.= "<tr><td><strong>Definitie:</strong></td><td>".metadata($item,array('Item Type Metadata','Scope'))."</td></tr>";
+                                        if(metadata($item,array('Dublin Core','Description')))
+                                            $werktuigen.="<tr><td><strong>Beschrijving:</strong></td><td>".metadata($item,array('Dublin Core','Description'),array('snippet'=>200))."</td></tr>";
+                                        $werktuigen.="</table>";
                                     echo $werktuigen;?>
                                     </div>
                                 <?php } ?>

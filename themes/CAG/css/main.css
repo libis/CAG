@@ -1556,3 +1556,14 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini{
     overflow:hidden;
 }
 
+#solr_results .item {
+    background-color:#F7F9F9;
+    border-bottom:1px solid #fff;
+    padding-top:1em;
+    padding-left:1em;
+}
+
+#solr_results .tags{
+    margin-top:5px;
+}
+
