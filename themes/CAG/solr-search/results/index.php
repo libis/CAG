@@ -314,6 +314,9 @@ jQuery(document).ready(function() {
                                             $identifier = metadata($item,array('Dublin Core','Identifier'));
                                             $beelden.="<tr><td><strong>Objectnummer:</strong></td><td>".$identifier."</td></tr>";
                                         }
+                                        if(metadata($item,array('Dublin Core','Date')))
+                                            $beelden.="<tr><td><strong>Datering:</strong></td><td>".metadata($item,array('Dublin Core','Date'))."</td></tr>";
+                                       
                                         
                                         if(metadata($item,array('Dublin Core','Description')))
                                             $beelden.="<tr><td><strong>Beschrijving:</strong></td><td>".metadata($item,array('Dublin Core','Description'),array('snippet'=>200))."</td></tr>";
