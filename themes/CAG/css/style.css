@@ -103,9 +103,9 @@ div.error {font-size:1.5em; line-height:1.33333em; margin:1.33333em 0;}
 
 /* Microformats */
 
-.hTagcloud a{line-height:2.0em;vertical-align:bottom;}
+.hTagcloud a{line-height:1.5em;vertical-align:bottom;}
 
-	.hTagcloud li {display:inline;margin-right:8px;}
+	.hTagcloud li {display:inline;}
 
 	.popular a {font-size:120%;}
 	.v-popular a {font-size:140%;}

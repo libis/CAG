@@ -981,7 +981,7 @@ function libis_get_simple_page_content($title){
  * @param string $tagNumberOrder
  * @return string HTML for the tag cloud
  */
-function libis_tag_cloud($recordOrTags = null, $link = null, $maxClasses = 9, $tagNumber = false, $tagNumberOrder = null)
+function libis_tag_cloud($recordOrTags = null, $link = null, $maxClasses = 20, $tagNumber = false, $tagNumberOrder = null)
 {
     if (!$recordOrTags) {
         $tags = array();

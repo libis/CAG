@@ -205,8 +205,9 @@ div#header {
 }
 
 .hTagcloud {clear:both;}
-.hTagcloud ul {	
-	line-height: 1.8em;        
+#page-content .hTagcloud ul {	
+	line-height: 1.8em;  
+        margin-left:0px;
 }
 
 #submit_search,#beeldbank-search input[type="submit"], #submit_search_advanced,#simple-search input[type="submit"] {	
