@@ -230,10 +230,10 @@ jQuery(document).ready(function() {
                 endforeach;
                 
                 if($featured){
-                    echo "<div class='nieuws-kolom'><h2>In de kijker</h2>".$featured."</div>";
+                    echo "<div class='nieuws-kolom'><h2>Recente publicaties</h2>".$featured."</div>";
                 }
                 if($pub){
-                    echo "<div class='nieuws-kolom two-col-nieuws'><h2>Publicaties</h2>".$pub."</div>";
+                    echo "<div class='nieuws-kolom two-col-nieuws'><h2>Alle publicaties</h2>".$pub."</div>";
                 }
             }
             
