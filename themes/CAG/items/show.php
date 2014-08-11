@@ -26,19 +26,8 @@ endif; ?>
 <!-- OBJECT -->
 <?php if($type == 'Object'):?>
     <!-- The following returns all of the files associated with an item. -->
-    <?php if(metadata('item', 'has files') || digitool_item_has_digitool_url($item)):?>
-        <div id="itemfiles" class="element">
-            <?php if (metadata('item', 'has files')): ?>
-            <div class="element-text"><?php echo files_for_item(); ?></div>
-            <?php endif; ?>
-            <?php if (digitool_item_has_digitool_url($item)):?>
-                    <div class="element-text"> <?php //echo digitool_get_thumb(get_current_item(),false,true,500);?>
-                            <?php echo digitool_simple_gallery($item,500);?>
-                    </div>
-            <?php endif; ?>
-        </div>
-    <?php endif; ?>
-
+    <?php echo libis_get_image($item);?>    
+   
     <div class="clearfix"></div>
     <?php if(metadata('item',array('Dublin Core','Identifier')) != ""){?>
     	<h3>CAG-objectnummer:</h3><p><?php echo (metadata('item',array('Dublin Core','Identifier')));?></p>
@@ -106,7 +95,14 @@ endif; ?>
                     <div class="element-text"> <?php //echo digitool_get_thumb(get_current_item(),false,true,500);?>
                         <?php echo digitool_simple_gallery($item,500);?>
                     </div>
-                <?php } ?>
+                <?php } 
+                if(metadata('item',array('Dublin Core','License')) != ""){
+                    $link = metadata('item',array('Dublin Core','License'));
+                    $img = str_replace("http://creativecommons.org/licenses/","https://i.creativecommons.org/l/",$link);
+                    $img .= "88x31.png";
+                    echo "<p><a href='".$link."'><img src='".$img."'></a></p>";
+                }   
+            ?>
             </div>
         <?php } ?>    
             <div class="clearfix"></div>    
@@ -181,18 +177,7 @@ endif; ?>
 <!-- COLLECTIE -->
 <?php if($type == 'Collectie'):?>
     <!-- The following returns all of the files associated with an item. -->
-    <?php if(metadata('item', 'has files') || digitool_item_has_digitool_url($item)):?>
-        <div id="itemfiles" class="element">
-            <?php if (metadata('item', 'has files')): ?>
-            <div class="element-text"><?php echo files_for_item(); ?></div>
-            <?php endif; ?>
-            <?php if (digitool_item_has_digitool_url($item)):?>
-                    <div class="element-text"> <?php //echo digitool_get_thumb(get_current_item(),false,true,500);?>
-                            <?php echo digitool_simple_gallery($item,500);?>
-                    </div>
-            <?php endif; ?>
-        </div>
-    <?php endif; ?>
+    <?php echo libis_get_image($item);?> 
 
     <div class="clearfix"></div>
     

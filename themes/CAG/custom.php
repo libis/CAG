@@ -1034,4 +1034,26 @@ function libis_tag_cloud($recordOrTags = null, $link = null, $maxClasses = 20, $
     
     return $html;
 }
+
+function libis_get_image($item){
+    if(metadata('item', 'has files') || digitool_item_has_digitool_url($item)):
+        echo '<div id="itemfiles" class="element">';
+        if (metadata('item', 'has files')):
+            echo '<div class="element-text">'.files_for_item().'</div>';
+        endif;
+        if (digitool_item_has_digitool_url($item)):
+            echo '<div class="element-text">';
+                echo digitool_simple_gallery($item,500);
+            echo '</div>';
+        endif;
+        echo "</div>";
+     
+        if(metadata('item',array('Dublin Core','License')) != ""){
+            $link = metadata('item',array('Dublin Core','License'));
+            $img = str_replace("http://creativecommons.org/licenses/","https://i.creativecommons.org/l/",$link);
+            $img .= "88x31.png";
+            echo "<p><a href='".$link."'><img src='".$img."'></a></p>";
+        }       
+    endif;
+}
 ?>
