@@ -55,13 +55,9 @@ endif; ?>
     <?php if(metadata('item', array('Dublin Core','Provenance')) != ""){?>
    		<h3>Bewaarinstelling:</h3><p><?php echo (metadata('item', array('Dublin Core','Provenance')));?></p>
     <?php } ?>
-    <!-- moet objectnaam worden -->            
-    <!--
-    <?php if(metadata('item', array('Dublin Core','Title')) != ""){?>
-   	 	<h3>Titel:</h3><p><?php echo ucfirst(metadata('item', array('Dublin Core','Title')));?></p>
-    <?php } ?>-->
-
-   
+    <?php if(metadata('item', array('Item Type Metadata','Collectie')) != ""){?>
+   	 	<h3>Collectie:</h3><p><?php echo ucfirst(metadata('item', array('Item Type Metadata','Collectie')));?></p>
+    <?php } ?>   
     <?php if(metadata('item', array('Dublin Core','Spatial Coverage')) != ""){?>
     	<h3>Plaats:</h3><p><?php echo (metadata('item', array('Dublin Core','Spatial Coverage')));?></p>
     <?php } ?>
