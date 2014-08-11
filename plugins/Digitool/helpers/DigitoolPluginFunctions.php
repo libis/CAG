@@ -256,8 +256,7 @@ function digitool_simple_gallery($item,$size=500,$type='object'){
                         
 			if($i==0){
                             $html.="<div id='gallery-image'><a href='".$link."'><img height='".$resize['height']."' width='".$resize['width']."' src='".$thumb."'/></a></div>";
-                            $html.="<div id='gallery-thumbnails' style='height: 400px;-moz-column-width: 70px;
- -moz-column-gap: 0px;column-width: 70px;'>";
+                            $html.="<div id='gallery-thumbnails' style='height: 400px;-moz-column-width: 70px;-webkit-column-width:70px;-moz-column-gap: 0px;column-width: 70px;'>";
 			}
 			$width = 50;
 			$html.= "<a href='#' rel='".$thumb."' name='".$link."' class='image'><img src='".$thumb."' class='thumb' width='".$width."' border='0'/></a>";
