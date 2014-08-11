@@ -46,27 +46,35 @@ endif; ?>
     <?php if(metadata('item', array('Item Type Metadata','Objectnaam')) != ""){?>
    	 	<h3>Objectnaam:</h3><p><?php echo ucfirst(metadata('item', array('Item Type Metadata','Objectnaam')));?></p>
     <?php } ?>
-    <?php if(metadata('item', array('Dublin Core','Abstract')) != ""){?>
-    	<h3>Titel:</h3><p><?php echo (metadata('item', array('Dublin Core','Abstract')));?></p>
+    <?php if(metadata('item', array('Dublin Core','Title')) != ""){?>
+    	<h3>Titel:</h3><p><?php echo (metadata('item', array('Dublin Core','Title')));?></p>
     <?php } ?>
     <?php if(metadata('item', array('Dublin Core','Description')) != ""){?>
     	<h3>Beschrijving:</h3><p><?php echo (metadata('item', array('Dublin Core','Description')));?></p>
     <?php } ?>
     <?php if(metadata('item', array('Dublin Core','Provenance')) != ""){?>
-   		<h3>Bewaarplaats:</h3><p><?php echo (metadata('item', array('Dublin Core','Provenance')));?></p>
+   		<h3>Bewaarinstelling:</h3><p><?php echo (metadata('item', array('Dublin Core','Provenance')));?></p>
     <?php } ?>
     <!-- moet objectnaam worden -->            
-    
+    <!--
     <?php if(metadata('item', array('Dublin Core','Title')) != ""){?>
    	 	<h3>Titel:</h3><p><?php echo ucfirst(metadata('item', array('Dublin Core','Title')));?></p>
-    <?php } ?>            
+    <?php } ?>-->
 
+   
+    <?php if(metadata('item', array('Dublin Core','Spatial Coverage')) != ""){?>
+    	<h3>Plaats:</h3><p><?php echo (metadata('item', array('Dublin Core','Spatial Coverage')));?></p>
+    <?php } ?>
     <?php if(metadata('item', array('Dublin Core','Date')) != ""){?>
     	<h3>Datering:</h3><p><?php echo (metadata('item', array('Dublin Core','Date')));?></p>
     <?php } ?>
-	 <?php if(metadata('item', array('Dublin Core','Spatial Coverage')) != ""){?>
-    	<h3>Plaats:</h3><p><?php echo (metadata('item', array('Dublin Core','Spatial Coverage')));?></p>
+    <?php if(metadata('item', array('Dublin Core','Creator')) != ""){?>
+    	<h3>Vervaardiger:</h3><p><?php echo (metadata('item', array('Dublin Core','Creator')));?></p>
     <?php } ?>
+        
+    <?php if(metadata('item', array('Dublin Core','References')) != ""){?>
+   	 	<h3>Referenties:</h3><p><?php echo ucfirst(metadata('item', array('Dublin Core','References')));?></p>
+    <?php } ?> 
 
     
         
@@ -289,11 +297,17 @@ endif; ?>
     <?php if(metadata('item', array('Dublin Core','Creator')) != ""){?>
     <h3>Auteur</h3><p><?php echo (metadata('item', array('Dublin Core','Creator'),array('delimiter'=>', ')));?></p>
     <?php } ?>
+    <?php if(metadata('item', array('Dublin Core','Contributor')) != ""){?>
+    <h3>Medewerker</h3><p><?php echo (metadata('item', array('Dublin Core','Contributor')));?></p>
+    <?php } ?>
     <?php if(metadata('item', array('Dublin Core','Publisher')) != ""){?>
     <h3>Uitgever</h3><p><?php echo (metadata('item', array('Dublin Core','Publisher')));?></p>
     <?php } ?>
     <?php if(metadata('item', array('Dublin Core','Date')) != ""){?>
     <h3>Datum</h3><p><?php echo (metadata('item', array('Dublin Core','Date')));?></p>
+    <?php } ?>
+    <?php if(metadata('item', array('Dublin Core','Format')) != ""){?>
+    <h3>Formaat</h3><p><?php echo (metadata('item', array('Dublin Core','Format')));?></p>
     <?php } ?>
     <?php if(metadata('item', array('Item Type Metadata','Prijs')) != ""){?>
     <h3>Prijs</h3><p><?php echo (metadata('item', array('Item Type Metadata','Prijs')));?> &euro;</p>
