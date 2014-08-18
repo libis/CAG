@@ -76,7 +76,7 @@ endif; ?>
 <?php endif;?>
 
 <!-- CONCEPT -->
-<?php if($type == 'Algemene info'):?>   
+<?php if($type == 'Algemene-info'):?>   
        
     <h3><?php echo ucfirst(metadata($item, array('Dublin Core','Title')));?></h3>       
     <br>
