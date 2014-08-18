@@ -139,7 +139,7 @@ class SolrSearch_AdminController
 
         if ($this->_request->isPost()) {
             try {
-
+                set_time_limit(3600);
                 // Clear and reindex.
                 SolrSearch_Helpers_Index::deleteAll();
                 SolrSearch_Helpers_Index::indexAll();
