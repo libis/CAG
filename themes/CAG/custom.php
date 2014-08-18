@@ -1052,7 +1052,7 @@ function libis_get_image($item){
             $link = metadata('item',array('Dublin Core','License'));
             $img = str_replace("http://creativecommons.org/licenses/","https://i.creativecommons.org/l/",$link);
             $img .= "88x31.png";
-            echo "<p><a href='".$link."'><img src='".$img."'></a></p>";
+            echo "<p style='clear:both;'><a href='".$link."'><img src='".$img."'></a></p>";
         }       
     endif;
 }
