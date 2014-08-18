@@ -940,7 +940,7 @@ function libis_get_projects($lopend = true){
 
 function libis_get_publicaties($pub_tag=null){
     $html="<ul>";
-    $items = get_records('Item',array('type'=>'Publicatie','sort_field'=>'Dublin Core,Date','sort_dir'=>'d'),10);
+    $items = get_records('Item',array('type'=>'Publicatie','sort_field'=>'Dublin Core,Date','sort_dir'=>'d'),400);
     if($pub_tag):
         foreach($items as $item){  
             $tags = $item->Tags;
