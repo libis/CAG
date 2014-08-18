@@ -3,6 +3,10 @@
 require_once('index.php');    
 
     $solr = SolrSearch_Helpers_Index::connect();    
+    
+    $solr->deleteByQuery('*:*');
+    $solr->commit();
+    $solr->optimize();
 
     $db     = get_db();
     $table  = $db->getTable('Item');
