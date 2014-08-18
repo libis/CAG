@@ -139,7 +139,8 @@ endif; ?>
                 
             <?php foreach($items as $c_item){?>           
                 <li>
-                <?php echo link_to_item(digitool_get_thumb_for_home($c_item),array(),'show',$c_item);?>
+                <a href="<?php echo url("items/show/".$c_item->id);?>"><div class="cycle-container"><img class="carousel-image" src="<?php echo digitool_get_thumb_url($c_item);?>"></div></a>
+
                 <span class="similar-title"><?php echo link_to_item(metadata($c_item, array('Dublin Core','Title'),array()),array(),'show',$c_item);?></span>
                 </li>
             <?php }; ?>
