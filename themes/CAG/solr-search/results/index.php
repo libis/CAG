@@ -366,7 +366,7 @@ jQuery(document).ready(function() {
                                 <?php }?>
 
                                 <!-- concept -->
-                                <?php if($item->getItemType()->name == 'Algemene info'){?>
+                                <?php if($item->getItemType()->name == 'Algemene-info'){?>
                                     <div class="title">
                                     <?php 
                                         $werktuigen="<table width='300'><th width='120'></th><th></th>";

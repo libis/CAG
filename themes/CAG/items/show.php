@@ -14,7 +14,7 @@ endif; ?>
         <?php if(metadata('item', array('Item Type Metadata','Objectnaam'))): ?>
         > <?php echo metadata('item', array('Item Type Metadata','Objectnaam')); ?>
         <?php endif;?>
-<?php elseif($type == 'Algemene info'):?> 
+<?php elseif($type == 'Algemene-info'):?> 
         <a href="/">Home</a> > <a href="/beeldbank">Beeldbank</a> > <a href='<?php echo url('/solr-search/results?facet=itemtype:"'.$type.'"');?>'>Algemene info</a>
         > <?php echo ucfirst(metadata('item', array('Dublin Core','Title'))); ?>
 <?php else:?>        
