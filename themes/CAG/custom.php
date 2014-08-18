@@ -945,7 +945,7 @@ function libis_get_publicaties($pub_tag=null){
         foreach($items as $item){  
             $tags = $item->Tags;
             foreach($tags as $tag):
-                if($pub_tag == $tag->name):
+                if(strtolower($pub_tag) == strtolower($tag->name)):
                     $html .= "<li>".link_to_item("<strong>".metadata($item,array('Dublin Core','Title'))."</strong>",array(), 'show', $item)."</li>";       
                 endif;
             endforeach;
