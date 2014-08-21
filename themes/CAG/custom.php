@@ -1039,7 +1039,7 @@ function libis_get_image($item){
     if(metadata('item', 'has files') || digitool_item_has_digitool_url($item)):
         echo '<div id="itemfiles" class="element">';
         if (metadata('item', 'has files')):
-            echo '<div class="element-text">'.files_for_item().'</div>';
+            echo '<div class="element-text">'.files_for_item(array("imageSize"=>"fullsize")).'</div>';
         endif;
         if (digitool_item_has_digitool_url($item)):
             echo '<div class="element-text">';

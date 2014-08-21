@@ -525,6 +525,11 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
 .item-pagination li.previous {display:block;float:left; width:48%;}
 .item-pagination li.next {float:right; display:block;width: 48%; text-align:right}
 
+.item-file img{
+    max-width:500px;
+    height:auto;
+}
+
 /* show-gallery
 -------------------------------------------------------------------*/
 #gallery{

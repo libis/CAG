@@ -85,7 +85,7 @@ endif; ?>
           
             <div id="itemfiles" class="element">
                 <?php if (metadata('item', 'has files')): ?>
-                <div class="element-text"><?php echo files_for_item(); ?></div>
+                <div class="element-text"><?php echo files_for_item(array("imageSize"=>"fullsize")); ?></div>
                 <?php endif; ?>
                 <?php if (digitool_item_has_digitool_url($item)){?>
                      <?php
@@ -238,7 +238,7 @@ endif; ?>
     <!-- The following returns all of the files associated with an item. -->
     <?php if (metadata('item', 'has files')): ?>
     <div id="itemfiles" class="element">       
-        <div class="element-text"><?php echo files_for_item(); ?></div>
+        <div class="element-text"><?php echo files_for_item(array("imageSize"=>"fullsize")); ?></div>
     </div>
     <?php endif; ?>
 
@@ -254,7 +254,7 @@ endif; ?>
     <!-- The following returns all of the files associated with an item. -->
     <?php if (metadata('item', 'has files')): ?>
     <div id="itemfiles" class="element">       
-        <div class="element-text"><?php echo files_for_item(); ?></div>
+        <div class="element-text"><?php echo files_for_item(array("imageSize"=>"fullsize")); ?></div>
     </div>
     <?php endif; ?>
 
@@ -270,7 +270,7 @@ endif; ?>
     <!-- The following returns all of the files associated with an item. -->
     <?php if (metadata('item', 'has files')): ?>
     <div id="itemfiles" class="element">       
-        <div class="element-text"><?php echo files_for_item(); ?></div>
+        <div class="element-text"><?php echo files_for_item(array("imageSize"=>"fullsize")); ?></div>
     </div>
     <?php endif; ?>
     <?php if(metadata('item', array('Dublin Core','Description')) != ""){?>
@@ -305,7 +305,7 @@ endif; ?>
     <!-- The following returns all of the files associated with an item. -->
     <?php if (metadata('item', 'has files')): ?>
     <div id="itemfiles" class="element">       
-        <div class="element-text"><?php echo files_for_item(); ?></div>
+        <div class="element-text"><?php echo files_for_item(array("imageSize"=>"fullsize")); ?></div>
     </div>
     <?php endif; ?>
 
