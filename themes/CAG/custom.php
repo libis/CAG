@@ -128,37 +128,40 @@ function Libis_get_exhibits($tag = "")
                         $html.= '<a href="'.url("verhalen/voeding").'"><img width="200" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/></a>';
                 }
                 //takes care of the link and text                
-		$html.= '</td></tr></table></center>';		
-	}elseif($tag=="algemeen"){
+		$html.= '</td></tr></table></center>';
+                return $html;
+	}
+        if($tag=="algemeen" ){
             $html= '<center><table class="exhibit_general_list"><tr>';
 
-		foreach($exhibits as $exhibit) {                   
-                    if($exhibit->thumbnail){
-                        $html.= '<td><p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
-		    	$html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="175" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/></td>');
-		    }		    
-		}
-		$html.= '</tr></table></center>';            
+            foreach($exhibits as $exhibit) {                   
+                if($exhibit->thumbnail){
+                    $html.= '<td><p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
+                    $html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="175" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/></td>');
+                }		    
+            }
+            $html.= '</tr></table></center>';   
+            return $html;
         }else{
-		$html= '<ul class="exhibit_tag_list">';
+            $html= '<ul class="exhibit_tag_list">';
 
-		foreach($exhibits as $exhibit) {
+            foreach($exhibits as $exhibit) {
 
-                    $html.= '<li>';
-                    //set current exhibit
-		    //exhibit_builder_set_current_exhibit($exhibit);
+                $html.= '<li>';
+                //set current exhibit
+                //exhibit_builder_set_current_exhibit($exhibit);
 
-		    if($exhibit->thumbnail){
-                        $html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="200" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/>');
-		    }
-		    //takes care of the link and text
-		    $html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
-                    //$html.= '<p>'.truncate(exhibit('description', array(), $exhibit),280).'</p>';
-                    $html.= '<p>'.metadata($exhibit,'description',array('snippet'=>'280')).'</p>';    
-		    $html.= '</li>';
+                if($exhibit->thumbnail){
+                    $html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="200" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/>');
+                }
+                //takes care of the link and text
+                $html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
+                //$html.= '<p>'.truncate(exhibit('description', array(), $exhibit),280).'</p>';
+                $html.= '<p>'.metadata($exhibit,'description',array('snippet'=>'280')).'</p>';    
+                $html.= '</li>';
 
-		}
-		$html.= '</ul>';
+            }
+            $html.= '</ul>';
 		
 	}
         return $html;
