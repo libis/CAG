@@ -110,8 +110,8 @@ function Libis_get_exhibits($tag = "")
 		}
 	}
 	//tag 'algemeen' has different formatting then the others
-	if($tag=="algemeen"){
-		$html.= '<center><table class="exhibit_general_list"><tr><td>';
+	if($tag=="main"){
+		$html= '<center><table class="exhibit_general_list"><tr><td>';
                 //get current exhibit
                 $exhibit = get_record_by_id('Exhibit',100010);               
                 $html.= '<p><a href="'.url("verhalen/landbouw").'">Landbouw</a></p>';
@@ -128,11 +128,19 @@ function Libis_get_exhibits($tag = "")
                         $html.= '<a href="'.url("verhalen/voeding").'"><img width="200" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/></a>';
                 }
                 //takes care of the link and text                
-		$html.= '</td></tr></table></center>';
-		return $html;
-	}
-	else{
-		$html.= '<ul class="exhibit_tag_list">';
+		$html.= '</td></tr></table></center>';		
+	}elseif($tag=="algemeen"){
+            $html= '<center><table class="exhibit_general_list"><tr>';
+
+		foreach($exhibits as $exhibit) {                   
+                    if($exhibit->thumbnail){
+                        $html.= '<td><p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
+		    	$html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="175" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/></td>');
+		    }		    
+		}
+		$html.= '</tr></table></center>';            
+        }else{
+		$html= '<ul class="exhibit_tag_list">';
 
 		foreach($exhibits as $exhibit) {
 
@@ -141,10 +149,7 @@ function Libis_get_exhibits($tag = "")
 		    //exhibit_builder_set_current_exhibit($exhibit);
 
 		    if($exhibit->thumbnail){
-		    	//$item = get_item_by_id($exhibit->thumbnail);
-				//set_current_item($item);
-		   		//$html.= (item_square_thumbnail(array('alt'=>item('Dublin Core', 'Title'))));
-		    	$html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="200" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/>');
+                        $html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="200" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/>');
 		    }
 		    //takes care of the link and text
 		    $html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
@@ -154,8 +159,9 @@ function Libis_get_exhibits($tag = "")
 
 		}
 		$html.= '</ul>';
-		return $html;
+		
 	}
+        return $html;
 }
 /**
 * Custom function to retrieve a thumb of an exhibit
