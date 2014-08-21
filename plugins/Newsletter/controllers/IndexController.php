@@ -5,7 +5,7 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
             $db = get_db();
             $itemType = $db->getTable('ItemType')->findByName('Newsletter-contact');
             $elements = $db->getTable('Element')->findByItemType($itemType->id);
-            $contacts = get_records('Item',array('type'=>'Newsletter-contact'));
+            $contacts = get_records('Item',array('type'=>'Newsletter-contact'),9999999);
             $pages = $db->getTable('SimplePagesPage')->findAll();
             
             //create headers for handsontable
