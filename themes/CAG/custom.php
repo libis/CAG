@@ -1056,4 +1056,34 @@ function libis_get_image($item){
         }       
     endif;
 }
+
+function libis_exhibit_nav($exhibitPage=null){
+    if (!$exhibitPage) {
+        if (!($exhibitPage = get_current_record('exhibit_page', false))) {
+            return;
+        }
+    }
+    $exhibit = $exhibitPage->getExhibit();
+    $html = '<ul class="exhibit-page-nav navigation">' . "\n";
+    //$pagesTrail = $exhibitPage->getAncestors();
+    $pagesTrail[] = $exhibitPage;
+    
+    foreach ($pagesTrail as $page) {
+        $linkText = $page->title;
+        $pageExhibit = $page->getExhibit();
+        $pageParent = $page->getParent();
+        $pageSiblings = ($pageParent ? exhibit_builder_child_pages($pageParent) : $pageExhibit->getTopPages()); 
+
+       
+        foreach ($pageSiblings as $pageSibling) {
+            $html .= '<li' . ($pageSibling->id == $page->id ? ' class="current"' : '') . '>';
+            $html .= '<a class="exhibit-page-title" href="' . html_escape(exhibit_builder_exhibit_uri($exhibit, $pageSibling)) . '">';
+            $html .= html_escape($pageSibling->title) . "</a></li>\n";
+        }
+       
+    }
+    $html .= '</ul>' . "\n";
+    $html = apply_filters('exhibit_builder_page_nav', $html);
+    return $html;
+}
 ?>

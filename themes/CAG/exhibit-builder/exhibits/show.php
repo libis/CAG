@@ -38,19 +38,22 @@ echo head(array(
     	<?php 
         //get parent
         $parent_page = $page->getParent();
-        if(exhibit_builder_child_pages($parent_page)){
-            echo exhibit_builder_child_page_nav($parent_page); 
-        }?>
+        if(exhibit_builder_child_pages($parent_page) && exhibit_builder_child_pages($page)){
+            echo exhibit_builder_child_page_nav($parent_page);            
+        }
+        if(exhibit_builder_child_pages($parent_page) && !exhibit_builder_child_pages($page)){
+            echo libis_exhibit_nav();
+        }
+        ?>
         
     	<br><p ><?php echo exhibit_builder_link_to_exhibit(null,"Terug naar de inhoudstafel");?></p>
     </div>
 		<div id="exhibit-page">
 
 		<h2><?php echo metadata('exhibit_page', 'title'); ?></h2>
-		<?php //echo exhibit_builder_link_to_next_exhibit_page("Volgende"); ?>
+		
 		<?php exhibit_builder_render_exhibit_page(); ?>
-
-
+                
 	</div>
 </div>
 <?php echo foot(); ?>

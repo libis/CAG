@@ -96,6 +96,18 @@ body {
     list-style: disc outside none; 
 }
 
+.exhibit_page_pagination{
+    margin-top:20px;
+}
+
+.previous_page_exhibit{
+    float:left;
+}
+
+.next_page_exhibit{
+    text-align: right;
+}
+
 .thema-table {
     background-color:#F7F9F9;
 }
@@ -838,7 +850,8 @@ address {
 #nav-left {
 	float: left;
 	width: 20%;
-        margin:0px 20px 0 0;        
+        margin:0px 20px 0 0;    
+        overflow:hidden;
 }
 
 #nav-left img {
