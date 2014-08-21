@@ -57,6 +57,24 @@ endif; ?>
     	<h3>Vervaardiger:</h3><p><?php echo (metadata('item', array('Dublin Core','Creator')));?></p>
     <?php } ?>
         
+    <?php if (metadata('item', 'has tags')): ?>
+    <h3>Trefwoorden</h3>
+    <p> <?php
+        $tags = $item->Tags;
+      
+        if(is_array($tags)):
+            foreach($tags as $tag):
+                echo "<a href='".url("solr-search/results?q=&facet=tag:\"".$tag."\"")."'>".$tag."</a>";
+                if ($tag !== end($tags))
+                    echo ', ';
+            endforeach;
+        else:
+            echo "<a href='".url("solr-search/results?q=&facet=tag:\"".$tags."\"")."'>".$tags."</a>";
+        endif;
+    ?>
+    </p>
+    <?php endif;?>	
+        
     <?php if(metadata('item', array('Dublin Core','References')) != ""){?>
    	 	<h3>Referenties:</h3><p><?php echo ucfirst(metadata('item', array('Dublin Core','References')));?></p>
     <?php } ?> 
@@ -317,7 +335,7 @@ endif; ?>
 
 <!-- The following prints a list of all tags associated with the item -->
 <!-- The following prints a list of all tags associated with the item -->
-<?php if (metadata('item', 'has tags')): ?>
+<?php if (metadata('item', 'has tags') && $type != "Object"): ?>
 <div id="item-tags" class="element">
     <h3>Trefwoorden</h3>
     <div class="element-text">
