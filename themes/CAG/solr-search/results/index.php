@@ -141,7 +141,7 @@ jQuery(document).ready(function() {
                    if($item->getItemType()->name == 'Nieuwsbericht' ||$item->getItemType()->name == 'Agendapunt'){
                        $html = "<div class='in_de_kijker' id='solr_".$doc->__get('id')."'>";                        
                        if($item->hasThumbnail()):
-                           $html .= link_to_item(item_image('square_thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
+                           $html .= link_to_item(item_image('thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
                        endif;
                        $html .=link_to_item("<h4>".metadata($item,array('Dublin Core','Title'))."</h4>",array(),'show',$item).
                        "<p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p> </div>";
@@ -173,7 +173,7 @@ jQuery(document).ready(function() {
                    if($item->getItemType()->name == 'Publicatie' ||$item->getItemType()->name == 'Project'){
                        $html = "<div class='in_de_kijker' id='solr_".$doc->__get('id')."'>";                        
                        if($item->hasThumbnail()):
-                           $html .= link_to_item(item_image('square_thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
+                           $html .= link_to_item(item_image('thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
                        endif;
                        $html .=link_to_item("<h4>".metadata($item,array('Dublin Core','Title'))."</h4>",array(),'show',$item).
                        "<p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p> </div>";
@@ -217,7 +217,7 @@ jQuery(document).ready(function() {
                        }
                        $html = "<div class='".$class."' id='solr_".$doc->__get('id')."'>";                        
                        if($item->hasThumbnail()):
-                           $html .= link_to_item(item_image('square_thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
+                           $html .= link_to_item(item_image('thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
                        endif;
                        $html .=link_to_item("<h4>".metadata($item,array('Dublin Core','Title'))."</h4>",array(),'show',$item).
                        "<p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p> </div>";
@@ -258,7 +258,7 @@ jQuery(document).ready(function() {
                        }
                        $html = "<div class='".$class."' id='solr_".$doc->__get('id')."'>";                        
                        if($item->hasThumbnail()):
-                           $html .= link_to_item(item_image('square_thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
+                           $html .= link_to_item(item_image('thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
                        endif;
                        $html .=link_to_item("<h4>".metadata($item,array('Dublin Core','Title'))."</h4>",array(),'show',$item).
                        "<p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p> </div>";

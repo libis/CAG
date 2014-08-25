@@ -874,7 +874,7 @@ function libis_get_featured_news(){
     foreach($items as $item){
         $html .= "<div class='in_de_kijker'>";
         if($item->hasThumbnail()):
-            $html .= link_to_item(item_image('square_thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
+            $html .= link_to_item(item_image('thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
         endif;
                       
         $html .= "<div class='in_de_kijker_text'>".link_to_item("<h4>".metadata($item,array('Dublin Core','Title'))."</h4>", array(), 'show', $item).
@@ -893,7 +893,7 @@ function libis_get_news(){
     foreach($nieuws as $item){
         $html .= "<div class='wegwijs-item'>";
         if($item->hasThumbnail()):
-            $html .= link_to_item(item_image('square_thumbnail', array('width'=>'60'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
+            $html .= link_to_item(item_image('thumbnail', array('width'=>'60'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
         endif;
                       
         $html .= link_to_item("<h4>".metadata($item,array('Dublin Core','Title'))."</h4>",array(), 'show', $item);
@@ -912,7 +912,7 @@ function libis_get_agenda(){
     foreach($agenda as $item){
         $html .= "<div class='wegwijs-item'>";
         if($item->hasThumbnail()):
-            $html .= link_to_item(item_image('square_thumbnail', array('width'=>'60'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
+            $html .= link_to_item(item_image('thumbnail', array('width'=>'60'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
         endif;
                       
         $html .= link_to_item("<h4>".metadata($item,array('Dublin Core','Title'))."</h4>",array(), 'show', $item);
@@ -935,7 +935,7 @@ function libis_get_projects($lopend = true){
         endif;
         $html .= "<td style='text-align: left;'><p>";
         if($item->hasThumbnail()):
-            $html .= link_to_item(item_image('square_thumbnail', array('width'=>'95'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
+            $html .= link_to_item(item_image('thumbnail', array('width'=>'95'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
         elseif(digitool_item_has_digitool_url()):
             $html .= link_to_item(digitool_get_thumb($item,true,false,95), array('class' => 'item-thumbnail'), 'show', $item);
         endif;
