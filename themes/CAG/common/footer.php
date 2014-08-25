@@ -3,9 +3,9 @@
 	<div class="column nieuwsbrief">
            
                 <h2>Nieuwsbrief</h2>
-                <div id="inschrijven"><a href="<?php echo url("newsletter/index/register")?>">Inschrijven</a></div>
+                <div id="inschrijven"><a href="<?php echo url("newsletter/index/register")?>">Inschrijven</a></div>                
                 <div class="archief-link"><a href="<?php echo url("nieuwsbriefarchief")?>">Nieuwsbrief archief</a></div>
-           
+                <div id="inschrijven" class="uitschrijven"><a href="<?php echo url("newsletter/index/unsubscribe")?>">Uitschrijven</a></div>
 	</div><!-- /.column -->
 	<div class="column links">
 		<div class="column left">

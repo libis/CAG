@@ -1026,8 +1026,12 @@ ul.navigation_footer {
     font-weight:bold;    
     line-height: 1.2em;
     text-transform: uppercase;
-    margin: 1.5em auto 0.5em auto;
+    margin: 1.0em auto 0.5em auto;
     padding: 6px 4px;
+}
+
+#inschrijven.uitschrijven{
+    margin-top:0.5em;
 }
 
 .archief-link{

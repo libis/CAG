@@ -273,10 +273,31 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                    
                     $html = "Het uitschrijven is gelukt. Je bent niet langer geregistreerd op onze nieuwsbrief.";
                     
-                endif;
-              
-            else:
-                $html = "<p>Sorry, maar er is geen geldig emailadres opgegeven.</p>";
+                endif;              
+            else:                        
+                $html = false;  
+                if ($this->getRequest()->isPost()) {
+                    // If the form submission is valid, then send out the email               
+                    $email = $this->getRequest()->getPost('email');
+                    if (!Zend_Validate::is($email, 'EmailAddress')) {
+                        $this->_helper->flashMessenger(__('Je e-mailadres is niet geldig.'));                        
+                    }else{
+                        $message = "<p>Beste,</p>
+                                    <p>Klik op onderstaande link om onze nieuwsbrief niet langer te ontvangen.</p>
+                                    <p>".newsletter_add_unsubscribe($email)."</p>";
+                        $this->sendEmailUnsubscribe($email,$message);
+                        $html = "<p>We hebben een e-mail verstuurd naar het opgegeven adres, hierin bevindt zich de nodige informatie om je uit te schrijven voor onze nieuwsbrief.</p>";
+                    }
+                }
+                $captchaObj = $this->_setupCaptcha();
+                // Render the HTML for the captcha itself.
+                // Pass this a blank Zend_View b/c ZF forces it.
+                if ($captchaObj) {
+                    $captcha = $captchaObj->render(new Zend_View);
+                } else {
+                    $captcha = '';
+                }
+                
             endif;
             $this->view->assign(compact('html'));
         }
@@ -358,6 +379,23 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
             $mail->setFrom($replyToEmail);
             $mail->addTo($formEmail, $formName);
             $mail->setSubject(get_option('site_title') . ' - ' . get_option('newsletter_user_notification_email_subject'));
+            $mail->send();
+        }
+    }
+    
+    protected function sendEmailUnsubscribe($formEmail, $message) {
+
+        //setup smtp
+        $tr = new Zend_Mail_Transport_Smtp('smtp.kuleuven.be');
+        Zend_Mail::setDefaultTransport($tr);
+        
+        $replyToEmail = get_option('newsletter_reply_from_email');
+        if (!empty($replyToEmail)) {
+            $mail = new Zend_Mail();
+            $mail->setBodyHtml($message);
+            $mail->setFrom($replyToEmail);
+            $mail->addTo($formEmail);
+            $mail->setSubject(get_option('site_title') . ' - Uitschrijven nieuwsbrief');
             $mail->send();
         }
     }
