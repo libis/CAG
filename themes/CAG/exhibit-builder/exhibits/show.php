@@ -22,7 +22,7 @@ echo head(array(
             <li><?php echo metadata('exhibit_page', 'title'); ?></li>
         </ul>
     </div>
-    <h1><?php echo metadata('exhibit', 'title'); ?></h1>
+    <h1><?php echo metadata('exhibit', 'title'); ?> <span id="print-exhibit"><a href="<?php echo exhibit_builder_exhibit_uri($exhibit).'?action=print'; ?>"><img width="15" src="<?php echo img('print.png');?>"></a></span></h1>
 
 
     <div id="nav-left">

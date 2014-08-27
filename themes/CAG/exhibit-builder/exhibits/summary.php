@@ -18,7 +18,10 @@ if(isset($_GET['action'])){
         <li><?php echo html_escape($exhibit->title); ?></li>
     </ul>
 </div>
-<h1><?php echo html_escape($exhibit['title']); ?></h1>
+
+
+<h1><?php echo html_escape($exhibit['title']); ?> <span id="print-exhibit"><a href="<?php echo exhibit_builder_exhibit_uri($exhibit).'?action=print'; ?>"><img width="15" src="<?php echo img('print.png');?>"></a></span>
+</h1>
 <div id="exhibit_description">
 <?php echo $exhibit->description; ?>
 <?php echo "<em>Door ".$exhibit->credits."</em>"; ?>

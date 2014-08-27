@@ -77,6 +77,11 @@ body {
         overflow: hidden;
 }
 
+#print-exhibit img{
+   vertical-align: baseline;
+   margin-left:5px;
+}
+
 #inhoudstafel{   
     font-size:120%;
 }
