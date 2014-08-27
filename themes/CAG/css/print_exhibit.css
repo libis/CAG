@@ -1,0 +1,50 @@
+/* 
+    Document   : print_exhibit.css
+    Created on : Aug 25, 2014, 4:36:26 PM
+    Author     : joris
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+@media screen, print {
+    body {
+        font-family:Verdana, Arial, Helvetica, sans-serif;
+        font-size:12px;
+        line-height:1.333em;
+    }
+
+    h1 {
+        font-size:2em;
+        color:#669999; 
+        padding:2px 0px 2px 0px;
+        margin-bottom:1.2em; 
+        line-height:1.333333em;
+        clear:both;
+    }
+    h2 {
+        font-size:1.4em;
+        color:#669999;;
+        padding:4px 0px 4px 0px;
+        margin-bottom:1em;
+        line-height:1.2em;      
+        clear:both;
+        page-break-before: always;
+    }
+    h3 {
+        font-size:1.0em;
+        color:#669999;;
+        padding:4px 0px 4px 0px;
+        margin-bottom:.75em;
+        line-height:1.2em;      
+        clear:both;
+    }
+    img {
+        max-width: 250px;
+        float:left;
+        margin:0 10px 10px 0;
+    }
+
+    
+    
+}
+

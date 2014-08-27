@@ -1095,4 +1095,63 @@ function libis_exhibit_nav($exhibitPage=null){
     $html = apply_filters('exhibit_builder_page_nav', $html);
     return $html;
 }
+
+function libis_get_exhibit_for_print($exhibit){    
+?>
+    <h1><?php echo html_escape($exhibit['title']); ?></h1>
+    <div id="exhibit_description">
+    <?php echo $exhibit->description; ?>
+    <?php echo "<em>Door ".$exhibit->credits."</em>"; ?>
+    </div>
+    <br>
+    <div id="exhibit-sections">	
+	<h3>Inhoudstafel</h3>	
+        <div class="exhibit-sections-item">
+        <ul id="inhoudstafel">
+            <?php set_exhibit_pages_for_loop_by_exhibit(); ?>
+            <?php foreach (loop('exhibit_page') as $exhibitPage): ?>
+            
+            <?php echo exhibit_builder_page_summary($exhibitPage); ?>
+           
+            <?php endforeach; ?>
+        </ul>	
+        </div>        
+    </div>
+    <div id="exhibit-bonanza">
+        <?php set_exhibit_pages_for_loop_by_exhibit(); ?>
+        <?php foreach (loop('exhibit_page') as $exhibitPage): ?>
+            <h2><span class="exhibit-page"><?php echo metadata('exhibit_page', 'title'); ?></h2>
+            <div class="image-left">
+            <?php if ($attachment = exhibit_builder_page_attachment(1)):?>
+            <div class="exhibit-item">
+                <?php echo exhibit_builder_attachment_markup($attachment, array('imageSize' => 'fullsize'), array('class' => 'permalink')); ?>
+            </div>
+            <?php endif; ?>
+            </div>
+            <?php echo exhibit_builder_page_text(1); ?>
+            
+            <?php 
+                $exhibit_children = exhibit_builder_child_pages();
+                //var_dump($exhibit_children);
+                if($exhibit_children):
+                   // set_exhibit_pages_for_loop_by_exhibit($exhibit_children);
+                    foreach (loop('exhibit_page',$exhibit_children) as $exhibitPage_child): ?>
+
+                    <h3><span class="exhibit-page"><?php echo metadata('exhibit_page', 'title'); ?></h3>
+                    <div class="image-left" width="250">
+                    <?php if ($attachment = exhibit_builder_page_attachment(1)):?>
+                    <div class="exhibit-item">
+                        <?php echo exhibit_builder_attachment_markup($attachment, array('imageSize' => 'fullsize'), array('class' => 'permalink')); ?>
+                    </div>
+                    <?php endif; ?>
+                    </div>
+                    <?php echo exhibit_builder_page_text(1); ?>
+                    <?php endforeach;?>  
+                <?php endif;?>    
+            <br><br>
+            <?php //echo exhibit_builder_page_summary($exhibitPage); ?>           
+        <?php endforeach; ?>
+    </div>
+<?php
+}
 ?>

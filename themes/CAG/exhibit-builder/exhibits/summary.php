@@ -1,3 +1,13 @@
+<?php
+if(isset($_GET['action'])){
+    if($_GET['action']=='print'){
+        queue_css_file('print_exhibit');                
+        echo head_css();
+        echo libis_get_exhibit_for_print($exhibit);
+        exit();
+    }
+}
+?>
 <?php echo head(array('title' => html_escape($exhibit->title),'bodyid'=>'exhibit','bodyclass'=>'summary')); ?>
 <div id="primary">
 <div id="breadcrumb">
