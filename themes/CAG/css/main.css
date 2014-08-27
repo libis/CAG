@@ -764,6 +764,10 @@ address {
 	background-color: #F7F9F9;
 }
 
+#form-instructions td{
+    padding-right:25px;
+}
+
 #form-instructions img{
     float:right;
 }
