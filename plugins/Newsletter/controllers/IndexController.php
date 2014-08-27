@@ -219,7 +219,7 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                     //CREATE & SAVE ITEM
                     $item = new Item();
                     $item->item_type_id = $itemType->id;
-                    $item->public = 1;
+                    $item->public = 0;
                     $item->save();
                     foreach($elements as $element):
                         $text = new ElementText();
