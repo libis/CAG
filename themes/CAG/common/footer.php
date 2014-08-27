@@ -35,7 +35,7 @@
                     <li><a href="<?php echo url('over/missie/'); ?>">Missie</a></li>
                     <li><a href="<?php echo url('werking/basiswerking/'); ?>">Basiswerking</a></li>
                     <li><a href="<?php echo url('over/team/'); ?>">Team</a></li>
-                    <li><a href="<?php echo url('over/team/'); ?>">Projecten</a></li>                       
+                    <li><a href="<?php echo url('werking/projecten/'); ?>">Projecten</a></li>                       
                     <li><a href="<?php echo url('over/partners/'); ?>">Partners</a></li>
                     </ul>	
 		</div>
