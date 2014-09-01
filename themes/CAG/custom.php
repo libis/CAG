@@ -100,17 +100,7 @@ function Libis_display_random_featured_exhibit()
 function Libis_get_exhibits($tag = "")
 {
 	$html="";
-        if($tag == ""){
-		$exhibits = get_records('Exhibit',array('sort_field'=>'id','sort_dir'=>'d'));
-	}else{
-		$exhibits = get_records('Exhibit',array('tags' =>$tag));
-		//if there were no exhibits found
-		if(empty($exhibits)){
-			return "<p>We're sorry but there were no stories found with this tag</p>";
-		}
-	}
-	//tag 'algemeen' has different formatting then the others
-	if($tag=="main"){
+        if($tag=="main"){
 		$html= '<center><table class="exhibit_general_list"><tr><td>';
                 //get current exhibit
                 $exhibit = get_record_by_id('Exhibit',100010);               
@@ -131,6 +121,17 @@ function Libis_get_exhibits($tag = "")
 		$html.= '</td></tr></table></center>';
                 return $html;
 	}
+        if($tag == ""){
+		$exhibits = get_records('Exhibit',array('sort_field'=>'id','sort_dir'=>'d'));
+	}else{
+		$exhibits = get_records('Exhibit',array('tags' =>$tag));
+		//if there were no exhibits found
+		if(empty($exhibits)){
+			return "<p>We're sorry but there were no stories found with this tag</p>";
+		}
+	}
+	//tag 'algemeen' has different formatting then the others
+	
         if($tag=="algemeen" ){
             $html= '<center><table class="exhibit_general_list"><tr>';
 
