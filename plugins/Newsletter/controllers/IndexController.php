@@ -46,10 +46,10 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                 $data .= "{id:".$contact->id." ,";
                 foreach($elements as $element):
                     if($counter != $size_elements):
-                        $data .= $element->name.':"'.metadata($contact,array('Item Type Metadata',$element->name)).'",'; 
+                        $data .= $element->name.':"'.str_replace('"',"'",metadata($contact,array('Item Type Metadata',$element->name))).'",'; 
                         $counter++;
                     else:
-                        $data .= $element->name.':"'.metadata($contact,array('Item Type Metadata',$element->name)).'"';
+                        $data .= $element->name.':"'.str_replace('"',"'",metadata($contact,array('Item Type Metadata',$element->name))).'"';
                     endif;
                 endforeach;
                 
