@@ -879,7 +879,7 @@ function libis_get_featured_news(){
         endif;
                       
         $html .= "<div class='in_de_kijker_text'>".link_to_item("<h4>".metadata($item,array('Dublin Core','Title'))."</h4>", array(), 'show', $item).
-                "<p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p></div>";
+                "<p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>110))."</p></div>";
         $html .= "<div class='lees_meer'>".link_to_item(__("Lees verder.."),array(),'show', $item)."</div></div>";
         
     }

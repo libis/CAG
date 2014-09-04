@@ -335,6 +335,10 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
     height:180px;
 }
 
+.in_de_kijker_text h4{
+    font-size:1.0em;
+}
+
 .nieuws-knoppen{
     height:207px;
 }
