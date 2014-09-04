@@ -137,8 +137,47 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
             $contacts = get_records('Item',array('type'=>'Newsletter-contact'));
             $page = get_record_by_id('SimplePagesPage',$page);
             
-            $aantal = 0;
+            $message_head = '
+                <div class="wrapper" width="100%" style="color: #006c68;font:14px/20px Calibri,Verdana,Arial,Helvetica,sans-serif;">
+                <div class="frame" width="400" style="margin:0 auto;width:600px;">
+		
+		<p class="explanation" style="font:11px/15px Calibri, Verdana, Arial, Helvetica, sans-serif; color:#999999;" align="center" valign="top">
+			Dit is de tweemaandelijkse nieuwsbrief van het Centrum Agrarische Geschiedenis vzw.</a>
+		';
+
+            $message_head_2 = '</p>
+		
+		<div class="content" class="top" style="border:2px solid #006c68;padding:10px;">
+                    <h2 style="font-weight:bold; line-height:31px; color:#006c68;">
+				Nieuwsbrief   
+			</h2>
+			
+			
+			<!-- facebook logo -->															  
+			<p>
+                             <a href="#"><img src="'.WEB_PUBLIC_THEME.'/CAG/images/cag_logo.png" alt="CAG_email" width="165" height="70" border="0" /></a>
+                            <a href="https://www.facebook.com/pages/Centrum-Agrarische-Geschiedenis/127938257279959?fref=ts" target="_blank">
+					<span style="color:#fff; text-decoration:none;">
+						<img style="" src="'.WEB_PUBLIC_THEME.'/CAG/images/FB_Logo.png" border="0"; width="149" height="52" />
+					</span>
+				</a>
+			</p>
+			
+			<h2 width="233" valign="top" style="line-height:20px; color:#fff;background:#006c68;padding:5px;">
+				'.$page->title.'
+			</h2>
+            ';
             
+            $message_foot = '                	
+                </div>                
+                <div class="footer">
+		<a href="#"><img src="'.WEB_PUBLIC_THEME.'/CAG/images/bg-footer_.gif" alt="www.HetVirtueleLand.be" width="600" height="252" border="0" /></a>
+                </div>
+                </div>
+                </div>
+            ';
+            
+            $aantal = 0;            
             
             // Create the Mailer using any Transport
             $mailer = Swift_Mailer::newInstance(
@@ -182,8 +221,8 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                   // Set the To addresses with an associative array
                   ->setTo(array($to_email => $name))
 
-                  // Give it a body
-                  ->setBody("<h1>".$page->title."</h1>".$page->text."<p>".$unsub."</p>",'text/html')
+                  // Give it a body                       
+                  ->setBody($message_head.$unsub.$message_head_2.$page->text.$message_foot,'text/html')
                         
                   // And optionally an alternative body
                   //->addPart('<q>Here is the message itself</q>', 'text/html')
