@@ -298,7 +298,7 @@ endif; ?>
     <h3>Auteur</h3><p><?php echo (metadata('item', array('Dublin Core','Creator'),array('delimiter'=>', ')));?></p>
     <?php } ?>
     <?php if(metadata('item', array('Dublin Core','Contributor')) != ""){?>
-    <h3>Medewerker</h3><p><?php echo (metadata('item', array('Dublin Core','Contributor')));?></p>
+    <h3>Medewerker</h3><p><?php echo (metadata('item', array('Dublin Core','Contributor'),array('delimiter'=>', ')));?></p>
     <?php } ?>
     <?php if(metadata('item', array('Dublin Core','Publisher')) != ""){?>
     <h3>Uitgever</h3><p><?php echo (metadata('item', array('Dublin Core','Publisher')));?></p>
