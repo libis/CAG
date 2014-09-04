@@ -134,7 +134,8 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                 $allen=true;
             }
                    
-            $contacts = get_records('Item',array('type'=>'Newsletter-contact'));
+            $contacts = get_records('Item',array('type'=>'Newsletter-contact'),9999);
+                        
             $page = get_record_by_id('SimplePagesPage',$page);
             
             $message_head = '
@@ -187,27 +188,9 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
             //100 mails/30 seconden
             $mailer->registerPlugin(new Swift_Plugins_AntiFloodPlugin(100, 30));
             
-            //loop through contacts
-            foreach ($contacts as $contact){
-                //skip if needed
-                if(!$allen){
-                    if($nieuwsbrief && 
-                           metadata($contact,array('Item Type Metadata','Nieuwsbrief'))=='false'){
-                        continue;
-                    }
-                    if($activiteiten && 
-                           metadata($contact,array('Item Type Metadata','Activiteiten'))=='false'){
-                        continue;
-                    }
-                }    
-                $aantal++;
-                
-                //continue to send if all is set correctly
-                $name= metadata($contact,array('Item Type Metadata','Naam'));
-                $to_email = metadata($contact,array('Item Type Metadata','Email'));
-                $from_email = get_option('newsletter_reply_from_email');
-                
-                $unsub = newsletter_add_unsubscribe($to_email);
+            //send test mail and return to index
+            if(isset($_POST['send_test'])){
+               $unsub = newsletter_add_unsubscribe(get_option('newsletter_reply_from_email'));
                               
                 // Create the message
                 $message = Swift_Message::newInstance()
@@ -216,10 +199,10 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                   ->setSubject("Nieuwsbrief - Het Virtuele Land: ".$page->title)
 
                   // Set the From address with an associative array
-                  ->setFrom(array($from_email))
+                  ->setFrom(array(get_option('newsletter_reply_from_email')))
 
                   // Set the To addresses with an associative array
-                  ->setTo(array($to_email => $name))
+                  ->setTo(array(get_option('newsletter_reply_from_email')))
 
                   // Give it a body                       
                   ->setBody($message_head.$unsub.$message_head_2.$page->text.$message_foot,'text/html')
@@ -232,10 +215,63 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                   ;
                   // Send the message
                  $result = $mailer->send($message);
+                 
+                
             }
+            else{
+            
+                //loop through contacts
+                foreach ($contacts as $contact){
+                    //skip if needed
+                    if(!$allen){
+                        if($nieuwsbrief && 
+                               metadata($contact,array('Item Type Metadata','Nieuwsbrief'))=='false'){
+                            continue;
+                        }
+                        if($activiteiten && 
+                               metadata($contact,array('Item Type Metadata','Activiteiten'))=='false'){
+                            continue;
+                        }
+                    }    
+                    $aantal++;
+
+                    //continue to send if all is set correctly
+                    $name= metadata($contact,array('Item Type Metadata','Naam'));
+                    $to_email = metadata($contact,array('Item Type Metadata','Email'));
+                    $from_email = get_option('newsletter_reply_from_email');
+
+                    $unsub = newsletter_add_unsubscribe($to_email);
+
+                    // Create the message
+                    $message = Swift_Message::newInstance()
+
+                      // Give the message a subject
+                      ->setSubject("Nieuwsbrief - Het Virtuele Land: ".$page->title)
+
+                      // Set the From address with an associative array
+                      ->setFrom(array($from_email))
+
+                      // Set the To addresses with an associative array
+                      ->setTo(array($to_email => $name))
+
+                      // Give it a body                       
+                      ->setBody($message_head.$unsub.$message_head_2.$page->text.$message_foot,'text/html')
+
+                      // And optionally an alternative body
+                      //->addPart('<q>Here is the message itself</q>', 'text/html')
+
+                      // Optionally add any attachments
+                     // ->attach(Swift_Attachment::fromPath('my-document.pdf'))
+                      ;
+                      // Send the message
+                     $result = $mailer->send($message);
+                }
+            };//endif
             $this->view->assign(compact('page','contacts','aantal'));
             
         }
+        
+        
         
 	public function registerAction()
 	{

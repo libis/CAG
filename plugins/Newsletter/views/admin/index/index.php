@@ -30,7 +30,9 @@ echo head($head);
         </div>
         <div class="field"> 
             <input type="submit" id="send-button" class="green" value="Verstuur" disabled="disabled">
+            <input type="submit" id="send-button-test" name="send_test" class="green" value="Verstuur test">
         </div>
+       
     </form>    
     <hr>
     <h2>Mailinglijst</h2>
