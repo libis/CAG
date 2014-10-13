@@ -466,7 +466,8 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
         // Use UNION (+) in order to preserve numeric keys
         $params = $userParams + $this->_globalParams;
 
-        $route = $this->getRoute($name);
+        //$route = $this->getRoute($name);
+        $route = $this->getRoute('default');
         $url   = $route->assemble($params, $reset, $encode);
 
         if (!preg_match('|^[a-z]+://|', $url)) {
