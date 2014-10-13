@@ -103,7 +103,7 @@ function Libis_get_exhibits($tag = "")
         if($tag=="main"){
 		$html= '<center><table class="exhibit_general_list"><tr><td>';
                 //get current exhibit
-                $exhibit = get_record_by_id('Exhibit',100010);               
+                $exhibit = get_record_by_id('Exhibit',100010,999);               
                 $html.= '<p><a href="'.url("verhalen/landbouw").'">Landbouw</a></p>';
                 if($exhibit->thumbnail){
                             $html.= '<a href="'.url("verhalen/landbouw").'"><img width="200" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/></a>';
@@ -112,7 +112,7 @@ function Libis_get_exhibits($tag = "")
                 $html.= '</td><td>';               
               
                 //get current exhibit
-                $exhibit = get_record_by_id('Exhibit',100150);
+                $exhibit = get_record_by_id('Exhibit',100150,999);
                 $html.= '<p><a href="'.url("verhalen/voeding").'">Voeding</a></p>';
                 if($exhibit->thumbnail){
                         $html.= '<a href="'.url("verhalen/voeding").'"><img width="200" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/></a>';
@@ -122,9 +122,9 @@ function Libis_get_exhibits($tag = "")
                 return $html;
 	}
         if($tag == ""){
-		$exhibits = get_records('Exhibit',array('sort_field'=>'id','sort_dir'=>'d'));
+		$exhibits = get_records('Exhibit',array('sort_field'=>'id','sort_dir'=>'d'),999);
 	}else{
-		$exhibits = get_records('Exhibit',array('tags' =>$tag));
+		$exhibits = get_records('Exhibit',array('tags' =>$tag),999);
 		//if there were no exhibits found
 		if(empty($exhibits)){
 			return "<p>We're sorry but there were no stories found with this tag</p>";
