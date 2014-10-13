@@ -21,7 +21,7 @@ class DigitoolUrlTable extends Omeka_Db_Table
             return false;
         }
 
-        // Create a SELECT statement for the Location table
+        // Create a SELECT statement for the table
         $select = $db->select()->from(array('d' => $db->DigitoolUrl), 'd.*');
 
         // Create a WHERE condition that will pull down all the digitool info
@@ -63,5 +63,22 @@ class DigitoolUrlTable extends Omeka_Db_Table
 	$id = $select->fetchAll();
 
         return $id[0]['id'];
+    }
+    
+    /**
+    * Add permission check to location queries.
+    *
+    * Since all locations belong to an item we can override this method to join
+    * the items table and add a permission check to the select object.
+    *
+    * @return Omeka_Db_Select
+    */
+    public function getSelect()
+    {
+        $select = parent::getSelect();
+        $select->join(array('items' => $this->_db->Item), 'items.id = digitool_urls.item_id', array());
+        $permissions = new Omeka_Db_Select_PublicPermissions('Items');
+        $permissions->apply($select, 'items');
+        return $select;
     }
 }
