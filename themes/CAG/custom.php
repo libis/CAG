@@ -113,9 +113,9 @@ function Libis_get_exhibits($tag = "")
               
                 //get current exhibit
                 $exhibit = get_record_by_id('Exhibit',100150,999);
-                $html.= '<p><a href="'.url("verhalen/voeding").'">Voeding</a></p>';
+                $html.= '<p><a href="'.url("verhalen/oogst").'">Voeding</a></p>';
                 if($exhibit->thumbnail){
-                        $html.= '<a href="'.url("verhalen/voeding").'"><img width="200" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/></a>';
+                        $html.= '<a href="'.url("verhalen/oogst").'"><img width="200" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/></a>';
                 }
                 //takes care of the link and text                
 		$html.= '</td></tr></table></center>';
