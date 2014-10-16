@@ -127,6 +127,9 @@ class NewsletterPlugin extends Omeka_Plugin_AbstractPlugin
         delete_option('newsletter_contact_page_instructions');
         delete_option('newsletter_thankyou_page_title');
         delete_option('newsletter_add_to_main_navigation');
+        delete_option('newsletter_list_owner');
+        delete_option('newsletter_mailing_list');
+        delete_option('newsletter_listserv');
     }
 
     /**
@@ -167,13 +170,14 @@ class NewsletterPlugin extends Omeka_Plugin_AbstractPlugin
             set_option('newsletter_reply_from_email', $_POST['reply_from_email']);
             set_option('newsletter_forward_to_email', $_POST['forward_to_email']);
             set_option('newsletter_admin_notification_email_subject', $_POST['admin_notification_email_subject']);
-            
             set_option('newsletter_user_notification_email_subject', $_POST['user_notification_email_subject']);
-            
             set_option('newsletter_contact_page_title', $_POST['contact_page_title']);
             set_option('newsletter_contact_page_instructions',$_POST['contact_page_instructions']);
             set_option('newsletter_thankyou_page_title', $_POST['thankyou_page_title']);
-            set_option('newsletter_thankyou_page_message', $_POST['thankyou_page_message']);            
+            set_option('newsletter_thankyou_page_message', $_POST['thankyou_page_message']);
+            set_option('newsletter_list_owner',$_POST['owner']);
+            set_option('newsletter_mailing_list',$_POST['mailinglist']);
+            set_option('newsletter_listserv',$_POST['listserv']);
     }
 
     public function filterPublicNavigationMain($nav)

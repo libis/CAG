@@ -37,6 +37,9 @@ $contact_page_instructions = get_option('newsletter_contact_page_instructions');
 $thankyou_page_title = get_option('newsletter_thankyou_page_title');
 $thankyou_page_message = get_option('newsletter_thankyou_page_message');
 $add_to_main_navigation = get_option('newsletter_add_to_main_navigation');
+$owner = get_option('newsletter_list_owner');
+$mailinglist = get_option('newsletter_mailing_list');
+$listserv = get_option('newsletter_listserv');
 
 $view = get_view();
 ?>
@@ -46,6 +49,41 @@ $view = get_view();
         API keys under <a href="<?php echo url('security#recaptcha_public_key'); ?>">security settings</a>. We recommend adding these keys, or the contact form will be vulnerable to spam.</p>
 <?php endif; ?>
 
+    
+
+<div class="field">
+    <?php echo $view->formLabel('mailinglist', 'Mailinglist'); ?>
+    <div class="inputs">
+        <?php echo $view->formText('mailinglist', $mailinglist, array('class' => 'textinput')); ?>
+        <p class="explanation">
+            The address of the mailing list (p.e. test.list@ls.exmaple.com.
+        </p>
+    </div>
+</div>
+    
+
+<div class="field">
+    <?php echo $view->formLabel('listserv', 'Listserv-address'); ?>
+    <div class="inputs">
+        <?php echo $view->formText('listserv', $listserv, array('class' => 'textinput')); ?>
+        <p class="explanation">
+            The address used for admin tasks. (p.e. listserv@ls.example.com)
+        </p>
+    </div>
+</div>
+    
+<div class="field">
+    <?php echo $view->formLabel('owner', 'Owner'); ?>
+    <div class="inputs">
+        <?php echo $view->formText('owner', $owner, array('class' => 'textinput')); ?>
+        <p class="explanation">
+            The email address of an owner of the mailing list.
+        </p>
+    </div>
+</div>
+    
+    
+    
 <div class="field">
     <?php echo $view->formLabel('reply_from_email', 'Reply-From Email'); ?>
     <div class="inputs">
