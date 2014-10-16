@@ -1103,6 +1103,10 @@ ul.navigation_footer {
     overflow:hidden;
 }
 
+.kolom-agenda{
+    margin-right:0;
+}
+
 .two-col-nieuws{
     width:423px;
     margin-right:0!important;

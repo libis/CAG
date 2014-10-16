@@ -160,7 +160,7 @@ jQuery(document).ready(function() {
                     echo "<div class='nieuws-kolom'><h2>Nieuws</h2>".$nieuws."</div>";
                 }
                 if($agenda){
-                    echo "<div class='nieuws-kolom'><h2>Agenda</h2>".$agenda."</div>";
+                    echo "<div class='nieuws-kolom kolom-agenda'><h2>Agenda</h2>".$agenda."</div>";
                 }
             }
             
