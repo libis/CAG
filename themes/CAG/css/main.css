@@ -617,6 +617,10 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
 	margin-bottom: 7px;
 }
 
+.exhibits #content h1{
+    clear:both;
+}
+
 /* toegevoegd door Sam */
 span.breadcrumb {
 	font-size: 200%;
