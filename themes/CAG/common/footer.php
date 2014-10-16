@@ -40,17 +40,9 @@
                     </ul>	
 		</div>
 	</div><!-- /.column -->
-	<div class="column contact">            
-            <!--<p>Atrechtcollege<br/>
-            Naamsestraat 63<br/>
-            3000 Leuven, Belgi&euml;<br/>
-            </p>-->
-            <p>
-            telefoon : +32 (0)16 32 35 25 <br />
-            email : <a href="mailto:contact@cagnet.be">contact@cagnet.be</a>
-            </p>
+	<div class="column contact">
             <?php echo add_this_add(); ?>
-            <div id="logo_vla"><a href="http://www.vlaanderen.be/nl"><img alt="Met steun van de Vlaamse overheid" src="<?php echo img("leeuwsteunVO-Gr.gif");?>"></a></div>
+            <div id="logo_vla"><a href="http://www.vlaanderen.be/nl"><img width="200" alt="Met steun van de Vlaamse overheid" src="<?php echo img("leeuwsteunVO-Gr.png");?>"></a></div>
 	</div><!-- /.column -->
 	<?php fire_plugin_hook('public_footer'); ?>
 </div><!-- end footer -->
