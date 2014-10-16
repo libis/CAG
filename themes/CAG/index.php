@@ -1,17 +1,16 @@
 <?php echo head(array('bodyid'=>'home', 'bodyclass' =>'two-col')); ?>
 
 <div id="frontpage-top">
-    <?php if ($homepageText = get_theme_option('Homepage Text')): ?>
-    <p><?php echo $homepageText; ?></p>
-
-    <?php endif; ?>
+   
+  
 
         <div class="logo" ><center><img src="<?php echo (img("cag_logo.png"));?>" /></center></div>
         <div id="intro">
-            <h1>Welkom op HetVirtueleLand</h1>
-            <p>Het Centrum Agrarische Geschiedenis is het expertisecentrum voor het agrarische erfgoed in Vlaanderen.
-            We bestuderen de geschiedenis en het erfgoed van landbouw, platteland en voeding, vanaf 1750 tot en met vandaag.</p>
-        </div>
+            <h1>Welkom op Het Virtuele Land</h1>
+            <?php if ($homepageText = get_theme_option('Homepage Text')): ?>
+            <p><?php echo $homepageText; ?></p>
+            <?php endif; ?>
+            </div>
 </div>  
         <h2>In de kijker</h2>
         <div id="item-block" class="kijker-block">

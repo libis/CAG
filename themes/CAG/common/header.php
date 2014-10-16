@@ -77,7 +77,7 @@
             <div id="header">
                 <div id="site-title">
                     <div id="header-title">
-                        <h1 class="header">HetVirtueleLand</h1>
+                        <h1 class="header">Het Virtuele Land</h1>
                         <h2 class="header">Erfgoed van landbouw, platteland en voeding</h2>                       
                     </div>
                 </div>
