@@ -11,7 +11,7 @@
 		<div class="column left">
                     <h2>Website</h2>
                     <ul>
-                    <li><a href="<?php echo url('over/')?>">Over deze website</a></li>
+                    <li><a href="<?php echo url('overwebsite')?>">Over deze website</a></li>
                     <li><a href="mailto:diantha.osseweijer@cagnet.be">Technische problemen</a></li> <!-- link CAG-->
                     <li><a href="<?php echo url('copyright/');?>">Copyright en disclaimer</a></li>
                     </ul>                   					
@@ -47,6 +47,6 @@
 	<?php fire_plugin_hook('public_footer'); ?>
 </div><!-- end footer -->
 </div><!-- end wrap -->
-<p class="info">Inhoud: <a href="http://www.cagnet.be">Centrum Agrarische Geschiedenis</a> - Ontwerp en realisatie: <a href="http://www.libis.be">LIBIS</a> - Vormgeving: <a href="http://www.blau.be">Blau</a></p>
+<p class="info">Inhoud: <a href="<?php echo url('contact'); ?>">Centrum Agrarische Geschiedenis</a> - Ontwerp en realisatie: <a href="http://www.libis.be">LIBIS</a> - Vormgeving: <a href="http://www.blau.be">Blau</a></p>
 </body>
 </html>
