@@ -1099,6 +1099,14 @@ function libis_exhibit_nav($exhibitPage=null){
 
 function libis_get_exhibit_for_print($exhibit){    
 ?>
+    <!DOCTYPE html>
+    <html>
+    <head>
+         <meta charset="utf-8">
+    <title><?php echo html_escape($exhibit['title']); ?></title>
+    </head>
+
+    <body>
     <h1><?php echo html_escape($exhibit['title']); ?></h1>
     <div id="exhibit_description">
     <?php echo $exhibit->description; ?>
@@ -1153,6 +1161,8 @@ function libis_get_exhibit_for_print($exhibit){
             <?php //echo exhibit_builder_page_summary($exhibitPage); ?>           
         <?php endforeach; ?>
     </div>
+    </body>
+</html>
 <?php
 }
 ?>
