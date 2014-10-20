@@ -93,8 +93,7 @@ echo head($head);
             });            
           },
           beforeRemoveRow: function(index){
-            alert(index);
-            jQuery.ajax({
+              jQuery.ajax({
               url: "<?php echo url('newsletter/index/delete');?>",              
               type: "POST",
               data: {index: index,table:jQuery('#example1').handsontable('getInstance').getData()}, //contains changed cells' data

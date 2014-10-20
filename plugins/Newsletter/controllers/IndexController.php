@@ -83,12 +83,19 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                 $element = $db->getTable('Element')->findByElementSetNameAndElementName('Item Type Metadata',$col);
                 $elementtext = $db->getTable('ElementText')->findByRecord($item);
                 
+                if($element->name == 'Email'):
+                    $oldmail = $elementtext->text;
+                    $newmail = $update;
+                     $this->sendListservEmail($oldmail,'','change',$newmail);
+                endif;
+                
                 $exists= false;
                 foreach($elementtext as $text){
                     if($text->element_id == $element->id){
                         $text->text = $update;
                         $text->save();
                         $exists = true;
+                       
                     }
                 }
                 if(!$exists){
@@ -113,9 +120,12 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
             //get record to save
             $item = get_record_by_id('Item',$id);
             
+            $email = metadata($item,array("Item Type Metadata",'Email'));
+            $name = metadata($item,array("Item Type Metadata",'Naam'));
+            
             $item->delete();
             //send to listserv
-            $this->sendListservEmail($this->getRequest()->getPost('Email'),$this->getRequest()->getPost('Naam'),'delete');
+            $this->sendListservEmail($email,$name,'delete');
                     
         }
         
@@ -272,11 +282,11 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                         $text->save();
                     endforeach;
                     //send to listserv
-                    $this->sendListservEmail($this->getRequest()->getPost('Email'),$this->getRequest()->getPost('Naam'),'add');
+                    echo $this->sendListservEmail($this->getRequest()->getPost('Email'),$this->getRequest()->getPost('Naam'),'add');
                     //send to subscriber
                     $this->sendEmailNotification($this->getRequest()->getPost('Email'), $this->getRequest()->getPost('Naam'));
                     
-                    $this->_helper->redirector('thankyou');
+                    //$this->_helper->redirector('thankyou');
     		}
                 
 	    }
@@ -420,7 +430,7 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
         }
     }
     
-    protected function sendListservEmail($email, $name,$task='add') {
+    protected function sendListservEmail($email, $name,$task='add',$changemail) {
         //setup smtp
         $tr = new Zend_Mail_Transport_Smtp('smtp.kuleuven.be');
         Zend_Mail::setDefaultTransport($tr);
@@ -429,23 +439,27 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
         
         switch($task):
             case 'add':
-                $message ='QUIET ADD '.get_option('newsletter_mailinglist').' '.$email.' '.$name;
+                $message ='QUIET ADD '.get_option('newsletter_mailing_list').' '.$email.' '.$name;
                 break;
             case 'delete':
-                $message='QUIET DELETE '.get_option('newsletter_mailinglist').' '.$email;
+                $message='QUIET DELETE '.get_option('newsletter_mailing_list').' '.$email;
+                break;
+            case 'change':
+                $message='QUIET change '.get_option('newsletter_mailing_list').' '.$email.' '.$changemail;
                 break;
             default:
                 $message='';
         endswitch;
-      
-        if($message !='' && !empty(get_option('newsletter_owner'))):
-            $mail = new Zend_Mail();
-            $mail->setBodyHtml($message);
-            $mail->setFrom(get_option('newsletter_owner'));
-            $mail->addTo(get_option('newsletter_listserv'));
-            $mail->setSubject(get_option('site_title') . ' - ' . get_option('newsletter_user_notification_email_subject'));
-            $mail->send();
-        endif;
+                
+        //if($message !=''):
+        $mail = new Zend_Mail();
+        $mail->setBodyHtml($message);
+        $mail->setFrom(get_option('newsletter_list_owner'));
+        $mail->addTo('listserv@'.get_option('newsletter_listserv'));
+        $mail->setSubject(get_option('site_title') . ' - ' . get_option('newsletter_user_notification_email_subject'));
+        $mail->send();
+        //endif;
+       
     }
     
     protected function sendEmailUnsubscribe($formEmail, $message) {
