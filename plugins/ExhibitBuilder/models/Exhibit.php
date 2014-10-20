@@ -20,6 +20,7 @@ class Exhibit extends Omeka_Record_AbstractRecord implements Zend_Acl_Resource_I
     public $theme;
     public $theme_options;
     public $slug;
+    public $thumbnail;
     public $added;
     public $modified;
     public $owner_id;

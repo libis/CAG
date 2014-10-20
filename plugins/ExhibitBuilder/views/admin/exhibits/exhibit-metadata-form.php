@@ -56,6 +56,46 @@
                 <?php endif;?>
             </div>
         </div>
+        
+        <div class="field">
+            <label>Thumbnail</label>
+            <?php
+            	if($exhibit->thumbnail){
+            		echo "<img width='150' src='".WEB_PUBLIC_THEME."/CAG/images/verhalen_thumbs/".$exhibit->thumbnail."'><br>Choose another thumbnail  ";
+            	}
+            ?>
+            <style>
+            	.exhibit-thumbs-list li{
+                    display:inline;
+                    padding: 0 0px;
+            	}
+
+            	.exhibit-thumbs-list img{
+                    padding:5px 5px;
+                    width:90px;
+            	}
+            </style>
+            <br>
+                <ul class="exhibit-thumbs-list">
+                    <?php
+                    $folder=dir("../themes/CAG/images/verhalen_thumbs");
+
+                    while($folderEntry=$folder->read())
+                    {
+                            if($folderEntry == $exhibit->thumbnail)
+                                    echo "<li><input selected='selected' type='radio' name='thumbnail' value='".$folderEntry."' /> <img width='150' src='".WEB_PUBLIC_THEME."/CAG/images/verhalen_thumbs/".$folderEntry."'></li>";
+
+                            else
+                                    if($folderEntry != '.' && $folderEntry != '..')
+                                            echo "<li><input type='radio' name='thumbnail' value='".$folderEntry."' /><img width='150' src='".WEB_PUBLIC_THEME."/CAG/images/verhalen_thumbs/".$folderEntry."'></li>";
+                    }
+
+                    $folder->close();
+                    ?>
+                </ul>
+            </div>
+        
+        
     </fieldset>
     <fieldset>
         <legend><?php echo __('Pages'); ?></legend>

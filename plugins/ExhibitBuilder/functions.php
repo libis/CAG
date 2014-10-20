@@ -29,6 +29,7 @@ function exhibit_builder_install()
       `theme` varchar(30) collate utf8_unicode_ci default NULL,
       `theme_options` text collate utf8_unicode_ci default NULL,
       `slug` varchar(30) collate utf8_unicode_ci default NULL,
+      `thumbnail` varchar(25) collate utf8_unicode_ci default NULL,
       `added` timestamp NOT NULL default '0000-00-00 00:00:00',
       `modified` timestamp NOT NULL default '0000-00-00 00:00:00',
       `owner_id` int unsigned default NULL,

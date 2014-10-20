@@ -23,6 +23,10 @@ if(isset($_GET['action'])){
 <h1><?php echo html_escape($exhibit['title']); ?> <span id="print-exhibit"><a href="<?php echo exhibit_builder_exhibit_uri($exhibit).'?action=print'; ?>"><img width="15" src="<?php echo img('print.png');?>"></a></span>
 </h1>
 <div id="exhibit_description">
+ <?php   
+ if($exhibit->thumbnail){
+    echo '<img width="200" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/>';
+}?>
 <?php echo $exhibit->description; ?>
 <?php echo "<em>Door ".$exhibit->credits."</em>"; ?>
 </div>
