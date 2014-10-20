@@ -56,7 +56,7 @@ $view = get_view();
     <div class="inputs">
         <?php echo $view->formText('mailinglist', $mailinglist, array('class' => 'textinput')); ?>
         <p class="explanation">
-            The address of the mailing list (p.e. test.list@ls.exmaple.com.
+            The name of the mailing list (p.e. test.list)
         </p>
     </div>
 </div>
@@ -67,7 +67,7 @@ $view = get_view();
     <div class="inputs">
         <?php echo $view->formText('listserv', $listserv, array('class' => 'textinput')); ?>
         <p class="explanation">
-            The address used for admin tasks. (p.e. listserv@ls.example.com)
+            The domain of the listserv mailing list. (p.e. ls.example.com)
         </p>
     </div>
 </div>
