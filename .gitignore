@@ -15,6 +15,7 @@
 !/admin/
 !/application/
 /config/
+/sitemap.xml
 
 #################
 ## Eclipse
