@@ -110,9 +110,9 @@ OmekaMap.prototype = {
                 
                 var pathArray = window.location.pathname.split( '/' );
                 if(pathArray[1].search("test")>=0){
-                    url = 'http://'+window.location.hostname+'/cag_test/items/map/bubble #mapsInfoWindow'
+                    url = 'http://'+window.location.hostname+'/cag_test/items/map/bubble/ #mapsInfoWindow'
                 }else{
-                    url = 'http://'+window.location.hostname+'/items/map/bubble #mapsInfoWindow'
+                    url = 'http://'+window.location.hostname+'/items/map/bubble/ #mapsInfoWindow'
                 }
                 
                 jQuery("#handle").load(url, { id: marker.snippet }, function(data) {
