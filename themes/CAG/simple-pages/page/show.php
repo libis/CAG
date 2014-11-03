@@ -25,7 +25,7 @@
                     <ul class="navigation">
                         <li class="active"><a href="<?php echo url("/beeldbank") ?>">Beeldbank</a></li>   
                         <li><a href="<?php echo url("/geolocation/map/browse") ?>">Kaart</a></li>
-                        <li><a href="<?php echo url("/beeldbank/tijdlijn") ?>">Tijdlijn</a></li>                   
+                        <!--<li><a href="<?php //echo url("/beeldbank/tijdlijn") ?>">Tijdlijn</a></li>-->                   
                 </div>
             </div>	
 	<?php } ?>
