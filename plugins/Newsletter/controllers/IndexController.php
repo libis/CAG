@@ -150,33 +150,68 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
             $page = get_record_by_id('SimplePagesPage',$page);
             
             $message_head = '
-                <div class="wrapper" width="100%" style="color: #006c68;font:14px/20px Calibri,Verdana,Arial,Helvetica,sans-serif;">
-                <div class="frame" width="400" style="margin:0 auto;width:600px;">
+                <table width="600" cellspacing="0" cellpadding="0">
+                <div class="wrapper" width="600" style="">
+                <style type="text/css">
+                    /* /\/\/\/\/\/\/\/\/ RESET STYLES /\/\/\/\/\/\/\/\/ */
+                    body{
+                        margin:0;
+                        padding:0;
+                    }
+
+                    img{
+                        border:0 none;
+                        height:auto;
+                        line-height:100%;
+                        outline:none;
+                        text-decoration:none;
+                    }
+
+                    a img{
+                        border:0 none;
+                    }
+
+                    .imageFix{
+                        display:block;
+                    }
+
+                    table, td{
+                        border-collapse:collapse;
+                    }
+
+                    #bodyTable{
+                        height:100% !important;
+                        margin:0;
+                        padding:0;
+                        width:100% !important;
+                    }
+                </style>
+                <div class="frame" width="600" style="width:600px;color: #006c68;font:13px Calibri,Verdana,Arial,Helvetica,sans-serif;">
 		
 		<p class="explanation" style="font:11px/15px Calibri, Verdana, Arial, Helvetica, sans-serif; color:#999999;" align="center" valign="top">
 			Dit is de tweemaandelijkse nieuwsbrief van het Centrum Agrarische Geschiedenis vzw.</a>
 		';
 
             $message_head_2 = '</p>
-		
-		<div class="content" class="top" style="border:2px solid #006c68;padding:10px;">
-                    <h2 style="font-weight:bold; line-height:31px; color:#006c68;">
+		<table width="576" style="font:13px Calibri, Verdana, Arial, Helvetica, sans-serif;border:2px solid #006c68;padding:10px;"cellspacing="0" cellpadding="0">
+		<div class="content" class="top" >
+                    <h2 style="font-weight:bold; line-height:31px; color:#006c68;padding5px;">
 				Nieuwsbrief   
 			</h2>
 			
 			
-			<!-- facebook logo -->															  
-			<p>
-                             <a href="#"><img src="'.WEB_PUBLIC_THEME.'/CAG/images/cag_logo.png" alt="CAG_email" width="165" height="70" border="0" /></a>
-                            <a href="https://www.facebook.com/pages/Centrum-Agrarische-Geschiedenis/127938257279959?fref=ts" target="_blank">
+			<table style="width:100%;"><tr>														  
+			<td><a href="#"><img src="'.WEB_PUBLIC_THEME.'/CAG/images/cag_logo.png" alt="CAG_email" width="165" height="70" border="0" /></a></td>
+                        <td style="text-align:right;"><a href="https://www.facebook.com/pages/Centrum-Agrarische-Geschiedenis/127938257279959?fref=ts" target="_blank">
 					<span style="color:#fff; text-decoration:none;">
-						<img style="" src="'.WEB_PUBLIC_THEME.'/CAG/images/FB_Logo.png" border="0"; width="149" height="52" />
+						<img style="float:right;" src="'.WEB_PUBLIC_THEME.'/CAG/images/FB_Logo.png" border="0"; width="149" height="52" />
 					</span>
 				</a>
-			</p>
-			
-			<h2 width="233" valign="top" style="line-height:20px; color:#fff;background:#006c68;padding:5px;">
-				'.$page->title.'
+			</td>
+                        </tr>
+			</table>
+			<h2 width="233" valign="top" style="line-height:20px; color:#fff;background:#006c68;padding:5px;clear:both;">
+				 	&nbsp;'.$page->title.'
 			</h2>
             ';
             
@@ -184,9 +219,9 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                 </div>                
                 <div class="footer">
 		<a href="#"><img src="'.WEB_PUBLIC_THEME.'/CAG/images/bg-footer_.gif" alt="www.HetVirtueleLand.be" width="600" height="252" border="0" /></a>
+                </div></table>
                 </div>
-                </div>
-                </div>
+                </div></table>
             ';
             
             $aantal = 0;            
@@ -208,6 +243,7 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                   // Give the message a subject
                   ->setSubject("Nieuwsbrief - Het Virtuele Land: ".$page->title)
                   // Set the From address with an associative array
+          
                   ->setFrom(array(get_option('newsletter_reply_from_email')))
                   // Set the To addresses with an associative array
                   ->setTo(array(get_option('newsletter_reply_from_email')))
@@ -219,19 +255,20 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
             }
             else{
                 //continue to send if all is set correctly
-                $name= metadata($contact,array('Item Type Metadata','Naam'));
-                $to_email = metadata($contact,array('Item Type Metadata','Email'));
+                //$name= metadata($contact,array('Item Type Metadata','Naam'));
+                //$to_email = metadata($contact,array('Item Type Metadata','Email'));
                 $from_email = get_option('newsletter_reply_from_email');
 
-                //$unsub = newsletter_add_unsubscribe($to_email);
+                $unsub = newsletter_add_unsubscribe();
 
                 // Create the message
                 $message = Swift_Message::newInstance()
-                    // Give the message a subject
+                    // Give the message a subject    
+     
                     ->setSubject("Nieuwsbrief - Het Virtuele Land: ".$page->title)
                     ->setFrom(array($from_email))
-                    ->setTo(get_option('newsletter_mailing_list'))
-                    ->setBody($message_head.$message_head_2.$page->text.$message_foot,'text/html');
+                    ->setTo(get_option('newsletter_mailing_list').'@'.get_option('newsletter_listserv'))
+                    ->setBody($message_head.$unsub.$message_head_2.$page->text.$message_foot,'text/html');
                 // Send the message
                 $result = $mailer->send($message);
             }
@@ -317,6 +354,9 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                     $item = get_record_by_id('Item',$text->record_id);
                     
                     $item->delete();
+                    //send to listserv
+                    $this->sendListservEmail($_GET['email'],"",'delete');
+                    
                    
                     $html = "Het uitschrijven is gelukt. Je bent niet langer geregistreerd op onze nieuwsbrief.";
                     
