@@ -138,18 +138,20 @@ jQuery(document).ready(function() {
                 foreach($results->response->docs as $doc):
                    $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id'))); 
 
-                   if($item->getItemType()->name == 'Nieuwsbericht' ||$item->getItemType()->name == 'Agendapunt'){
-                       $html = "<div class='in_de_kijker' id='solr_".$doc->__get('id')."'>";                        
-                       if($item->hasThumbnail()):
-                           $html .= link_to_item(item_image('thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
-                       endif;
-                       $html .=link_to_item("<h4>".metadata($item,array('Dublin Core','Title'))."</h4>",array(),'show',$item).
-                       "<p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p> </div>";
-
-                       if($item->featured==1){$featured .= $html;}                       
-                       if($item->getItemType()->name == 'Nieuwsbericht'){$nieuws .=$html;}
-                       if($item->getItemType()->name == 'Agendapunt'){$agenda .=$html;}
-                      
+                   if(!is_null($item)) {
+			   if($item->getItemType()->name == 'Nieuwsbericht' ||$item->getItemType()->name == 'Agendapunt'){
+			       $html = "<div class='in_de_kijker' id='solr_".$doc->__get('id')."'>";                        
+			       if($item->hasThumbnail()):
+				   $html .= link_to_item(item_image('thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
+			       endif;
+			       $html .=link_to_item("<h4>".metadata($item,array('Dublin Core','Title'))."</h4>",array(),'show',$item).
+			       "<p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p> </div>";
+	
+			       if($item->featured==1){$featured .= $html;}                       
+			       if($item->getItemType()->name == 'Nieuwsbericht'){$nieuws .=$html;}
+			       if($item->getItemType()->name == 'Agendapunt'){$agenda .=$html;}
+			      
+			   }
                    }
                 endforeach;
                 
