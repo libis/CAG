@@ -15,6 +15,21 @@ class DigitoolUrl extends Omeka_Record_AbstractRecord implements Zend_Acl_Resour
         if (empty($this->item_id)) {
             $this->addError('item_id', 'DigitoolUrl requires an item id.');
         }
+        
+        //check if item/pid combo already exists
+        $db = get_db();
+        
+        //echo $url->pid;
+	$select = $db->query("SELECT id
+		FROM omeka_digitool_urls
+		WHERE pid = '".$this->pid."' AND item_id = '".$this->item_id."'		
+	");
+
+	$id = $select->fetchAll();
+        if(!empty($id)):
+            $this->addError('item_id', 'Item already has this pid.');
+        endif;
+       
     }
     
     public function get_thumb(){
