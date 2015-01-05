@@ -47,6 +47,6 @@
 	<?php fire_plugin_hook('public_footer'); ?>
 </div><!-- end footer -->
 </div><!-- end wrap -->
-<p class="info">Inhoud: <a href="<?php echo url('contact'); ?>">Centrum Agrarische Geschiedenis</a> - Ontwerp en realisatie: <a href="http://www.libis.be">LIBIS</a> - Vormgeving: <a href="http://www.blau.be">Blau</a></p>
+<p class="info">Inhoud: <a href="<?php echo url('contact'); ?>">Centrum Agrarische Geschiedenis</a> - Ontwerp en realisatie: <a href="http://www.libis.be">LIBIS</a></p>
 </body>
 </html>
