@@ -518,7 +518,7 @@ jQuery(document).ready(function() {
         <?php //if(!empty($itemids)){//echo relatedTagCloud_get($itemids);} ?>
     
     <div class="topresults bottom">
-        <div class="resultCount"><?php echo __('%s resulaten', $results->response->numFound); ?></div>
+        <div class="resultCount"><?php echo __('%s resultaten', $results->response->numFound); ?></div>
         <?php echo pagination_links(array('partial_file' => 'common/pagination.php','per_page'=>$per_page)); ?> 
         
         <div class="resultsPerPage">
