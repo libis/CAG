@@ -73,7 +73,7 @@ echo head($head);
           removeRowPlugin: true,         
           contextMenu: ['remove_row'],
           width: 790,
-          height: 300
+          height: 300,
                     
           afterChange: function (change, source) {
             if (source === 'loadData') {
