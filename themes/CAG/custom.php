@@ -134,6 +134,11 @@ function Libis_get_exhibits($tag = "")
 	
         if($tag=="algemeen" ){
             $html= '<center><table class="exhibit_general_list"><tr>';
+            
+             //sort items by 
+            usort($exhibits, function($a, $b) {
+                return strtotime($a->id) - strtotime($b->id);
+            });
 
             foreach($exhibits as $exhibit) {                   
                 if($exhibit->thumbnail){
