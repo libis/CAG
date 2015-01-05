@@ -134,10 +134,18 @@ jQuery(document).ready(function() {
             
             //VIEW = NIEUWS EN AGENDA
             if($view=='nieuws'){
+                
                 $featured="";$nieuws ="";$agenda="";
                 foreach($results->response->docs as $doc):
-                   $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id'))); 
-
+                   $items[] = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id'))); 
+                endforeach;               
+                
+                 //sort items by 
+                usort($items, function($a, $b) {
+                    return strtotime($b->added) - strtotime($a->added);
+                });
+                
+                foreach($items as $item):
                    if(!is_null($item)) {
 			   if($item->getItemType()->name == 'Nieuwsbericht' ||$item->getItemType()->name == 'Agendapunt'){
 			       $html = "<div class='in_de_kijker' id='solr_".$doc->__get('id')."'>";                        
@@ -201,11 +209,22 @@ jQuery(document).ready(function() {
             //VIEW = PUBLICATIE (PUBLICATIE)
             if($view=='publicatie'){
                 $featured="";$pub ="";
-                $i='odd';
+                $i='odd';$class='in_de_kijker';                   
                 
-                foreach($results->response->docs as $doc):
-                   $class='in_de_kijker'; 
-                   $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id'))); 
+                foreach($results->response->docs as $doc):                  
+                   $items[] = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id'))); 
+                endforeach;        
+                
+                //sort items by 
+                usort($items, function($a, $b) {
+                    if(strtotime(metadata($b,array('Dublin Core','Date'))) == strtotime(metadata($a,array('Dublin Core','Date')))):
+                        return strtotime($b->added) - strtotime($a->added);
+                    else:
+                        return strtotime(metadata($b,array('Dublin Core','Date'))) - strtotime(metadata($a,array('Dublin Core','Date')));
+                    endif;                    
+                });
+                
+                foreach($items as $item):
                     
                    if($item->getItemType()->name == 'Publicatie'){
                        if($item->featured==0){
@@ -243,11 +262,24 @@ jQuery(document).ready(function() {
             if($view=='project'){
                 $featured="";$project="";
                 $i='odd';
+                $class='in_de_kijker';  
                  
                 foreach($results->response->docs as $doc):
-                   $class='in_de_kijker';  
-                   $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id'))); 
-
+                  
+                   $items[] = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id'))); 
+                endforeach;        
+                
+                //sort items by 
+                usort($items, function($a, $b) {
+                    if(strtotime(metadata($b,array('Dublin Core','Date'))) == strtotime(metadata($a,array('Dublin Core','Date')))):
+                        return strtotime($b->added) - strtotime($a->added);
+                    else:
+                        return strtotime(metadata($b,array('Dublin Core','Date'))) - strtotime(metadata($a,array('Dublin Core','Date')));
+                    endif;
+                    
+                });
+                
+                foreach($items as $item):
                    if($item->getItemType()->name == 'Project'){
                        if($item->featured==0){
                            if($i == 'odd'){
@@ -285,6 +317,7 @@ jQuery(document).ready(function() {
                 foreach($results->response->docs as $doc):                   
                     $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id')));                                         
                 ?>
+           
                 <div class="item" id="solr_<?php echo $doc->__get('id'); ?>">
                     <div class="details">
                         <div class='resultbody'>                  
@@ -439,13 +472,13 @@ jQuery(document).ready(function() {
                                         <?php } ?>   
                                     </div>
                                     </div>
-                                <? }?>
+                                <?php }?>
                             </div>
                         </div>
                     </div>
                 </div>
-            <?php endforeach; ?>
-            <?php } ?>
+               
+                <?php endforeach; } ?>
         </div>
     </div>
     
