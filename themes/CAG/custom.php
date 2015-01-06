@@ -158,7 +158,7 @@ function Libis_get_exhibits($tag = "")
                 //takes care of the link and text
                 $html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
                 //$html.= '<p>'.truncate(exhibit('description', array(), $exhibit),280).'</p>';
-                $html.= '<p>'.metadata($exhibit,'description',array('snippet'=>'280')).'</p>';    
+                $html.= '<p>'.metadata($exhibit,'description',array('snippet'=>'280', 'no_escape' => true)).'</p>';    
                 $html.= '</li>';
 
             }
