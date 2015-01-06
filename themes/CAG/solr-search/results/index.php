@@ -333,12 +333,7 @@ jQuery(document).ready(function() {
 
                                 <!-- Collectie -->
                                 <?php if($item->getItemType()->name == 'Collectie'){                                                   
-                                    if(digitool_item_has_digitool_url($item)){ ?>
-                                    <div class="image">
-                                        <?php echo link_to_item(digitool_get_thumb_for_browse($item,'140'));?>
-                                        <?php //echo SolrSearch_ViewHelpers::createResultImgHtml($image, SolrSearch_ViewHelpers::getDocTitle($doc)); ?>
-                                    </div>
-                                    <?php }
+                                    
                                     $actoren= "<table><th width='120'></th><th></th>";
 
                                     if(metadata($item,array('Item Type Metadata','Naam instelling')))
