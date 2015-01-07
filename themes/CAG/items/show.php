@@ -252,8 +252,8 @@ endif; ?>
         </tr>
         <?php endif; ?>
         <tr>
-        <?php if(metadata($item,array('Item Type Metadata','Email'))):?>
-            <td><label>E-mail:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Email'))?></td>
+        <?php if(metadata($item,array('Item Type Metadata','E-mail'))):?>
+            <td><label>E-mail:</label></td><td><?php echo metadata($item,array('Item Type Metadata','E-mail'))?></td>
         </tr>
         <?php endif; ?>
     </table>
