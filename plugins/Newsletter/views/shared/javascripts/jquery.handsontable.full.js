@@ -4530,7 +4530,8 @@ Handsontable.SelectionPoint.prototype.arr = function (arr) {
       TD.appendChild(INPUT);
     }
     else {
-      instance.view.wt.wtDom.fastInnerText(TD, '#bad value#'); //this is faster than innerHTML. See: https://github.com/warpech/jquery-handsontable/wiki/JavaScript-&-DOM-performance-tips
+        TD.appendChild(INPUT);
+     // instance.view.wt.wtDom.fastInnerText(TD, '#bad value#'); //this is faster than innerHTML. See: https://github.com/warpech/jquery-handsontable/wiki/JavaScript-&-DOM-performance-tips
     }
 
     var $input = $(INPUT);
