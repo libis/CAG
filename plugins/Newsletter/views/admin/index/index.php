@@ -123,9 +123,21 @@ echo head($head);
     
         function convert2dArrayToCsv(arr){
             return arr.reduce(function(csvString, row){
-                row = jQuery.map(row, function(el) { return el; });               
-                csvString += row.join(',');
-                csvString += ';';
+                row = jQuery.map(row, function(el) { return el; });            
+              
+                var item, i;
+                var line = [];
+
+                for (i = 0; i < row.length; ++i) {
+                    item = row[i];
+                    if (item.indexOf && (item.indexOf(',') !== -1 || item.indexOf('"') !== -1)) {
+                        item = '"' + item.replace(/"/g, '""') + '"';
+                    }
+                    line.push(item);
+                }
+               
+                csvString += line.join(',');
+                csvString += '\n';
                 return csvString;
             }, '');
         }
