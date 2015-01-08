@@ -323,7 +323,7 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                     //send to subscriber
                     $this->sendEmailNotification($this->getRequest()->getPost('Email'), $this->getRequest()->getPost('Naam'));
                     
-                    //$this->_helper->redirector('thankyou');
+                    $this->_helper->redirector('thankyou');
     		}
                 
 	    }
