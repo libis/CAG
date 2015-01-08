@@ -46,10 +46,10 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                 $data .= "{id:".$contact->id." ,";
                 foreach($elements as $element):
                     if($counter != $size_elements):
-                        $data .= $element->name.':"'.str_replace('"',"'",metadata($contact,array('Item Type Metadata',$element->name))).'",'; 
+                        $data .= $element->name.':'.json_encode(metadata($contact,array('Item Type Metadata',$element->name))).','; 
                         $counter++;
                     else:
-                        $data .= $element->name.':"'.str_replace('"',"'",metadata($contact,array('Item Type Metadata',$element->name))).'"';
+                        $data .= $element->name.':'.json_encode(metadata($contact,array('Item Type Metadata',$element->name))).'';
                     endif;
                 endforeach;
                 
@@ -311,7 +311,10 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                             //checkbox checked
                             $text->text = 'true';
                         elseif($this->getRequest()->getPost($element->name) != null):
-                            $text->text = $this->getRequest()->getPost($element->name);                        
+                            $var = $this->getRequest()->getPost($element->name);
+                            $var = filter_var($var,FILTER_SANITIZE_STRING);
+                           
+                            $text->text = $var;                        
                         else:
                             //checkbox unchecked
                             $text->text = 'false';
@@ -319,9 +322,9 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                         $text->save();
                     endforeach;
                     //send to listserv
-                    echo $this->sendListservEmail($this->getRequest()->getPost('Email'),$this->getRequest()->getPost('Naam'),'add');
+                    echo $this->sendListservEmail(filter_var($this->getRequest()->getPost('Email'),FILTER_SANITIZE_EMAIL),filter_var($this->getRequest()->getPost('Naam'),FILTER_SANITIZE_STRING),'add');
                     //send to subscriber
-                    $this->sendEmailNotification($this->getRequest()->getPost('Email'), $this->getRequest()->getPost('Naam'));
+                    $this->sendEmailNotification(filter_var($this->getRequest()->getPost('Email'),FILTER_SANITIZE_EMAIL), filter_var($this->getRequest()->getPost('Naam'),FILTER_SANITIZE_STRING));
                     
                     $this->_helper->redirector('thankyou');
     		}
