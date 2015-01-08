@@ -9,16 +9,26 @@ endif; ?>
 
 <div id="primary">
 <p id="simple-pages-breadcrumbs">
-<?php if($type == 'Object'):?>   
-        <a href="/">Home</a> > <a href="/beeldbank">Beeldbank</a> > <a href='<?php echo url('/solr-search/results?facet=itemtype:"'.$type.'"');?>'>Objecten</a>
+<a href="/">Home</a> > 
+<?php 
+      // TODO why does typeUrl starts with / and tagUrl doesn't? 
+      // TODO this tag url screams for a proper Url builder. (idem for typeUrl and creative commons); This includes all the is_array stuff
+      $tagUrl = 'solr-search/results?q=&facet=tag:"';
+      $tagUrlEnd = '"';
+      $typeUrl = '/solr-search/results?facet=itemtype:"'.$type.'"';
+      if($type == 'Object'):?>   
+        <a href="/beeldbank">Beeldbank</a> > <a href='<?php echo url($typeUrl);?>'>Objecten</a>
         <?php if(metadata('item', array('Item Type Metadata','Objectnaam'))): ?>
         > <?php echo metadata('item', array('Item Type Metadata','Objectnaam')); ?>
         <?php endif;?>
 <?php elseif($type == 'Algemene-info'):?> 
-        <a href="/">Home</a> > <a href="/beeldbank">Beeldbank</a> > <a href='<?php echo url('/solr-search/results?facet=itemtype:"'.$type.'"');?>'>Algemene info</a>
+        <a href="/beeldbank">Beeldbank</a> > <a href='<?php echo url($typeUrl);?>'>Algemene info</a>
         > <?php echo ucfirst(metadata('item', array('Dublin Core','Title'))); ?>
+<?php elseif($type == 'Collectie'):?> 
+        <a href='<?php echo url($typeUrl);?>'><?php echo $type; ?> </a>
+        > <?php echo ucfirst(metadata($item,array('Item Type Metadata','Naam instelling'))); ?>
 <?php else:?>        
-        <a href="/">Home</a> > <a href='<?php echo url('/solr-search/results?facet=itemtype:"'.$type.'"');?>'><?php echo $type?></a>
+        <a href='<?php echo url($typeUrl);?>'><?php echo $type?></a>
         > <?php echo metadata('item', array('Dublin Core','Title')); ?>
 <?php endif;?>
 </p>   
@@ -64,12 +74,12 @@ endif; ?>
       
         if(is_array($tags)):
             foreach($tags as $tag):
-                echo "<a href='".url("solr-search/results?q=&facet=tag:\"".$tag."\"")."'>".$tag."</a>";
+                echo "<a href='".url($tagUrl.$tag.$tagUrlEnd)."'>".$tag."</a>";
                 if ($tag !== end($tags))
                     echo ', ';
             endforeach;
         else:
-            echo "<a href='".url("solr-search/results?q=&facet=tag:\"".$tags."\"")."'>".$tags."</a>";
+            echo "<a href='".url($tagUrl.$tags.$tagUrlEnd)."'>".$tags."</a>";
         endif;
     ?>
     </p>
@@ -242,8 +252,8 @@ endif; ?>
         </tr>
         <?php endif; ?>
         <tr>
-        <?php if(metadata($item,array('Item Type Metadata','Email'))):?>
-            <td><label>E-mail:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Email'))?></td>
+        <?php if(metadata($item,array('Item Type Metadata','E-mail'))):?>
+            <td><label>E-mail:</label></td><td><?php echo metadata($item,array('Item Type Metadata','E-mail'))?></td>
         </tr>
         <?php endif; ?>
     </table>
@@ -344,12 +354,12 @@ endif; ?>
       
         if(is_array($tags)):
             foreach($tags as $tag):
-                echo "<a href='".url("solr-search/results?q=&facet=tag:\"".$tag."\"")."'>".$tag."</a>";
+                echo "<a href='".url($tagUrl.$tag.$tagUrlEnd)."'>".$tag."</a>";
                 if ($tag !== end($tags))
                     echo ', ';
             endforeach;
         else:
-            echo "<a href='".url("solr-search/results?q=&facet=tag:\"".$tags."\"")."'>".$tags."</a>";
+            echo "<a href='".url($tagUrl.$tags.$tagUrlEnd)."'>".$tags."</a>";
         endif;
     ?>
     </div>                                              

@@ -366,12 +366,7 @@ jQuery(document).ready(function() {
 
                                 <!-- Collectie -->
                                 <?php if($item->getItemType()->name == 'Collectie'){                                                   
-                                    if(digitool_item_has_digitool_url($item)){ ?>
-                                    <div class="image">
-                                        <?php echo link_to_item(digitool_get_thumb_for_browse($item,'140'));?>
-                                        <?php //echo SolrSearch_ViewHelpers::createResultImgHtml($image, SolrSearch_ViewHelpers::getDocTitle($doc)); ?>
-                                    </div>
-                                    <?php }
+                                    
                                     $actoren= "<table><th width='120'></th><th></th>";
 
                                     if(metadata($item,array('Item Type Metadata','Naam instelling')))
@@ -390,10 +385,10 @@ jQuery(document).ready(function() {
                                         $actoren.= "<tr><td><strong>Fax:</strong></td><td>".metadata($item,array('Item Type Metadata','Fax'))."</td></tr>";
                                     if(metadata($item,array('Item Type Metadata','Website')))
                                         $actoren.= "<tr><td><strong>Website:</strong></td><td>".metadata($item,array('Item Type Metadata','Website'))."</td></tr>";
-                                    if(metadata($item,array('Item Type Metadata','Email')))
-                                        $actoren.= "<tr><td><strong>E-mail:</strong></td><td>".metadata($item,array('Item Type Metadata','Email'))."</td></tr>";
-                                    if(metadata($item,array('Dublin Core','Description')))
-                                           $actoren.="<tr><td><strong>Beschrijving:</strong></td><td>".metadata($item,array('Dublin Core','Description'),array('snippet'=>200))."</td></tr>";
+                                    if(metadata($item,array('Item Type Metadata','E-mail')))
+                                        $actoren.= "<tr><td><strong>E-mail:</strong></td><td>".metadata($item,array('Item Type Metadata','E-mail'))."</td></tr>";
+                                    if(metadata($item,array('Item Type Metadata','Beschrijving')))
+                                           $actoren.="<tr><td><strong>Beschrijving:</strong></td><td>".metadata($item,array('Item Type Metadata','Beschrijving'),array('snippet'=>200))."</td></tr>";
                                        
                                     $actoren .="</table>";//.plugin_append_to_items_browse_each();
                                 ?>
