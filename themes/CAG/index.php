@@ -55,7 +55,7 @@
             <div id="item-block">
                 <h2><?php echo __('Objecten uit onze erfgoedbank'); ?></h2>		
                 <?php
-                    $items = Libis_get_random_featured_items('10');    
+                    $items = Libis_get_random_featured_items('10',true);    
                 ?>       
                 <div class="cycle" id="cycle2">
                     <ul class="rotator2">
