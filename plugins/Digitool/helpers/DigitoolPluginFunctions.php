@@ -112,7 +112,7 @@ function digitool_admin_form($item){
 	</script>
 
 	<?php
-	$ht .= ob_get_contents();
+	$ht = ob_get_contents();
 	ob_end_clean();
 
 	return $ht;
