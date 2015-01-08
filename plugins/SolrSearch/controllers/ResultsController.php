@@ -62,7 +62,7 @@ class SolrSearch_ResultsController
         // Execute the query.
         $results = $this->_search($start, $limit);
         
-        $max_page = round($results->response->numFound/$limit);
+        $max_page = ceil($results->response->numFound/$limit);
         if($page > $max_page){$page = $max_page;}
         // Set the pagination.
         Zend_Registry::set('pagination', array(
