@@ -74,12 +74,12 @@ endif; ?>
       
         if(is_array($tags)):
             foreach($tags as $tag):
-                echo "<a href='".url($tagUrl.$tag.$tagUrlEnd)."'>".$tag."</a>";
+                echo "<a rel='nofollow' href='".url($tagUrl.$tag.$tagUrlEnd)."'>".$tag."</a>";
                 if ($tag !== end($tags))
                     echo ', ';
             endforeach;
         else:
-            echo "<a href='".url($tagUrl.$tags.$tagUrlEnd)."'>".$tags."</a>";
+            echo "<a rel='nofollow' href='".url($tagUrl.$tags.$tagUrlEnd)."'>".$tags."</a>";
         endif;
     ?>
     </p>
@@ -354,12 +354,12 @@ endif; ?>
       
         if(is_array($tags)):
             foreach($tags as $tag):
-                echo "<a href='".url($tagUrl.$tag.$tagUrlEnd)."'>".$tag."</a>";
+                echo "<a rel='nofollow' href='".url($tagUrl.$tag.$tagUrlEnd)."'>".$tag."</a>";
                 if ($tag !== end($tags))
                     echo ', ';
             endforeach;
         else:
-            echo "<a href='".url($tagUrl.$tags.$tagUrlEnd)."'>".$tags."</a>";
+            echo "<a rel='nofollow' href='".url($tagUrl.$tags.$tagUrlEnd)."'>".$tags."</a>";
         endif;
     ?>
     </div>                                              

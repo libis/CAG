@@ -419,12 +419,12 @@ jQuery(document).ready(function() {
                                         <?php 
                                         if(is_array($tags)){
                                             foreach($tags as $tag){
-                                                echo "<a href='".libis_curPageURL()."AND tag:\"".$tag."\"'>".$tag."</a>";
+                                                echo "<a rel='nofollow' href='".libis_curPageURL()."AND tag:\"".$tag."\"'>".$tag."</a>";
                                                 if ($tag !== end($tags))
                                                     echo ', ';
                                             }
                                         }else{
-                                            echo "<a href='".libis_curPageURL()."AND tag:\"".$tags."\"'>".$tags."</a>";
+                                            echo "<a rel='nofollow' href='".libis_curPageURL()."AND tag:\"".$tags."\"'>".$tags."</a>";
                                         }?>    
                                     </div>
                                 <?php } ?>    
