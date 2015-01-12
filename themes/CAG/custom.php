@@ -109,8 +109,8 @@ function Libis_get_exhibits($tag = "")
                                                
                 $html.= '</td><td>';               
               
-                $html.= '<p><a href="'.url("verhalen/oogst").'">Voeding</a></p>';
-                $html.= '<a href="'.url("verhalen/oogst").'"><img width="200" src="'.img('banner_voeding_hoofding.jpg').'"/></a>';
+                $html.= '<p><a href="'.url("verhalen/voedsel").'">Voeding</a></p>';
+                $html.= '<a href="'.url("verhalen/voedsel").'"><img width="200" src="'.img('banner_voeding_hoofding.jpg').'"/></a>';
                 
                 //takes care of the link and text                
 		$html.= '</td></tr></table></center>';
