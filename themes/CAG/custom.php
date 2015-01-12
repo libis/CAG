@@ -105,12 +105,12 @@ function Libis_get_exhibits($tag = "")
                 //get current exhibit
                        
                 $html.= '<p><a href="'.url("verhalen/landbouw").'">Landbouw</a></p>';
-                $html.= '<a href="'.url("verhalen/landbouw").'"><img width="200" src="'.img('banner_landbouw_hoofding').'"/></a>';
+                $html.= '<a href="'.url("verhalen/landbouw").'"><img width="200" src="'.img('banner_landbouw_hoofding.jpg').'"/></a>';
                                                
                 $html.= '</td><td>';               
               
                 $html.= '<p><a href="'.url("verhalen/oogst").'">Voeding</a></p>';
-                $html.= '<a href="'.url("verhalen/oogst").'"><img width="200" src="'.img('banner_voeding_hoofding').'"/></a>';
+                $html.= '<a href="'.url("verhalen/oogst").'"><img width="200" src="'.img('banner_voeding_hoofding.jpg').'"/></a>';
                 
                 //takes care of the link and text                
 		$html.= '</td></tr></table></center>';
