@@ -137,7 +137,7 @@ function Libis_get_exhibits($tag = "")
 
             foreach($exhibits as $exhibit) {                   
                 if($exhibit->thumbnail){
-                    $html.= '<td><p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
+                    $html.= '<td><p style="height:35px;">'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
                     $html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="175" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/></td>');
                 }		    
             }
