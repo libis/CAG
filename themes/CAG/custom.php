@@ -127,7 +127,7 @@ function Libis_get_exhibits($tag = "")
 	}
 	//tag 'algemeen' has different formatting then the others
 	
-        if($tag=="algemeen" ){
+        if($tag=="algemeen" || $tag=="voedsel"){
             $html= '<center><table class="exhibit_general_list"><tr>';
             
              //sort items by 
