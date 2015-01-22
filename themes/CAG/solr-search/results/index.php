@@ -315,7 +315,7 @@ jQuery(document).ready(function() {
             //VIEW = DEFAULT (OBJECT, COLLECTIE, AlGEMENE INFO)
             if($view=='default'){
                 foreach($results->response->docs as $doc):                   
-                    $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id')));                                         
+                                                            
                 ?>
            
                 <div class="item" id="solr_<?php echo $doc->__get('id'); ?>">
@@ -323,9 +323,10 @@ jQuery(document).ready(function() {
                         <div class='resultbody'>                  
                             <div class='textfields'>
 
-                            <?php
-                            if($item){
-                                    set_current_record('item',$item); 
+                            <?php 
+                            if($doc->resulttype === 'Item'):
+                                    $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id'))); 
+                                    set_current_record('Item',$item); 
                                     $itemids[] = $item->id;?>
                                 <?php if(digitool_item_has_digitool_url($item)){ ?>
                                     <div class="image">
@@ -338,7 +339,7 @@ jQuery(document).ready(function() {
                                 <?php if($item->getItemType()->name == 'Object'){?>
 
                                     <div class="title">
-                                        <?php $beelden="<table width='300'><th width='120'></th><th></th>";
+                                        <?php $beelden="<table><th width='120'></th><th></th>";
                                          if(metadata($item,array('Item Type Metadata','Objectnaam')))
                                             $beelden.="<tr><td><strong>Objectnaam:</strong></td><td>".link_to_item(ucfirst(metadata($item,array('Item Type Metadata','Objectnaam'))))."</td></tr>";
                                         
@@ -429,7 +430,8 @@ jQuery(document).ready(function() {
                                     </div>
                                 <?php } ?>    
 
-                                <? }else{ ?>                      
+                                <?php else: ?>         
+                                
                                     <div class="title">
                                         <h3><a href="<?php echo $doc->url; ?>" class="result-title">
                                         <?php echo is_array($doc->title) ? $doc->title[0] : $doc->title; ?>
@@ -467,7 +469,7 @@ jQuery(document).ready(function() {
                                         <?php } ?>   
                                     </div>
                                     </div>
-                                <?php }?>
+                                <?php endif;?>
                             </div>
                         </div>
                     </div>
