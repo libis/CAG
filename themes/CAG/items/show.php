@@ -211,27 +211,27 @@ endif; ?>
     <div class="clearfix"></div>
     
     <?php if(metadata($item,array('Item Type Metadata','Naam instelling')))?>
-        <h1><?php echo metadata($item,array('Item Type Metadata','Naam instelling'))?></h1>
+        <h1><?php echo metadata($item,array('Item Type Metadata','Naam instelling'),array('delimiter'=>' ;'))?></h1>
     
     <table id="collecties">
         <tr>       
         <?php if(metadata($item,array('Item Type Metadata','Type Organisatie'))):?>
-            <td><label>Collectietype:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Type Organisatie'))?></td>
+            <td><label>Collectietype:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Type Organisatie'),array('delimiter'=>' ;'))?></td>
         </tr>
          <?php endif; ?>
         <tr>       
         <?php if(metadata($item,array('Item Type Metadata','Collectiefocus'))):?>
-            <td><label>Collectiefocus:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Collectiefocus'))?></td>
+            <td><label>Collectiefocus:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Collectiefocus'),array('delimiter'=>' ;'))?></td>
         </tr>
         <?php endif; ?>
         <tr>       
         <?php if(metadata($item,array('Item Type Metadata','Erfgoeddragers'))):?>
-            <td><label>Erfgoeddragers:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Erfgoeddragers'))?></td>
+            <td><label>Erfgoeddragers:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Erfgoeddragers'),array('delimiter'=>' ;'))?></td>
         </tr>
         <?php endif; ?>
         <tr>       
         <?php if(metadata($item,array('Item Type Metadata','Beschrijving'))):?>
-            <td><label>Beschrijving:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Beschrijving'))?></td>
+            <td><label>Beschrijving:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Beschrijving'),array('delimiter'=>' ;'))?></td>
         </tr>
         <?php endif; ?>
         <tr>
@@ -243,17 +243,17 @@ endif; ?>
             </td>
         </tr><tr>       
         <?php if(metadata($item,array('Item Type Metadata','Telefoon'))):?>
-            <td><label>Telefoon:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Telefoon'))?></td>
+            <td><label>Telefoon:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Telefoon'),array('delimiter'=>' ;'))?></td>
         </tr>
         <?php endif; ?>
         <tr>
         <?php if(metadata($item,array('Item Type Metadata','Website'))):?>
-            <td><label>Website:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Website'))?></td>
+            <td><label>Website:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Website'),array('delimiter'=>' ;'))?></td>
         </tr>
         <?php endif; ?>
         <tr>
         <?php if(metadata($item,array('Item Type Metadata','E-mail'))):?>
-            <td><label>E-mail:</label></td><td><?php echo metadata($item,array('Item Type Metadata','E-mail'))?></td>
+            <td><label>E-mail:</label></td><td><?php echo metadata($item,array('Item Type Metadata','E-mail'),array('delimiter'=>' ;'))?></td>
         </tr>
         <?php endif; ?>
     </table>
