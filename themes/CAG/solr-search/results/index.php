@@ -339,7 +339,7 @@ jQuery(document).ready(function() {
                                 <?php if($item->getItemType()->name == 'Object'){?>
 
                                     <div class="title">
-                                        <?php $beelden="<table><th width='120'></th><th></th>";
+                                        <?php $beelden="<table><th width='120'></th><th width='375'></th>";
                                          if(metadata($item,array('Item Type Metadata','Objectnaam')))
                                             $beelden.="<tr><td><strong>Objectnaam:</strong></td><td>".link_to_item(ucfirst(metadata($item,array('Item Type Metadata','Objectnaam'))))."</td></tr>";
                                         
@@ -355,7 +355,7 @@ jQuery(document).ready(function() {
                                        
                                         
                                         if(metadata($item,array('Dublin Core','Description')))
-                                            $beelden.="<tr><td><strong>Beschrijving:</strong></td><td>".metadata($item,array('Dublin Core','Description'),array('snippet'=>200))."</td></tr>";
+                                            $beelden.="<tr><td ><strong>Beschrijving:</strong></td><td width=375>".metadata($item,array('Dublin Core','Description'),array('snippet'=>200))."</td></tr>";
                                        
                                         
                                         $beelden.="</table>";
@@ -368,7 +368,7 @@ jQuery(document).ready(function() {
                                 <!-- Collectie -->
                                 <?php if($item->getItemType()->name == 'Collectie'){                                                   
                                     
-                                    $actoren= "<table><th width='120'></th><th></th>";
+                                    $actoren= "<table><th width='120'></th><th width='375'></th>";
 
                                     if(metadata($item,array('Item Type Metadata','Naam instelling')))
                                         $actoren.= "<tr><td><strong>Naam Instelling:</strong></td><td>".link_to_item(metadata($item,array('Item Type Metadata','Naam instelling')),array(),'show',$item)."</td></tr>";
@@ -389,7 +389,7 @@ jQuery(document).ready(function() {
                                     if(metadata($item,array('Item Type Metadata','E-mail')))
                                         $actoren.= "<tr><td><strong>E-mail:</strong></td><td>".metadata($item,array('Item Type Metadata','E-mail'))."</td></tr>";
                                     if(metadata($item,array('Item Type Metadata','Beschrijving')))
-                                           $actoren.="<tr><td><strong>Beschrijving:</strong></td><td>".metadata($item,array('Item Type Metadata','Beschrijving'),array('snippet'=>200))."</td></tr>";
+                                           $actoren.="<tr><td ><strong>Beschrijving:</strong></td><td width=375>".metadata($item,array('Item Type Metadata','Beschrijving'),array('snippet'=>200))."</td></tr>";
                                        
                                     $actoren .="</table>";//.plugin_append_to_items_browse_each();
                                 ?>
