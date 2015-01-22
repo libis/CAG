@@ -225,8 +225,8 @@ endif; ?>
         </tr>
         <?php endif; ?>
         <tr>       
-        <?php if(metadata($item,array('Item Type Metadata','Erfgoeddragers'))):?>
-            <td><label>Erfgoeddragers:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Erfgoeddragers'),array('delimiter'=>' ;'))?></td>
+        <?php if(metadata($item,array('Item Type Metadata','Soort erfgoed'))):?>
+            <td><label>Soort erfgoed:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Soort erfgoed'),array('delimiter'=>' ;'))?></td>
         </tr>
         <?php endif; ?>
         <tr>       
