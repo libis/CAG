@@ -222,7 +222,7 @@ endif; ?>
         <tr>       
         <?php if(metadata($item,array('Item Type Metadata','Collectiefocus'))):?>
             <?php                   
-                $focus = str_replace(array('<br/>', '<br>'), '',  metadata($item,array('Item Type Metadata','Collectiefocus'),array('delimiter'=>'; ')));        
+                $focus = strip_tags(metadata($item,array('Item Type Metadata','Collectiefocus'),array('delimiter'=>'; ')));        
             ?>
             <td><label>Collectiefocus:</label></td><td><?php echo $focus;?></td>
         </tr>
