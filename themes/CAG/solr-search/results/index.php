@@ -497,8 +497,7 @@ jQuery(document).ready(function() {
         }  
     
         if(!empty($locationsSolr)){
-            $locations = $locationsSolr;    
-            $session->items= $itemsSolr;
+            $locations = $locationsSolr;            
             $session->from= 'solr';
             $session->locations= $locations;
             //var_dump($locationsSolr);?>
