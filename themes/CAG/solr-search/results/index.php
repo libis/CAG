@@ -385,7 +385,7 @@ jQuery(document).ready(function() {
                                     if(metadata($item,array('Item Type Metadata','Fax')))
                                         $actoren.= "<tr><td><strong>Fax:</strong></td><td>".metadata($item,array('Item Type Metadata','Fax'))."</td></tr>";
                                     if(metadata($item,array('Item Type Metadata','Website')))
-                                        $actoren.= "<tr><td><strong>Website:</strong></td><td width=375>".metadata($item,array('Item Type Metadata','Website'))."</td></tr>";
+                                        $actoren.= "<tr><td><strong>Website:</strong></td><td width=375 style='word-wrap:break-word'>".metadata($item,array('Item Type Metadata','Website'))."</td></tr>";
                                     if(metadata($item,array('Item Type Metadata','E-mail')))
                                         $actoren.= "<tr><td><strong>E-mail:</strong></td><td>".metadata($item,array('Item Type Metadata','E-mail'))."</td></tr>";
                                     if(metadata($item,array('Item Type Metadata','Beschrijving')))
