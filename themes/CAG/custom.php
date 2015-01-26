@@ -1165,4 +1165,27 @@ function libis_get_exhibit_for_print($exhibit){
 </html>
 <?php
 }
+
+/**
+* Custom function to retrieve the element name is metadata is given (from items/show.php)
+*
+* @param string $metadata The metadata of which the label is needed
+* @return string The element name.
+*/
+function libis_get_element_name($metadata){    
+    $item = get_current_record('item');
+    
+    //search elements of itemtype
+    $type = $item->getItemType();
+    $db = get_db();
+    $elements = $db->getTable('Element')->findByItemType($type->id);
+    $texts = $db->getTable('ElementText')->findByRecord($item);
+   
+    foreach($texts as $text):   
+        if($text->text == $metadata):
+            $element = $db->getTable('Element')->find($text->element_id);
+            return $element->name;
+        endif;        
+    endforeach;   
+}
 ?>
