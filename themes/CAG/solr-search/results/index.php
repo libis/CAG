@@ -377,7 +377,7 @@ jQuery(document).ready(function() {
                                     if(metadata($item,array('Item Type Metadata','Postcode')))
                                         $actoren.= "<tr><td><strong>Postcode:</strong></td><td>".metadata($item,array('Item Type Metadata','Postcode'))."</td></tr>";
                                     if(metadata($item,array('Item Type Metadata','Stad')))
-                                        $actoren.= "<tr><td><strong>Stad:</strong></td><td>".metadata($item,array('Item Type Metadata','Stad'))."</td></tr>";
+                                        $actoren.= "<tr><td><strong>Gemeente/stad:</strong></td><td>".metadata($item,array('Item Type Metadata','Stad'))."</td></tr>";
                                     if(metadata($item,array('Item Type Metadata','Provincie')))
                                         $actoren.= "<tr><td><strong>Provincie:</strong></td><td>".metadata($item,array('Item Type Metadata','Provincie'))."</td></tr>";
                                     if(metadata($item,array('Item Type Metadata','Telefoon')))
