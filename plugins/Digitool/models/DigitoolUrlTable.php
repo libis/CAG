@@ -22,7 +22,8 @@ class DigitoolUrlTable extends Omeka_Db_Table
         }
 
         // Create a SELECT statement for the table
-        $select = $db->select()->from(array('d' => $db->DigitoolUrl), 'd.*');
+        $select = $db->select()->from(array('d' => $db->DigitoolUrl), 'd.*')
+                               ->order('pid DESC');
 
         // Create a WHERE condition that will pull down all the digitool info
         if (is_array($item)) {
@@ -37,6 +38,7 @@ class DigitoolUrlTable extends Omeka_Db_Table
         }
 
         // Get the DigitoolUrls
+        
         $urls = $this->fetchObjects($select);
 
         //otherwise return the whole table
