@@ -23,7 +23,7 @@ class DigitoolUrlTable extends Omeka_Db_Table
 
         // Create a SELECT statement for the table
         $select = $db->select()->from(array('d' => $db->DigitoolUrl), 'd.*')
-                               ->order('pid DESC');
+                               ->order('id ASC');
 
         // Create a WHERE condition that will pull down all the digitool info
         if (is_array($item)) {
