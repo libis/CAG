@@ -728,7 +728,9 @@ function libis_breadcrumb_tag($exhibit){
         "landschap" => "Boerderij en landschap",        
         "identiteit" => "Identiteit en beeldvorming",
         "eetcultuur" => "Eetcultuur",
-        "industrie" => "Industrie en wetenschap"
+        "industrie" => "Industrie en wetenschap",
+        "voedsel" => "Voeding",
+        "landbouw" => "Landbouw"
     );            
     return "<li><a href='/verhalen/".$tag."'>".$namen[$tag]."</a> ></li>";    
 }
