@@ -347,24 +347,7 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
 
 	}
         
-        public function unsubscribeAction(){
-            if(isset($_GET['id']) && isset($_GET['email'])):                
-                if(md5(get_option('newsletter_salt').$_GET['email']) == $_GET['id']):
-                    $db = get_db();
-                    $select = $db->getTable('ElementText')->getSelect()
-                            ->where('element_texts.text = ?', (string)$_GET['email']);
-                    $text = $db->getTable('ElementText')->fetchObject($select);                    
-                    $item = get_record_by_id('Item',$text->record_id);
-                    
-                    $item->delete();
-                    //send to listserv
-                    $this->sendListservEmail($_GET['email'],"",'delete');
-                    
-                   
-                    $html = "Het uitschrijven is gelukt. Je bent niet langer geregistreerd op onze nieuwsbrief.";
-                    
-                endif;              
-            else:                        
+        public function unsubscribeAction(){                              
                 $html = false;  
                 if ($this->getRequest()->isPost()) {
                     // If the form submission is valid, then send out the email               
@@ -372,11 +355,21 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                     if (!Zend_Validate::is($email, 'EmailAddress')) {
                         $this->_helper->flashMessenger(__('Je e-mailadres is niet geldig.'));                        
                     }else{
-                        $message = "<p>Beste,</p>
-                                    <p>Klik op onderstaande link om onze nieuwsbrief niet langer te ontvangen.</p>
-                                    <p>".newsletter_add_unsubscribe($email)."</p>";
-                        $this->sendEmailUnsubscribe($email,$message);
-                        $html = "<p>We hebben een e-mail verstuurd naar het opgegeven adres, hierin bevindt zich de nodige informatie om je uit te schrijven voor onze nieuwsbrief.</p>";
+                         $db = get_db();
+                        $select = $db->getTable('ElementText')->getSelect()
+                                ->where('element_texts.text = ?', $email);                        
+                        $text = $db->getTable('ElementText')->fetchObject($select); 
+                        
+                        if($text):
+                        $item = get_record_by_id('Item',$text->record_id);
+                        
+                             $item->delete();
+                            //send to listserv
+                            $this->sendListservEmail($email,"",'delete');                  
+                            $html = "Het uitschrijven is gelukt. Je bent niet langer geregistreerd op onze nieuwsbrief.";
+                        else:
+                            $html = "Het opgegeven e-mailadres zit niet in onze mailinglijst.";
+                        endif;
                     }
                 }
                 $captchaObj = $this->_setupCaptcha();
@@ -387,8 +380,7 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                 } else {
                     $captcha = '';
                 }
-                
-            endif;
+            
             $this->view->assign(compact('html'));
         }
 
@@ -473,7 +465,7 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
         }
     }
     
-    protected function sendListservEmail($email, $name,$task='add',$changemail) {
+    protected function sendListservEmail($email, $name,$task='add',$changemail=null) {
         //setup smtp
         $tr = new Zend_Mail_Transport_Smtp('smtp.kuleuven.be');
         Zend_Mail::setDefaultTransport($tr);
