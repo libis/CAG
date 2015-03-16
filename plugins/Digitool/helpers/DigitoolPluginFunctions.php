@@ -64,7 +64,7 @@ function digitool_admin_form($item){
 
 		});
 
-		jQuery('.digi-child').live("click", function(event) {
+		jQuery('.digi-child').click(function(event) {
 			event.preventDefault();
 			jQuery('#wait').show('slow');
 			jQuery.get('<?php echo url("digitool/index/childcgi/");?>',{ child: jQuery('.digi-child').val()} , function(data) {

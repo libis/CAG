@@ -26,12 +26,12 @@ OmekaMap.prototype = {
                
         //options.position = new google.maps.LatLng(lat, lng);
         options.map = this.map;
-        
-        bindHtml = bindHtml.replace(/(<([^>]+)>)/ig,"");
-        bindHtml = bindHtml.replace(/ /g,'');
-        //options.title = bindHtml;
-        options.snippet = bindHtml;
-        
+        if (bindHtml){
+            bindHtml = bindHtml.replace(/(<([^>]+)>)/ig,"");
+            bindHtml = bindHtml.replace(/ /g,'');
+            //options.title = bindHtml;
+            options.snippet = bindHtml;
+        }
         var marker = new google.maps.Marker(options);
         //for clusterer
         this.mc.addMarker(marker);
@@ -54,8 +54,8 @@ OmekaMap.prototype = {
             });
         }
                
-        this.markers.push(marker);
-        return marker;*/
+        this.markers.push(marker);*/
+        return marker;
     },
     
     initMap: function () {
