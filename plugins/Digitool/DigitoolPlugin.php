@@ -168,7 +168,8 @@ class DigitoolPlugin extends Omeka_Plugin_AbstractPlugin
     {
         $apiResources['digitool_urls'] = array(
             'record_type' => 'DigitoolUrl', 
-            'actions' => array('get','index','put','post','delete')
+            'actions' => array('get','index','put','post','delete'),
+            'index_params' => array('item_id')
         );       
 
         return $apiResources;    
@@ -186,21 +187,21 @@ class DigitoolPlugin extends Omeka_Plugin_AbstractPlugin
     {
         $item = $args['record'];
         $urls = $this->_db->getTable('DigitoolUrl')->findBy(array('item_id' => $item->id));
-        if (!$urls) {
-            return $extend;
-        }
-        $url = $urls[0];
-        $i=1;
-        foreach($urls as $url):
-        $extend['digitool_urls'] = array(
-        'count'=>$i,        
-        'url' => Omeka_Record_Api_AbstractRecordAdapter::getResourceUrl("/digitool_urls/{$url->id}"),
-        'resource' => 'digitool_urls',
-        'pid' => $url->id,
-        'item_id' => $item->id
-        );
-        $i++;
-        endforeach;
+        
+        if(count($urls)==1) {
+            $url = $urls[0];
+            $extend['digitool_urls'] = array(
+            'id'=>$url->id,        
+            'url' => Omeka_Record_Api_AbstractRecordAdapter::getResourceUrl("/digitool_urls/{$url->id}"),
+            'resource' => 'digitool_urls',
+            );
+        }else{
+            $extend['digitool_urls'] = array(
+            'count'=> count($urls),        
+            'url' => Omeka_Record_Api_AbstractRecordAdapter::getResourceUrl("/digitool_urls?item={$item->id}"),
+            'resource' => 'digitool_urls',
+            );
+        }    
         return $extend;
     }
     

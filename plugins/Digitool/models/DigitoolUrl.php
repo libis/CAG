@@ -16,6 +16,15 @@ class DigitoolUrl extends Omeka_Record_AbstractRecord implements Zend_Acl_Resour
             $this->addError('item_id', 'DigitoolUrl requires an item id.');
         }
         
+        if($this->pid == 'delete'):
+            $db = get_db();
+            $digitool_urls = $db->getTable("DigitoolUrl")->findDigitoolUrlByItem(get_record_by_id('Item',$this->item_id));
+            foreach($digitool_urls as $digitool_url):
+                $digitool_url->delete();
+            endforeach;
+            $this->addError('pid', 'Deleted digitool-urls with item_id '.$this->item_id);
+        endif;
+        
         //check if item/pid combo already exists
         $db = get_db();
         

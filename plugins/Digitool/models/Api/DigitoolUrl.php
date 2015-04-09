@@ -28,13 +28,19 @@ class Api_DigitoolUrl extends Omeka_Record_Api_AbstractRecordAdapter
         }
         if (isset($data->label)) {
             $record->label = $data->label;
-        }       
+        }        
     }
     
     // Set data to a record during a PUT request.
     public function setPutData(Omeka_Record_AbstractRecord $record, $data)
     {
         $this->setPostData($record, $data);
-    }    
+    }
+    
+    // Set data to a record during a DELETE request.
+    public function setDeleteData(Omeka_Record_AbstractRecord $record, $data)
+    {
+        $this->setPostData($record, $data);
+    } 
     
 }
