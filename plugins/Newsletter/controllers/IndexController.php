@@ -319,6 +319,7 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                             //checkbox unchecked
                             $text->text = 'false';
                         endif;
+                        echo $text->text;
                         $text->save();
                     endforeach;
                     //send to listserv
@@ -361,9 +362,19 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                         $text = $db->getTable('ElementText')->fetchObject($select); 
                         
                         if($text):
-                        $item = get_record_by_id('Item',$text->record_id);
-                        
-                             $item->delete();
+                            echo $text->record_id;
+                            
+                            //delete item;
+                            $table = $db->getTable('Item')->getTableName();
+                            $db->delete($table, 'id = '  . (int) $text->record_id);
+                            //delete element texts of item
+                            $select = $db->getTable('ElementText')->getSelect()
+                                ->where('element_texts.record_id = ?', $text->record_id);                        
+                            $texts = $db->getTable('ElementText')->fetchObjects($select);
+                            foreach($texts as $text):                                
+                                $text->delete();
+                            endforeach;
+                            
                             //send to listserv
                             $this->sendListservEmail($email,"",'delete');                  
                             $html = "Het uitschrijven is gelukt. Je bent niet langer geregistreerd op onze nieuwsbrief.";
