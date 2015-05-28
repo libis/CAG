@@ -83,6 +83,7 @@
                var nieuwBedrag;
                
                var ppe = jQuery(this).find(".bestel-prijs").html();
+               var ppe = ppe.replace(/,/g, '.');
                prijs.data('oldVal',prijs.val());
 
                prijs.bind("propertychange keyup input paste",function(event){
