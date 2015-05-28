@@ -114,32 +114,35 @@ echo head($head);
         };
 
         jQuery('#exportToCsv').on('click', function(){
-            var tableData = jQuery('#example1').handsontable('getData');            
-            var csv = convert2dArrayToCsv(tableData);
+           
+            var instance = jQuery('#example1').handsontable('getInstance');
+            var headers = instance.getColHeader();
+        
+            var csv = "";
+            csv += headers.join("|") + "\n";
+        
+            for (var i = 0; i < instance.countRows(); i++) {
+                var row = [];
+                for (var h in headers) {
+                    var prop = instance.colToProp(h)
+                    var value = instance.getDataAtRowProp(i, prop)
+                    row.push(value)
+                }
+
+            csv += row.join("|")
+            csv += "\n";
+        }
+        
+       
+            
             window.location.href = 'data:text/csv;charset=UTF-8,'
                             + encodeURIComponent(csv);
+                    
+                    
               
         });
     
-        function convert2dArrayToCsv(arr){
-            return arr.reduce(function(csvString, row){
-                row = jQuery.map(row, function(el) { return el; });            
-              
-                var item, i;
-                var line = [];
-
-                for (i = 0; i < row.length; ++i) {
-                    item = row[i];
-                    if (item.indexOf && (item.indexOf(',') !== -1 || item.indexOf('"') !== -1)) {
-                        item = '"' + item.replace(/"/g, '""') + '"';
-                    }
-                    line.push(item);
-                }
-               
-                csvString += line.join(',');
-                csvString += '\n';
-                return csvString;
-            }, '');
+        
         }
 
         jQuery('#search_field').on('keyup',function(event){
