@@ -192,7 +192,7 @@ jQuery(document).ready(function() {
                        if($item->getItemType()->name == 'Publicatie'){$pub .=$html;}
                        if($item->getItemType()->name == 'Project'){$project .=$html;}
                       
-                   }
+                    }
                 endforeach;
                 
                 if($featured){
