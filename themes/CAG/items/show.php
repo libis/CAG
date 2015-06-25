@@ -52,7 +52,7 @@ endif; ?>
     	<h3>Beschrijving:</h3><p><?php echo (metadata('item', array('Dublin Core','Description')));?></p>
     <?php } ?>
     <?php if(metadata('item', array('Dublin Core','Provenance')) != ""){?>
-   		<h3>Bewaarinstelling:</h3><p><?php echo (metadata('item', array('Dublin Core','Provenance')));?></p>
+   		<h3>Bewaarinstelling:</h3><p><?php echo (metadata('item', array('Dublin Core','Provenance'),array('delimiter'=>'; ')));?></p>
     <?php } ?>
     <?php if(metadata('item', array('Item Type Metadata','Collectie')) != ""){?>
    	 	<h3>Collectie:</h3><p><?php echo ucfirst(metadata('item', array('Item Type Metadata','Collectie')));?></p>
