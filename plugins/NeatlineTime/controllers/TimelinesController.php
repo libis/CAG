@@ -62,7 +62,7 @@ class NeatlineTime_TimelinesController extends Omeka_Controller_AbstractActionCo
     public function itemsAction()
     {
         $timeline = $this->_helper->db->findById();
-
+        
         $query = $timeline->query ? unserialize($timeline->query) : array();
         $items = get_db()->getTable('Item')->findBy($query, null);
 

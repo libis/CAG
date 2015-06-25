@@ -243,7 +243,7 @@ jQuery(document).ready(function() {
                        $html .=link_to_item("<h4>".metadata($item,array('Dublin Core','Title'))."</h4>",array(),'show',$item).
                        "<p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p> </div>";
 
-                       if($item->featured==1){$featured .= $html;}
+                       if(strtotime($item->added) > strtotime('1 year ago')){$featured .= $html;}
                        else{
                         $pub .=$html;                        
                        }
