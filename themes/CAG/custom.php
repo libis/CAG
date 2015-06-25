@@ -952,7 +952,7 @@ function libis_get_projects($lopend = true){
 
 function libis_get_publicaties($pub_tag=null){
     $html="<ul>";
-    $items = get_records('Item',array('type'=>'Publicatie','sort_field'=>'Dublin Core,Date','sort_dir'=>'d'),20);
+    $items = get_records('Item',array('type'=>'Publicatie','sort_field'=>'Dublin Core,Date','sort_dir'=>'d'),400);
     if($pub_tag):
         foreach($items as $item){  
             $tags = $item->Tags;
@@ -966,7 +966,9 @@ function libis_get_publicaties($pub_tag=null){
         $html .= "</ul><div class='lees_meer'><a href='".url('solr-search/results?q=&facet=itemtype:"Publicatie" AND tag:"'.$pub_tag.'"')."'>Lees meer..</a></div>";
     else:
         foreach($items as $item):  
+             if(metadata($item,array('Item Type Metadata','recent'))=='ja'){
             $html .= "<li>".link_to_item("<strong>".metadata($item,array('Dublin Core','Title'))."</strong>",array(), 'show', $item)."</li>";       
+             }
         endforeach;       
         $html .= "</ul><div class='lees_meer'><a href='".url('solr-search/results?q=&facet=itemtype:"Publicatie"')."'>Lees meer..</a></div>";
    endif;

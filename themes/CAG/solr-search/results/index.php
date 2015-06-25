@@ -227,7 +227,7 @@ jQuery(document).ready(function() {
                 foreach($items as $item):
                     
                    if($item->getItemType()->name == 'Publicatie'){
-                       if($item->featured==0){
+                       if(metadata($item,array('Item Type Metadata','recent'))=='ja'){
                            if($i == 'odd'){
                                $class = 'in_de_kijker odd';
                                $i='even';
