@@ -114,7 +114,7 @@ echo head($head);
         };
 
         jQuery('#exportToCsv').on('click', function(){
-           ok
+           
             var instance = jQuery('#example1').handsontable('getInstance');
             var headers = instance.getColHeader();
         
