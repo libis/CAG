@@ -143,8 +143,6 @@ echo head($head);
         });
     
         
-        }
-
         jQuery('#search_field').on('keyup',function(event){
             var value = ('' + this.value).toLowerCase(),row,col,r_len,c_len,td;
             var example = jQuery('#example1');
