@@ -40,7 +40,7 @@ class DigitoolPlugin extends Omeka_Plugin_AbstractPlugin
         `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
         `item_id` BIGINT UNSIGNED NOT NULL ,
         `pid` VARCHAR(100) NOT NULL ,
-        `label` VARCHAR(25)
+        `label` VARCHAR(25),
         INDEX (`item_id`)) ENGINE = MYISAM";
         $db->query($sql);
 
