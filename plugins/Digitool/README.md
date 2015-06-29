@@ -1,1 +1,0 @@
-[![Build Status](https://travis-ci.org/libis/plugin-Digitool.png)](https://travis-ci.org/libis/plugin-Digitool)
