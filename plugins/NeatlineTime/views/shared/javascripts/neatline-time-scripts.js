@@ -99,7 +99,7 @@ var NeatlineTime = {
     tl.loadJSON(timelineData, function(json, url) {
         if (json.events.length > 0) {
             eventSource.loadJSON(json, url);
-            tl.getBand(0).setCenterVisibleDate(eventSource.getEarliestDate());
+            tl.getBand(0).setCenterVisibleDate('1960');
         }
     });
 
