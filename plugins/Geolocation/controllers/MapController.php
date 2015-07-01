@@ -34,4 +34,6 @@ class Geolocation_MapController extends Omeka_Controller_AbstractActionControlle
         // Make the pagination values accessible from pagination_links().
         Zend_Registry::set('pagination', $params);
     }
+     public function bubbleAction(){
+    }
 }

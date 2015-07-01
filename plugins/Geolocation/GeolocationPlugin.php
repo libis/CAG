@@ -156,6 +156,13 @@ class GeolocationPlugin extends Omeka_Plugin_AbstractPlugin
                                 'page'       => '1'),
                         array('page' => '\d+'));
         $router->addRoute('items_map', $mapRoute);
+        
+        $bubbleRoute = new Zend_Controller_Router_Route('items/map/bubble',
+                        array('controller' => 'map',
+                                'action'     => 'bubble',
+                                'module'     => 'geolocation'
+                                ));
+        $router->addRoute('items_map_bubble', $bubbleRoute);  
 
         // Trying to make the route look like a KML file so google will eat it.
         // @todo Include page parameter if this works.

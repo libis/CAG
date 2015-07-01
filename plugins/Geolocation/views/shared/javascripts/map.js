@@ -7,22 +7,38 @@ function OmekaMap(mapDivId, center, options) {
 OmekaMap.prototype = {
     
     map: null,
+    mc: null,
+    oms: null,
     mapDivId: null,
+    mapSize: 'small',
     markers: [],
     options: {},
     center: null,
+    coordinates_hash : [],
     
     addMarker: function (lat, lng, options, bindHtml)
     {        
         if (!options) {
             options = {};
         }
-        options.position = new google.maps.LatLng(lat, lng);
-        options.map = this.map;
-          
-        var marker = new google.maps.Marker(options);
         
-        if (bindHtml) {
+        options.position = new google.maps.LatLng(lat, lng);
+               
+        //options.position = new google.maps.LatLng(lat, lng);
+        options.map = this.map;
+        if (bindHtml){
+            bindHtml = bindHtml.replace(/(<([^>]+)>)/ig,"");
+            bindHtml = bindHtml.replace(/ /g,'');
+            //options.title = bindHtml;
+            options.snippet = bindHtml;
+        }
+        var marker = new google.maps.Marker(options);
+        //for clusterer
+        this.mc.addMarker(marker);
+        //spider
+        this.oms.addMarker(marker);
+        
+        /*if (bindHtml) {
             var infoWindow = new google.maps.InfoWindow({
                 content: bindHtml
             });
@@ -38,40 +54,39 @@ OmekaMap.prototype = {
             });
         }
                
-        this.markers.push(marker);
+        this.markers.push(marker);*/
         return marker;
     },
     
     initMap: function () {
-        if (!this.center) {
-            alert('Error: The center of the map has not been set!');
-            return;
-        }
-
+        
         // Build the map.
         var mapOptions = {
             zoom: this.center.zoomLevel,
             center: new google.maps.LatLng(this.center.latitude, this.center.longitude),
-        };
-
-        switch (this.options.mapType) {
-        case 'hybrid':
-            mapOptions.mapTypeId = google.maps.MapTypeId.HYBRID;
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            navigationControl: true,
+            mapTypeControl: true
+        };    
+        switch (this.mapSize) {
+        case 'small':
+            mapOptions.navigationControlOptions = {
+                style: google.maps.NavigationControlStyle.SMALL
+            };
             break;
-        case 'satellite':
-            mapOptions.mapTypeId = google.maps.MapTypeId.SATELLITE;
-            break;
-        case 'terrain':
-            mapOptions.mapTypeId = google.maps.MapTypeId.TERRAIN;
-            break;
-        case 'roadmap':
+        case 'large':
         default:
-            mapOptions.mapTypeId = google.maps.MapTypeId.ROADMAP;
+            mapOptions.navigationControlOptions = {
+                style: google.maps.NavigationControlStyle.DEFAULT
+            };
         }
 
-        jQuery.extend(mapOptions, this.options.mapOptions);
-
         this.map = new google.maps.Map(document.getElementById(this.mapDivId), mapOptions); 
+
+        if (!this.center) {
+            alert('Error: The center of the map has not been set!');
+            return;
+        }
 
         // Show the center marker if we have that enabled.
         if (this.center.show) {
@@ -80,6 +95,33 @@ OmekaMap.prototype = {
                            {title: "(" + this.center.latitude + ',' + this.center.longitude + ")"}, 
                            this.center.markerHtml);
         }
+        
+        //The markercluster's options
+        var mcOptions = {gridSize: 50, maxZoom: 15};
+        //Construct an empty markerclusterer object
+        this.mc = new MarkerClusterer(this.map, [], mcOptions);
+        this.oms = new OverlappingMarkerSpiderfier(this.map);
+        
+        this.oms.addListener('click', function(marker) {
+            //bindHtml = bindHtml.replace(/(<([^>]+)>)/ig,"");
+              //  bindHtml = bindHtml.replace(/ /g,'');
+                //alert(document.location.hostname);
+                var infowindow = null;
+                
+                var pathArray = window.location.pathname.split( '/' );
+                if(pathArray[1].search("test")>=0){
+                    url = 'http://'+window.location.hostname+'/cag_test/items/map/bubble/ #mapsInfoWindow'
+                }else{
+                    url = 'http://'+window.location.hostname+'/omeka/cag/items/map/bubble/ #mapsInfoWindow'
+                }
+                
+                jQuery("#handle").load(url, { id: marker.snippet }, function(data) {
+                    infowindow = new google.maps.InfoWindow({
+                        content: data
+                    });
+                    infowindow.open(marker.getMap(), marker);
+                });                
+          });
     }
 };
 
@@ -94,7 +136,7 @@ function OmekaMapBrowse(mapDivId, center, options) {
 
 OmekaMapBrowse.prototype = {
     
-    afterLoadItems: function () {
+    /*afterLoadItems: function () {
         var listDiv = jQuery('#' + this.options.list);
 
         if (!listDiv.size()) {
@@ -103,7 +145,7 @@ OmekaMapBrowse.prototype = {
             //Create HTML links for each of the markers
             this.buildListLinks(listDiv);
         }
-    },
+    },*/
     
     /* Need to parse KML manually b/c Google Maps API cannot access the KML 
        behind the admin interface */
@@ -138,7 +180,7 @@ OmekaMapBrowse.prototype = {
                     });
             
                     // We have successfully loaded some map points, so continue setting up the map object
-                    return that.afterLoadItems();
+                    //return that.afterLoadItems();
                 } else {
                     // @todo Elaborate with an error message
                     return false;
@@ -159,6 +201,7 @@ OmekaMapBrowse.prototype = {
         var titleWithLink = placeMark.find('namewithlink').text();
         var body = placeMark.find('description').text();
         var snippet = placeMark.find('Snippet').text();
+        var icon = placeMark.find('Icon href').text();
             
         // Extract the lat/long from the KML-formatted data
         var coordinates = placeMark.find('Point coordinates').text().split(',');
@@ -217,6 +260,9 @@ function OmekaMapSingle(mapDivId, center, options) {
     jQuery.extend(true, this, omekaMap);
     this.initMap();
 }
+OmekaMapSingle.prototype = {
+    mapSize: 'small'
+};
 
 function OmekaMapForm(mapDivId, center, options) {
     var that = this;
@@ -271,6 +317,8 @@ function OmekaMapForm(mapDivId, center, options) {
 }
 
 OmekaMapForm.prototype = {
+    mapSize: 'large',
+    
     /* Get the geolocation of the address and add marker. */
     findAddress: function (address) {
         var that = this;

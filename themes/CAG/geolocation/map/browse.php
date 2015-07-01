@@ -1,4 +1,27 @@
-<?php echo head(array('title' => 'Beeldbank Kaart','bodyid'=>'map','bodyclass' => 'browse')); ?>
+<?php 
+queue_js_url("http://maps.google.com/maps/api/js?sensor=false");
+queue_js_file('map');
+
+
+$css = "
+            #map-display {
+                height: 436px;
+            }
+            .balloon {width:400px !important; font-size:1.2em;}
+            .balloon .title {font-weight:bold;margin-bottom:1.5em;}
+            .balloon .title, .balloon .description {float:left; width: 220px;margin-bottom:1.5em;}
+            .balloon img {float:right;display:block;}
+            .balloon .view-item {display:block; float:left; clear:left; font-weight:bold; text-decoration:none;}
+            #link_block {
+                display:none;
+            }
+            #search_block {
+                clear: both;
+            }";
+queue_css_string($css);
+
+echo head(array('title' => __('Browse Map'),'bodyid'=>'map','bodyclass' => 'browse')); ?>
+
 <?php 
      $session = new Zend_Session_Namespace('style');
      $session->from= 'browse'; 
@@ -10,28 +33,16 @@ $formAttributes['method'] = 'GET';
 ?>
 
 <div id="primary">
-<p id="simple-pages-breadcrumbs">
+    <p id="simple-pages-breadcrumbs">
     <a href="/">Home</a> > <a href="/beeldbank">Beeldbank</a>
     > Erfgoed op de kaart
 </p>
 <h1>Erfgoed op de kaart</h1>
 
-<ul class="items-nav navigation" id="secondary-nav">
-	<?php //echo custom_nav_items(); ?>
- 	<?php /*
- 		echo nav(
-     		array(
-            	'Zoeken' => url('beeldbank'),
-            	'Kaart' => url('items/map/')
-
-            )
-		);*/
-	?>
-</ul>
-<br>
 <div class="map-left">
    <?php echo libis_get_simple_page_content('info-kaart'); ?>
 </div>
+
 <div class="map-right">   
     <form id="beeldbank-search" <?php echo tag_attributes($formAttributes); ?>>        
         <?php
@@ -45,11 +56,14 @@ $formAttributes['method'] = 'GET';
     </form><br>
     <h6>Aantal beelden op de kaart: <?php echo $totalItems; ?> </h6>
 </div>
-
 <br>
 <div id="map-block">
-    <?php echo $this->googleMap('map-display', array('loadKml'=>true));?>    
+    <?php echo $this->googleMap('map-display', array('loadKml'=>true, 'list'=>'map-links'));?>
 </div><!-- end map_block -->
+
+<div id="link_block">
+    <div id="map-links"><h2><?php echo __('Find An Item on the Map'); ?></h2></div><!-- Used by JavaScript -->
+</div><!-- end link_block -->
 
 </div><!-- end primary -->
 <div id="handle"></div>
@@ -66,5 +80,6 @@ $formAttributes['method'] = 'GET';
         Omeka.Search.activateSearchButtons();
     });
 </script>
+
 
 <?php echo foot(); ?>
