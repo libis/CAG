@@ -9,7 +9,7 @@ $currentLng = trim($request->getParam('geolocation-longitude'));
 $radius = trim($request->getParam('geolocation-radius'));
 
 if (empty($radius)) {
-    $radius = get_option('geolocation_default_radius');
+    $radius = 10; // 10 miles
 }
 
 if (get_option('geolocation_use_metric_distances')) {
