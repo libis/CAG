@@ -6,44 +6,39 @@
         <Style id="item-info-balloon">
             <BalloonStyle>
                 <text><![CDATA[
-                    <div class="mapsInfoWindow img">
-                        
-                        $[description]
-
+                    <div class="geolocation_balloon">
+                        <div class="geolocation_balloon_title">$[namewithlink]</div>
+                        <div class="geolocation_balloon_thumbnail">$[description]</div>
+                        <p class="geolocation_balloon_description">$[Snippet]</p>
                     </div>
                 ]]></text>
             </BalloonStyle>
         </Style>
-        
-         <?php
-        //Zend_Session::start();
-        $session = new Zend_Session_Namespace('pagination_help');
-       
-        $url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-        $locationsArray = array();
-        if ($session->from == 'solr' || $session->from == 'show') {
-            $locations = $session->locations;
-        }else{
-            foreach(loop('item',$items) as $item):        
-                $locationsArray[] = $locations[$item->id];    
-            endforeach;
-            $locations = $locationsArray;
-        }
-       
-        foreach($locations as $location):
-       
+        <?php
+        foreach(loop('item') as $item):        
+        $location = $locations[$item->id];
         ?>
-        <Placemark>            
-            <description><![CDATA[<?php echo $location['item_id']; ?>]]></description>
-            
+        <Placemark>
+            <name><![CDATA[<?php echo metadata('item', array('Dublin Core', 'Title'));?>]]></name>
+            <namewithlink><![CDATA[<?php echo link_to_item(metadata('item' , array('Dublin Core', 'Title')), array('class' => 'view-item')); ?>]]></namewithlink>
+            <Snippet maxLines="2"><![CDATA[<?php
+            echo metadata('item', array('Dublin Core', 'Description'), array('snippet' => 150));
+            ?>]]></Snippet>    
+            <description><![CDATA[<?php 
+            // @since 3/26/08: movies do not display properly on the map in IE6, 
+            // so can't use display_files(). Description field contains the HTML 
+            // for displaying the first file (if possible).
+            if (metadata($item, 'has thumbnail')) {
+                echo link_to_item(item_image('thumbnail'), array('class' => 'view-item'));                
+            }
+            ?>]]></description>
             <Point>
-                <coordinates><?php echo $location->longitude; ?>,<?php echo $location->latitude; ?></coordinates>
+                <coordinates><?php echo $location['longitude']; ?>,<?php echo $location['latitude']; ?></coordinates>
             </Point>
-            <?php if ($location->address): ?>
-            <address><![CDATA[<?php echo $location->address; ?>]]></address>
+            <?php if ($location['address']): ?>
+            <address><![CDATA[<?php echo $location['address']; ?>]]></address>
             <?php endif; ?>
         </Placemark>
         <?php endforeach; ?>
-       
     </Document>
 </kml>
