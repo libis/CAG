@@ -31,16 +31,15 @@ class Table_Location extends Omeka_Db_Table
             $itemId = (int)(($item instanceof Item) ? $item->id : $item);
             $select->where("$alias.item_id = ?", $itemId);
         }
-
+        
+        // Get the locations
+        $locations = $this->fetchObjects($select);
+        
         // If only a single location is request, return the first one found.
         if ($findOnlyOne) {
-            $location = $this->fetchObject($select);
-            return $location;
+            return current($locations);
         }
-
-        // Get the locations.
-        $locations = $this->fetchObjects($select);
-
+        
         // Return an associative array of locations where the key is the item_id of the location
         // Note: Since each item can only have one location, this makes sense to associate a single location with a single item_id.
         // However, if in the future, an item can have multiple locations, then we cannot just associate a single location with a single item_id;
@@ -51,7 +50,24 @@ class Table_Location extends Omeka_Db_Table
         }
         return $indexedLocations;
     }
-
+    
+    public function countItemsBy($params)
+    {
+        $itemTable = $this->_db->getTable('Item');
+        $select = $itemTable->getSelectForCount($params);
+        $this->applySearchFilters($select, $params);
+        return $itemTable->fetchOne($select);
+    }
+    
+    public function findItemsBy($params = array(), $limit = null, $page = null)
+    {
+        $itemTable = $this->_db->getTable('Item'); 
+        $select = $itemTable->getSelectForFindBy($params);
+        $itemTable->applyPagination($select, $limit, $page);
+        $this->applySearchFilters($select, $params);        
+        return $itemTable->fetchObjects($select);
+    }
+    
     /**
      * Add permission check to location queries.
      * 

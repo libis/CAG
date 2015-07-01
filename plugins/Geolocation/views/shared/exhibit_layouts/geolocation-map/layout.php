@@ -22,8 +22,8 @@ foreach ($attachments as $attachment):
             $body = $this->exhibitAttachmentCaption($attachment);
         endif;
 
-        $html = '<div class="geolocation_balloon">'
-              . '<div class="geolocation_balloon_title">' . $titleLink . '</div>'
+        $html = '<div class="geolocation-balloon">'
+              . '<p class="geolocation_marker_title">' . $titleLink . '</p>'
               . $body
               . '</div>';
         $locations[] = array(
@@ -43,6 +43,7 @@ google.maps.event.addDomListener(window, 'load', function () {
     );
     geolocation_map.initMap();
     var map_locations = <?php echo json_encode($locations); ?>;
+    var map_bounds = new google.maps.LatLngBounds();
     for (var i = 0; i < map_locations.length; i++) {
         var locationData = map_locations[i];
         geolocation_map.addMarker(
@@ -51,8 +52,13 @@ google.maps.event.addDomListener(window, 'load', function () {
             {},
             locationData.html
         );
+        map_bounds.extend(new google.maps.LatLng(locationData.lat, locationData.lng));
     }
-    geolocation_map.fitMarkers();
+    if (map_locations.length > 1) {
+        geolocation_map.map.fitBounds(map_bounds);
+    } else if (map_locations.length = 1) {
+        geolocation_map.map.setCenter(new google.maps.LatLng(map_locations[0].lat, map_locations[0].lng));
+    }
 });
 </script>
 <div id="<?php echo $divId; ?>" class="geolocation-map exhibit-geolocation-map"></div>
