@@ -471,10 +471,11 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
 		For api calls $name=id, which causes'Route id is not defined' error. 
 		Replacing 'id' with 'default' solves the problem.		 
 		*/
-        if($name === "id")
-            $route = $this->getRoute('default');
-        else
+        try{
             $route = $this->getRoute($name);
+        } catch (Zend_Controller_Router_Exception $ex){
+            $route = $this->getRoute('default');
+        }
         //libis_end		
 		
         $url   = $route->assemble($params, $reset, $encode);
