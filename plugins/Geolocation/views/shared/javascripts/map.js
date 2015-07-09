@@ -108,12 +108,7 @@ OmekaMap.prototype = {
                 //alert(document.location.hostname);
                 var infowindow = null;
                 
-                var pathArray = window.location.pathname.split( '/' );
-                if(pathArray[1].search("test")>=0){
-                    url = 'http://'+window.location.hostname+'/cag_test/items/map/bubble/ #mapsInfoWindow'
-                }else{
-                    url = 'http://'+window.location.hostname+'/omeka/cag/items/map/bubble/ #mapsInfoWindow'
-                }
+                url = 'http://'+window.location.hostname+'/cag/items/map/bubble/ #mapsInfoWindow';
                 
                 jQuery("#handle").load(url, { id: marker.snippet }, function(data) {
                     infowindow = new google.maps.InfoWindow({
