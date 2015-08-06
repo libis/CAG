@@ -503,7 +503,7 @@ jQuery(document).ready(function() {
             //var_dump($locationsSolr);?>
             <div id="map-block" style="clear:both;">        
                 <?php 
-                require(GEOLOCATION_PLUGIN_DIR . '/helpers/GoogleMap.php');
+                require(GEOLOCATION_PLUGIN_DIR . '/views/helpers/GoogleMap.php');
                 $map = new Geolocation_View_Helper_GoogleMap();
                 echo $map->googleMap('map-display', array('loadKml'=>true));?>
             </div><!-- end map_block -->
