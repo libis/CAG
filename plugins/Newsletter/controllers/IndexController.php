@@ -212,14 +212,7 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
 			</h2>
             ';
             
-            $message_foot = '                	
-                </div>                
-                <div class="footer">
-		<a href="#"><img src="'.WEB_PUBLIC_THEME.'/CAG/images/bg-footer_.gif" alt="www.HetVirtueleLand.be" width="600" height="252" border="0" /></a>
-                </div></table>
-                </div>
-                </div>
-            ';
+            
             
             $aantal = 0;            
             
@@ -234,6 +227,14 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
             //send test mail and return to index
             if(isset($_POST['send_test'])){
                $unsub = newsletter_add_unsubscribe(get_option('newsletter_reply_from_email'));
+                $message_foot = '                	
+                </div>                
+                <div class="footer">
+		<a href="#"><img src="'.WEB_PUBLIC_THEME.'/CAG/images/bg-footer_.gif" alt="www.HetVirtueleLand.be" width="600" height="252" border="0" /></a>
+                </div>'.$unsub.'</table>
+                </div>
+                </div></table>
+            ';
                               
                 // Create the message
                 $message = Swift_Message::newInstance()
@@ -245,7 +246,7 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                   // Set the To addresses with an associative array
                   ->setTo(array(get_option('newsletter_reply_from_email')))
                   // Give it a body                       
-                  ->setBody($message_head.$message_head_2.$page->text.$message_foot.$unsub,'text/html');
+                  ->setBody($message_head.$message_head_2.$page->text.$message_foot,'text/html');
                   // Send the message
                  $result = $mailer->send($message);                 
                 
@@ -257,6 +258,15 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                 $from_email = get_option('newsletter_reply_from_email');
 
                 $unsub = newsletter_add_unsubscribe();
+                
+                $message_foot = '                	
+                </div>                
+                <div class="footer">
+		<a href="#"><img src="'.WEB_PUBLIC_THEME.'/CAG/images/bg-footer_.gif" alt="www.HetVirtueleLand.be" width="600" height="252" border="0" /></a>
+                </div>'.$unsub.'</table>
+                </div>
+                </div></table>
+            ';
 
                 // Create the message
                 $message = Swift_Message::newInstance()
@@ -265,7 +275,7 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                     ->setSubject("Nieuwsbrief - Het Virtuele Land: ".$page->title)
                     ->setFrom(array($from_email))
                     ->setTo(get_option('newsletter_mailing_list').'@'.get_option('newsletter_listserv'))
-                    ->setBody($message_head.$unsub.$message_head_2.$page->text.$message_foot,'text/html');
+                    ->setBody($message_head.$message_head_2.$page->text.$message_foot,'text/html');
                 // Send the message
                 $result = $mailer->send($message);
             }
