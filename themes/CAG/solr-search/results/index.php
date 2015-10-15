@@ -58,7 +58,7 @@ jQuery(document).ready(function() {
                 <?php if (count(get_object_vars($facets))): ?>
 
                   <!-- Facet label. -->
-                  <?php $label = SolrSearch_Helpers_Facet::keyToLabel($name); ?>
+                  <?php $label = SolrSearch_Helpers_Facet::nameTolabel($name); ?>
                   <h4 class="facet"><?php echo $label; ?></h4>
 
                   <ul style="display: none;">
@@ -90,11 +90,11 @@ jQuery(document).ready(function() {
         <div id="results">              
             <div id="appliedParams">
                 <!-- Get the applied facets. -->
-               <?php foreach (SolrSearch_Helpers_Facet::parseFacets() as $f): ?>             
+                <?php foreach (SolrSearch_Helpers_Facet::parseFacets() as $f): ?>               
                   <span class="appliedFilter">
 
                     <!-- Facet label. -->
-                    <?php $label = SolrSearch_Helpers_Facet::keyToLabel($f[0]); ?>
+                    <?php $label = SolrSearch_Helpers_Facet::nameToLabel($f[0]); ?>
                     <span class="filterName"><?php echo $label; ?></span>
                     <span class="filterValue"><?php echo $f[1]; ?></span>
 
@@ -503,7 +503,7 @@ jQuery(document).ready(function() {
             //var_dump($locationsSolr);?>
             <div id="map-block" style="clear:both;">        
                 <?php 
-                require(GEOLOCATION_PLUGIN_DIR . '/views/helpers/GoogleMap.php');
+                require(GEOLOCATION_PLUGIN_DIR . '/helpers/GoogleMap.php');
                 $map = new Geolocation_View_Helper_GoogleMap();
                 echo $map->googleMap('map-display', array('loadKml'=>true));?>
             </div><!-- end map_block -->
