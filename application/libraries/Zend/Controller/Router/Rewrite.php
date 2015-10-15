@@ -465,19 +465,21 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
 
         // Use UNION (+) in order to preserve numeric keys
         $params = $userParams + $this->_globalParams;
-
+$route = $this->getRoute($name);
         //libis_start   
 		/* 
 		For api calls $name=id, which causes'Route id is not defined' error. 
 		Replacing 'id' with 'default' solves the problem.		 
-		*/
+	
+                 * 	*/
+/*
         try{
             $route = $this->getRoute($name);
         } catch (Zend_Controller_Router_Exception $ex){
             $route = $this->getRoute('default');
         }
         //libis_end		
-		
+		*/
         $url   = $route->assemble($params, $reset, $encode);
 
         if (!preg_match('|^[a-z]+://|', $url)) {

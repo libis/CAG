@@ -1,7 +1,5 @@
 <?php
 
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 cc=80; */
-
 /**
  * @package     omeka
  * @subpackage  solr-search
@@ -16,7 +14,7 @@ class SolrSearch_AdminController
 
 
     /**
-     * Display the "Solr Configuration" form.
+     * Display the "Server Configuration" form.
      */
     public function serverAction()
     {
@@ -52,6 +50,77 @@ class SolrSearch_AdminController
 
     }
 
+    /**
+     * Display the "Collection Configuration" form.
+     *
+     * @return void
+     * @author Eric Rochester <erochest@virginia.edu>
+     **/
+    public function collectionsAction()
+    {
+        if ($this->_request->isPost()) {
+            $this->_updateCollections($this->_request->getPost());
+        }
+        $this->view->form = $this->_collectionsForm();
+    }
+
+    /**
+     * This updates the excluded collections.
+     *
+     * @param array $post The post data to update from.
+     * @return void
+     * @author Eric Rochester <erochest@virginia.edu>
+     **/
+    protected function _updateCollections($post)
+    {
+        $etable = $this->_helper->db->getTable('SolrSearchExclude');
+        $etable->query("DELETE FROM {$etable->getTableName()};");
+
+        $c = 0;
+        if (isset($post['solrexclude'])) {
+            foreach ($post['solrexclude'] as $exc) {
+                $exclude = new SolrSearchExclude();
+                $exclude->collection_id = $exc;
+                $exclude->save();
+                $c += 1;
+            }
+        }
+
+        $this->_helper->_flashMessenger("$c collection(s) excluded.");
+    }
+
+    /**
+     * This returns the form for the collections.
+     *
+     * @return Zend_Form
+     * @author Eric Rochester <erochest@virginia.edu>
+     **/
+    protected function _collectionsForm()
+    {
+        $ctable      = $this->_helper->db->getTable('Collection');
+        $collections = $ctable->findBy(array('public' => 1));
+
+        $form = new Zend_Form();
+        $form->setAction(url('solr-search/collections'))->setMethod('post');
+
+        $collbox = new Zend_Form_Element_MultiCheckbox('solrexclude');
+        $form->addElement($collbox);
+        foreach ($collections as $c) {
+            $title = metadata($c, array('Dublin Core', 'Title'));
+            $collbox->addMultiOption("{$c->id}", $title);
+        }
+
+        $etable   = $this->_helper->db->getTable('SolrSearchExclude');
+        $excludes = array();
+        foreach ($etable->findAll() as $exclude) {
+            $excludes[] = "{$exclude->collection_id}";
+        }
+        $collbox->setValue($excludes);
+
+        $form->addElement('submit', 'Exclude');
+
+        return $form;
+    }
 
     /**
      * Display the "Field Configuration" form.
@@ -60,24 +129,23 @@ class SolrSearch_AdminController
     {
 
         // Get the facet mapping table.
-        $facetTable = $this->_helper->db->getTable('SolrSearchField');
+        $fieldTable = $this->_helper->db->getTable('SolrSearchField');
 
         // If the form was submitted.
         if ($this->_request->isPost()) {
 
-            // Get facets from POST.
-            $facets = $this->_request->getPost();
-            $facets = $facets['facets'];
+            // Gather the POST arguments.
+            $post = $this->_request->getPost();
 
             // Save the facets.
-            foreach ($facets as $name => $data) {
+            foreach ($post['facets'] as $name => $data) {
 
                 // Were "Is Indexed?" and "Is Facet?" checked?
                 $indexed = array_key_exists('is_indexed', $data) ? 1 : 0;
                 $faceted = array_key_exists('is_facet', $data) ? 1 : 0;
 
                 // Load the facet mapping.
-                $facet = $facetTable->findByName($name);
+                $facet = $fieldTable->findBySlug($name);
 
                 // Apply the updated values.
                 $facet->label       = $data['label'];
@@ -96,18 +164,18 @@ class SolrSearch_AdminController
         }
 
         // Assign the facet groups.
-        $this->view->groups = $facetTable->groupByElementSet();
+        $this->view->groups = $fieldTable->groupByElementSet();
 
     }
 
 
     /**
-     * Display the "Hit Highlighting Options" form.
+     * Display the "Results Configuration" form.
      */
-    public function highlightAction()
+    public function resultsAction()
     {
 
-        $form = new SolrSearch_Form_Highlight();
+        $form = new SolrSearch_Form_Results();
 
         // If a valid form was submitted.
         if ($this->_request->isPost() && $form->isValid($_POST)) {
@@ -122,7 +190,7 @@ class SolrSearch_AdminController
                 __('Highlighting options successfully saved!'), 'success'
             );
 
-        }	
+        }
 
         $this->view->form = $form;
 
@@ -139,14 +207,15 @@ class SolrSearch_AdminController
 
         if ($this->_request->isPost()) {
             try {
-                set_time_limit(3600);
+
                 // Clear and reindex.
-                SolrSearch_Helpers_Index::deleteAll();
-                SolrSearch_Helpers_Index::indexAll();
+                Zend_Registry::get('job_dispatcher')->sendLongRunning(
+                    'SolrSearch_Job_Reindex'
+                );
 
                 // Flash success.
                 $this->_helper->flashMessenger(
-                    __('Reindexing finished.'), 'success'
+                    __('Reindexing started.'), 'success'
                 );
 
             } catch (Exception $err) {
@@ -157,7 +226,7 @@ class SolrSearch_AdminController
                 );
 
             }
-        }	
+        }
 
         $this->view->form = $form;
 

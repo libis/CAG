@@ -1,7 +1,5 @@
 <?php
 
-/* vim: set expandtab tabstop=2 shiftwidth=2 softtabstop=2 cc=80; */
-
 /**
  * @package     omeka
  * @subpackage  solr-search
@@ -24,7 +22,7 @@
   <form id="solr-search-form">
     <input type="submit" value="Search" />
     <span class="float-wrap">
-      <input type="text" name="q" value="<?php
+      <input type="text" title="<?php echo __('Search keywords') ?>" name="q" value="<?php
         echo array_key_exists('q', $_GET) ? $_GET['q'] : '';
       ?>" />
     </span>
@@ -42,7 +40,7 @@
       <li>
 
         <!-- Facet label. -->
-        <?php $label = SolrSearch_Helpers_Facet::nameToLabel($f[0]); ?>
+        <?php $label = SolrSearch_Helpers_Facet::keyToLabel($f[0]); ?>
         <span class="applied-facet-label"><?php echo $label; ?></span> >
         <span class="applied-facet-value"><?php echo $f[1]; ?></span>
 
@@ -69,7 +67,7 @@
     <?php if (count(get_object_vars($facets))): ?>
 
       <!-- Facet label. -->
-      <?php $label = SolrSearch_Helpers_Facet::nameTolabel($name); ?>
+      <?php $label = SolrSearch_Helpers_Facet::keyToLabel($name); ?>
       <strong><?php echo $label; ?></strong>
 
       <ul>
@@ -77,8 +75,10 @@
         <?php foreach ($facets as $value => $count): ?>
           <li class="<?php echo $value; ?>">
 
-            <!-- Facet link. -->
+            <!-- Facet URL. -->
             <?php $url = SolrSearch_Helpers_Facet::addFacet($name, $value); ?>
+
+            <!-- Facet link. -->
             <a href="<?php echo $url; ?>" class="facet-value">
               <?php echo $value; ?>
             </a>
@@ -112,9 +112,18 @@
       <!-- Header. -->
       <div class="result-header">
 
+        <!-- Record URL. -->
+        <?php $url = SolrSearch_Helpers_View::getDocumentUrl($doc); ?>
+
         <!-- Title. -->
-        <a href="<?php echo $doc->url; ?>" class="result-title">
-          <?php echo is_array($doc->title) ? $doc->title[0] : $doc->title; ?>
+        <a href="<?php echo $url; ?>" class="result-title">
+            <?php
+                $title = is_array($doc->title) ? $doc->title[0] : $doc->title;
+                if (empty($title)) {
+                    $title = '<i>' . __('Untitled') . '</i>';
+                }
+                echo $title;
+            ?>
         </a>
 
         <!-- Result type. -->
@@ -123,7 +132,7 @@
       </div>
 
       <!-- Highlighting. -->
-      <?php if (get_option('solr_search_hl') == 'true'): ?>
+      <?php if (get_option('solr_search_hl')): ?>
         <ul class="hl">
           <?php foreach($results->highlighting->{$doc->id} as $field): ?>
             <?php foreach($field as $hl): ?>

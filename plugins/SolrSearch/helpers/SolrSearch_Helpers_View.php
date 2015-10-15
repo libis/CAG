@@ -1,7 +1,5 @@
 <?php
 
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 cc=80; */
-
 /**
  * @package     omeka
  * @subpackage  solr-search
@@ -22,16 +20,16 @@ class SolrSearch_Helpers_View
      **/
     public static function getBaseUrl()
     {
-        return url('solr-search/results');
+        return url('solr-search');
     }
 
 
     /**
-     * Lookup the element name for a solr element
+     * Lookup the element name for a solr element.
      *
-     * @param string $field Field name to look up
-     * 
-     * @return string Human readable solr element name
+     * @param string $field Field name to look up.
+     *
+     * @return string Human readable solr element name.
      */
     public static function lookupElement($field)
     {
@@ -44,12 +42,12 @@ class SolrSearch_Helpers_View
 
 
     /**
-     * Return the path for an image
+     * Return the path for an image.
      *
-     * @param string $type   Omeka File type (size)
-     * @param int    $fileId Id of the file to look up
+     * @param string $type Omeka File type (size).
+     * @param int $fileId Id of the file to look up.
      *
-     * @return string Link to file
+     * @return string Link to file.
      */
     public static function getImagePath($type='fullsize', $fileId)
     {
@@ -62,27 +60,37 @@ class SolrSearch_Helpers_View
     /**
      * Generate an image tag for use in search results.
      *
-     * @param int    $image_id Image to look up
-     * @param string $alt      Alt text for image
+     * @param int $image_id Image to look up.
+     * @param string $alt Alt text for image.
      *
-     * @return string $html link to image
+     * @return string $html Link to image.
      * @author Wayne Graham <wsg4w@virginia.edu>
      **/
     public static function createResultImgHtml($image_id, $alt)
     {
         $html = '';
-        $fullsize = SolrSearch_Helpers_View::getImagePath(
-            'fullsize', $image_id
-        );
-        $thumbnail = SolrSearch_Helpers_View::getImagePath(
-            'square_thumbnail', $image_id
-        );
+        $thumbnail  = self::getImagePath('square_thumbnail', $image_id);
+        $fullsize   = self::getImagePath('fullsize', $image_id);
 
         $html .= '<a class="solr_search_image" href="' . $fullsize . '">';
         $html .= '<img alt="' . $alt . '" src="' . $thumbnail . '" />';
         $html .= '</a>';
 
         return $html;
+    }
+
+
+    /**
+     * Get the URL for the record that corresponds to a Solr document.
+     *
+     * @param Apache_Solr_Document $doc A Solr document.
+     *
+     * @return string The record URL.
+     */
+    public static function getDocumentUrl($doc)
+    {
+        $record = get_db()->getTable($doc->model)->find($doc->modelid);
+        return SolrSearch_Helpers_Index::getUri($record);
     }
 
 

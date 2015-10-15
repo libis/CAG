@@ -1,7 +1,5 @@
 <?php
 
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 cc=80; */
-
 /**
  * @package     omeka
  * @subpackage  solr-search
@@ -21,13 +19,13 @@ class SolrSearch_Helpers_Facet
      */
     public static function parseFacets()
     {
-        
+
         $facets = array();
-       
+
         if (array_key_exists('facet', $_GET)) {
-            
+
             // Extract the field/value facet pairs.
-            preg_match_all('/(?P<field>[\w]+):"(?P<value>[-\w\s]+)"/',
+            preg_match_all('/(?P<field>[\w]+):"(?P<value>[^"]+)"/',
                 $_GET['facet'], $matches
             );
 
@@ -59,13 +57,13 @@ class SolrSearch_Helpers_Facet
         }
 
         // Implode on ` AND `.
-        $fParam = implode(' AND ', $fParam);
+        $fParam = urlencode(implode(' AND ', $fParam));
 
         // Get the `q` parameter, reverting to ''.
         $qParam = array_key_exists('q', $_GET) ? $_GET['q'] : '';
 
         // Get the base results URL.
-        $results = url('solr-search/results');
+        $results = url('solr-search');
 
         // String together the final route.
         return htmlspecialchars("$results?q=$qParam&facet=$fParam");
@@ -123,15 +121,15 @@ class SolrSearch_Helpers_Facet
 
 
     /**
-     * Get the human-readable label for a given facet name.
+     * Get the human-readable label for a facet key.
      *
-     * @param string $name The facet name.
+     * @param string $key The facet key.
      * @return string The label.
      */
-    public static function nameToLabel($name)
+    public static function keyToLabel($key)
     {
         $fields = get_db()->getTable('SolrSearchField');
-        return $fields->findByName($name)->label;
+        return $fields->findBySlug(rtrim($key, '_s'))->label;
     }
 
 

@@ -1,7 +1,5 @@
 <?php
 
-/* vim: set expandtab tabstop=2 shiftwidth=2 softtabstop=2 cc=80; */
-
 /**
  * @package     omeka
  * @subpackage  solr-search
@@ -49,9 +47,9 @@
             </thead>
 
             <tbody>
-              <?php foreach ($group as $facet): ?>
-                <?php echo $this->partial('admin/partials/facet.php', array(
-                  'facet' => $facet
+              <?php foreach ($group as $field): ?>
+                <?php echo $this->partial('admin/partials/field.php', array(
+                  'field' => $field
                 )); ?>
               <?php endforeach; ?>
             </tbody>

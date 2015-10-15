@@ -1,339 +1,192 @@
-About SolrSearch 
-----------
+# [SolrSearch][plugin]
 
-**SolrSearch** is an Omeka plugin that allows you to leverage the powerful
-[Solr][solr] search engine within Omeka. Not only does Solr provide robust,
-configurable, full-text indexing, it also allows you a flexible
-interface to configure how your users discover the content in your
-Omeka application. 
+![Solr](https://lucene.apache.org/images/solr.png)
+
+**SolrSearch** replaces the default Omeka search interface with one powered by
+[Solr][solr], a scalable and feature-rich search engine that supports faceting
+and hit highlighting. In most cases, Omeka's built-in searching capabilities
+work great, but there are a couple of situations where it might make sense to
+take a look at Solr:
+
+  - When you have a really large collection, and want something a bit faster;
+
+  - When your site contains a lot of text content, and you want to take
+    advantage of Solr's hit highlighting functionality, which displays a
+    preview snippet from each of the matching records;
+
+  - When your site makes use of a lot of different taxonomies (collections,
+    item types, etc.), and you want to use Solr's faceting capabilities, which
+    make it possible for users to refine searches by cropping down the set of
+    results to focus on specific categories.
 
 ## Requirements
 
-**SolrSearch** relies on access to a [Solr 3.5+][solr] server to
-maintain the search indexes. Installation of this software is covered in
-the [Solr Documentation][2]. 
+To use the plugin, you'll need access to an installation of Solr 4.0+ running
+the core included in the plugin source code under `solr-core/omeka`. For
+general information about how to get up and running with Solr, check out the
+official [installation documentation][solr-install].
 
-### Configuration
-Once Solr is up-and-running, you will need to tell Solr about the the
-Omeka SolrSearch configuration. While there are many ways to define the
-`solr/home` (where the index and configuration files are located),
-one of the easiest ways to deal with this is by deploying Solr with a
-Context which defines the path to where the `SolrSearch` plugin 
-directory is located (specifically the `SolrSearch/solr-home`
-directory).
+## Installation
 
-The following is an example of a context file that can be deployed
-easily through the [Tomcat Manager][tomcatmanager]:
+### Solr Core
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<Context docBase="/path/to/solr.war" debug="0" crossContext="true" >
-	<Environment name="solr/home" type="java.lang.String" value="/path/to/Omeka/plugins/SolrSearch/solr-home" override="true" />
-</Context>
-```
-
-It is worth noting that the `solr-home` directory can be placed
-anywhere on the server that makes sense from a maitenance perspective,
-which is valuable for institutions using the [multicore][multicore]
-feature in Solr.
+To deploy the Solr core, just copy the `solr-core/omeka` directory into your
+Solr home directory. For example, if your deployment is based on the default
+Solr 4 multicore template, you might end up with directories for `core0`,
+`core1`, and `omeka`. Once the directory is in place, restart/reload Solr to
+register the new core.
 
-Installation and Configuration
-----------
-* Upload the 'SolrSearch' plugin directory to your Omeka installation's `plugin` directory. See [Installing a Plugin][plugininstall].
-* Activate the plugin from the admin → Settings → Plugins page.
-* Configure your connection to the Solr server. We have provided some
-  typical default settings, but double check to ensure that these
-settings are correct for you installation of Solr.
+### Omeka Plugin
 
-## Index Configuration
+Once the core is up and running, install SolrSearch just like any other Omeka
+plugin:
 
-SolrSearch comes with some pre-selected defaults, including titles,
-itemtype, tag, and references to files. These are configurable in the
-Solr Index tab of Omeka's Admin interface:
+  1. Download the plugin from the [Omeka addons repository][plugin] and unzip
+     the archive.
 
-TODO: add image
+  2. Upload the `SolrSearch` directory into the Omeka `plugins` directory.
 
-The index configuration is split in to the different types of
-information Omeka uses, plus a few 'special' fields (image, tag,
-collection, itemtype) that are outside of the normal classification.
-Each element has three options:
+  3. Open up the "Plugins" page in Omeka and click the "Install" button for
+     Solr Search.
 
-* **Is Searchable**: Adds the text of the field to the search index.
-* **Is Facet**: Adds the field as a 'facet' in the search interface
-* **Is Sortable**: ??? Are we removing this?
+For more information, check out the [Managing Plugins][managing-plugins] guide.
 
-After you have configured the fields you want indexed, and how you want
-them indexed, click on the `Save Facets` button. 
+## Configuration
 
-**Note:** SolrSearch indexes any item marked 'public' in Omeka. 
+### Server Configuration
 
-## Hit Highlighting
-SolrSearch uses 'hit highlighting' to contextualize the query result.
-You can configure this in the `Hit Highlighting Options` tab.
+To get started, click on the "Solr Search" tab, which displays a form with Solr
+connection parameters:
 
-## Reindexing
+  - **Server Host**: The location of the Solr server, without the port number.
 
+  - **Server Port**: The port that Solr is listening on.
 
-# Developer Mode
-There are a number of technologies used in the development mode for this
-plugin. You will need [node][node], [ruby gems][gems], as well as
-several gems (installed via [bundler][bundler]), and I recommend
-[rvm][rvm].
+  - **Core URL**: The URL of the Solr core in which documents should be
+    indexed.
 
-Install the solr keg from [homebrew][homebrew]. You can then start an
-instance of Solr with
+After making changes to the connection parameters, click the "Save Settings"
+button. If the plugin is able to connect to Solr, a greet notification saying
+"Solr connection is valid" will be displayed.
 
-```bash
-$ solr path/to/SolrSearch/solr-home
-```
+### Collections Configuration
 
-From scratch, assuming [homebrew][homebrew] is installed.
+You can also decide not to index certain collections of items. By default, all
+collections are indexed. However, if you go to the "Collections" tab, then you
+can select collections to *exclude* from indexing.
 
-```bash
-#! /bin/bash
-$ brew install node solr
-$ rvm gemset create solrsearch
-$ solr path/to/SolrSearch/solr-core
-```
-
-## Tomcat
-
-If you want to run this in the Tomcat servlet container, there is a
-slightly different method of configuring the application.
-
-Install start Tomcat:
-
-```bash
-$ brew install tomcat
-```
-
-We're going to need to refer to a directory inside where brew installed
-tomcat, and we'll need to pass it to some of the scripts that we run
-later. Let's find out what it is and save it.
-
-```bash
-$ CATALINA_HOME=$(ls -d /usr/local/Cellar/tomcat/* | head -1)/libexec
-$ export CATALINA_HOME
-$ echo $CATALINA_HOME
-/usr/local/Cellar/tomcat/7.0.50/libexec
-```
-
-The output of the `echo` command on the last line may have a different
-version number, but everything else should look the same.
-
-
-Now enable the manager application. To do this, edit
-`/usr/local/Cellar/tomcat/[version]/libexec/conf/tomcat-users.xml`.
-The first part of the path should be the same as the output of the `echo`
-command above. Inside the `<tomcat-users>` element, add something along
-the following:
-
-```xml
-<role rolename="manager-gui"/>
-<user username="tomcat" password="s3cret" roles="manager-gui"/>
-```
-
-You need to have [Solr](http://lucene.apache.org/solr/) downloaded somewhere on
-your computer.
-
-You need to copy some files that are shipped with Solr to get included
-in your Tomcat `$PATH`. These are the files in the `examples/lib/ext/`
-directory. You will have something that looks like this:
-
-
-```bash
-cp path/to/solr/download/examples/lib/ext/*.jar $CATALINA_HOME/lib/
-```
-
-Now start Tomcat with the catalina shell:
-
-```bash
-$ catalina start
-```
-This will run Tomcat as a background process on port `8080`, which you
-can access at `http://localhost:8080`. 
-
-For Tomcat, it's easiest to pass the various values that Solr needs in
-an XML configuration file. Name it `tomcat-config.xml` in your project
-directory, and have it contain something like this:
-
-```xml
-<Context path="/solr" docBase="/Users/[username]/Downloads/solr-4.6.0/dist/solr-4.6.0.war" debug="0" crossContext="true">
-  <Environment name="solr/home" type="java.lang.String" value="/Users/[username]/projects/SolrSearch/solr-core" override="true"/>
-</Context>
-```
-
-**Note:** Adjust your paths as necessary.
-
-Now to access the manager application. Point your browser at
-`http://localhost:8080/manager/html`. In the deploy section fill out the
-**Context** and **XML Configuration file URL** fields with:
-
-* **Context** /solr
-* **XML Configuration file URL** path/to/tomcat-config.xml
-
-Then hit the deploy button. If everything went well, you should see the
-Solr admin panel when you point your browser at
-`http://localhost:8080/solr`
-
-## Dependencies
-
-We use an assortment of tools in our development cycle to automate
-various tasks. 
-
-* [Rake][rake]: An Make-like program implemented in Ruby. Runs
-  [Jasmine][jasmin] BDD JavaScript tests 
-* [Cake][cake]: `cake` is a simplified version of Make (Rake, etc.) for
-  CoffeeScript. This is used to compile JavaScript files, walk and
-mangle the AST, and generate an optimized version of the JavaScript
-using [uglify-js][uglify].
-* [Ant][ant]: A Java tool and library used to build software. 
-* [Guard][guard]: A tool that monitors file-system modification. When a
-  file in this project changes, Guard automagically rebuilds compiled
-sources and refreshes web pages. 
-* [Pear][pear]: A framework and distribution system for reusable PHP components. We use various PHP libraries to run reports, test our code, and generate documentation. 
-* [SCSS][sass]: SCSS is a syntax of SASS (syntactically awesome
-  stylesheets). We use this to simplify writing stylesheets for our
-plugins
-* [Compass][compass]: We use this to compile our SCSS, as well as add in
-  mixins for CSS3 support. 
+### Field Configuration
 
-### Guard + Compass + LiveReload + uglify + rvm
-We use [RVM][rvm] to manage Ruby version, and there is an `.rvmrc` file
-to automatically switch bundles and make sure all of the require Ruby
-gems are install. If you do not have RVM installed, you can do all of
-this manually:
+This form makes it possible to configure (a) which metadata elements and Omeka
+categories ("fields") are stored as searchable content in Solr and (b) which
+fields should be used as "facets", groupings of records that can be used to
+iteratively narrow down the set of results. For each element, there are three
+options:
 
-```bash
-cd /path/to/SolrSearch
-bundle
-```
-
-This will install all of the required gems, including the guard gem to
-monitor all of the files in the plugin. To start guard, simply run it
-within `bundle exec`.
-
-```bash
-cd /path/to/SolrSearch
-bundle exec guard
-```
-
-### Running Tests
-SolrSearch tests are designed to run anywhere on the system, as long as 
-an environmental variable is set that points to the target Omeka
-install. This is especially useful in testing plugins against several
-versions of Omeka.
-
-In Bash, you can set this in your .bash_profile/.bash_rc file:
-
-```bash
-export OMEKA_DIR=/path/to/omeka
-```
-
-With this set, you can run the `phpunit` tests in tests:
-
-```bash
-cd /path/to/omeka/tests
-phpunit
-```
-
-This will generate a test coverage report in the build sub-directory.
-
-### Reports
-This plugin uses various tools to analyze software quality from PEAR
-including:
-
-* [PHP_Depend][pdepend]: Static code analysis for PHP
-* [phpDocumentor][phpdoc]: Generates documentation from PHP source code
-* [PHPMessDetector][phpmd]: Code quality analysis
-* [phpcpd][phpcpd]: Copy/Paste Detector (CPD) for PHP code
-* [PHP_CodeSniffer][phpcs]: Tokenises PHP, JavaScript and CSS files and detects violations of a defined set of coding standards
-* [PHPUnit][phpunit]: Automated testing for tests
-* [PHP_CodeBrowser][phpcb]: Generates a browsable representation of PHP code where sections with violations found by quality assurance tools
-
-### Packaging
-
-There are two tasks for packaging the plugin. An arbitrary zip (and
-tarball) can be generated with the version number and a timestamp with
-the `ant zip` task.
-
-```bash
-$ ant zip
-Buildfile: /path/to/SolrSearch/build.xml
-
-zip:
-      [zip] Building zip: /path/to/SolrSearch/build/dist/SolrSearch-20120618-1612.zip
-
-BUILD SUCCESSFUL
-Total time: 1 second
-```
-
-Likewise, a package suitable for uploading the the Omeka plugin
-repository may be generated with the `ant package` task.
-
-```bash
-$ ant package
-Buildfile: /path/to/SolrSearch/build.xml
-
-clean:
-   [delete] Deleting directory /path/to/SolrSearch/build
-
-package:
-    [mkdir] Created dir: /path/to/SolrSearch/build/dist
-      [zip] Building zip: /path/to/SolrSearch/build/dist/SolrSearch-1.0.zip
-
-BUILD SUCCESSFUL
-Total time: 1 second
-```
-
-# Reporting Bugs and Contributing
-If you discover a problem with SolrSearch, we would like to know about it. However, we ask that you please review these guidelines before submitting a bug report: [Bug reports][bugs].
-
-We hope that you will consider contributing to SolrSearch. Please read this short overview for some information about to to get started: [Contributing][contributing].
-
-## Translations
-
-We'd welcome any help we can get translating text in the SolrSearch plugin.
-We're using [Transifex][transifex] to manage translations. For more information
-about using this, see [Jeremy's excellent blog post][i18nblog] about it.
-
-[bugs]: https://github.com/scholarslab/SolrSearch/wiki/Bug-Reports
-[contributing]: https://github.com/scholarslab/SolrSearch/wiki/Contributing
-
-[phpcb]: https://github.com/Mayflower/PHP_CodeBrowser
-
-[pdepend]: http://pdepend.org/
-[phpdoc]: http://www.phpdoc.org/
-[phpmd]: http://phpmd.org/
-[phpcs]: http://pear.php.net/package/PHP_CodeSniffer/
-[phpunit]: http://www.phpunit.de/manual/current/en/index.html
-[phpcpd]: https://github.com/sebastianbergmann/phpcpd
-
-[1]: http://scholarslab.org/ "http://scholarslab.org/"
-[2]: http://lucene.apache.org/solr/#getstarted "http://lucene.apache.org/solr/#getstarted"
-[3]: https://github.com/scholarslab/SolrSearch "https://github.com/scholarslab/SolrSearch"
-[4]: http://github.com/scholarslab/SolrSearch/tarball/master "http://github.com/scholarslab/SolrSearch/tarball/master"
-[5]: /codex/Installing_a_Plugin "Installing a Plugin"
+  - **Facet Label**: The label used as the heading for the facet corresponding
+    to the field. In most cases, it probably just makes sense to use the
+    canonical name as the element (the default), but this makes it possible to
+    create a customized interface that doesn't map onto the nomenclature of the
+    metadata.
+
+  - **Is Indexed?**: If checked, the content in this field will be stored as
+    full-text-searchable content in Solr. As a rule of thumb, it makes sense to
+    index any fields that contain non-trivial text content, but not fields that
+    contain non-semantic data or identifiers.
+
+  - **Is Facet?**: If checked, the field will be used as a facet in the
+    results. As a rule of thumb, **a field might be a useful facet if it
+    contains a controlled vocabulary**. For example, imagine you use one of
+    three values in the Dublin Core "Type" field - `type1`, `type2`, and
+    `type3`. This would make a good facet, because users would be able to hone
+    in on the implicit relationships among items of the same type. It wouldn't
+    make sense to use something like the "Description" field as a facet,
+    though, two items will almost never share the exact same description (or,
+    at least, they probably shouldn't!).
+
+Use the accordion to expand and contract the fields in the three categories.
+There are two types of fields - the "Omeka Categories," which aren't actually
+metadata elements but rather high-level taxonomies that are baked in to the
+struture of Omeka, and the metadata elements (Dublin Core and Item Type
+Metadata) that can be used to describe items.
+
+After you've made changes, click the "Update Search Fields" to save the
+configuration.
+
+### Results Configuration
+
+This form exposes options for two features in Solr: **hit highlighting**, which
+makes it possible to display preview snippets for each result that excerpt
+portions of the metadata that are relevant to the query, and **faceting**,
+which makes it possible for users to progressively refine large result sets by
+honing in on specific categories.
+
+  - **Enable Highlighting**: Set whether highlighting snippets should be
+    displayed.
+
+  - **Number of Snippets**: The maximum number of snippets to display for a
+    result.
+
+  - **Snippet Length**: The maximum length of each snippet.
+
+  - **Facet Ordering**: The criteria by which to sort the facets in the
+    results.
+
+  - **Facet Count**: The maximum number of facets to display.
+
+Click "Save Settings" to update the configuration.
+
+### Index Items
+
+After making changes in the "Field Configuration" and "Results Configuration"
+tabs, it's necessary to reindex the content in the site in order for the
+changes to take effect. SolrSearch doesn't do this automatically because
+reindexing can take as long as a few minutes for really large sites.
+
+When you're ready, just click the "Clear and Reindex" button. This will spawn
+off a background process behind the scenes that rebuilds the index according to
+the new configuration options.
+
+### Private Items
+
+Currently, because of the complexity of the Omeka authorization system, we only
+support search on items that have been marked *public*. The admin search
+interface can be used to discover items that are private.
+
+### Featured Items
+
+As of version [2.1.0][210], Solr Search indexes and allows faceted searches on
+featured items. If you're upgrading, for this to work, you'll need to do two
+extra steps after going through the standard Omeka plugin upgrade process.
+
+1. Re-install the Solr configuration files as explained in the section on
+[Installing the Solr Core][solr-core].
+2. Re-index everything from the SolrSearch admin panel.
+
+## Searching
+
+Once the content has been indexed, head to the public site and type a search query into the regular Omeka search input. When the query is submitted, SolrSearch will intercept the request and redirect to a custom interface that displays results from Solr with faceting and hit highlighting.
+
+## Thanks
+
+This work has been a collaboration. During development, we've gotten help from a number of others:
+
+* @anuragji
+* @marcobat
+* Adam Doan
+* @cokernel
+* Dave Lester
+
+[plugin]: http://omeka.org/add-ons/plugins/SolrSearch/
+[solr]: http://lucene.apache.org/solr
+[solr-install]: https://wiki.apache.org/solr/SolrInstall 
+[managing-plugins]: https://omeka.org/codex/Managing_Plugins
 [homebrew]: http://mxcl.github.com/homebrew/
-
 [node]: http://nodejs.org/
 [gems]: http://rubygems.org/
 [bundler]: http://gembundler.com/
 [rvm]: http://beginrescueend.com/
-[solr]: http://lucene.apache.org/solr
-[solrinstall]: http://wiki.apache.org/solr/SolrInstall
-[tomcatmanager]: http://tomcat.apache.org/tomcat-6.0-doc/manager-howto.html
 [multicore]: http://wiki.apache.org/solr/CoreAdmin
-[rake]: http://rubygems.org/gems/rake
-[cake]: http://coffeescript.org/documentation/docs/cake.html
-[jasmin]: http://pivotal.github.com/jasmine/
-[uglify]: https://github.com/mishoo/UglifyJS
-[ant]: http://ant.apache.org/
-[guard]: https://github.com/guard/guard
-[pear]: http://pear.php.net/
-[sass]: http://sass-lang.com/
-[compass]: http://compass-style.org/
 [rvm]: https://rvm.io/
-
-[transifex]: http://www.transifex.com/
-[i18nblog]: http://www.scholarslab.org/slab-code/translating-neatline/
+[210]: https://github.com/scholarslab/SolrSearch/releases/tag/2.1.0
+[solr-core]: #solr-core

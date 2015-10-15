@@ -476,11 +476,9 @@ class Apache_Solr_Service
 		// lazy load a default if one has not be set
 		if ($this->_httpTransport === false)
 		{
-			// Switching to Curl, FileGetContents gives UnsupportedEncodingException: UTF-8X-dynaTrace exception 
-			//require_once(dirname(__FILE__) . '/HttpTransport/FileGetContents.php');
-			require_once(dirname(__FILE__) . '/HttpTransport/Curl.php');
-			//$this->_httpTransport = new Apache_Solr_HttpTransport_FileGetContents();
-			$this->_httpTransport = new Apache_Solr_HttpTransport_Curl();
+			require_once(dirname(__FILE__) . '/HttpTransport/FileGetContents.php');
+
+			$this->_httpTransport = new Apache_Solr_HttpTransport_FileGetContents();
 		}
 
 		return $this->_httpTransport;

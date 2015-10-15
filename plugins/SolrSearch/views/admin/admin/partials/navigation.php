@@ -1,7 +1,5 @@
 <?php
 
-/* vim: set expandtab tabstop=2 shiftwidth=2 softtabstop=2 cc=80; */
-
 /**
  * @package     omeka
  * @subpackage  solr-search
@@ -12,24 +10,11 @@
 ?>
 
 <ul id="section-nav" class="navigation">
-  <li class="<?php if ($tab == 'server') echo 'current'; ?>">
-    <a href="<?php echo url('solr-search/server'); ?>">
-      <?php echo __('Server Configuration') ?>
-    </a>
-  </li>
-  <li class="<?php if ($tab == 'fields') echo 'current'; ?>">
-    <a href="<?php echo url('solr-search/fields'); ?>">
-      <?php echo __('Field Configuration') ?>
-    </a>
-  </li>
-  <li class="<?php if ($tab == 'highlight') echo 'current'; ?>">
-    <a href="<?php echo url('solr-search/highlight'); ?>">
-      <?php echo __('Hit Highlighting') ?>
-    </a>
-  </li>
-  <li class="<?php if ($tab == 'reindex') echo 'current'; ?>">
-    <a href="<?php echo url('solr-search/reindex'); ?>">
-      <?php echo __('Index Items') ?>
-    </a>
-  </li>
+<?php
+    SolrSearch_Utils::nav_li($tab, 'server',      url('solr-search/server'),      __('Server'));
+    SolrSearch_Utils::nav_li($tab, 'collections', url('solr-search/collections'), __('Collections'));
+    SolrSearch_Utils::nav_li($tab, 'fields',      url('solr-search/fields'),      __('Fields'));
+    SolrSearch_Utils::nav_li($tab, 'results',     url('solr-search/results'),     __('Results'));
+    SolrSearch_Utils::nav_li($tab, 'reindex',     url('solr-search/reindex'),     __('Index'));
+?>
 </ul>

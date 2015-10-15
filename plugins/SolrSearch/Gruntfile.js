@@ -1,6 +1,4 @@
 
-/* vim: set expandtab tabstop=2 shiftwidth=2 softtabstop=2 cc=80; */
-
 /**
  * @package     omeka
  * @subpackage  neatline
@@ -10,7 +8,6 @@
 
 module.exports = function(grunt) {
 
-  grunt.loadNpmTasks('grunt-bower-task');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-compass');
@@ -23,14 +20,7 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
 
-    bower: {
-      install: {
-        options: { copy: false }
-      }
-    },
-
     clean: {
-      bower: 'bower_components',
       pkg: 'pkg'
     },
 
@@ -48,9 +38,6 @@ module.exports = function(grunt) {
       }
 
     },
-
-    //concat: {},
-    //uglify: {},
 
     compass: {
 
@@ -86,10 +73,6 @@ module.exports = function(grunt) {
           // GIT
           '!.git/**',
 
-          // BOWER
-          '!bower.json',
-          '!bower_components/**',
-
           // NPM
           '!package.json',
           '!node_modules/**',
@@ -107,11 +90,17 @@ module.exports = function(grunt) {
           '!.grunt/**',
           '!Gruntfile.js',
 
+          // SASS
+          '!.sass-cache/**',
+
           // DIST
           '!pkg/**',
 
           // TESTS
-          '!tests/**'
+          '!tests/**',
+
+          // Editor settings
+          '!*.vim'
 
         ]
       }
@@ -126,26 +115,12 @@ module.exports = function(grunt) {
   // Build the application.
   grunt.registerTask('build', [
     'clean',
-    'bower',
-    'compile:min'
-  ]);
-
-  // Compile JS/CSS payloads.
-  grunt.registerTask('compile', [
-    //'concat',
-    'compass'
-  ]);
-
-  // Minify JS/CSS payloads.
-  grunt.registerTask('compile:min', [
-    //'uglify',
     'compass'
   ]);
 
   // Spawn release package.
   grunt.registerTask('package', [
-    'clean:pkg',
-    'compile:min',
+    'build',
     'compress'
   ]);
 

@@ -1,7 +1,5 @@
 <?php
 
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 cc=80; */
-
 /**
  * @package     omeka
  * @subpackage  solr-search
@@ -22,7 +20,7 @@ class SolrSearchField extends Omeka_Record_AbstractRecord
     /**
      * The name of the element [string].
      */
-    public $name;
+    public $slug;
 
     /**
      * The label of the element.
@@ -56,13 +54,35 @@ class SolrSearchField extends Omeka_Record_AbstractRecord
             $this->element_id = $element->id;
 
             // Element identifier.
-            $this->name = "{$element->id}_s";
+            $this->slug = $element->id;
 
             // Pubilc-facing label.
             $this->label = $element->name;
 
         }
 
+    }
+
+
+    /**
+     * The key for the tokenized version of the field in a Solr document.
+     *
+     * @return string
+     */
+    public function indexKey()
+    {
+        return "{$this->slug}_t";
+    }
+
+
+    /**
+     * The key for the untokenized version of the field in a Solr document.
+     *
+     * @return string
+     */
+    public function facetKey()
+    {
+        return $this->hasElement() ? "{$this->slug}_s" : $this->slug;
     }
 
 
@@ -120,12 +140,13 @@ class SolrSearchField extends Omeka_Record_AbstractRecord
      **/
     public function getOriginalLabel()
     {
-        switch ($this->name) {
+        switch ($this->slug) {
 
             case 'tag':         return __('Tag');
             case 'collection':  return __('Collection');
             case 'itemtype':    return __('Item Type');
             case 'resulttype':  return __('Result Type');
+            case 'featured':    return __('Featured');
 
             default: return $this->getElement()->name;
 
