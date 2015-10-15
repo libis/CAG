@@ -218,7 +218,7 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
 		<a href="#"><img src="'.WEB_PUBLIC_THEME.'/CAG/images/bg-footer_.gif" alt="www.HetVirtueleLand.be" width="600" height="252" border="0" /></a>
                 </div></table>
                 </div>
-                </div></table>
+                </div>
             ';
             
             $aantal = 0;            
@@ -245,7 +245,7 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                   // Set the To addresses with an associative array
                   ->setTo(array(get_option('newsletter_reply_from_email')))
                   // Give it a body                       
-                  ->setBody($message_head.$unsub.$message_head_2.$page->text.$message_foot,'text/html');
+                  ->setBody($message_head.$message_head_2.$page->text.$message_foot.$unsub,'text/html');
                   // Send the message
                  $result = $mailer->send($message);                 
                 
