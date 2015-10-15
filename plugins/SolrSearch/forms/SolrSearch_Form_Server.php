@@ -1,5 +1,7 @@
 <?php
 
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 cc=80; */
+
 /**
  * @package     omeka
  * @subpackage  neatline
@@ -66,6 +68,32 @@ class SolrSearch_Form_Server extends Omeka_Form
             )
         ));
 
+        // Facet Ordering:
+        $this->addElement('select', 'solr_search_facet_sort', array(
+            'label'         => __('Facet Ordering'),
+            'description'   => __('The sorting criteria for result facets.'),
+            'multiOptions'  => array( 'index' => __('Alphabetical'), 'count' => __('Occurrences')),
+            'value'         => get_option('solr_search_facet_sort')
+        ));
+
+        // Maximum Facet Count:
+        $this->addElement('text', 'solr_search_facet_limit', array(
+            'label'         => __('Facet Count'),
+            'description'   => __('The maximum number of facets to display.'),
+            'value'         => get_option('solr_search_facet_limit'),
+            'required'      => true,
+            'size'          => 40,
+            'validators'    => array(
+                array('validator' => 'Int', 'breakChainOnFailure' => true, 'options' =>
+                    array(
+                        'messages' => array(
+                            Zend_Validate_Int::NOT_INT => __('Must be an integer.')
+                        )
+                    )
+                )
+            )
+        ));
+
         // Submit:
         $this->addElement('submit', 'submit', array(
             'label' => __('Save Settings')
@@ -74,7 +102,9 @@ class SolrSearch_Form_Server extends Omeka_Form
         $this->addDisplayGroup(array(
             'solr_search_host',
             'solr_search_port',
-            'solr_search_core'
+            'solr_search_core',
+            'solr_search_facet_sort',
+            'solr_search_facet_limit'
         ), 'fields');
 
         $this->addDisplayGroup(array(

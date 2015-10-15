@@ -1,5 +1,7 @@
 <?php
 
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 cc=80; */
+
 /**
  * @package     omeka
  * @subpackage  solr-search
@@ -39,7 +41,7 @@ class SolrSearchPlugin extends Omeka_Plugin_AbstractPlugin
      */
     public function hookInstall()
     {
-        self::_createSolrTables();
+        self::_createSolrTable();
         self::_installFacetMappings();
         self::_setOptions();
     }
@@ -54,11 +56,7 @@ class SolrSearchPlugin extends Omeka_Plugin_AbstractPlugin
         $this->_db->query(<<<SQL
         DROP TABLE IF EXISTS {$this->_db->prefix}solr_search_fields
 SQL
-        );
-        $this->_db->query(<<<SQL
-        DROP TABLE IF EXISTS {$this->_db->prefix}solr_search_excludes
-SQL
-        );
+);
 
         try {
             $solr = SolrSearch_Helpers_Index::connect();
@@ -79,16 +77,8 @@ SQL
      */
     public function hookUpgrade($args)
     {
-        self::_createSolrTables();
         if (version_compare($args['old_version'], '1.0.1', '<=')) {
-            self::_installFacetMappings();
-            self::_setOptions();
-        }
-
-        $fields = $this->_db->getTable('SolrSearchField');
-        $featured = $fields->findBy(array('slug' => 'featured'));
-        if (is_null($featured) || empty($featured)) {
-            $this->_installGenericFacet('featured', __('Featured'));
+            $this->hookInstall();
         }
     }
 
@@ -116,7 +106,7 @@ SQL
 
 
     /**
-     * When a record is saved, try to extract and index a Solr document.
+     * When a record is saved, try to extract and intex a Solr document.
      *
      * @param array $args With `record`.
      */
@@ -126,12 +116,6 @@ SQL
         SolrSearch_Utils::ensureView();
 
         $record = $args['record'];
-
-        $excludes = get_db()->getTable('SolrSearchExclude');
-        $collection = get_collection_for_item($record);
-        if (!is_null($collection) && $excludes->isExcluded($collection)) {
-            return;
-        }
 
         // Try to extract a document for the record.
         $mgr = new SolrSearch_Addon_Manager($this->_db);
@@ -180,20 +164,27 @@ SQL
         SolrSearch_Utils::ensureView();
 
         $item = $args['record'];
-
-        $excludes = get_db()->getTable('SolrSearchExclude');
-        $collection = get_collection_for_item($item);
-        if (!is_null($collection) && $excludes->isExcluded($collection)) {
-            return;
-        }
-
         $solr = SolrSearch_Helpers_Index::connect();
 
-        // Both public and private items will be indexed
-        $doc = SolrSearch_Helpers_Index::itemToDocument($item);
-        $solr->addDocuments(array($doc));
-        $solr->commit();
-        $solr->optimize();
+        // If the item is public, add/update the Solr document.
+        if ($item['public'] == true) {
+
+            $doc = SolrSearch_Helpers_Index::itemToDocument(
+                $this->_db, $item
+            );
+
+            $solr->addDocuments(array($doc));
+            $solr->commit();
+            $solr->optimize();
+
+        }
+
+        // If the item's is being set private, remove it from Solr.
+        else {
+            $solr->deleteById('Item_' . $item['id']);
+            $solr->commit();
+            $solr->optimize();
+        }
 
     }
 
@@ -278,7 +269,7 @@ SQL
     public function filterAdminNavigationMain($nav)
     {
         $nav[] = array(
-            'label' => __('Solr Search'), 'uri' => url('solr-search/server')
+            'label' => __('Solr Search'), 'uri' => url('solr-search')
         );
         return $nav;
     }
@@ -301,29 +292,25 @@ SQL
     /**
      * Install the facets table.
      */
-    protected function _createSolrTables()
+    protected function _createSolrTable()
     {
         $this->_db->query(<<<SQL
+
         CREATE TABLE IF NOT EXISTS {$this->_db->prefix}solr_search_fields (
+
             id          int(10) unsigned NOT NULL auto_increment,
             element_id  int(10) unsigned,
-            slug        tinytext collate utf8_unicode_ci NOT NULL,
+            name        tinytext collate utf8_unicode_ci NOT NULL,
             label       tinytext collate utf8_unicode_ci NOT NULL,
             is_indexed  tinyint unsigned DEFAULT 0,
             is_facet    tinyint unsigned DEFAULT 0,
-            PRIMARY KEY (id)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-SQL
-        );
 
-        $this->_db->query(<<<SQL
-        CREATE TABLE IF NOT EXISTS {$this->_db->prefix}solr_search_excludes (
-            id            int(10) unsigned NOT NULL auto_increment,
-            collection_id int(10) unsigned NOT NULL,
             PRIMARY KEY (id)
+
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 SQL
-        );
+);
     }
 
 
@@ -341,7 +328,6 @@ SQL
         $this->_installGenericFacet('collection',   __('Collection'));
         $this->_installGenericFacet('itemtype',     __('Item Type'));
         $this->_installGenericFacet('resulttype',   __('Result Type'));
-        $this->_installGenericFacet('featured',     __('Featured'));
 
         // Element-backed facets:
         foreach ($elements->findAll() as $element) {
@@ -359,13 +345,13 @@ SQL
     /**
      * Install the default facet mappings.
      *
-     * @param string $slug The facet `slug`.
+     * @param string $name The facet `name`.
      * @param string $label The facet `label`.
      */
-    protected function _installGenericFacet($slug, $label)
+    protected function _installGenericFacet($name, $label)
     {
         $facet = new SolrSearchField();
-        $facet->slug        = $slug;
+        $facet->name        = $name;
         $facet->label       = $label;
         $facet->is_indexed  = 1;
         $facet->is_facet    = 1;
@@ -383,10 +369,9 @@ SQL
         set_option('solr_search_core',          '/solr/omeka/');
         set_option('solr_search_facet_limit',   '25');
         set_option('solr_search_facet_sort',    'count');
-        set_option('solr_search_hl',            '1');
+        set_option('solr_search_hl',            'true');
         set_option('solr_search_hl_snippets',   '1');
         set_option('solr_search_hl_fragsize',   '250');
-        set_option('solr_search_display_private_items',   '1');
     }
 
 
@@ -403,7 +388,6 @@ SQL
         delete_option('solr_search_hl');
         delete_option('solr_search_hl_snippets');
         delete_option('solr_search_hl_fragsize');
-        delete_option('solr_search_display_private_items');
     }
 
 

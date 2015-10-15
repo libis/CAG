@@ -1,5 +1,7 @@
 <?php
 
+/* vim: set expandtab tabstop=2 shiftwidth=2 softtabstop=2 cc=80; */
+
 /**
  * @package     omeka
  * @subpackage  solr-search
@@ -30,7 +32,7 @@ class SolrSearch_Addon_Config
 
 
     /**
-     * This parses a string into an associative array of SolrSearch_Addon_Addon
+     * This parses a string into an associative array of SolrSearch_Addon_Addon 
      * classes.
      *
      * @param string $configJson The input JSON configuration to parse.
@@ -92,11 +94,11 @@ class SolrSearch_Addon_Config
 
 
     /**
-     * This takes a JSON object describing an addon and parses it into an
+     * This takes a JSON object describing an addon and parses it into an 
      * Addon.
      *
      * @param string $json The JSON object to parse.
-     * @param SolrSearch_Addon_Addon|null $parent The parent for the objects in
+     * @param SolrSearch_Addon_Addon|null $parent The parent for the objects in 
      * this collection.
      *
      * @return array of SolrSearch_Addon_Addon
@@ -124,7 +126,7 @@ class SolrSearch_Addon_Config
      * This parses the data for a single addon.
      *
      * @param string $name The name of the addon.
-     * @param array $json An associate array representing the JSON object for
+     * @param array $json An associate array representing the JSON object for 
      * the addon.
      * @param SolrSearch_Addon_Addon|null $parent The parent for the object.
      *

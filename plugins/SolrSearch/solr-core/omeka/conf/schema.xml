@@ -92,19 +92,18 @@
 
     <field name="id" type="string" indexed="true" stored="true" required="true" /> 
     <field name="title" type="text_en" indexed="true" stored="true" multiValued="true" />
-    <field name="tag" type="string" indexed="true" stored="true" multiValued="true" />
+    <field name="tag" type="text_en" indexed="true" stored="true" multiValued="true" />
+    <field name="image" type="int" indexed="true" stored="true" multiValued="true" />
     <field name="collection" type="string" indexed="true" stored="true" />
-    <field name="public" type="boolean" indexed="true" stored="true" />
-    <field name="featured" type="boolean" indexed="true" stored="true" />
     <field name="itemtype" type="string" indexed="true" stored="true" />
     <field name="resulttype" type="string" indexed="true" stored="true" />
+    <field name="url" type="string" indexed="false" stored="true" />
     <field name="model" type="string" indexed="false" stored="true" />
     <field name="modelid" type="string" indexed="false" stored="true" />
     <field name="text" type="text_en" indexed="true" stored="false" multiValued="true"/>
     <field name="_version_" type="long" indexed="true" stored="true"/>
 
-    <dynamicField name="*_t" type="text_en" indexed="true" stored="true" multiValued="true" />
-    <dynamicField name="*_s" type="string" indexed="true" stored="true" multiValued="true" />
+    <dynamicField name="*_s" type="text_en" indexed="true" stored="true" multiValued="true" />
 
   </fields>
 
@@ -114,7 +113,7 @@
    -->
   <uniqueKey>id</uniqueKey>
 
-  <copyField source="*_t" dest="text" />
+  <copyField source="*_s" dest="text" />
   <copyField source="tag" dest="text" />
   <copyField source="collection" dest="text" />
   <copyField source="itemtype" dest="text" />

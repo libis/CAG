@@ -1,5 +1,7 @@
 <?php
 
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 cc=80; */
+
 /**
  * @package     omeka
  * @subpackage  solr-search
@@ -27,7 +29,7 @@ class SolrSearch_ResultsController
      */
     public function interceptorAction()
     {
-        $this->_redirect('solr-search?'.http_build_query(array(
+        $this->_redirect('solr-search/results?'.http_build_query(array(
             'q' => $this->_request->getParam('query')
         )));
     }
@@ -53,31 +55,15 @@ class SolrSearch_ResultsController
         }       
         //end of hack
         
-        // Get pagination settings.
-        //$limit = get_option('per_page_public');
+        // Get pagination settings.        
         $page  = $this->_request->page ? $this->_request->page : 1;
         $start = ($page-1) * $limit;
 
-
-        // determine whether to display private items or not
-        // items will only be displayed if:
-        // solr_search_display_private_items has been enabled in the Solr Search admin panel
-        // user is logged in
-        // user_role has sufficient permissions
-
-        $user = current_user();
-        if(get_option('solr_search_display_private_items')
-            && $user
-            && is_allowed('Items','showNotPublic')) {
-            // limit to public items
-            $limitToPublicItems = false;
-        } else {
-            $limitToPublicItems = true;
-        }
-
         // Execute the query.
-        $results = $this->_search($start, $limit, $limitToPublicItems);
-
+        $results = $this->_search($start, $limit);
+                       
+        $max_page = ceil($results->response->numFound/$limit);
+        if($page > $max_page){$page = $max_page;}
         // Set the pagination.
         Zend_Registry::set('pagination', array(
             'page'          => $page,
@@ -98,9 +84,9 @@ class SolrSearch_ResultsController
      * @param int $limit  Limit per page
      * @return SolrResultDoc Solr results
      */
-    protected function _search($offset, $limit, $limitToPublicItems = true)
+    protected function _search($offset, $limit)
     {
-
+        
         // Connect to Solr.
         $solr = SolrSearch_Helpers_Index::connect();
 
@@ -108,7 +94,7 @@ class SolrSearch_ResultsController
         $params = $this->_getParameters();
 
         // Construct the query.
-        $query = $this->_getQuery($limitToPublicItems);
+        $query = $this->_getQuery();
 
         // Execute the query.
         return $solr->search($query, $offset, $limit, $params);
@@ -121,7 +107,7 @@ class SolrSearch_ResultsController
      *
      * @return string The Solr query.
      */
-    protected function _getQuery($limitToPublicItems = true)
+    protected function _getQuery()
     {
 
         // Get the `q` GET parameter.
@@ -137,11 +123,6 @@ class SolrSearch_ResultsController
         // Form the composite Solr query.
         if (!empty($facet)) $query .= " AND {$facet}";
 
-        // Limit the query to public items if required
-        if($limitToPublicItems) {
-           $query .= ' AND public:"true"';
-        }
-
         return $query;
 
     }
@@ -155,22 +136,26 @@ class SolrSearch_ResultsController
     protected function _getParameters()
     {
 
-        // Get a list of active facets.
-        $facets = $this->_fields->getActiveFacetKeys();
+        $params = array();
 
-        return array(
+        // Get a list of active facets.
+        $facets = $this->_fields->getActiveFacetNames();
+
+        if (!empty($facets)) $params = array(
 
             'facet'          => 'true',
             'facet.field'    => $facets,
             'facet.mincount' => 1,
             'facet.limit'    => get_option('solr_search_facet_limit'),
             'facet.sort'     => get_option('solr_search_facet_sort'),
-            'hl'             => get_option('solr_search_hl')?'true':'false',
+            'hl'             => get_option('solr_search_hl'),
             'hl.snippets'    => get_option('solr_search_hl_snippets'),
             'hl.fragsize'    => get_option('solr_search_hl_fragsize'),
-            'hl.fl'          => '*_t'
+            'hl.fl'          => '*_s'
 
         );
+
+        return $params;
 
     }
 

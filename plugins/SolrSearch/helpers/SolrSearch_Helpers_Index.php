@@ -1,5 +1,7 @@
 <?php
 
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 cc=80; */
+
 /**
  * @package     omeka
  * @subpackage  solr-search
@@ -39,90 +41,83 @@ class SolrSearch_Helpers_Index
 
     }
 
-    /**
-     * This indexes something that implements Mixin_ElementText into a Solr Document.
-     *
-     * @param array                $fields The fields to index.
-     * @param Mixin_ElementText    $item   The item containing the element texts.
-     * @param Apache_Solr_Document $doc    The document to index everything into.
-     * @return void
-     * @author Eric Rochester <erochest@virginia.edu>
-     **/
-    public static function indexItem($fields, $item, $doc)
-    {
-        foreach ($item->getAllElementTexts() as $text) {
-            $field = $fields->findByText($text);
-            
-            if(!$field):
-                echo $item->id." - ".$text->id." - ".$text->element_id."<br>";
-            else:
-            // Set text field.
-                if ($field->is_indexed) {
-                     if(!$field->getElement()) echo $field->element_id;
-                     else $doc->setMultiValue($field->indexKey(), $text->text);
-                }
-
-                // Set string field.
-                if ($field->is_facet) {
-                    $doc->setMultiValue($field->facetKey(), $text->text);
-                }
-            endif;    
-        }
-    }
-
 
     /**
-     * This takes an Omeka_Record instance and returns a populated
+     * This takes an Omeka_Record instance and returns a populated 
      * Apache_Solr_Document.
      *
+     * @param Omeka_Db     $db   The database to query.
      * @param Omeka_Record $item The record to index.
      *
      * @return Apache_Solr_Document
      * @author Eric Rochester <erochest@virginia.edu>
      **/
-    public static function itemToDocument($item)
+    public static function itemToDocument($db, $item)
     {
 
-        $fields = get_db()->getTable('SolrSearchField');
-
+        // Create the item document.
         $doc = new Apache_Solr_Document();
-        $doc->setField('id', "Item_{$item->id}");
-        $doc->setField('resulttype', 'Item');
+        $doc->id = "Item_{$item['id']}";
+        $doc->setMultiValue('resulttype', 'Item');
+        $doc->setField('url', SolrSearch_Helpers_Index::getUri($item));
         $doc->setField('model', 'Item');
-        $doc->setField('modelid', $item->id);
+        $doc->setField('modelid', $item['id']);
 
-        // extend $doc to to include and items public / private status
-        $doc->setField('public', $item->public);
+        // Get list of indexed elements.
+        $indexSet = SolrSearch_Helpers_Index::getIndexSet($db);
 
-        // Title:
-        $title = metadata($item, array('Dublin Core', 'Title'));
-        $doc->setField('title', $title);
+        $elementTexts = $db
+            ->getTable('ElementText')
+            ->findBySql('record_id = ?', array($item['id']));
 
-        // Elements:
-        self::indexItem($fields, $item, $doc);
+        // Index element texts:
+        foreach ($elementTexts as $elementText) {
 
-        // Tags:
-        foreach ($item->getTags() as $tag) {
-            $doc->setMultiValue('tag', $tag->name);
+            // If the element text should be searchable.
+            if (array_key_exists($elementText['element_id'], $indexSet)) {
+
+                // Set the text value on the document.
+                $fieldName = $indexSet[$elementText['element_id']];
+                $doc->setMultiValue($fieldName, $elementText['text']);
+
+                // If the title is searchable, set it explicitly.
+                if ($elementText['element_id'] == 50) {
+                    $doc->setMultiValue('title', $elementText['text']);
+                }
+
+            }
+
         }
 
-        // Collection:
-        if ($collection = $item->getCollection()) {
+        // Index tags:
+        if (array_key_exists('tag', $indexSet)) {
+            foreach ($item->getTags() as $tag) {
+                $doc->setMultiValue('tag', $tag->name);
+            }
+        }
+
+        // Index collection name:
+        if (array_key_exists('collection', $indexSet) &&
+          $item['collection_id'] > 0
+        ) {
+
+            $collection = $db
+                ->getTable('Collection')
+                ->find($item['collection_id']);
+
             $doc->collection = metadata(
-                $collection, array('Dublin Core', 'Title')
+              $collection, array('Dublin Core', 'Title')
             );
+
         }
 
-        // Item type:
-        if ($itemType = $item->getItemType()) {
-            $doc->itemtype = $itemType->name;
-        }
-
-        $doc->featured = (bool) $item->featured;
-
-        // File metadata
-        foreach ($item->getFiles() as $file) {
-            self::indexItem($fields, $file, $doc);
+        // Index item type:
+        if (array_key_exists('itemtype', $indexSet) && $item['item_type_id'] > 0) {
+            $itemType = $db
+                ->getTable('ItemType')
+                ->find($item['item_type_id'])
+                ->name;
+            $doc->itemtype = $itemType;
         }
 
         return $doc;
@@ -151,11 +146,11 @@ class SolrSearch_Helpers_Index
         else if ($rc === 'ExhibitPage') {
 
             $exhibit = $record->getExhibit();
-            $exUri   = self::getSlugUri($exhibit, $action);
+            $exUri   = SolrSearch_Helpers_Index::getSlugUri($exhibit, $action);
             $uri     = "$exUri/$record->slug";
 
         } else if (property_exists($record, 'slug')) {
-            $uri = self::getSlugUri($record, $action);
+            $uri = SolrSearch_Helpers_Index::getSlugUri($record, $action);
         } else {
             $uri = record_url($record, $action);
         }
@@ -196,6 +191,35 @@ class SolrSearch_Helpers_Index
 
 
     /**
+     * This returns a set of fields to be indexed by Solr according to the
+     * solr_search_facet table.
+     *
+     * The fields can be either the element IDs or the names of categories like
+     * 'description'.
+     *
+     * @param Omeka_Db $db The database to query.
+     *
+     * @return array $fieldSet The set of fields to index.
+     * @author Eric Rochester <erochest@virginia.edu>
+     **/
+    public static function getIndexSet($db)
+    {
+        $fieldSet = array();
+
+        $facets = $db->getTable('SolrSearchField')->findAll();
+
+        foreach ($facets as $facet) {
+            if ($facet->is_indexed || $facet->is_facet) {
+                $key = $facet->element_id ? $facet->element_id : $facet->name;
+                $fieldSet[$key] = $facet->name;
+            }
+        }
+
+        return $fieldSet;
+    }
+
+
+    /**
      * This pings the Solr server with the given options and returns true if
      * it's currently up.
      *
@@ -212,60 +236,6 @@ class SolrSearch_Helpers_Index
         } catch (Exception $e) {
             return false;
         }
-    }
-
-
-    /**
-     * This re-indexes everything in the Omeka DB.
-     *
-     * @return void
-     * @author Eric Rochester
-     **/
-    public static function indexAll($options=array())
-    {
-
-        $solr = self::connect($options);
-
-        $db     = get_db();
-        $table  = $db->getTable('Item');
-        $select = $table->getSelect();
-
-        // Removed in order to index both public and private items
-        // $table->filterByPublic($select, true);
-
-        $table->applySorting($select, 'id', 'ASC');
-
-        $excTable = $db->getTable('SolrSearchExclude');
-        $excludes = array();
-        foreach ($excTable->findAll() as $e) {
-            $excludes[] = $e->collection_id;
-        }
-        if (!empty($excludes)) {
-            $select->where(
-                'collection_id IS NULL OR collection_id NOT IN (?)',
-                $excludes);
-        }
-
-        // First get the items.
-        $pager = new SolrSearch_DbPager($db, $table, $select);
-        while ($items = $pager->next()) {
-            foreach ($items as $item) {
-                $docs = array();
-                $doc = self::itemToDocument($item);
-                $docs[] = $doc;
-                $solr->addDocuments($docs);
-            }
-            $solr->commit();
-        }
-
-        // Now the other addon stuff.
-        $mgr  = new SolrSearch_Addon_Manager($db);
-        $docs = $mgr->reindexAddons();
-        $solr->addDocuments($docs);
-        $solr->commit();
-
-        $solr->optimize();
-
     }
 
 
@@ -287,6 +257,46 @@ class SolrSearch_Helpers_Index
         $solr->commit();
         $solr->optimize();
 
+    }
+
+
+    /**
+     * This re-indexes everything in the Omeka DB.
+     *
+     * @return void
+     * @author Eric Rochester
+     **/
+    public static function indexAll($options=array())
+    {
+
+        $solr = self::connect($options);
+
+        $db     = get_db();
+        $table  = $db->getTable('Item');
+        $select = $table->getSelect();
+
+        $table->filterByPublic($select, true);
+        $table->applySorting($select, 'id', 'ASC');
+
+        // First get the items.
+        $pager = new SolrSearch_DbPager($db, $table, $select);
+        while ($items = $pager->next()) {
+            foreach ($items as $item) {
+                $docs = array();
+                $doc = SolrSearch_Helpers_Index::itemToDocument($db, $item);
+                $docs[] = $doc;
+                $solr->addDocuments($docs);
+            }
+            $solr->commit();
+        }
+
+        // Now the other addon stuff.
+        $mgr  = new SolrSearch_Addon_Manager($db);
+        $docs = $mgr->reindexAddons();
+        $solr->addDocuments($docs);
+        $solr->commit();
+
+        $solr->optimize();
     }
 
 

@@ -1,5 +1,7 @@
 <?php
 
+/* vim: set expandtab tabstop=2 shiftwidth=2 softtabstop=2 cc=80; */
+
 /**
  * @package     omeka
  * @subpackage  solr-search
@@ -9,7 +11,7 @@
 
 
 /**
- * This class takes a Zend_Db_Select object and pages through the results,
+ * This class takes a Zend_Db_Select object and pages through the results, 
  * returning them in chunks.
  *
  * IT IS STRONGLY SUGGESTED THAT THE SELECT HAVE AN ORDER CLAUSE.
@@ -64,7 +66,7 @@ class SolrSearch_DbPager
     /**
      * This constructs a SolrSearch_DbPager.
      **/
-    function __construct($db, $table, $select, $rowCount=100, $params=array())
+    function __construct($db, $table, $select, $rowCount=1000, $params=array())
     {
         $this->db         = $db;
         $this->table      = $table;

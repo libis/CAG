@@ -1,5 +1,7 @@
 <?php
 
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 cc=80; */
+
 /**
  * @package     omeka
  * @subpackage  solr-search
@@ -35,11 +37,8 @@ require_once SOLR_DIR.'/helpers/SolrSearch_Helpers_Facet.php';
 
 // Forms:
 require_once SOLR_DIR.'/forms/SolrSearch_Form_Server.php';
-require_once SOLR_DIR.'/forms/SolrSearch_Form_Results.php';
+require_once SOLR_DIR.'/forms/SolrSearch_Form_Highlight.php';
 require_once SOLR_DIR.'/forms/SolrSearch_Form_Reindex.php';
-
-// Jobs:
-require_once SOLR_DIR.'/jobs/SolrSearch_Job_Reindex.php';
 
 $solr = new SolrSearchPlugin();
 $solr->setUp();

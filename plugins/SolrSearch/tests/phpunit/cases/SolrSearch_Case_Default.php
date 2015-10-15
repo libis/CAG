@@ -1,5 +1,7 @@
 <?php
 
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 cc=80; */
+
 /**
  * @package     omeka
  * @subpackage  solr-search
@@ -29,7 +31,7 @@ class SolrSearch_Case_Default extends Omeka_Test_AppTestCase
         $this->helper->setUp('SolrSearch');
 
         // Get tables.
-        $this->fieldTable       = $this->db->getTable('SolrSearchField');
+        $this->facetTable       = $this->db->getTable('SolrSearchField');
         $this->elementSetTable  = $this->db->getTable('ElementSet');
         $this->elementTable     = $this->db->getTable('Element');
         $this->itemTypeTable    = $this->db->getTable('ItemType');
@@ -100,32 +102,12 @@ class SolrSearch_Case_Default extends Omeka_Test_AppTestCase
     /**
      * Delete all existing facet mappings.
      */
-    protected function _clearFieldMappings()
+    protected function _clearFacetMappings()
     {
         $this->db->query(<<<SQL
         DELETE FROM {$this->db->prefix}solr_search_fields WHERE 1=1
 SQL
 );
-    }
-
-
-    /**
-     * Inject and return a mock `Omeka_Job_Dispatcher_Default`.
-     *
-     * @return Omeka_Job_Dispatcher_Default PHPUnit mock.
-     */
-    protected function _mockJobDispatcher()
-    {
-
-        // Create a testing-double job dispatcher.
-        $jobs = $this->getMockBuilder('Omeka_Job_Dispatcher_Default')
-            ->disableOriginalConstructor()->getMock();
-
-        // Inject the mock.
-        Zend_Registry::set('job_dispatcher', $jobs);
-
-        return $jobs;
-
     }
 
 
@@ -153,21 +135,21 @@ SQL
 
 
     /**
-     * Create a field.
+     * Create a standalone facet.
      *
-     * @param string $slug The facet slug.
+     * @param string $name The facet name.
      * @param string $label The facet label.
      * @return SolrSearchField
      */
-    protected function _field($slug, $label='Test Label')
+    protected function _facet($name, $label='Test Label')
     {
 
-        $field = new SolrSearchField();
-        $field->slug  = $slug;
-        $field->label = $label;
+        $facet = new SolrSearchField();
+        $facet->name  = $name;
+        $facet->label = $label;
 
-        $field->save();
-        return $field;
+        $facet->save();
+        return $facet;
 
     }
 
@@ -257,26 +239,28 @@ SQL
 
 
     /**
-     * Create an exhibit page block.
+     * Create an exhibit page entry.
      *
      * @param ExhibitPage $page The parent page.
      * @param string $text The entry content.
      * @param integer $order The entry order.
-     * @return ExhibitPageBlock
+     * @return ExhibitPage
      */
-    protected function _exhibitBlock($page=null, $text='Test text.') {
+    protected function _exhibitEntry(
+        $page=null, $text='Test text.', $order=1
+    ) {
 
         // Create a parent page if none is passed.
         if (is_null($page)) $page = $this->_exhibitPage();
 
-        $block = new ExhibitPageBlock;
+        $entry = new ExhibitPageEntry;
 
-        $block->page_id = $page->id;
-        $block->text    = $text;
-        $block->layout  = 'text';
+        $entry->page_id = $page->id;
+        $entry->text    = $text;
+        $entry->order   = $order;
 
-        $block->save();
-        return $block;
+        $entry->save();
+        return $entry;
 
     }
 
@@ -339,7 +323,7 @@ SQL
      * @param string $field The field.
      * @return string
      */
-    protected function _getAddonKey($record, $field)
+    protected function _getAddonSolrKey($record, $field)
     {
 
         // Spin up a manager and indexer.
@@ -354,30 +338,23 @@ SQL
 
 
     /**
-     * Get the key for an element's tokenized field on a Solr document.
+     * Get the `name` (used as the key value on Solr documents) for a facet.
      *
-     * @param string $set The element set name.
-     * @param string $element The element name.
+     * @param string $elementSetName The element set name.
+     * @param string $elementName The element name.
      * @return string
      */
-    protected function _getElementTextKey($set, $element)
+    protected function _getElementSolrKey($elementSetName, $elementName)
     {
-        $field = $this->fieldTable->findByElementName($set, $element);
-        return $field->indexKey();
-    }
 
+        // Get the element.
+        $element = $this->elementTable->findByElementSetNameAndElementName(
+            $elementSetName, $elementName
+        );
 
-    /**
-     * Get the key for an element's un-tokenized field on a Solr document.
-     *
-     * @param string $set The element set name.
-     * @param string $element The element name.
-     * @return string
-     */
-    protected function _getElementStringKey($set, $element)
-    {
-        $field = $this->fieldTable->findByElementName($set, $element);
-        return $field->facetKey();
+        // Get the subject and source facets.
+        return $this->facetTable->findByElement($element)->name;
+
     }
 
 
