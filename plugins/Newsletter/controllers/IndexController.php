@@ -187,12 +187,9 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
                     }
                 </style>
                 <div class="frame" width="600" style="width:600px;color: #006c68;font:13px Calibri,Verdana,Arial,Helvetica,sans-serif;">
-		
-		<p class="explanation" style="font:11px/15px Calibri, Verdana, Arial, Helvetica, sans-serif; color:#999999;" align="center" valign="top">
-			Dit is de tweemaandelijkse nieuwsbrief van het Centrum Agrarische Geschiedenis vzw.</a>
 		';
 
-            $message_head_2 = '</p>
+            $message_head_2 = '
 		<table width="576" style="font:13px Calibri, Verdana, Arial, Helvetica, sans-serif;border:2px solid #006c68;padding:10px;"cellspacing="0" cellpadding="0">
 		<div class="content" class="top" >
                     <h2 style="font-weight:bold; line-height:31px; color:#006c68;padding5px;">
