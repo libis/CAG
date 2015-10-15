@@ -167,7 +167,7 @@ p img{float:left; padding-right:10px;padding-bottom:10px; }
 	#primary {margin-right:30px;min-width:70%;padding-bottom:20px;}
 	#secondary {float:right; width: 20%;padding-right:30px;}
 
-	#nav-section{background:#f8c400;padding:5px;}	
+	#nav-section{border-bottom:1px solid #669999;padding:5px;background:#f7f9f9;}
 
 	#carousel-block{float:left;width:550px;margin:0;}	
 

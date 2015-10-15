@@ -881,7 +881,6 @@ address {
     list-style:none;
     -webkit-padding-start: 0px;
     margin:0px 0px;
-    padding:5px;
     font-weight:700;
     background-color:#F7F9F9;    
 }
@@ -892,8 +891,12 @@ address {
 }
 
 #nav-left li {
-    padding:4px 0;
+    padding:4px 5px;
     border-bottom:1px dotted #C7CACA;
+}
+
+#nav-left li.current {
+background: #f8c400 none repeat scroll 0 0;
 }
 
 #nav-left li:last-child {
@@ -906,7 +909,7 @@ address {
 	color: #558282;
 }
 
-#primary #nav-left a:hover, #primary #nav-left a:focus,#primary #nav-left li.current a {
+#primary #nav-left a:hover, #primary #nav-left a:focus {
 	color: #07614e;
 }
 
