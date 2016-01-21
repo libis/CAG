@@ -181,11 +181,11 @@ function digitool_get_thumb($item,$findOnlyOne = false,$linkToView = false,$widt
     foreach($digis as $digi){
         $thumb = $digi->get_thumb();
         $view = $digi->get_view();
-        $resize = digitool_resize_dimensions($width,$width,$thumb);
+        
         if($linkToView){
-             $html.='<a href="'.$view.'" target="_blank"><img src="'.$thumb.'" height="'.$resize['height'].'" width="'.$resize['width'].'"></a>';
+             $html.='<a href="'.$view.'" target="_blank"><img src="'.$thumb.'" ></a>';
         }else{
-            $html.='<img src="'.$thumb.'" height="'.$resize['height'].'" width="'.$resize['width'].'" /> ';
+            $html.='<img src="'.$thumb.'"  /> ';
         }
         if($findOnlyOne){
             return $html;
@@ -237,8 +237,7 @@ function digitool_simple_gallery($item,$size=500,$type='object'){
 		$thumb =  $digis[0]->get_thumb();
                 $view =  $digis[0]->get_view();
 
-                $resize = digitool_resize_dimensions($size,$size,$thumb);
-		$html ="<div id='image'><a href='".$view."'><img height='".$resize['height']."' width='".$resize['width']."' src='".$thumb."' /></a></div>";
+		$html ="<div id='image'><a href='".$view."'><img src='".$thumb."' /></a></div>";
 
 		return $html;
 	}else{
@@ -251,11 +250,9 @@ function digitool_simple_gallery($item,$size=500,$type='object'){
                             $altItem = get_record_by_id('item',$altItem_id);
                             $link = url($altItem);
                         }
-                        $resize = digitool_resize_dimensions($size,$size,$thumb);
-                        
-                        
+                                                
 			if($i==0){
-                            $html.="<div id='gallery-image'><a href='".$link."'><img height='".$resize['height']."' width='".$resize['width']."' src='".$thumb."'/></a></div>";
+                            $html.="<div id='gallery-image'><a href='".$link."'><img src='".$thumb."'/></a></div>";
                             $html.="<div id='gallery-thumbnails' style='height: 400px;-moz-column-width: 70px;-webkit-column-width:70px;-moz-column-gap: 0px;column-width: 70px;'>";
 			}
 			$width = 50;
@@ -406,6 +403,10 @@ function digitool_resize_dimensions($goal_width,$goal_height,$imageurl) {
         //echo($image);    
 
         $new_image = imageCreateFromString($image);
+        if(!$new_image):
+            $return['width'] = "";
+            $return['height'] = "";
+        endif;
         
         // Get new dimensions
         $width = imagesx($new_image);
