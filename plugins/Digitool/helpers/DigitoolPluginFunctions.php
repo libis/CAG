@@ -246,7 +246,7 @@ function digitool_simple_gallery($item,$size=500,$type='object'){
 		foreach($digis as $digi){
 			$thumb =  $digi->get_thumb();
                         $link =  $digi->get_view();
-                        if($type='concept'){
+                        if($type=='concept'){
                             $altItem_id = digitool_find_items_with_same_pid(null,$digi->pid);
                             $altItem = get_record_by_id('item',$altItem_id);
                             $link = url($altItem);
