@@ -720,6 +720,8 @@ function libis_breadcrumb_tag($exhibit){
     if($tag == 'algemeen'){
         return false;
     }  
+    
+    $tags = explode(', ',$tag);
 
     $namen = array(
         "middenveld" => "Middenveld en beleid",
@@ -731,8 +733,15 @@ function libis_breadcrumb_tag($exhibit){
         "industrie" => "Industrie en wetenschap",
         "voedsel" => "Voeding",
         "landbouw" => "Landbouw"
-    );            
-    return "<li><a href='/verhalen/".$tag."'>".$namen[$tag]."</a> ></li>";    
+    );  
+    
+    $tag_text='';
+    foreach($tags as $tag):
+        $tag_text .= " <a href='/verhalen/".$tag."'>".$namen[$tag]."</a>, "; 
+    endforeach;
+    $tag_text = rtrim($tag_text, ", ");
+    $html = '<li>'.$tag_text.' ></li>';
+    return $html;    
 }
 
 //get current url
