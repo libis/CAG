@@ -25,7 +25,7 @@
                     <li><a href="<?php echo url('wegbeschrijving/'); ?>">Wegbeschrijving</a></li>
                     
                     <li><a href="<?php echo url('english'); ?>">English</a></li>
-                    <li><a href="<?php echo url('francais'); ?>">français</a></li>
+                    <li><a href="<?php echo url('francais'); ?>">Français</a></li>
                     </ul>
 		</div><!-- /.column -->
 		<div class="column  right ">
