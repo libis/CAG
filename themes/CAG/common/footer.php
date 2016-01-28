@@ -23,9 +23,9 @@
                     <li><a href="<?php echo url('vacatures/'); ?>">Vacatures</a></li>
                     <li><a href="<?php echo url("contact/");?>">Contact</a></li>
                     <li><a href="<?php echo url('wegbeschrijving/'); ?>">Wegbeschrijving</a></li>
-                    <!--
-                    <li><a href="http://www.cagnet.be/showpage.php?pageID=26">English</a></li>
-                    <li><a href="http://www.cagnet.be/showpage.php?pageID=25 ">français</a></li>-->
+                    
+                    <li><a href="<?php echo url('english'); ?>">English</a></li>
+                    <li><a href="<?php echo url('francais'); ?>">français</a></li>
                     </ul>
 		</div><!-- /.column -->
 		<div class="column  right ">
