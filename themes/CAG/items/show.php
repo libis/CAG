@@ -58,7 +58,7 @@ endif; ?>
    	 	<h3>Collectie:</h3><p><?php echo ucfirst(metadata('item', array('Item Type Metadata','Collectie')));?></p>
     <?php } ?>   
     <?php if(metadata('item', array('Item Type Metadata','Gerelateerd nummer')) != ""){?>
-   	 	<h3>Collectie:</h3><p><?php echo metadata($item,array('Item Type Metadata','Gerelateerd nummer'),array('delimiter'=>'<br>'))?></p>
+   	 	<h3>Gerelateerd nummer:</h3><p><?php echo metadata($item,array('Item Type Metadata','Gerelateerd nummer'),array('delimiter'=>'<br>'))?></p>
     <?php } ?>             
     <?php if(metadata('item', array('Dublin Core','Spatial Coverage')) != ""){?>
     	<h3>Plaats:</h3><p><?php echo (metadata('item', array('Dublin Core','Spatial Coverage')));?></p>
