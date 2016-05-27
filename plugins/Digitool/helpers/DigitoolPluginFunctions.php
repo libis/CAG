@@ -237,7 +237,7 @@ function digitool_simple_gallery($item,$size=500,$type='object'){
 		$thumb =  $digis[0]->get_thumb();
                 $view =  $digis[0]->get_view();
 
-		$html ="<div id='image'><a href='".$view."'><img src='".$thumb."' /></a></div>";
+		$html ="<div id='image'><a href='".$view."'><img src='".$thumb."?quality=CRITICAL,ARCHIVE' /></a></div>";
 
 		return $html;
 	}else{
@@ -252,7 +252,7 @@ function digitool_simple_gallery($item,$size=500,$type='object'){
                         }
                                                 
 			if($i==0){
-                            $html.="<div id='gallery-image'><a href='".$link."'><img src='".$thumb."'/></a></div>";
+                            $html.="<div id='gallery-image'><a href='".$link."'><img src='".$thumb."?quality=CRITICAL,ARCHIVE'/></a></div>";
                             $html.="<div id='gallery-thumbnails' style='height: 400px;-moz-column-width: 70px;-webkit-column-width:70px;-moz-column-gap: 0px;column-width: 70px;'>";
 			}
 			$width = 50;
