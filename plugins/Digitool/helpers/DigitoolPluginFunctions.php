@@ -183,9 +183,9 @@ function digitool_get_thumb($item,$findOnlyOne = false,$linkToView = false,$widt
         $view = $digi->get_view();
         
         if($linkToView){
-             $html.='<a href="'.$view.'" target="_blank"><img src="'.$thumb.'" ></a>';
+             $html.='<a href="'.$view.'" target="_blank"><img src="'.$thumb.'?quality=CRITICAL,ARCHIVE" ></a>';
         }else{
-            $html.='<img src="'.$thumb.'"  /> ';
+            $html.='<img src="'.$thumb.'?quality=CRITICAL,ARCHIVE"  /> ';
         }
         if($findOnlyOne){
             return $html;
