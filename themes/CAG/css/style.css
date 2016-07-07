@@ -226,15 +226,6 @@ p img{float:left; padding-right:10px;padding-bottom:10px; }
 
 		.exhibit-item img {width: 100%;height:auto !important;}
 
-
-		
-
-		
-
-		/* == Collections (voorlopig niet gebruikt)== */
-		.collection {border-top:1px solid #669999;padding-top:1.33333em;}
-		.collection .element {margin-bottom:0;}
-
 		/*contact form*/
 		#form-instructions{padding:10px;background-color:#F7F9F9;}
 		.field label{width:350px;display:block;}

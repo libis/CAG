@@ -982,6 +982,66 @@ p#simple-pages-breadcrumbs {
     font-size:12px;
 }
 
+/* Collections
+------------------------------------------------------------------ */
+.collection {border-top:1px solid #F0ECEC;padding-top:1.33333em;}
+.collection .element {margin-bottom:0;}
+                
+.collection h2 a, #collection-items h2 a{
+    color:white;
+}
+
+.collection .element-text{
+    padding:5px 0 0 0;
+}
+
+.collection .view-items-link{
+    font-weight:bold;
+    margin:10px 0;
+}
+
+#collection-items{
+    padding-bottom:20px;
+}
+
+#collection-items .hentry{
+    padding-bottom:15px;
+    overflow:auto;
+}
+
+#collection-items .hentry h3{
+    padding:10px 0;
+    clear:both;
+}
+
+#collection-items .image{
+    float:left;
+    overflow:auto;
+    width:150px;
+}
+
+#collection-items .link-to-browse {
+    font-weight:bold;
+    padding:10px 0;
+}
+
+
+.pagination_list{
+    padding:10px 0;
+}
+
+.pagination_list li{
+    display:inline;
+    padding:3px;
+    color:#333;
+}
+
+.pagination_list li a{
+    font-weight:bold;
+}
+
+
+
 /* footer
 ------------------------------------------------------------------ */
 
