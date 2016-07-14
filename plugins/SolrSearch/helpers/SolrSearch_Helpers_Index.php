@@ -150,7 +150,7 @@ class SolrSearch_Helpers_Index
             $uri     = "$exUri/$record->slug";
 
         } else if (property_exists($record, 'slug')) {
-            $uri = SolrSearch_Helpers_Index::getSlugUri($record, $action);
+            $uri = exhibit_builder_exhibit_uri($exhibit,$record);//SolrSearch_Helpers_Index::getSlugUri($record, $action);
         } else {
             $uri = record_url($record, $action);
         }
