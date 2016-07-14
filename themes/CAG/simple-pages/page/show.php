@@ -24,6 +24,7 @@
                 <div class="simple-pages-navigation">
                     <ul class="navigation">
                         <li class="active"><a href="<?php echo url("/beeldbank") ?>">Beeldbank</a></li>   
+                        <li class="active"><a href="<?php echo url("/collections") ?>">Collectie-inventarissen</a></li>
                         <li><a href="<?php echo url("/geolocation/map/browse") ?>">Kaart</a></li>
                         <!--<li><a href="<?php //echo url("/beeldbank/tijdlijn") ?>">Tijdlijn</a></li>-->                   
                 </div>
