@@ -146,11 +146,11 @@ class SolrSearch_Helpers_Index
         else if ($rc === 'ExhibitPage') {
 
             $exhibit = $record->getExhibit();
-            $exUri   = SolrSearch_Helpers_Index::getSlugUri($exhibit, $action);
+            $exUri   = exhibit_builder_exhibit_uri($exhibit,$record);//SolrSearch_Helpers_Index::getSlugUri($exhibit, $action);
             $uri     = "$exUri/$record->slug";
 
         } else if (property_exists($record, 'slug')) {
-            $uri = exhibit_builder_exhibit_uri($exhibit,$record);//SolrSearch_Helpers_Index::getSlugUri($record, $action);
+            $uri = SolrSearch_Helpers_Index::getSlugUri($record, $action);
         } else {
             $uri = record_url($record, $action);
         }
