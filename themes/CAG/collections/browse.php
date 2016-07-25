@@ -14,6 +14,8 @@ echo head(array('title'=>$pageTitle,'bodyclass' => 'Collectie-inventarissen'));
 
 <h1><?php echo $pageTitle; ?></h1>
 
+<p><?php echo libis_get_simple_page_content('info-collections'); ?></p>
+
 <?php echo pagination_links(); ?>
 
 <?php foreach (loop('collections') as $collection): ?>
