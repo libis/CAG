@@ -1093,7 +1093,7 @@ ul.navigation_footer {
 	background-color: #f0ecec;
 	color: #606060;
 	padding: 0;
-	font-size: 13px;
+	font-size: 15px;
 }
 
 #inschrijven{
@@ -1188,6 +1188,7 @@ ul.navigation_footer {
     width:190px;
     height:150px;
     margin:0 10px 10px 0;
+    font-size:12px;    
 }
 
 .in_de_kijker.even{
@@ -1592,7 +1593,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini{
 .facet {
     border-bottom: 1px solid #CACACA;
     padding:5px 0;margin-bottom:10px;
-    font-size:1.2em;
+    font-size:1em;
     clear:both;
 }
 #solr_results .solr_facets_container .clicker.active:before{-webkit-transform:rotate(90deg);-moz-transform:rotate(90deg);-ms-transform:rotate(90deg);-o-transform:rotate(90deg);transform:rotate(90deg)}
