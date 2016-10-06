@@ -328,7 +328,8 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
     width:22.7%;
     margin:5px 6px 10px 0px;
     padding:5px;
-    float:left;    
+    float:left;   
+    font-size:12px;
 }
 
 .in_de_kijker_text{
