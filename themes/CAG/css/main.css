@@ -268,7 +268,7 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
 }
 
 #header-nav .navigation a{
-	font-size: 13px;
+	font-size: 14px;
 }
 
 #header-nav .navigation {
@@ -288,7 +288,7 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
 
 #header-nav ul{margin-left:-40px;padding:5px 5px; }
 #header-nav li{display:inline; }
-#header-nav a{font-size:12px;;font-weight: bold;text-decoration: none;}
+#header-nav a{font-size:14px;;font-weight: bold;text-decoration: none;}
 #header-nav a:hover{text-decoration: underline;}
 
 /* LEVEL ONE */
@@ -301,7 +301,7 @@ input#search.textinput:hover, input#search.textinput:focus, #advanced-search-for
 
 /* LEVEL TWO */
 #header-nav .navigation li ul {visibility: hidden;display:block;z-index: 100000;position: absolute; top: 16px; left: 40px;}
-#header-nav .navigation li ul li {display:block;height:20px; float: none;}
+#header-nav .navigation li ul li {display:block;height:25px; float: none;}
 									  
 /* IE 6 & 7 Needs Inline Block */
 #header-nav .navigation li ul li a { width: 180px;display: inline-block; background: #f8c400;} 
@@ -1019,6 +1019,10 @@ p#simple-pages-breadcrumbs {
     float:left;
     overflow:auto;
     width:150px;
+}
+
+#collection-items .image img{
+    height:auto;
 }
 
 #collection-items .link-to-browse {
