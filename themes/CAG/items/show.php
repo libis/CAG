@@ -67,7 +67,7 @@ endif; ?>
     	<h3>Datering:</h3><p><?php echo (metadata('item', array('Dublin Core','Date')));?></p>
     <?php } ?>
     <?php if(metadata('item', array('Dublin Core','Creator')) != ""){?>
-    	<h3>Vervaardiger:</h3><p><?php echo (metadata('item', array('Dublin Core','Creator')));?></p>
+    	<h3>Gerelateerde personen/instellingen:</h3><p><?php echo metadata('item', array('Dublin Core','Creator'),array('delimiter'=>'<br>'));?></p>
     <?php } ?>
         
     <?php if (metadata('item', 'has tags')): ?>
