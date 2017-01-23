@@ -6,12 +6,12 @@
   $view='default';
   $session = new Zend_Session_Namespace('pagination_help');
   $per_page = $session->per_page;
-  
+
   $itemids ='';
   //uitbreiding solr-geolocation
   $session->items = "";
   $session->locations= "";
-  $session->from= ''; 
+  $session->from= '';
 ?>
 <script>
 jQuery(document).ready(function() {
@@ -25,24 +25,24 @@ jQuery(document).ready(function() {
 });
 </script>
 <div id="primary" class="solr_results results">
-                  
+
     <div class="topresults">
         <div class="resultCount"><?php echo __('%s resultaten', $results->response->numFound); ?></div>
-        <?php echo pagination_links(array('partial_file' => 'common/pagination.php','per_page'=>$per_page)); ?> 
-        
+        <?php echo pagination_links(array('partial_file' => 'common/pagination.php','per_page'=>$per_page)); ?>
+
         <div class="resultsPerPage">
             <form action='<?php echo libis_curPageURL();?>' method="post">
                 <select name="perPage" onchange="this.form.submit()">
                   <option <?php if($per_page==10){echo 'selected="selected"';}?> value="10">10 resultaten per pagina</option>
                   <option <?php if($per_page==20){echo 'selected="selected"';}?> value="20">20 resultaten per pagina</option>
-                  <option <?php if($per_page==50){echo 'selected="selected"';}?> value="50">50 resultaten per pagina</option>                  
-               
+                  <option <?php if($per_page==50){echo 'selected="selected"';}?> value="50">50 resultaten per pagina</option>
+
                 </select>
             </form>
         </div>
-        
-           
-    </div>        
+
+
+    </div>
     <div id="solr_results" class="item-list">
 
         <?php //$query = SolrSearch_QueryHelpers::getParams(); ?>
@@ -83,14 +83,14 @@ jQuery(document).ready(function() {
 
               <?php endforeach; ?>
             </div>
-              
-          
+
+
         </div>
-      
-        <div id="results">              
+
+        <div id="results">
             <div id="appliedParams">
                 <!-- Get the applied facets. -->
-                <?php foreach (SolrSearch_Helpers_Facet::parseFacets() as $f): ?>               
+                <?php foreach (SolrSearch_Helpers_Facet::parseFacets() as $f): ?>
                   <span class="appliedFilter">
 
                     <!-- Facet label. -->
@@ -105,64 +105,64 @@ jQuery(document).ready(function() {
                   </span>
                 <?php endforeach; ?>
 
-              
+
                 <?php //echo SolrSearch_QueryHelpers::removeFacets(); ?>
             </div>
-            
-            
-            <?php 
+
+
+            <?php
             //KIES VIEW
             if(isset($_GET['facet'])){
                 $facet = $_GET['facet'];
-                
-                if(strpos($facet,'Agendapunt') !== false || 
+
+                if(strpos($facet,'Agendapunt') !== false ||
                     strpos($facet,'Nieuwsbericht') !== false) {
                     $view = 'nieuws';
                 }
-               
+
                 if(strpos($facet,'Publicatie') !== false) {
                     $view = 'publicatie';
                 }
                 if(strpos($facet,'Project') !== false) {
                     $view = 'project';
                 }
-                 if(strpos($facet,'Publicatie') !== false && 
+                 if(strpos($facet,'Publicatie') !== false &&
                     strpos($facet,'Project') !== false) {
                     $view = 'pubpro';
                 }
-            }            
-            
+            }
+
             //VIEW = NIEUWS EN AGENDA
             if($view=='nieuws'){
-                
+
                 $featured="";$nieuws ="";$agenda="";
                 foreach($results->response->docs as $doc):
-                   $items[] = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id'))); 
-                endforeach;               
-                
-                 //sort items by 
+                   $items[] = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id')));
+                endforeach;
+
+                 //sort items by
                 usort($items, function($a, $b) {
                     return strtotime($b->added) - strtotime($a->added);
                 });
-                
+
                 foreach($items as $item):
                    if(!is_null($item)) {
 			   if($item->getItemType()->name == 'Nieuwsbericht' ||$item->getItemType()->name == 'Agendapunt'){
-			       $html = "<div class='in_de_kijker' id='solr_".$doc->__get('id')."'>";                        
+			       $html = "<div class='in_de_kijker' id='solr_".$doc->__get('id')."'>";
 			       if($item->hasThumbnail()):
 				   $html .= link_to_item(item_image('thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
 			       endif;
 			       $html .=link_to_item("<h4>".metadata($item,array('Dublin Core','Title'))."</h4>",array(),'show',$item).
 			       "<p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p> </div>";
-	
-			       if($item->featured==1){$featured .= $html;}                       
+
+			       if($item->featured==1){$featured .= $html;}
 			       if($item->getItemType()->name == 'Nieuwsbericht'){$nieuws .=$html;}
 			       if($item->getItemType()->name == 'Agendapunt'){$agenda .=$html;}
-			      
+
 			   }
                    }
                 endforeach;
-                
+
                 if($featured){
                     echo "<div class='nieuws-kolom'><h2>In de kijker</h2>".$featured."</div>";
                 }
@@ -173,28 +173,28 @@ jQuery(document).ready(function() {
                     echo "<div class='nieuws-kolom kolom-agenda'><h2>Agenda</h2>".$agenda."</div>";
                 }
             }
-            
+
             //VIEW = PUBLICATIE (PUBLICATIE && PROJECT)
             if($view=='pubpro'){
                 $featured="";$pub ="";$project="";
                 foreach($results->response->docs as $doc):
-                   $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id'))); 
+                   $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id')));
 
                    if($item->getItemType()->name == 'Publicatie' ||$item->getItemType()->name == 'Project'){
-                       $html = "<div class='in_de_kijker' id='solr_".$doc->__get('id')."'>";                        
+                       $html = "<div class='in_de_kijker' id='solr_".$doc->__get('id')."'>";
                        if($item->hasThumbnail()):
                            $html .= link_to_item(item_image('thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
                        endif;
                        $html .=link_to_item("<h4>".metadata($item,array('Dublin Core','Title'))."</h4>",array(),'show',$item).
                        "<p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p> </div>";
 
-                       if($item->featured==1){$featured .= $html;}                       
+                       if($item->featured==1){$featured .= $html;}
                        if($item->getItemType()->name == 'Publicatie'){$pub .=$html;}
                        if($item->getItemType()->name == 'Project'){$project .=$html;}
-                      
+
                     }
                 endforeach;
-                
+
                 if($featured){
                     echo "<div class='nieuws-kolom'><h2>In de kijker</h2>".$featured."</div>";
                 }
@@ -205,27 +205,27 @@ jQuery(document).ready(function() {
                     echo "<div class='nieuws-kolom'><h2>Projecten</h2>".$project."</div>";
                 }
             }
-            
+
             //VIEW = PUBLICATIE (PUBLICATIE)
             if($view=='publicatie'){
                 $featured="";$pub ="";
-                $i='odd';$class='in_de_kijker';                   
-                
-                foreach($results->response->docs as $doc):                  
-                   $items[] = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id'))); 
-                endforeach;        
-                
-                //sort items by 
+                $i='odd';$class='in_de_kijker';
+
+                foreach($results->response->docs as $doc):
+                   $items[] = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id')));
+                endforeach;
+
+                //sort items by
                 usort($items, function($a, $b) {
                     if(strtotime(metadata($b,array('Dublin Core','Date'))) == strtotime(metadata($a,array('Dublin Core','Date')))):
                         return strtotime($b->added) - strtotime($a->added);
                     else:
                         return strtotime(metadata($b,array('Dublin Core','Date'))) - strtotime(metadata($a,array('Dublin Core','Date')));
-                    endif;                    
+                    endif;
                 });
-                
+
                 foreach($items as $item):
-                    
+
                    if($item->getItemType()->name == 'Publicatie'){
                        if(metadata($item,array('Item Type Metadata','recent'))=='ja'){
                            if($i == 'odd'){
@@ -236,7 +236,7 @@ jQuery(document).ready(function() {
                                $i = 'odd';
                            }
                        }
-                       $html = "<div class='".$class."' id='solr_".$doc->__get('id')."'>";                        
+                       $html = "<div class='".$class."' id='solr_".$doc->__get('id')."'>";
                        if($item->hasThumbnail()):
                            $html .= link_to_item(item_image('thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
                        endif;
@@ -245,11 +245,11 @@ jQuery(document).ready(function() {
 
                        if(metadata($item,array('Item Type Metadata','recent'))=='ja'){$featured .= $html;}
                        else{
-                        $pub .=$html;            
+                        $pub .=$html;
                        }
                    }
                 endforeach;
-                
+
                 if($featured){
                     echo "<div class='nieuws-kolom'><h2>Recente publicaties</h2>".$featured."</div>";
                 }
@@ -257,28 +257,28 @@ jQuery(document).ready(function() {
                     echo "<div class='nieuws-kolom two-col-nieuws'><h2>Alle publicaties</h2>".$pub."</div>";
                 }
             }
-            
+
             //VIEW = Project(PROJECT)
             if($view=='project'){
                 $featured="";$project="";
                 $i='odd';
-                $class='in_de_kijker';  
-                 
+                $class='in_de_kijker';
+
                 foreach($results->response->docs as $doc):
-                  
-                   $items[] = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id'))); 
-                endforeach;        
-                
-                //sort items by 
+
+                   $items[] = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id')));
+                endforeach;
+
+                //sort items by
                 usort($items, function($a, $b) {
                     if(strtotime(metadata($b,array('Dublin Core','Date'))) == strtotime(metadata($a,array('Dublin Core','Date')))):
                         return strtotime($b->added) - strtotime($a->added);
                     else:
                         return strtotime(metadata($b,array('Dublin Core','Date'))) - strtotime(metadata($a,array('Dublin Core','Date')));
                     endif;
-                    
+
                 });
-                
+
                 foreach($items as $item):
                    if($item->getItemType()->name == 'Project'){
                        if($item->featured==0){
@@ -290,7 +290,7 @@ jQuery(document).ready(function() {
                                $i = 'odd';
                            }
                        }
-                       $html = "<div class='".$class."' id='solr_".$doc->__get('id')."'>";                        
+                       $html = "<div class='".$class."' id='solr_".$doc->__get('id')."'>";
                        if($item->hasThumbnail()):
                            $html .= link_to_item(item_image('thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
                        endif;
@@ -300,10 +300,10 @@ jQuery(document).ready(function() {
                        if($item->featured==1):$featured .= $html;
                        else: $project .=$html;
                        endif;
-                      
+
                    }
                 endforeach;
-                
+
                 if($featured){
                     echo "<div class='nieuws-kolom'><h2>Lopende projecten</h2>".$featured."</div>";
                 }
@@ -311,29 +311,30 @@ jQuery(document).ready(function() {
                     echo "<div class='nieuws-kolom two-col-nieuws'><h2>Afgelopen projecten</h2>".$project."</div>";
                 }
             }
-                
+
             //VIEW = DEFAULT (OBJECT, COLLECTIE, AlGEMENE INFO)
             if($view=='default'){
-                foreach($results->response->docs as $doc):                   
-                                                            
+                foreach($results->response->docs as $doc):
+
                 ?>
-           
+
                 <div class="item" id="solr_<?php echo $doc->__get('id'); ?>">
                     <div class="details">
-                        <div class='resultbody'>                  
+                        <div class='resultbody'>
                             <div class='textfields'>
 
-                            <?php 
+                            <?php
                             if($doc->resulttype === 'Item'):
-                                    $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id'))); 
-                                    set_current_record('Item',$item); 
+                                    $item = get_record_by_id('item',preg_replace ( '/[^0-9]/', '', $doc->__get('id')));
+                                    set_current_record('Item',$item);
                                     $itemids[] = $item->id;?>
-                                <?php if(digitool_item_has_digitool_url($item)){ ?>
+                                <?php if(digitool_item_has_digitool_url($item)): ?>
                                     <div class="image">
                                         <?php echo link_to_item(digitool_get_thumb_for_browse($item,'140'));?>
-                                        <?php //echo SolrSearch_ViewHelpers::createResultImgHtml($image, SolrSearch_ViewHelpers::getDocTitle($doc)); ?>
                                     </div>
-                                <?php } ?>
+                                <?php elseif($item->hasThumbnail()):?>
+                                    <?php echo link_to_item(item_image('thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);?>
+                                <?php endif; ?>
 
                                 <!-- OBJECT -->
                                 <?php if($item->getItemType()->name == 'Object'){?>
@@ -342,32 +343,32 @@ jQuery(document).ready(function() {
                                         <?php $beelden="<table><th width='120'></th><th width='375'></th>";
                                          if(metadata($item,array('Item Type Metadata','Objectnaam')))
                                             $beelden.="<tr><td><strong>Objectnaam:</strong></td><td>".link_to_item(ucfirst(metadata($item,array('Item Type Metadata','Objectnaam'))))."</td></tr>";
-                                        
+
                                         if(metadata($item,array('Dublin Core','Title')))
                                           $beelden.="<tr><td><strong>Titel:</strong></td><td>".link_to_item(ucfirst(metadata($item,array('Dublin Core','Title'))))."</td></tr>";
-                                        
+
                                         if(metadata($item,array('Dublin Core','Identifier'))){
                                             $identifier = metadata($item,array('Dublin Core','Identifier'));
                                             $beelden.="<tr><td><strong>Objectnummer:</strong></td><td>".$identifier."</td></tr>";
                                         }
                                         if(metadata($item,array('Dublin Core','Date')))
                                             $beelden.="<tr><td><strong>Datering:</strong></td><td>".metadata($item,array('Dublin Core','Date'))."</td></tr>";
-                                       
-                                        
+
+
                                         if(metadata($item,array('Dublin Core','Description')))
                                             $beelden.="<tr><td ><strong>Beschrijving:</strong></td><td width=375>".metadata($item,array('Dublin Core','Description'),array('snippet'=>200))."</td></tr>";
-                                       
-                                        
+
+
                                         $beelden.="</table>";
-                                        
+
                                         echo $beelden;
                                         ?>
                                     </div>
                                 <?php } ?>
 
                                 <!-- Collectie -->
-                                <?php if($item->getItemType()->name == 'Collectie'){                                                   
-                                    
+                                <?php if($item->getItemType()->name == 'Collectie'){
+
                                     $actoren= "<table><th width='120'></th><th width='375'></th>";
 
                                     if(metadata($item,array('Item Type Metadata','Naam instelling')))
@@ -390,7 +391,7 @@ jQuery(document).ready(function() {
                                         $actoren.= "<tr><td><strong>E-mail:</strong></td><td>".metadata($item,array('Item Type Metadata','E-mail'))."</td></tr>";
                                     if(metadata($item,array('Item Type Metadata','Beschrijving')))
                                            $actoren.="<tr><td ><strong>Beschrijving:</strong></td><td width=375>".metadata($item,array('Item Type Metadata','Beschrijving'),array('snippet'=>200))."</td></tr>";
-                                       
+
                                     $actoren .="</table>";//.plugin_append_to_items_browse_each();
                                 ?>
                                     <div class="title"><?php echo $actoren; ?></div>
@@ -399,9 +400,9 @@ jQuery(document).ready(function() {
                                 <!-- concept -->
                                 <?php if($item->getItemType()->name == 'Algemene-info'){?>
                                     <div class="title">
-                                    <?php 
+                                    <?php
                                         $werktuigen="<table width='300'><th width='120'></th><th></th>";
-                                        
+
                                         if(metadata($item,array('Dublin Core','Title')))
                                             $werktuigen.="<tr><td><strong>Naam:</strong></td><td>".link_to_item(ucfirst(metadata($item,array('Dublin Core','Title'))))."</td></tr>";
                                         if(metadata($item,array('Item Type Metadata','Scope')))
@@ -413,11 +414,29 @@ jQuery(document).ready(function() {
                                     </div>
                                 <?php } ?>
 
+                                <!-- concept -->
+                                <?php if($item->getItemType()->name == 'Publicatie' || $item->getItemType()->name == 'Project'){?>
+                                  <div class="title">
+                                  <?php $pro="<table><th width='120'></th><th width='375'></th>";
+
+                                  if(metadata($item,array('Dublin Core','Title')))
+                                    $pro.="<tr><td><strong>Titel:</strong></td><td>".link_to_item(ucfirst(metadata($item,array('Dublin Core','Title'))))."</td></tr>";
+
+                                  if(metadata($item,array('Dublin Core','Description'))){
+                                      $description = metadata($item,array('Dublin Core','Description'),array('snippet'=>50));
+                                      $pro.="<tr><td><strong>Objectnummer:</strong></td><td>".$description."</td></tr>";
+                                  }
+                                  $pro .= "</table>";
+                                  echo $pro;?>
+                                  </div>
+                                <?php } ?>
+
+
                                 <?php $tags = $doc->__get('tag');?>
                                 <?php if($tags){ ?>
                                     <div class="tags">
                                         <strong>Trefwoorden:</strong>
-                                        <?php 
+                                        <?php
                                         if(is_array($tags)){
                                             foreach($tags as $tag){
                                                 echo "<a rel='nofollow' href='".libis_curPageURL()."AND tag:\"".$tag."\"'>".$tag."</a>";
@@ -426,12 +445,12 @@ jQuery(document).ready(function() {
                                             }
                                         }else{
                                             echo "<a rel='nofollow' href='".libis_curPageURL()."AND tag:\"".$tags."\"'>".$tags."</a>";
-                                        }?>    
+                                        }?>
                                     </div>
-                                <?php } ?>    
+                                <?php } ?>
 
-                                <?php else: ?>         
-                                
+                                <?php else: ?>
+
                                     <div class="title">
                                         <h3><a href="<?php echo $doc->url; ?>" class="result-title">
                                         <?php echo is_array($doc->title) ? $doc->title[0] : $doc->title; ?>
@@ -450,12 +469,12 @@ jQuery(document).ready(function() {
                                       </ul>
                                     <?php endif; ?>
 
-                                    <div class='textfields'>    
-                                        <?php $tags = $doc->__get('tag');?> 
+                                    <div class='textfields'>
+                                        <?php $tags = $doc->__get('tag');?>
                                         <?php if($tags){ ?>
                                         <div class="tags">
                                         <strong>Trefwoorden:</strong>
-                                            <?php 
+                                            <?php
                                             if(is_array($tags)){
                                                 foreach($tags as $tag){
                                                     echo "<a href='".libis_curPageURL()."AND tag:\"".$tag."\"'>".$tag."</a>";
@@ -464,9 +483,9 @@ jQuery(document).ready(function() {
                                                 }
                                             }else{
                                                 echo "<a href='".libis_curPageURL()."AND tag:\"".$tags."\"'>".$tags."</a>";
-                                            }?>    
+                                            }?>
                                         </div>
-                                        <?php } ?>   
+                                        <?php } ?>
                                     </div>
                                     </div>
                                 <?php endif;?>
@@ -474,35 +493,35 @@ jQuery(document).ready(function() {
                         </div>
                     </div>
                 </div>
-               
+
                 <?php endforeach; } ?>
         </div>
     </div>
-    
+
     <!-- BEGIN SOLR GEOLOCATIION -->
-    <?php 
-        //uitbreiding solr-geolocation        
+    <?php
+        //uitbreiding solr-geolocation
         $locationSolr = array();
         $itemsSolr = array();
         if($itemids){
             foreach($itemids as $id){
-                $item = get_record_by_id('item',$id);                    
+                $item = get_record_by_id('item',$id);
                 $loc = $locs = get_db()->getTable('Location')->findLocationByItem($item, true);
                 if(!empty($loc)){
                     $locationsSolr[] = $loc;
                     $center = $loc[$id];
-                    $itemsSolr[] = $item;  
+                    $itemsSolr[] = $item;
                 }
-            }          
-        }  
-    
+            }
+        }
+
         if(!empty($locationsSolr)){
-            $locations = $locationsSolr;            
+            $locations = $locationsSolr;
             $session->from= 'solr';
             $session->locations= $locations;
             //var_dump($locationsSolr);?>
-            <div id="map-block" style="clear:both;">        
-                <?php 
+            <div id="map-block" style="clear:both;">
+                <?php
                 require(GEOLOCATION_PLUGIN_DIR . '/views/helpers/GoogleMap.php');
                 $map = new Geolocation_View_Helper_GoogleMap();
                 echo $map->googleMap('map-display', array('loadKml'=>true));?>
@@ -510,25 +529,25 @@ jQuery(document).ready(function() {
         <?php } ?>
         <div id="handle" style="display:none;"></div>
         <!-- END SOLR-GEOLOCATION -->
-    
+
         <?php //if(!empty($itemids)){//echo relatedTagCloud_get($itemids);} ?>
-    
+
     <div class="topresults bottom">
         <div class="resultCount"><?php echo __('%s resultaten', $results->response->numFound); ?></div>
-        <?php echo pagination_links(array('partial_file' => 'common/pagination.php','per_page'=>$per_page)); ?> 
-        
+        <?php echo pagination_links(array('partial_file' => 'common/pagination.php','per_page'=>$per_page)); ?>
+
         <div class="resultsPerPage">
             <form action='<?php echo libis_curPageURL();?>' method="post">
                 <select name="perPage" onchange="this.form.submit()">
                   <option <?php if($per_page==10){echo 'selected="selected"';}?> value="10">10 resultaten per pagina</option>
                   <option <?php if($per_page==20){echo 'selected="selected"';}?> value="20">20 resultaten per pagina</option>
-                  <option <?php if($per_page==50){echo 'selected="selected"';}?> value="50">50 resultaten per pagina</option>                  
+                  <option <?php if($per_page==50){echo 'selected="selected"';}?> value="50">50 resultaten per pagina</option>
                 </select>
             </form>
-        </div>           
-    </div>  
+        </div>
+    </div>
 </div>
 
 <?php
-    echo foot();    
+    echo foot();
 ?>
