@@ -333,7 +333,9 @@ jQuery(document).ready(function() {
                                         <?php echo link_to_item(digitool_get_thumb_for_browse($item,'140'));?>
                                     </div>
                                 <?php elseif($item->hasThumbnail()):?>
+                                    <div class="image">
                                     <?php echo link_to_item(item_image('thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);?>
+                                    </div>
                                 <?php endif; ?>
 
                                 <!-- OBJECT -->
@@ -414,7 +416,7 @@ jQuery(document).ready(function() {
                                     </div>
                                 <?php } ?>
 
-                                <!-- concept -->
+                                <!-- propub -->
                                 <?php if($item->getItemType()->name == 'Publicatie' || $item->getItemType()->name == 'Project'){?>
                                   <div class="title">
                                   <?php $pro="<table><th width='120'></th><th width='375'></th>";
@@ -423,8 +425,8 @@ jQuery(document).ready(function() {
                                     $pro.="<tr><td><strong>Titel:</strong></td><td>".link_to_item(ucfirst(metadata($item,array('Dublin Core','Title'))))."</td></tr>";
 
                                   if(metadata($item,array('Dublin Core','Description'))){
-                                      $description = metadata($item,array('Dublin Core','Description'),array('snippet'=>50));
-                                      $pro.="<tr><td><strong>Objectnummer:</strong></td><td>".$description."</td></tr>";
+                                      $description = metadata($item,array('Dublin Core','Description'),array('snippet'=>100));
+                                      $pro.="<tr><td><strong>Beschrijving:</strong></td><td>".$description."</td></tr>";
                                   }
                                   $pro .= "</table>";
                                   echo $pro;?>
