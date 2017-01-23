@@ -103,45 +103,45 @@ function Libis_get_exhibits($tag = "")
         if($tag=="main"){
 		$html= '<center><table class="exhibit_general_list"><tr><td>';
                 //get current exhibit
-                       
+
                 $html.= '<p><a href="'.url("verhalen/landbouw").'">Landbouw</a></p>';
                 $html.= '<a href="'.url("verhalen/landbouw").'"><img width="200" src="'.img('banner_landbouw_hoofding.jpg').'"/></a>';
-                                               
-                $html.= '</td><td>';               
-              
+
+                $html.= '</td><td>';
+
                 $html.= '<p><a href="'.url("verhalen/voedsel").'">Voeding</a></p>';
                 $html.= '<a href="'.url("verhalen/voedsel").'"><img width="200" src="'.img('banner_voeding_hoofding.jpg').'"/></a>';
-                
-                //takes care of the link and text                
+
+                //takes care of the link and text
 		$html.= '</td></tr></table></center>';
                 return $html;
 	}
         if($tag == ""){
 		$exhibits = get_records('Exhibit',array('sort_field'=>'id','sort_dir'=>'d'),999);
 	}else{
-		$exhibits = get_records('Exhibit',array('tags' =>$tag),999);
+		$exhibits = get_records('Exhibit',array('tags' =>$tag,'sort_field'=>'id','sort_dir'=>'d'),999);
 		//if there were no exhibits found
 		if(empty($exhibits)){
 			return "<p>We're sorry but there were no stories found with this tag</p>";
 		}
 	}
 	//tag 'algemeen' has different formatting then the others
-	
+
         if($tag=="algemeen" || $tag=="voedsel"){
             $html= '<center><table class="exhibit_general_list"><tr>';
-            
-             //sort items by 
+
+             //sort items by
             usort($exhibits, function($a, $b) {
                 return strtotime($a->id) - strtotime($b->id);
             });
 
-            foreach($exhibits as $exhibit) {                   
+            foreach($exhibits as $exhibit) {
                 if($exhibit->thumbnail){
                     $html.= '<td><p style="height:35px;">'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
                     $html.= exhibit_builder_link_to_exhibit($exhibit,'<img width="175" src="'.img($exhibit->thumbnail,'images/verhalen_thumbs').'"/></td>');
-                }		    
+                }
             }
-            $html.= '</tr></table></center>';   
+            $html.= '</tr></table></center>';
             return $html;
         }else{
             $html= '<ul class="exhibit_tag_list">';
@@ -158,12 +158,12 @@ function Libis_get_exhibits($tag = "")
                 //takes care of the link and text
                 $html.= '<p>'.(exhibit_builder_link_to_exhibit($exhibit, $exhibit->title)).'</p>';
                 //$html.= '<p>'.truncate(exhibit('description', array(), $exhibit),280).'</p>';
-                $html.= '<p>'.metadata($exhibit,'description',array('snippet'=>'280', 'no_escape' => true)).'</p>';    
+                $html.= '<p>'.metadata($exhibit,'description',array('snippet'=>'280', 'no_escape' => true)).'</p>';
                 $html.= '</li>';
 
             }
             $html.= '</ul>';
-		
+
 	}
         return $html;
 }
@@ -247,14 +247,14 @@ function libis_get_similar_objects($item_original){
                     ) && $item_original->id != $item->id){
                 if(digitool_item_has_digitool_url($item)){
                     $similars[] = $item;
-                }    
-            }           
+                }
+            }
         }
         if(!empty($similars))
             return $similars;
         else
             return false;
-        
+
     }else{
         return false;
     }
@@ -434,7 +434,7 @@ function Libis_get_simple_pages_nav($parentId = 0, $currentDepth = null, $sort =
 	}
 	//loop through all toplevel pages
 	while (loop_simple_pages()):
-           
+
             //if menu item equal or is a child of current page display children
             if(simple_page('id') == $currentPage->id || simple_page('id') == $ancestorPage->id){
                 $childPageLinks = simple_pages_get_links_for_children_pages($ancestorPage->id, null, $sort, $requiresIsPublished, $requiresIsAddToPublicNav);
@@ -714,34 +714,34 @@ function truncate($text, $length = 100, $ending = '...', $exact = false, $consid
 }
 
 //returns the proper name/title of an exhibit tag
-function libis_breadcrumb_tag($exhibit){    
+function libis_breadcrumb_tag($exhibit){
     $tag = tag_string($exhibit,null);
 
     if($tag == 'algemeen'){
         return false;
-    }  
-    
+    }
+
     $tags = explode(', ',$tag);
 
     $namen = array(
         "middenveld" => "Middenveld en beleid",
         "oogst" => "Een rijke oogst",
         "mensen" => "Boer & Co",
-        "landschap" => "Boerderij en landschap",        
+        "landschap" => "Boerderij en landschap",
         "identiteit" => "Identiteit en beeldvorming",
         "eetcultuur" => "Eetcultuur",
         "industrie" => "Industrie en wetenschap",
         "voedsel" => "Voeding",
         "landbouw" => "Landbouw"
-    );  
-    
+    );
+
     $tag_text='';
     foreach($tags as $tag):
-        $tag_text .= " <a href='/verhalen/".$tag."'>".$namen[$tag]."</a>, "; 
+        $tag_text .= " <a href='/verhalen/".$tag."'>".$namen[$tag]."</a>, ";
     endforeach;
     $tag_text = rtrim($tag_text, ", ");
     $html = '<li>'.$tag_text.' ></li>';
-    return $html;    
+    return $html;
 }
 
 //get current url
@@ -761,27 +761,27 @@ function libis_curPageURL() {
 
 function libis_get_type_organisations(){
     $items = get_records('Item',array('type'=>'Collectie'),10000);
-    
+
     $types = array();
-   
+
     foreach($items as $item){
         $type = metadata($item,array("Item Type Metadata","Type Organisatie"));
-        if($type !="")        
-            $types[] = $type;        
-    }    
+        if($type !="")
+            $types[] = $type;
+    }
     echo "<ul>";
-    foreach($types as $type){        
+    foreach($types as $type){
         echo "<li><a href='".url("/solr-search/results/?facet=226_s:%22".$type."%22 AND itemtype:%22Collectie%22")."'>".$type."</li>";
     }
         echo "</ul>";
-     
+
 }
 
 function libis_get_simple_page_three(){
     //get page id
     $parentPage = simple_pages_get_current_page();
     $parentId = $parentPage->id;
-    
+
     //find children pages
     $findBy = array('parent_id' => $parentId, 'sort' => 'order');
     $findBy['is_published'] = true;
@@ -803,20 +803,20 @@ function libis_get_simple_page_three(){
     //search children
     $j=0;
     while($j<20){
-        $check=false;        
+        $check=false;
         for($i=0;$i <= sizeof($navLinks[$j]);$i++){
-            $k=0; 
-            $parent = $navLinks[$j][$i];  
+            $k=0;
+            $parent = $navLinks[$j][$i];
             if($parent['id']!=''){
-                
+
                 $findBy = array('parent_id' => $parent['id'], 'sort' => 'order');
                 $findBy['is_published'] = true;
                 $pages=null;
                 $pages = get_db()->getTable('SimplePagesPage')->findBy($findBy);
                 echo "<br>".$parent['id']." - ".sizeof($pages);
                 if($pages){
-                                   
-                    foreach ($pages as $page) {                    
+
+                    foreach ($pages as $page) {
                         //make url
                         $uri = uri($page->slug);
 
@@ -831,7 +831,7 @@ function libis_get_simple_page_three(){
                     //$check = true;
                 }
             }
-            
+
         }
         $j++;
     }
@@ -888,18 +888,18 @@ function libis_get_featured_news(){
         if($item->hasThumbnail()):
             $html .= link_to_item(item_image('thumbnail', array('width'=>'80'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
         endif;
-                      
+
         $html .= "<div class='in_de_kijker_text'>".link_to_item("<h4>".metadata($item,array('Dublin Core','Title'))."</h4>", array(), 'show', $item).
                 "<p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>110))."</p></div>";
         $html .= "<div class='lees_meer'>".link_to_item(__("Lees verder.."),array(),'show', $item)."</div></div>";
-        
+
     }
-    
+
     return $html;
 }
 
 function libis_get_news(){
-    $html = "<div class='wegwijs-block'>";   
+    $html = "<div class='wegwijs-block'>";
     $html .="<h2>Recente Nieuwsberichten</h2>";
     $nieuws = get_records('Item',array('type'=>'Nieuwsbericht','recent'=>true,'sort_field'=>'added','sort_dir'=>'d'),5);
     foreach($nieuws as $item){
@@ -907,18 +907,18 @@ function libis_get_news(){
         if($item->hasThumbnail()):
             $html .= link_to_item(item_image('thumbnail', array('width'=>'60'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
         endif;
-                      
+
         $html .= link_to_item("<h4>".metadata($item,array('Dublin Core','Title'))."</h4>",array(), 'show', $item);
         $html .= "<p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p>";
         $html .= "</div>";
-        
+
     }
     $html .= "<div class='lees_meer'><a href='".url('solr-search/results?q=&facet=itemtype:("Nieuwsbericht" OR "Agendapunt")')."'>Lees meer..</a></div></div>";
     return $html;
 }
 
 function libis_get_agenda(){
-    $html = "<div class='wegwijs-block'>";   
+    $html = "<div class='wegwijs-block'>";
     $html .="<h2>Agenda</h2>";
     $agenda = get_records('Item',array('type'=>'Agendapunt','featured'=>true,'sort_field'=>'added','sort_dir'=>'d'),3);
     foreach($agenda as $item){
@@ -926,11 +926,11 @@ function libis_get_agenda(){
         if($item->hasThumbnail()):
             $html .= link_to_item(item_image('thumbnail', array('width'=>'60'), 0, $item), array('class' => 'item-thumbnail'), 'show', $item);
         endif;
-                      
+
         $html .= link_to_item("<h4>".metadata($item,array('Dublin Core','Title'))."</h4>",array(), 'show', $item);
         $html .= "<p>".metadata($item,array('Dublin Core','Description'),array('snippet'=>50))."</p>";
         $html .= "</div>";
-        
+
     }
     $html .= "<div class='lees_meer'><a href='".url('solr-search/results?q=&facet=itemtype:("Nieuwsbericht" OR "Agendapunt")')."'>Lees meer..</a></div></div>";
     return $html;
@@ -951,9 +951,9 @@ function libis_get_projects($lopend = true){
         elseif(digitool_item_has_digitool_url()):
             $html .= link_to_item(digitool_get_thumb($item,true,false,95), array('class' => 'item-thumbnail'), 'show', $item);
         endif;
-        $html .= link_to_item("<strong>".metadata($item,array('Dublin Core','Title'))."</strong>",array(), 'show', $item)."</p></td>";       
+        $html .= link_to_item("<strong>".metadata($item,array('Dublin Core','Title'))."</strong>",array(), 'show', $item)."</p></td>";
         $i++;
-        
+
     }
     $html .= "</tr></table><div class='lees_meer'><a href='".url('solr-search/results?q=&facet=itemtype:"Project"')."'>Lees meer..</a></div>";
     return $html;
@@ -963,26 +963,26 @@ function libis_get_publicaties($pub_tag=null){
     $html="<ul>";
     $items = get_records('Item',array('type'=>'Publicatie','sort_field'=>'Dublin Core,Date','sort_dir'=>'d'),400);
     if($pub_tag):
-        foreach($items as $item){  
+        foreach($items as $item){
             $tags = $item->Tags;
             foreach($tags as $tag):
                 if(strtolower($pub_tag) == strtolower($tag->name)):
-                    $html .= "<li>".link_to_item("<strong>".metadata($item,array('Dublin Core','Title'))."</strong>",array(), 'show', $item)."</li>";       
+                    $html .= "<li>".link_to_item("<strong>".metadata($item,array('Dublin Core','Title'))."</strong>",array(), 'show', $item)."</li>";
                 endif;
             endforeach;
-        
+
         }
         $html .= "</ul><div class='lees_meer'><a href='".url('solr-search/results?q=&facet=itemtype:"Publicatie" AND tag:"'.$pub_tag.'"')."'>Lees meer..</a></div>";
     else:
-        foreach($items as $item):  
+        foreach($items as $item):
              if(metadata($item,array('Item Type Metadata','recent'))=='ja'){
-            $html .= "<li>".link_to_item("<strong>".metadata($item,array('Dublin Core','Title'))."</strong>",array(), 'show', $item)."</li>";       
+            $html .= "<li>".link_to_item("<strong>".metadata($item,array('Dublin Core','Title'))."</strong>",array(), 'show', $item)."</li>";
              }
-        endforeach;       
+        endforeach;
         $html .= "</ul><div class='lees_meer'><a href='".url('solr-search/results?q=&facet=itemtype:"Publicatie"')."'>Lees meer..</a></div>";
    endif;
-        
-        
+
+
     return $html;
 }
 
@@ -995,9 +995,9 @@ function libis_get_simple_page_content($title){
  * Create a tag cloud made of divs that follow the hTagcloud microformat
  *
  * @package Omeka\Function\View\Tag
- * @param Omeka_Record_AbstractRecord|array $recordOrTags The record to retrieve 
+ * @param Omeka_Record_AbstractRecord|array $recordOrTags The record to retrieve
  * tags from, or the actual array of tags
- * @param string|null $link The URI to use in the link for each tag. If none 
+ * @param string|null $link The URI to use in the link for each tag. If none
  * given, tags in the cloud will not be given links.
  * @param int $maxClasses
  * @param bool $tagNumber
@@ -1015,11 +1015,11 @@ function libis_tag_cloud($recordOrTags = null, $link = null, $maxClasses = 20, $
     } else {
         $tags = $recordOrTags;
     }
-    
+
     if (empty($tags)) {
         return '<p>' . __('No tags are available.') . '</p>';
     }
-    
+
     //Get the largest value in the tags array
     $largest = 0;
     foreach ($tags as $tag) {
@@ -1029,11 +1029,11 @@ function libis_tag_cloud($recordOrTags = null, $link = null, $maxClasses = 20, $
     }
     $html = '<div class="hTagcloud">';
     $html .= '<ul class="popularity">';
-    
+
     if ($largest < $maxClasses) {
         $maxClasses = $largest;
     }
-    
+
     foreach( $tags as $tag ) {
         $size = (int)(($tag['tagCount'] * $maxClasses) / $largest - 1);
         $class = str_repeat('v', $size) . ($size ? '-' : '') . 'popular';
@@ -1054,7 +1054,7 @@ function libis_tag_cloud($recordOrTags = null, $link = null, $maxClasses = 20, $
         $html .= '</li>' . "\n";
     }
     $html .= '</ul></div>';
-    
+
     return $html;
 }
 
@@ -1070,13 +1070,13 @@ function libis_get_image($item){
             echo '</div>';
         endif;
         echo "</div>";
-     
+
         if(metadata('item',array('Dublin Core','License')) != ""){
             $link = metadata('item',array('Dublin Core','License'));
             $img = str_replace("http://creativecommons.org/licenses/","http://i.creativecommons.org/l/",$link);
             $img .= "88x31.png";
             echo "<p style='clear:both;'><a href='".$link."'><img alt='Creative Commons Licentie' src='".$img."'></a></p>";
-        }       
+        }
     endif;
 }
 
@@ -1090,27 +1090,27 @@ function libis_exhibit_nav($exhibitPage=null){
     $html = '<ul class="exhibit-page-nav navigation">' . "\n";
     //$pagesTrail = $exhibitPage->getAncestors();
     $pagesTrail[] = $exhibitPage;
-    
+
     foreach ($pagesTrail as $page) {
         $linkText = $page->title;
         $pageExhibit = $page->getExhibit();
         $pageParent = $page->getParent();
-        $pageSiblings = ($pageParent ? exhibit_builder_child_pages($pageParent) : $pageExhibit->getTopPages()); 
+        $pageSiblings = ($pageParent ? exhibit_builder_child_pages($pageParent) : $pageExhibit->getTopPages());
 
-       
+
         foreach ($pageSiblings as $pageSibling) {
             $html .= '<li' . ($pageSibling->id == $page->id ? ' class="current"' : '') . '>';
             $html .= '<a class="exhibit-page-title" href="' . html_escape(exhibit_builder_exhibit_uri($exhibit, $pageSibling)) . '">';
             $html .= html_escape($pageSibling->title) . "</a></li>\n";
         }
-       
+
     }
     $html .= '</ul>' . "\n";
     $html = apply_filters('exhibit_builder_page_nav', $html);
     return $html;
 }
 
-function libis_get_exhibit_for_print($exhibit){    
+function libis_get_exhibit_for_print($exhibit){
 ?>
     <!DOCTYPE html>
     <html>
@@ -1126,18 +1126,18 @@ function libis_get_exhibit_for_print($exhibit){
     <?php echo "<em>Door ".$exhibit->credits."</em>"; ?>
     </div>
     <br>
-    <div id="exhibit-sections">	
-	<h3>Inhoudstafel</h3>	
+    <div id="exhibit-sections">
+	<h3>Inhoudstafel</h3>
         <div class="exhibit-sections-item">
         <ul id="inhoudstafel">
             <?php set_exhibit_pages_for_loop_by_exhibit(); ?>
             <?php foreach (loop('exhibit_page') as $exhibitPage): ?>
-            
+
             <?php echo exhibit_builder_page_summary($exhibitPage); ?>
-           
+
             <?php endforeach; ?>
-        </ul>	
-        </div>        
+        </ul>
+        </div>
     </div>
     <div id="exhibit-bonanza">
         <?php set_exhibit_pages_for_loop_by_exhibit(); ?>
@@ -1151,8 +1151,8 @@ function libis_get_exhibit_for_print($exhibit){
             <?php endif; ?>
             </div>
             <?php echo exhibit_builder_page_text(1); ?>
-            
-            <?php 
+
+            <?php
                 $exhibit_children = exhibit_builder_child_pages();
                 //var_dump($exhibit_children);
                 if($exhibit_children):
@@ -1168,10 +1168,10 @@ function libis_get_exhibit_for_print($exhibit){
                     <?php endif; ?>
                     </div>
                     <?php echo exhibit_builder_page_text(1); ?>
-                    <?php endforeach;?>  
-                <?php endif;?>    
+                    <?php endforeach;?>
+                <?php endif;?>
             <br><br>
-            <?php //echo exhibit_builder_page_summary($exhibitPage); ?>           
+            <?php //echo exhibit_builder_page_summary($exhibitPage); ?>
         <?php endforeach; ?>
     </div>
     </body>
@@ -1185,20 +1185,20 @@ function libis_get_exhibit_for_print($exhibit){
 * @param string $metadata The metadata of which the label is needed
 * @return string The element name.
 */
-function libis_get_element_name($metadata){    
+function libis_get_element_name($metadata){
     $item = get_current_record('item');
-    
+
     //search elements of itemtype
     $type = $item->getItemType();
     $db = get_db();
     $elements = $db->getTable('Element')->findByItemType($type->id);
     $texts = $db->getTable('ElementText')->findByRecord($item);
-   
-    foreach($texts as $text):   
+
+    foreach($texts as $text):
         if($text->text == $metadata):
             $element = $db->getTable('Element')->find($text->element_id);
             return $element->name;
-        endif;        
-    endforeach;   
+        endif;
+    endforeach;
 }
 ?>
