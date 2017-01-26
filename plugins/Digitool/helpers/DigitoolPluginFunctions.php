@@ -7,7 +7,7 @@
 */
 
 /**
- * 
+ *
  * @param type $item
  * @return type
  */
@@ -20,8 +20,8 @@ function digitool_admin_form($item){
     ?>
     <div>
     <b>Digitool images currently associated with this item:</b>
-    <br><?php echo digitool_get_thumb_admin($item,true);?>    
-    
+    <br><?php echo digitool_get_thumb_admin($item,true);?>
+
     </div>
     <br><br>
     <?php }?>
@@ -119,7 +119,7 @@ function digitool_admin_form($item){
 }
 
 function digitool_get_digitool_urls($item){
-    $digis = get_db()->getTable('DigitoolUrl')->findDigitoolUrlByItem($item,false);   
+    $digis = get_db()->getTable('DigitoolUrl')->findDigitoolUrlByItem($item,false);
     return $digis;
 }
 
@@ -131,22 +131,22 @@ function digitool_get_digitool_urls($item){
 function digitool_get_thumb_admin($item,$link=false){
 
 	$digis = digitool_get_digitool_urls($item);
-        
+
         if(!$digis){return false;}
-	
+
         $html="<ul>";
         foreach($digis as $digi){
             if($link){
                 $html.='<li><a href="/admin/digitool/index/'.$digi->id.'"><img src="'.$digi->get_thumb().'" width="100" /></a><br> ';
             }else{
                 $html.='<li><img src="'.$digi->get_thumb().'" width="100" /><br> ';
-            }    
+            }
             //$html.= button_to(url('digitool/index/delete-confirm/' . $digi->id),
-                //null, __('Delete'),array('class' => 'delete-confirm')).'</li>';                
+                //null, __('Delete'),array('class' => 'delete-confirm')).'</li>';
 
         }
         $html .="</ul>";
-        return $html;        
+        return $html;
 }
 
 /**
@@ -155,9 +155,9 @@ function digitool_get_thumb_admin($item,$link=false){
 * @return void
 **/
 function digitool_get_thumb_url($item){
-    
-    $digis = digitool_get_digitool_urls($item);    
-    
+
+    $digis = digitool_get_digitool_urls($item);
+
     if($digis){
         return $digis[0]->get_thumb();
     }else{
@@ -173,27 +173,27 @@ function digitool_get_thumb_url($item){
 function digitool_get_thumb($item,$findOnlyOne = false,$linkToView = false,$width="",$class="",$alt=""){
 
     $html="";
-    
+
     $digis = digitool_get_digitool_urls($item);
 
     if(!$digis){ return false;}
-    
+
     foreach($digis as $digi){
         $thumb = $digi->get_thumb();
         $view = $digi->get_view();
-        
+
         if($linkToView){
-             $html.='<a href="'.$view.'" target="_blank"><img src="'.$thumb.'?quality=CRITICAL,ARCHIVE" ></a>';
+             $html.='<a href="'.$view.'" target="_blank"><img src="'.$thumb.'" ></a>';
         }else{
-            $html.='<img src="'.$thumb.'?quality=CRITICAL,ARCHIVE"  /> ';
+            $html.='<img src="'.$thumb.'"  /> ';
         }
         if($findOnlyOne){
             return $html;
         }
     }
-    
+
     return $html;
-    
+
 }
 
 /**
@@ -202,8 +202,8 @@ function digitool_get_thumb($item,$findOnlyOne = false,$linkToView = false,$widt
 * @return html of the thumbnails
 **/
 function digitool_get_thumb_for_home($item){
-    
-    $digis = digitool_get_digitool_urls($item);    
+
+    $digis = digitool_get_digitool_urls($item);
 
     if(!empty($digis)){
         $thumb =  $digis[0]->get_thumb();
@@ -215,7 +215,7 @@ function digitool_get_thumb_for_home($item){
 
 function digitool_get_thumb_for_browse($item, $width="500",$class="",$alt=""){
 
-	$digis = digitool_get_digitool_urls($item);    
+	$digis = digitool_get_digitool_urls($item);
 
         if(!empty($digis)){
             $thumb =  $digis[0]->get_thumb();
@@ -230,14 +230,14 @@ function digitool_get_thumb_for_browse($item, $width="500",$class="",$alt=""){
 function digitool_simple_gallery($item,$size=500,$type='object'){
 
 	$i=0;
-	
-        $digis = digitool_get_digitool_urls($item);    
-        
+
+        $digis = digitool_get_digitool_urls($item);
+
 	if(sizeof($digis)==1){
 		$thumb =  $digis[0]->get_thumb();
                 $view =  $digis[0]->get_view();
 
-		$html ="<div id='image'><a href='".$view."'><img src='".$thumb."?quality=CRITICAL,ARCHIVE' /></a></div>";
+		$html ="<div id='image'><a href='".$view."'><img src='".$thumb."' /></a></div>";
 
 		return $html;
 	}else{
@@ -250,14 +250,14 @@ function digitool_simple_gallery($item,$size=500,$type='object'){
                             $altItem = get_record_by_id('item',$altItem_id);
                             $link = url($altItem);
                         }
-                                                
+
 			if($i==0){
-                            $html.="<div id='gallery-image'><a href='".$link."'><img src='".$thumb."?quality=CRITICAL,ARCHIVE'/></a></div>";
+                            $html.="<div id='gallery-image'><a href='".$link."'><img src='".$thumb."'/></a></div>";
                             $html.="<div id='gallery-thumbnails' style='height: 400px;-moz-column-width: 70px;-webkit-column-width:70px;-moz-column-gap: 0px;column-width: 70px;'>";
 			}
 			$width = 50;
 			$html.= "<a href='#' rel='".$thumb."' name='".$link."' class='image'><img src='".$thumb."' class='thumb' width='".$width."' border='0'/></a>";
-                        
+
 			$i++;
 		}
 		$html .= "</div></div>";
@@ -290,8 +290,8 @@ function digitool_simple_gallery($item,$size=500,$type='object'){
 **/
 // Sam: De default waarden toegevoegd voor Internet Explorer
 function digitool_get_view($item, $findOnlyOne = false,$width="500",$height="100%"){
-    $html='';   
-    
+    $html='';
+
     $digis = digitool_get_digitool_urls($item);
     if(!$digis){ return false;}
 
@@ -302,7 +302,7 @@ function digitool_get_view($item, $findOnlyOne = false,$width="500",$height="100
             return $html;
         }
     }
-    
+
     return $html;
 }
 
@@ -313,7 +313,7 @@ function digitool_get_view($item, $findOnlyOne = false,$width="500",$height="100
 **/
 function digitool_item_has_digitool_url($item = null){
     $digis = digitool_get_digitool_urls($item);
-    
+
     if($digis){
         return true;
     }
@@ -344,13 +344,13 @@ function digitool_thumbnail($item,$fileFirst = true, $size = "150",$class="",$al
 
 /**
  * returns
- * 
+ *
  * @param type $item
  * @param type $pid
  * @return boolean
  */
 function digitool_find_items_with_same_pid($item=null,$pid=null){
-    
+
     if($item == null){ return false;}
 
     if($pid == null){
@@ -380,7 +380,7 @@ function digitool_find_items_with_same_pid($item=null,$pid=null){
 
 /**
  * Calculates restricted dimensions with a maximum of $goal_width by $goal_height
- * 
+ *
  * @param type $goal_width
  * @param type $goal_height
  * @param type $imageurl
@@ -400,14 +400,14 @@ function digitool_resize_dimensions($goal_width,$goal_height,$imageurl) {
 
         $vo_http_response = $vo_http_client->request();
         $image = $vo_http_response->getBody();
-        //echo($image);    
+        //echo($image);
 
         $new_image = imageCreateFromString($image);
         if(!$new_image):
             $return['width'] = "";
             $return['height'] = "";
         endif;
-        
+
         // Get new dimensions
         $width = imagesx($new_image);
         $height = imagesy($new_image);
@@ -416,11 +416,11 @@ function digitool_resize_dimensions($goal_width,$goal_height,$imageurl) {
         //var_dump($size);
         $width = $size[0];
         $height = $size[1];
-    }    
-    
+    }
+
     $return['width'] = $width;
-    $return['height'] = $height;        
-    
+    $return['height'] = $height;
+
     // If the ratio > goal ratio and the width > goal width resize down to goal width
     if ($width/$height > $goal_width/$goal_height && $width > $goal_width) {
         $return['width'] = $goal_width;
@@ -429,10 +429,10 @@ function digitool_resize_dimensions($goal_width,$goal_height,$imageurl) {
     // Otherwise, if the height > goal, resize down to goal height
     else if ($height > $goal_height) {
         $return['width'] = $goal_height/$height * $width;
-        $return['height'] = $goal_height;        
+        $return['height'] = $goal_height;
     }
-    
-    
+
+
 }
 
 
@@ -443,9 +443,9 @@ function digitool_resize_dimensions($goal_width,$goal_height,$imageurl) {
 * If this function is used with AJAX, this parameter may need to be set to true.
 * @return string
 */
-function digitool_scripts(){       
+function digitool_scripts(){
     queue_js_file('jquery.pagination');
-    head_js();       
+    head_js();
 }
 
 /**
@@ -484,7 +484,7 @@ function digitool_get_image_from_file($pid){
  * @return new URL for resized image.
  */
 function resize($pid,$opts=null){
-    
+
         $view_url = get_option('digitool_view');
 
 	$imagePath = urldecode($view_url.$pid."&custom_att_3=stream");
@@ -529,7 +529,7 @@ function resize($pid,$opts=null){
 		$download_image = false;
 	endif;
 	if($download_image == true):
-		
+
 		$vo_http_client = new Zend_Http_Client();
 		$config = array(
 				'adapter'    => 'Zend_Http_Client_Adapter_Proxy',
