@@ -198,9 +198,12 @@ endif; ?>
             <h3>Referenties</h3>
             <span class="werktuigblock"><p >
             <?php
-                $text3= metadata('item', array('Item Type Metadata','Referenties'));
-                $text3= str_replace("<br /><br />","<br>",$text3);
-                echo $text3;
+                $text3= metadata('item', array('Item Type Metadata','Referenties'),array('all'=>true));
+                foreach($text3 as $ref):
+                  $ref= str_replace("<br /><br />","<br>",$ref);
+                  echo $ref."<br>";
+                endforeach;
+
             ?>
             </p></span>
         <?php } ?>
