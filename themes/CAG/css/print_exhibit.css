@@ -39,7 +39,6 @@
         clear:both;
     }
     img {
-        width:100%;
         margin:0 10px 10px 0;
     }
 
@@ -57,6 +56,10 @@
       margin-bottom:20px;
       float:left;
       overflow : auto;
+    }
+
+    .exhibit-item img{
+      width:100%;
     }
 
     .exhibit-text{
