@@ -1120,7 +1120,7 @@ function libis_get_exhibit_for_print($exhibit){
     </head>
 
     <body>
-    <div class="logo" ><img src="<?php echo (img("cag_logo.png"));?>" /></div>
+    <div class="logo" ><img width="300" src="<?php echo (img("cag_logo.png"));?>" /></div>
 
     <h1><?php echo html_escape($exhibit['title']); ?></h1>
     <div id="exhibit_description">
@@ -1145,7 +1145,7 @@ function libis_get_exhibit_for_print($exhibit){
         <?php set_exhibit_pages_for_loop_by_exhibit(); ?>
         <?php foreach (loop('exhibit_page') as $exhibitPage): ?>
             <h2><span class="exhibit-page"><?php echo metadata('exhibit_page', 'title'); ?></h2>
-            <div class="image-left">
+
 
               <?php
               for ($i = 1; $i <= 8; $i++):
@@ -1153,7 +1153,7 @@ function libis_get_exhibit_for_print($exhibit){
                   $attachment = exhibit_builder_page_attachment($i);
                   if ($text || $attachment):
               ?>
-
+                <div class="image-left">
                 <?php if ($attachment): ?>
                 <div class="exhibit-item">
                     <?php echo exhibit_builder_attachment_markup($attachment, array('imageSize' => 'thumbnail'), array('class' => 'permalink')); ?>
@@ -1164,10 +1164,9 @@ function libis_get_exhibit_for_print($exhibit){
                     <?php echo $text; ?>
                 </div>
                 <?php endif; ?>
-
-
+                </div>
               <?php endif; endfor; ?>
-            </div>
+
 
             <?php
                 $exhibit_children = exhibit_builder_child_pages();
