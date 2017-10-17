@@ -1120,6 +1120,8 @@ function libis_get_exhibit_for_print($exhibit){
     </head>
 
     <body>
+    <div class="logo" ><img src="<?php echo (img("cag_logo.png"));?>" /></div>
+
     <h1><?php echo html_escape($exhibit['title']); ?></h1>
     <div id="exhibit_description">
     <?php echo $exhibit->description; ?>
@@ -1144,13 +1146,28 @@ function libis_get_exhibit_for_print($exhibit){
         <?php foreach (loop('exhibit_page') as $exhibitPage): ?>
             <h2><span class="exhibit-page"><?php echo metadata('exhibit_page', 'title'); ?></h2>
             <div class="image-left">
-            <?php if ($attachment = exhibit_builder_page_attachment(1)):?>
-            <div class="exhibit-item">
-                <?php echo exhibit_builder_attachment_markup($attachment, array('imageSize' => 'fullsize'), array('class' => 'permalink')); ?>
+
+              <?php
+              for ($i = 1; $i <= 8; $i++):
+                  $text = exhibit_builder_page_text($i);
+                  $attachment = exhibit_builder_page_attachment($i);
+                  if ($text || $attachment):
+              ?>
+
+                <?php if ($attachment): ?>
+                <div class="exhibit-item">
+                    <?php echo exhibit_builder_attachment_markup($attachment, array('imageSize' => 'thumbnail'), array('class' => 'permalink')); ?>
+                </div>
+                <?php endif; ?>
+                <?php if ($text): ?>
+                <div class="exhibit-text">
+                    <?php echo $text; ?>
+                </div>
+                <?php endif; ?>
+
+
+              <?php endif; endfor; ?>
             </div>
-            <?php endif; ?>
-            </div>
-            <?php echo exhibit_builder_page_text(1); ?>
 
             <?php
                 $exhibit_children = exhibit_builder_child_pages();
@@ -1160,14 +1177,27 @@ function libis_get_exhibit_for_print($exhibit){
                     foreach (loop('exhibit_page',$exhibit_children) as $exhibitPage_child): ?>
 
                     <h3><span class="exhibit-page"><?php echo metadata('exhibit_page', 'title'); ?></h3>
-                    <div class="image-left" width="250">
-                    <?php if ($attachment = exhibit_builder_page_attachment(1)):?>
-                    <div class="exhibit-item">
-                        <?php echo exhibit_builder_attachment_markup($attachment, array('imageSize' => 'fullsize'), array('class' => 'permalink')); ?>
-                    </div>
-                    <?php endif; ?>
-                    </div>
-                    <?php echo exhibit_builder_page_text(1); ?>
+
+                      <?php
+                      for ($i = 1; $i <= 8; $i++):
+                          $text = exhibit_builder_page_text($i);
+                          $attachment = exhibit_builder_page_attachment($i);
+                          if ($text || $attachment):
+                      ?>
+                      <div class="image-left" width="250">
+                        <?php if ($attachment): ?>
+                        <div class="exhibit-item">
+                            <?php echo exhibit_builder_attachment_markup($attachment, array('imageSize' => 'thumbnail'), array('class' => 'permalink')); ?>
+                        </div>
+                        <?php endif; ?>
+                          <?php if ($text): ?>
+                          <div class="exhibit-text">
+                              <?php echo $text; ?>
+                          </div>
+                          <?php endif; ?>
+                      </div>
+                      <?php endif; endfor; ?>
+
                     <?php endforeach;?>
                 <?php endif;?>
             <br><br>

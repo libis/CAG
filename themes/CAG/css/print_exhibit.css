@@ -1,4 +1,4 @@
-/* 
+/*
     Document   : print_exhibit.css
     Created on : Aug 25, 2014, 4:36:26 PM
     Author     : joris
@@ -15,9 +15,9 @@
 
     h1 {
         font-size:2em;
-        color:#669999; 
+        color:#669999;
         padding:2px 0px 2px 0px;
-        margin-bottom:1.2em; 
+        margin-bottom:1.2em;
         line-height:1.333333em;
         clear:both;
     }
@@ -26,7 +26,7 @@
         color:#669999;;
         padding:4px 0px 4px 0px;
         margin-bottom:1em;
-        line-height:1.2em;      
+        line-height:1.2em;
         clear:both;
         page-break-before: always;
     }
@@ -35,16 +35,34 @@
         color:#669999;;
         padding:4px 0px 4px 0px;
         margin-bottom:.75em;
-        line-height:1.2em;      
+        line-height:1.2em;
         clear:both;
     }
     img {
-        max-width: 250px;
-        float:left;
+        width:100%;
         margin:0 10px 10px 0;
     }
 
-    
-    
-}
+    .exhibit-item-caption{
+      color: #aaa;
+    }
 
+    .image-left{
+      clear:both;
+    }
+
+    .exhibit-item{
+      max-width: 250px;
+      padding-right:15px;
+      margin-bottom:20px;
+      float:left;
+      overflow : auto;
+    }
+
+    .exhibit-text{
+      overflow : auto;
+    }
+
+
+
+}
