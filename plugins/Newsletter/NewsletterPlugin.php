@@ -39,7 +39,7 @@ class NewsletterPlugin extends Omeka_Plugin_AbstractPlugin
         'public_navigation_main',
         'admin_navigation_main'
     );
-    
+
     public function hookInstall()
     {
             //make new item type
@@ -64,16 +64,16 @@ class NewsletterPlugin extends Omeka_Plugin_AbstractPlugin
             }
 
             $contactactiviteiten->element_set_id = 3;
-            $contactactiviteiten->name = 'Activiteiten';            
+            $contactactiviteiten->name = 'Activiteiten';
             try{
                 $contactactiviteiten->save();
                 $elements[]= $contactactiviteiten;
             }catch(Exception $e){
                 $problem .= $e->getMessage();
             }
-            
+
             $contactemail->element_set_id = 3;
-            $contactemail->name = 'Email';            
+            $contactemail->name = 'Email';
             try{
                 $contactemail->save();
                 $elements[]= $contactemail;
@@ -84,8 +84,8 @@ class NewsletterPlugin extends Omeka_Plugin_AbstractPlugin
             $itemType->addElements($elements);
 
             //save the item type
-            $itemType->save();   
-            
+            $itemType->save();
+
             //salt
             $characterList = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*?";
             $i = 0;
@@ -94,9 +94,9 @@ class NewsletterPlugin extends Omeka_Plugin_AbstractPlugin
                 $salt .= $characterList{mt_rand(0, (strlen($characterList) - 1))};
                 $i++;
             }
-            
+
             set_option('newsletter_salt', $salt);
-            
+
             set_option('newsletter_reply_from_email', get_option('administrator_email'));
             set_option('newsletter_forward_to_email', get_option('administrator_email'));
             set_option('newsletter_forward_to_email_admin_notification_email_subject', NEWSLETTER_ADMIN_NOTIFICATION_EMAIL_SUBJECT);
@@ -115,7 +115,7 @@ class NewsletterPlugin extends Omeka_Plugin_AbstractPlugin
         foreach($elements as $element){
             $element->delete();
         }*/
-        $itemType->delete();    
+        $itemType->delete();
 
         delete_option('newsletter_reply_from_email');
         delete_option('newsletter_forward_to_email');
@@ -144,7 +144,7 @@ class NewsletterPlugin extends Omeka_Plugin_AbstractPlugin
                     NEWSLETTER_PAGE_PATH,
                     array('module'       => 'newsletter')
                 )
-            );           
+            );
 
             $router->addRoute(
                 'newsletter_thankyou',
@@ -195,20 +195,20 @@ class NewsletterPlugin extends Omeka_Plugin_AbstractPlugin
         return $nav;
 
     }
-    
+
     public function hookAdminHead($args)
     {
-        queue_css_file('jquery.handsontable.full');
-        queue_js_file('jquery.handsontable.full');       
+        //queue_css_file('jquery.handsontable.full');
+        //queue_js_file('jquery.handsontable.full');       
     }
-    
+
     public function hookAfterSaveItem($item){
-        
+
     }
-    
+
     /**
      * Add the Newsletter link to the admin main navigation.
-     * 
+     *
      * @param array Navigation array.
      * @return array Filtered navigation array.
      */
@@ -216,8 +216,8 @@ class NewsletterPlugin extends Omeka_Plugin_AbstractPlugin
     {
         $nav[] = array(
             'label' => __('Newsletter'),
-            'uri' => url('newsletter')            
+            'uri' => url('newsletter')
         );
         return $nav;
-    } 
-}    
+    }
+}
