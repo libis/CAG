@@ -29,6 +29,19 @@ class SimpleContactForm_IndexController extends Omeka_Controller_AbstractActionC
 								$this->sendListservEmail(filter_var($email,FILTER_SANITIZE_EMAIL),filter_var($name,FILTER_SANITIZE_STRING),'add');
 						}
 
+						//motivatie
+						if($_POST['aanvraag']=="true"){
+                $redentxt ='<b>Motivatie:</b><ul>';
+                foreach($motivatie as $reden){
+                    if($reden == 'Anders'){
+                        $redentxt .= "<li>Anders: ".html_escape($_POST["motivatie-other"])."</li>";
+                    }else{
+                        $redentxt .= "<li>".$reden."</li>";
+                    }
+                }
+                $message .= "<br>".$redentxt;
+            }
+
 		    		$this->sendEmailNotification($_POST['email'], $_POST['name'], $message);
 	          $url = WEB_ROOT."/".SIMPLE_CONTACT_FORM_PAGE_PATH."thankyou";
             $this->_helper->redirector->goToUrl($url);
