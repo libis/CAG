@@ -15,14 +15,14 @@
         <title><?php echo implode(' &middot; ', $titleParts); ?></title>
 
         <!-- Meta -->
-              
+
         <meta property='og:title' content='<?php echo implode(' &middot; ', $titleParts); ?>'/>
         <meta property='og:url' content='<?php echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];?>'/>
-        <meta property='og:description' content=''/>    
-        <?php 
+        <meta property='og:description' content=''/>
+        <?php
             //if($og){echo $og;}
         ?>
-        <link rel="shortcut icon" href="<?php echo img('favicon.ico') ?>" />       
+        <link rel="shortcut icon" href="<?php echo img('favicon.ico') ?>" />
 
 <?php echo auto_discovery_link_tags(); ?>
 
@@ -34,7 +34,7 @@
         <?php
         queue_css_file('reset');
         queue_css_file('style');
-        queue_css_file('ie');      
+        queue_css_file('ie');
         queue_css_file('skin');
         queue_css_file('main');
         queue_css_file('geolocation-items-map');
@@ -53,22 +53,22 @@
 <?php endif; ?>
 
         <!-- JavaScripts -->
-        <?php queue_js_file('jquery.collapser'); ?>   
-        <?php queue_js_file('jquery.roundabout'); ?>       
+        <?php queue_js_file('jquery.collapser'); ?>
+        <?php queue_js_file('jquery.roundabout'); ?>
         <?php queue_js_file('iframe'); ?>
         <?php queue_js_file('selectivizr'); ?>
         <?php queue_js_url("http://maps.google.com/maps/api/js?sensor=false");
             queue_js_file('map');
             queue_js_file('markerclusterer');
             queue_js_file('spider');
-        ?>       
+        ?>
         <?php echo head_js(); ?>
 
         <script language="JavaScript">
             if (self !== top) document.write('<style type="text/css">#normal-title{display:none} html{background:#fff;margin:0 0 100px 0;} #footer {display: none;} .info {display:none;} #header {display: none;} #search-wrap {display: none;}</style>');
             var RecaptchaOptions = {
                 lang : 'nl'
-             };    
+             };
         </script><!--iframe changes-->
     </head>
     <body<?php echo isset($bodyid) ? ' id="' . $bodyid . '"' : ''; ?><?php echo isset($bodyclass) ? ' class="' . $bodyclass . '"' : ''; ?>>
@@ -78,7 +78,7 @@
                 <div id="site-title">
                     <div id="header-title">
                         <h1 class="header">Het Virtuele Land</h1>
-                        <h2 class="header">Erfgoed van landbouw, platteland en voeding</h2>                       
+                        <h2 class="header">Erfgoed van landbouw, voeding en landelijk leven</h2>                       
                     </div>
                 </div>
                 <div id="search-wrap" class="group">
@@ -89,12 +89,12 @@
 
                     <div id="header-nav">
 
-                      
-                            <?php echo public_nav_main(); ?>  
+
+                            <?php echo public_nav_main(); ?>
                     </div>
-                    
+
                 </div>
-                  
+
             </div>
-            
+
             <div id="content" class="group">
