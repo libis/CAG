@@ -1,2 +1,5 @@
 User-agent: *
+Crawl-delay: 10
 Disallow: /files/
+Disallow: /*?solrfacet
+Disallow: /solr-search/
