@@ -1,5 +1,5 @@
-<?php 
-queue_js_url("http://maps.google.com/maps/api/js?sensor=false");
+<?php
+queue_js_url("https://maps.google.com/maps/api/js?sensor=false");
 queue_js_file('map');
 
 
@@ -22,9 +22,9 @@ queue_css_string($css);
 
 echo head(array('title' => __('Browse Map'),'bodyid'=>'map','bodyclass' => 'browse')); ?>
 
-<?php 
+<?php
      $session = new Zend_Session_Namespace('style');
-     $session->from= 'browse'; 
+     $session->from= 'browse';
 ?>
 
 <?php
@@ -43,16 +43,16 @@ $formAttributes['method'] = 'GET';
    <?php echo libis_get_simple_page_content('info-kaart'); ?>
 </div>
 
-<div class="map-right">   
-    <form id="beeldbank-search" <?php echo tag_attributes($formAttributes); ?>>        
+<div class="map-right">
+    <form id="beeldbank-search" <?php echo tag_attributes($formAttributes); ?>>
         <?php
             echo $this->formText(
                 'search',
                 @$_REQUEST['search'],
                 array('id' => 'query', 'size' => '40')
             );
-        ?>        
-        <input type="submit" class="submit" name="submit_search" id="submit_search_advanced" value="<?php echo __('Search'); ?>" />      
+        ?>
+        <input type="submit" class="submit" name="submit_search" id="submit_search_advanced" value="<?php echo __('Search'); ?>" />
     </form><br>
     <h6>Aantal beelden op de kaart: <?php echo $totalItems; ?> </h6>
 </div>

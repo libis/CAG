@@ -57,7 +57,7 @@
         <?php queue_js_file('jquery.roundabout'); ?>
         <?php queue_js_file('iframe'); ?>
         <?php queue_js_file('selectivizr'); ?>
-        <?php queue_js_url("http://maps.google.com/maps/api/js?sensor=false");
+        <?php queue_js_url("https://maps.google.com/maps/api/js?sensor=false");
             queue_js_file('map');
             queue_js_file('markerclusterer');
             queue_js_file('spider');
@@ -78,7 +78,7 @@
                 <div id="site-title">
                     <div id="header-title">
                         <h1 class="header">Het Virtuele Land</h1>
-                        <h2 class="header">Erfgoed van landbouw, voeding en landelijk leven</h2>                       
+                        <h2 class="header">Erfgoed van landbouw, voeding en landelijk leven</h2>
                     </div>
                 </div>
                 <div id="search-wrap" class="group">
