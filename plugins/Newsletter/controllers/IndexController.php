@@ -230,7 +230,7 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
         }
 
         if(!$this->getRequest()->getPost('privacy')){
-  				$this->_helper->flashMessenger(__('Je hebt de privacy voorwaarden niet geaccepteerd.'));
+  				$this->_helper->flashMessenger(__('Je hebt de privacy voorwaarden nog niet geaccepteerd.'));
   				$valid = false;
   			}
 
