@@ -111,15 +111,16 @@
 
         });
     </script>
-    <div class="field">
-        <label><?php echo $this->formLabel('newsletter', 'Ik wil graag de nieuwsbrief en/of andere activiteiten van CAG en ICAG ontvangen via mail'); ?></label>
-        <input type="checkbox" name="newsletter">
-    </div>
-    <div class="field">
-        <label><?php echo $this->formLabel('privacy', ''); ?>Ik ga akkoord met de <a href="'.url('copyright').'">privacy statement</a></label>
-        <input type="checkbox" name="privacy">
-    </div>
+
     <fieldset>
+      <div class="field">
+          <label><?php echo $this->formLabel('newsletter', 'Ik wil graag de nieuwsbrief en/of andere activiteiten van CAG en ICAG ontvangen via mail'); ?></label>
+          <input type="checkbox" name="newsletter">
+      </div>
+      <div class="field">
+          <label><?php echo $this->formLabel('privacy', ''); ?>Ik ga akkoord met de <a href="'.url('copyright').'">privacy statement</a></label>
+          <input type="checkbox" name="privacy">
+      </div>
         <?php if ($captcha): ?>
         <div class="field">
             <?php echo $captcha; ?>
