@@ -149,7 +149,10 @@ class SimpleContactForm_IndexController extends Omeka_Controller_AbstractActionC
             } else if (!Zend_Validate::is($email, 'EmailAddress')) {
             $this->_helper->flashMessenger(__('Je e-mailadres is niet geldig.'));
             $valid = false;
-	    }
+	    } else if(!$this->getRequest()->getPost('privacy')){
+				$this->_helper->flashMessenger(__('Je hebt de privacy voorwaarden niet geaccepteerd.'));
+				$valid = false;
+			}
 	    return $valid;
 	}
 
@@ -190,7 +193,10 @@ class SimpleContactForm_IndexController extends Omeka_Controller_AbstractActionC
 	    } else if (empty($land)) {
             $this->_helper->flashMessenger(__('Je land ontbreekt.'));
             $valid = false;
-	    }
+	    } else if(!$this->getRequest()->getPost('privacy')){
+				$this->_helper->flashMessenger(__('Je hebt de privacy voorwaarden niet geaccepteerd.'));
+				$valid = false;
+			}
 
 	    return $valid;
 	}

@@ -229,6 +229,11 @@ class Newsletter_IndexController extends Omeka_Controller_AbstractActionControll
             $this->_helper->flashMessenger(__('Je moet minsten één type brief aanvinken'));
         }
 
+        if(!$this->getRequest()->getPost('privacy')){
+  				$this->_helper->flashMessenger(__('Je hebt de privacy voorwaarden niet geaccepteerd.'));
+  				$valid = false;
+  			}
+
         // ZF ReCaptcha ignores the 1st arg.
         if ($captcha and !$captcha->isValid('foo', $_POST)) {
                     $this->_helper->flashMessenger(__('Your CAPTCHA submission was invalid, please try again.'));

@@ -3,7 +3,7 @@
 <p id="simple-pages-breadcrumbs">
 	<a href="<?php echo url("");?>">Home</a>
 	> Registreer voor de nieuwsbrief
-	</p>    
+	</p>
         <h1>Nieuwsbrief - Registreer</h1>
 <div id="simple-contact">
 	<div id="form-instructions">
@@ -11,18 +11,18 @@
 	</div>
 	<?php echo flash(); ?>
 	<form name="contact_form" id="contact-form"  method="post" accept-charset="utf-8">
-        
+
         <fieldset>
             <?php foreach($elements as $element):?>
-               
+
                 <?php if($element->name == 'Nieuwsbrief' or $element->name == 'Activiteiten'):?>
-                    <div class="field"> 
+                    <div class="field">
                         <label><?php echo $element->name; ?></label>
                         <input type="checkbox" name="<?php echo $element->name; ?>"><br>
                     </div>
                 <?php else:?>
                     <div class="field">
-                        <?php 
+                        <?php
                             echo $this->formLabel($element->name, $element->name.': ');
                             echo $this->formText($element->name, $sticky[$element->name], array('class'=>'textinput')); ?>
                     </div>
@@ -30,11 +30,16 @@
             <?php endforeach;?>
         </fieldset>
 
+				<div class="field">
+						<label><?php echo $this->formLabel('privacy', ''); ?>Ik ga akkoord met de <a href="'.url('copyright').'">privacy statement</a></label>
+						<input type="checkbox" name="privacy">
+				</div>
+
         <fieldset>
-		    
+
             <div class="field">
               <?php echo $captcha; ?>
-            </div>		
+            </div>
 
             <div class="field">
               <?php echo $this->formSubmit('send', 'Registreer'); ?>
