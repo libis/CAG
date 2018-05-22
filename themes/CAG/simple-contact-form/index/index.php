@@ -63,7 +63,7 @@
                     <input type="checkbox" name="newsletter">
                 </div>
 								<div class="field">
-                    <label><?php echo $this->formLabel('privacy', ''); ?>Ik ga akkoord met de <a href="'.url('copyright').'">privacy statement</a></label>
+                    <label><?php echo $this->formLabel('privacy', ''); ?>Ik ga akkoord met de <a href="<?php echo url('copyright_privacystatement');?>">privacy statement</a></label>
                     <input type="checkbox" name="privacy">
                 </div>
             </fieldset>
