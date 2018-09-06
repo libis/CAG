@@ -1148,9 +1148,8 @@ function libis_get_exhibit_for_print($exhibit){
 
 
               <?php
-              for ($i = 1; $i <= 8; $i++):
-                  $text = exhibit_builder_page_text($i);
-                  $attachment = exhibit_builder_page_attachment($i);
+                  $text = exhibit_builder_page_text(1);
+                  $attachment = exhibit_builder_page_attachment(1);
                   if ($text || $attachment):
               ?>
                 <div class="image-left">
@@ -1165,7 +1164,7 @@ function libis_get_exhibit_for_print($exhibit){
                 </div>
                 <?php endif; ?>
                 </div>
-              <?php endif; endfor; ?>
+              <?php endif; ?>
 
 
             <?php
@@ -1178,9 +1177,9 @@ function libis_get_exhibit_for_print($exhibit){
                     <h3><span class="exhibit-page"><?php echo metadata('exhibit_page', 'title'); ?></h3>
 
                       <?php
-                      for ($i = 1; $i <= 8; $i++):
-                          $text = exhibit_builder_page_text($i);
-                          $attachment = exhibit_builder_page_attachment($i);
+
+                          $text = exhibit_builder_page_text(1);
+                          $attachment = exhibit_builder_page_attachment(1);
                           if ($text || $attachment):
                       ?>
                       <div class="image-left" width="250">
@@ -1195,7 +1194,7 @@ function libis_get_exhibit_for_print($exhibit){
                           </div>
                           <?php endif; ?>
                       </div>
-                      <?php endif; endfor; ?>
+                      <?php endif; ?>
 
                     <?php endforeach;?>
                 <?php endif;?>
