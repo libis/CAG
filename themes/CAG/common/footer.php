@@ -44,9 +44,17 @@
             <?php echo add_this_add(); ?>
             <div id="logo_vla"><a href="http://www.vlaanderen.be/nl"><img width="200" alt="Met steun van de Vlaamse overheid" src="<?php echo img("leeuwsteunVO-Gr.png");?>"></a></div>
 	</div><!-- /.column -->
+	<div id="google_translate_element" style="float: right;margin-right: 15px;margin-top: 15px;"></div><script type="text/javascript">
+	function googleTranslateElementInit() {
+	  new google.translate.TranslateElement({pageLanguage: 'nl', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+	}
+	</script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 	<?php fire_plugin_hook('public_footer'); ?>
-</div><!-- end footer -->
+	</div><!-- end footer -->
 </div><!-- end wrap -->
-<p class="info">Inhoud: <a href="<?php echo url('contact'); ?>">Centrum Agrarische Geschiedenis</a> - Ontwerp en realisatie: <a href="http://www.libis.be">LIBIS</a></p>
+<p class="info">Inhoud: <a href="<?php echo url('contact'); ?>">Centrum Agrarische Geschiedenis</a> - Ontwerp en realisatie: <a href="http://www.libis.be">LIBIS</a>
+</p>
+
 </body>
 </html>
