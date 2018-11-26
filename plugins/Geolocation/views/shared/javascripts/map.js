@@ -35,7 +35,7 @@ OmekaMap.prototype = {
               var itemobj = popup.getElement().getElementsByClassName('item_id').item(0);
               //var item ="";
               console.log(item);
-              var url = 'http://'+window.location.hostname+'/items/map/bubble/'+item+'#mapsInfoWindow';
+              var url = 'https://'+window.location.hostname+'/items/map/bubble/'+item+'#mapsInfoWindow';
               console.log(url);
               var el = jQuery('<div/>');
               //var url="DYNAMIC_CONTENT_URL";
@@ -45,7 +45,7 @@ OmekaMap.prototype = {
             });
 
             // Fit images on the map on first load
-            marker.once('popupopen', function (event) {
+            /*marker.once('popupopen', function (event) {
                 var popup = event.popup;
                 var imgs = popup.getElement().getElementsByTagName('img');
                 for (var i = 0; i < imgs.length; i++) {
@@ -62,7 +62,7 @@ OmekaMap.prototype = {
                     });
                 }
 
-            });
+            });*/
         }
 
         this.markers.push(marker);
