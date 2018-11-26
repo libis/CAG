@@ -37,8 +37,6 @@
         queue_css_file('ie');
         queue_css_file('skin');
         queue_css_file('main');
-        queue_css_file('geolocation-items-map');
-        queue_css_file('geolocation-marker');
         queue_css_file('feature-carousel');
         echo head_css();
         ?>
@@ -57,11 +55,6 @@
         <?php queue_js_file('jquery.roundabout'); ?>
         <?php queue_js_file('iframe'); ?>
         <?php queue_js_file('selectivizr'); ?>
-        <?php queue_js_url("https://maps.google.com/maps/api/js?sensor=false");
-            queue_js_file('map');
-            queue_js_file('markerclusterer');
-            queue_js_file('spider');
-        ?>
         <?php echo head_js(); ?>
 
         <script language="JavaScript">

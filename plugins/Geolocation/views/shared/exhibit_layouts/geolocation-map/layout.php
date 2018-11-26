@@ -22,8 +22,8 @@ foreach ($attachments as $attachment):
             $body = $this->exhibitAttachmentCaption($attachment);
         endif;
 
-        $html = '<div class="geolocation-balloon">'
-              . '<p class="geolocation_marker_title">' . $titleLink . '</p>'
+        $html = '<div class="geolocation_balloon">'
+              . '<div class="geolocation_balloon_title">' . $titleLink . '</div>'
               . $body
               . '</div>';
         $locations[] = array(
@@ -35,30 +35,22 @@ foreach ($attachments as $attachment):
 endforeach;
 ?>
 <script type="text/javascript">
-google.maps.event.addDomListener(window, 'load', function () {
+jQuery(window).on('load', function () {
     var geolocation_map = new OmekaMap(
         <?php echo json_encode($divId); ?>,
         <?php echo json_encode($center); ?>,
-        {}
-    );
+        <?php echo $this->geolocationMapOptions(); ?>);
     geolocation_map.initMap();
     var map_locations = <?php echo json_encode($locations); ?>;
-    var map_bounds = new google.maps.LatLngBounds();
     for (var i = 0; i < map_locations.length; i++) {
         var locationData = map_locations[i];
         geolocation_map.addMarker(
-            locationData.lat,
-            locationData.lng,
+            [locationData.lat, locationData.lng],
             {},
             locationData.html
         );
-        map_bounds.extend(new google.maps.LatLng(locationData.lat, locationData.lng));
     }
-    if (map_locations.length > 1) {
-        geolocation_map.map.fitBounds(map_bounds);
-    } else if (map_locations.length = 1) {
-        geolocation_map.map.setCenter(new google.maps.LatLng(map_locations[0].lat, map_locations[0].lng));
-    }
+    geolocation_map.fitMarkers();
 });
 </script>
 <div id="<?php echo $divId; ?>" class="geolocation-map exhibit-geolocation-map"></div>
