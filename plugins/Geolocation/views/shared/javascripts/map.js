@@ -43,7 +43,7 @@ OmekaMap.prototype = {
             });
 
             // Fit images on the map on first load
-            /*marker.once('popupopen', function (event) {
+            marker.once('popupopen', function (event) {
                 var popup = event.popup;
                 var imgs = popup.getElement().getElementsByTagName('img');
                 for (var i = 0; i < imgs.length; i++) {
@@ -60,7 +60,7 @@ OmekaMap.prototype = {
                     });
                 }
 
-            });*/
+            });
         }
 
         this.markers.push(marker);
