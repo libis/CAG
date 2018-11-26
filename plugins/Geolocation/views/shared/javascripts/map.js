@@ -5,7 +5,7 @@ function OmekaMap(mapDivId, center, options) {
 }
 
 OmekaMap.prototype = {
-    
+
     map: null,
     mapDivId: null,
     markers: [],
@@ -13,7 +13,7 @@ OmekaMap.prototype = {
     center: null,
     markerBounds: null,
     clusterGroup: null,
-    
+
     addMarker: function (latLng, options, bindHtml)
     {
         var map = this.map;
@@ -24,9 +24,26 @@ OmekaMap.prototype = {
         } else {
             marker.addTo(map);
         }
-        
+
         if (bindHtml) {
             marker.bindPopup(bindHtml, {autoPanPadding: [50, 50]});
+
+            marker.on('click', function(e) {
+              var mark = this;
+              var popup = e.target.getPopup();
+              var item = popup.getElement().getElementsByClassName('item_id').item(0).innerHTML;
+              var itemobj = popup.getElement().getElementsByClassName('item_id').item(0);
+              //var item ="";
+              console.log(item);
+              var url = 'http://'+window.location.hostname+'/items/map/bubble/'+item+'#mapsInfoWindow';
+              console.log(url);
+              var el = jQuery('<div/>');
+              //var url="DYNAMIC_CONTENT_URL";
+              jQuery.get(url).done(function(data) {
+                mark.setPopupContent(data);
+              });
+            });
+
             // Fit images on the map on first load
             marker.once('popupopen', function (event) {
                 var popup = event.popup;
@@ -44,9 +61,10 @@ OmekaMap.prototype = {
                         }
                     });
                 }
+
             });
         }
-               
+
         this.markers.push(marker);
         this.markerBounds.extend(latLng);
         return marker;
@@ -59,7 +77,7 @@ OmekaMap.prototype = {
             this.map.fitBounds(this.markerBounds, {padding: [25, 25]});
         }
     },
-    
+
     initMap: function () {
         if (!this.center) {
             alert('Error: The center of the map has not been set!');
@@ -83,9 +101,30 @@ OmekaMap.prototype = {
         // Show the center marker if we have that enabled.
         if (this.center.show) {
             this.addMarker([this.center.latitude, this.center.longitude],
-                           {title: "(" + this.center.latitude + ',' + this.center.longitude + ")"}, 
+                           {title: "(" + this.center.latitude + ',' + this.center.longitude + ")"},
                            this.center.markerHtml);
         }
+
+        /*this.marker.addListener('click', function(marker) {
+           //bindHtml = bindHtml.replace(/(<([^>]+)>)/ig,"");
+             //  bindHtml = bindHtml.replace(/ /g,'');
+               //alert(document.location.hostname);
+               var infowindow = null;
+
+               var pathArray = window.location.pathname.split( '/' );
+               if(pathArray[1].search("test")>=0){
+                   url = 'http://'+window.location.hostname+'/cag_test/items/map/bubble #mapsInfoWindow'
+               }else{
+                   url = 'http://'+window.location.hostname+'/items/map/bubble #mapsInfoWindow'
+               }
+
+               jQuery("#handle").load(url, { id: marker.snippet }, function(data) {
+                   infowindow = new google.maps.InfoWindow({
+                       content: data
+                   });
+                   infowindow.open(marker.getMap(), marker);
+               });
+        });*/
     }
 };
 
@@ -99,7 +138,7 @@ function OmekaMapBrowse(mapDivId, center, options) {
 }
 
 OmekaMapBrowse.prototype = {
-    
+
     afterLoadItems: function () {
         if (this.options.fitMarkers) {
             this.fitMarkers();
@@ -117,8 +156,8 @@ OmekaMapBrowse.prototype = {
             this.buildListLinks(listDiv);
         }
     },
-    
-    /* Need to parse KML manually b/c Google Maps API cannot access the KML 
+
+    /* Need to parse KML manually b/c Google Maps API cannot access the KML
        behind the admin interface */
     loadKmlIntoMap: function (kmlUrl, params) {
         var that = this;
@@ -129,7 +168,7 @@ OmekaMapBrowse.prototype = {
             data: params,
             success: function(data) {
                 var xml = jQuery(data);
-        
+
                 /* KML can be parsed as:
                     kml - root element
                         Placemark
@@ -138,32 +177,32 @@ OmekaMapBrowse.prototype = {
                             Point - longitude,latitude
                 */
                 var placeMarks = xml.find('Placemark');
-        
+
                 // If we have some placemarks, load them
                 if (placeMarks.size()) {
                     // Retrieve the balloon styling from the KML file
                     that.browseBalloon = that.getBalloonStyling(xml);
-                
+
                     // Build the markers from the placemarks
                     jQuery.each(placeMarks, function (index, placeMark) {
                         placeMark = jQuery(placeMark);
                         that.buildMarkerFromPlacemark(placeMark);
                     });
-            
+
                     // We have successfully loaded some map points, so continue setting up the map object
                     return that.afterLoadItems();
                 } else {
                     // @todo Elaborate with an error message
                     return false;
-                }            
+                }
             }
         });
     },
-    
+
     getBalloonStyling: function (xml) {
-        return xml.find('BalloonStyle text').text();        
+        return xml.find('BalloonStyle text').text();
     },
-    
+
     // Build a marker given the KML XML Placemark data
     // I wish we could use the KML file directly, but it's behind the admin interface so no go
     buildMarkerFromPlacemark: function (placeMark) {
@@ -172,12 +211,12 @@ OmekaMapBrowse.prototype = {
         var titleWithLink = placeMark.find('namewithlink').text();
         var body = placeMark.find('description').text();
         var snippet = placeMark.find('Snippet').text();
-            
+
         // Extract the lat/long from the KML-formatted data
         var coordinates = placeMark.find('Point coordinates').text().split(',');
         var longitude = coordinates[0];
         var latitude = coordinates[1];
-        
+
         // Use the KML formatting (do some string sub magic)
         var balloon = this.browseBalloon;
         balloon = balloon.replace('$[namewithlink]', titleWithLink).replace('$[description]', body).replace('$[Snippet]', snippet);
@@ -185,7 +224,7 @@ OmekaMapBrowse.prototype = {
         // Build a marker, add HTML for it
         this.addMarker([latitude, longitude], {title: title}, balloon);
     },
-    
+
     buildListLinks: function (container) {
         var that = this;
         var list = jQuery('<ul></ul>');
@@ -202,7 +241,7 @@ OmekaMapBrowse.prototype = {
             // Links open up the markers on the map, clicking them doesn't actually go anywhere
             link.attr('href', 'javascript:void(0);');
 
-            // Each <li> starts with the title of the item            
+            // Each <li> starts with the title of the item
             link.html(marker.options.title);
 
             // Clicking the link should take us to the map
@@ -236,9 +275,9 @@ function OmekaMapForm(mapDivId, center, options) {
     var omekaMap = new OmekaMap(mapDivId, center, options);
     jQuery.extend(true, this, omekaMap);
     this.initMap();
-    
-    this.formDiv = jQuery('#' + this.options.form.id);       
-        
+
+    this.formDiv = jQuery('#' + this.options.form.id);
+
     // Make the map clickable to add a location point.
     this.map.on('click', function (event) {
         // If we are clicking a new spot on the map
@@ -247,7 +286,7 @@ function OmekaMapForm(mapDivId, center, options) {
             jQuery('#geolocation_address').val('');
         }
     });
-	
+
     // Make the map update on zoom changes.
     this.map.on('zoomend', function () {
         that.updateZoomForm();
@@ -262,7 +301,7 @@ function OmekaMapForm(mapDivId, center, options) {
 }
 
 OmekaMapForm.prototype = {
-    /* Set the marker to the point. */   
+    /* Set the marker to the point. */
     setMarker: function (point) {
         var that = this;
 
@@ -275,62 +314,62 @@ OmekaMapForm.prototype = {
 
         // Get rid of existing markers.
         this.clearForm();
-        
+
         // Add the marker
         var marker = this.addMarker(point);
-        
+
         // Pan the map to the marker
         this.map.panTo(point);
-        
+
         //  Make the marker clear the form if clicked.
         marker.on('click', function (event) {
             if (!that.options.confirmLocationChange || confirm('Are you sure you want to remove the location of the item?')) {
                 that.clearForm();
             }
         });
-        
+
         this.updateForm(point);
         return marker;
     },
-    
+
     /* Update the latitude, longitude, and zoom of the form. */
     updateForm: function (point) {
         var latElement = document.getElementsByName('geolocation[latitude]')[0];
         var lngElement = document.getElementsByName('geolocation[longitude]')[0];
         var zoomElement = document.getElementsByName('geolocation[zoom_level]')[0];
-        
+
         // If we passed a point, then set the form to that. If there is no point, clear the form
         if (point) {
             latElement.value = point.lat;
             lngElement.value = point.lng;
-            zoomElement.value = this.map.getZoom();          
+            zoomElement.value = this.map.getZoom();
         } else {
             latElement.value = '';
             lngElement.value = '';
-            zoomElement.value = this.map.getZoom();          
-        }        
+            zoomElement.value = this.map.getZoom();
+        }
     },
-    
+
     /* Update the zoom input of the form to be the current zoom on the map. */
     updateZoomForm: function () {
         var zoomElement = document.getElementsByName('geolocation[zoom_level]')[0];
         zoomElement.value = this.map.getZoom();
     },
-    
+
     /* Clear the form of all markers. */
     clearForm: function () {
         // Remove the markers from the map
         for (var i = 0; i < this.markers.length; i++) {
             this.markers[i].remove();
         }
-        
+
         // Clear the markers array
         this.markers = [];
-        
+
         // Update the form
         this.updateForm();
     },
-    
+
     /* Resize the map and center it on the first marker. */
     resize: function () {
         this.map.invalidateSize();

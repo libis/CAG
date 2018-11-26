@@ -21,16 +21,15 @@
         <Placemark>
             <name><![CDATA[<?php echo metadata('item', array('Dublin Core', 'Title'));?>]]></name>
             <namewithlink><![CDATA[<?php echo link_to_item(metadata('item' , array('Dublin Core', 'Title')), array('class' => 'view-item')); ?>]]></namewithlink>
-            <Snippet maxLines="2"><![CDATA[<?php
-            echo metadata('item', array('Dublin Core', 'Description'), array('snippet' => 150));
-            ?>]]></Snippet>
+            <Snippet maxLines="2"><![CDATA[]]></Snippet>
             <description><![CDATA[<?php
             // @since 3/26/08: movies do not display properly on the map in IE6,
             // so can't use display_files(). Description field contains the HTML
             // for displaying the first file (if possible).
-            if (digitool_get_thumb_url($item)) {
-                echo link_to_item('<img src="'.digitool_get_thumb_url($item).'">', array('class' => 'view-item'));                
-            }
+            echo '<div class="item_id" style="display:hidden">'.$item->id.'</div>';
+            /*if ($img = digitool_get_thumb_url($item)) {
+                echo link_to_item('<img src="'.digitool_get_thumb_url($item).'">', array('class' => 'view-item'));
+            }*/
             ?>]]></description>
             <Point>
                 <coordinates><?php echo $location['longitude']; ?>,<?php echo $location['latitude']; ?></coordinates>

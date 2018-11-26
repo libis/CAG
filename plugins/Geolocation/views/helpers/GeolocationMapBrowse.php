@@ -44,4 +44,6 @@ class Geolocation_View_Helper_GeolocationMapBrowse extends Zend_View_Helper_Abst
         $html .= "<script type='text/javascript'>$js</script>";
         return $html;
     }
+    public function bubbleAction(){
+    }
 }
