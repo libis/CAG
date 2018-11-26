@@ -34,9 +34,7 @@ OmekaMap.prototype = {
               var item = popup.getElement().getElementsByClassName('item_id').item(0).innerHTML;
               var itemobj = popup.getElement().getElementsByClassName('item_id').item(0);
               //var item ="";
-              console.log(item);
               var url = 'https://'+window.location.hostname+'/items/map/bubble/'+item+'#mapsInfoWindow';
-              console.log(url);
               var el = jQuery('<div/>');
               //var url="DYNAMIC_CONTENT_URL";
               jQuery.get(url).done(function(data) {
