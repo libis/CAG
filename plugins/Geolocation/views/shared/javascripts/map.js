@@ -33,7 +33,7 @@ OmekaMap.prototype = {
               console.log(html.find('.item_id').html());
               var popup = e.target.getPopup();
               var item = html.find('.item_id').html();
-              var url = 'http://'+window.location.hostname+'/cag/items/map/bubble/'+item+'#mapsInfoWindow';
+              var url = 'https://'+window.location.hostname+'/items/map/bubble/'+item+'#mapsInfoWindow';
 
               jQuery.get(url).done(function(data) {
                 mark.bindPopup(data, {autoPanPadding: [50, 50]});
