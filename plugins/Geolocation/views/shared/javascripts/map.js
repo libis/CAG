@@ -30,8 +30,6 @@ OmekaMap.prototype = {
             marker.on('click', function(e) {
               var mark = this;
               var html = jQuery(bindHtml);
-              console.log(html.find('.item_id').html());
-              var popup = e.target.getPopup();
               var item = html.find('.item_id').html();
               var url = 'https://'+window.location.hostname+'/items/map/bubble/'+item+'#mapsInfoWindow';
 
