@@ -26,19 +26,19 @@ OmekaMap.prototype = {
         }
 
         if (bindHtml) {
-            marker.bindPopup(bindHtml, {autoPanPadding: [50, 50]});
 
             marker.on('click', function(e) {
               var mark = this;
+              var html = jQuery(bindHtml);
+              console.log(html.find('.item_id').html());
               var popup = e.target.getPopup();
-              var item = popup.getElement().getElementsByClassName('item_id').item(0).innerHTML;
-              var itemobj = popup.getElement().getElementsByClassName('item_id').item(0);
-              //var item ="";
-              var url = 'https://'+window.location.hostname+'/items/map/bubble/'+item+'#mapsInfoWindow';
-              var el = jQuery('<div/>');
-              //var url="DYNAMIC_CONTENT_URL";
+              var item = html.find('.item_id').html();
+              var url = 'http://'+window.location.hostname+'/cag/items/map/bubble/'+item+'#mapsInfoWindow';
+
               jQuery.get(url).done(function(data) {
-                mark.setPopupContent(data);
+                mark.bindPopup(data, {autoPanPadding: [50, 50]});
+                mark.openPopup();
+                //mark.setPopupContent(data);
               });
             });
 
