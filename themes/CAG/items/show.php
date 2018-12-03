@@ -70,6 +70,7 @@ endif; ?>
     	<h3>Gerelateerde personen/instellingen:</h3><p><?php echo metadata('item', array('Dublin Core','Creator'),array('delimiter'=>'<br>'));?></p>
     <?php } ?>
 
+
     <?php if (metadata('item', 'has tags')): ?>
     <h3>Trefwoorden</h3>
     <p> <?php
@@ -92,6 +93,25 @@ endif; ?>
    	 	<h3>Referenties:</h3><p><?php echo ucfirst(metadata('item', array('Dublin Core','References'),array('delimiter'=>'<br>')));?></p>
     <?php } ?>
 
+    <?php if(metadata($item,array('Item Type Metadata','Website'))){?>
+        <h3>>Website:</h3>
+        <p>
+          <?php
+            $r =  metadata($item,array('Item Type Metadata','Website'),array('all'=>'true'));
+            $html = "";
+            foreach($r as $link):
+              if($link != strip_tags($link)) {
+                  $html .= $link;
+              }else{
+                  $html .= "<a href='".$link."'>".$link."</a>";
+              }
+              $html .= ", ";
+            endforeach;
+            echo substr($html, 0, -2);
+          ?>
+        </td>
+    </p>
+    <?php } ?>
 
 
 
@@ -207,6 +227,27 @@ endif; ?>
             ?>
             </p></span>
         <?php } ?>
+
+        <?php if(metadata($item,array('Item Type Metadata','Website'))){?>
+            <h3>>Website:</h3>
+            <p>
+              <?php
+                $r =  metadata($item,array('Item Type Metadata','Website'),array('all'=>'true'));
+                $html = "";
+                foreach($r as $link):
+                  if($link != strip_tags($link)) {
+                      $html .= $link;
+                  }else{
+                      $html .= "<a href='".$link."'>".$link."</a>";
+                  }
+                  $html .= ", ";
+                endforeach;
+                echo substr($html, 0, -2);
+              ?>
+            </td>
+        </p>
+        <?php } ?>
+
 <?php endif;?>
 
 <!-- COLLECTIE -->
@@ -244,7 +285,7 @@ endif; ?>
         </tr>
         <?php endif; ?>
         <tr>
-            <?php if(metadata($item,array('Item Type Metadata','Straat + Nr')))?>
+            <?php if(metadata($item,array('Item Type Metadata','Straat + Nr'))):?>
             <td><label>Adresgegevens:</label></td>
             <td><?php echo metadata($item,array('Item Type Metadata','Straat + Nr'))?><br>
                 <?php echo metadata($item,array('Item Type Metadata','Postcode'))?>, <?php echo metadata($item,array('Item Type Metadata','Stad'))?><br>
@@ -255,15 +296,45 @@ endif; ?>
             <td><label>Telefoon:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Telefoon'),array('delimiter'=>'; '))?></td>
         </tr>
         <?php endif; ?>
-        <tr>
+
         <?php if(metadata($item,array('Item Type Metadata','Website'))):?>
-            <td><label>Website:</label></td><td><?php echo metadata($item,array('Item Type Metadata','Website'),array('delimiter'=>'; '))?></td>
+          <tr><td><label>Website:</label></td>
+            <td>
+              <?php
+                $r =  metadata($item,array('Item Type Metadata','Website'),array('all'=>'true'));
+                $html = "";
+                foreach($r as $link):
+                  if($link != strip_tags($link)) {
+                      $html .= $link;
+                  }else{
+                      $html .= "<a href='".$link."'>".$link."</a>";
+                  }
+                  $html .= ", ";
+                endforeach;
+                echo substr($html, 0, -2);
+              ?>
+            </td>
         </tr>
         <?php endif; ?>
-        <tr>
+
         <?php if(metadata($item,array('Item Type Metadata','E-mail'))):?>
-            <td><label>E-mail:</label></td><td><?php echo metadata($item,array('Item Type Metadata','E-mail'),array('delimiter'=>'; '))?></td>
-        </tr>
+          <tr><td><label>E-mail:</label></td>
+            <td>
+              <?php
+              $r =  metadata($item,array('Item Type Metadata','E-mail'),array('all'=>'true'));
+              $html = "";
+              foreach($r as $link):
+                if($link != strip_tags($link)) {
+                    $html .= $link;
+                }else{
+                    $html .= "<a href='".$link."'>".$link."</a>";
+                }
+                $html .= ", ";
+              endforeach;
+              echo substr($html, 0, -2);
+              ?>
+            </td>
+          </tr>
         <?php endif; ?>
     </table>
 <?php endif;?>
