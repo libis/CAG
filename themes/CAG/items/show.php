@@ -285,7 +285,7 @@ endif; ?>
         </tr>
         <?php endif; ?>
         <tr>
-            <?php if(metadata($item,array('Item Type Metadata','Straat + Nr'))):?>
+            <?php if(metadata($item,array('Item Type Metadata','Straat + Nr')))?>
             <td><label>Adresgegevens:</label></td>
             <td><?php echo metadata($item,array('Item Type Metadata','Straat + Nr'))?><br>
                 <?php echo metadata($item,array('Item Type Metadata','Postcode'))?>, <?php echo metadata($item,array('Item Type Metadata','Stad'))?><br>
@@ -318,7 +318,7 @@ endif; ?>
         <?php endif; ?>
 
         <?php if(metadata($item,array('Item Type Metadata','E-mail'))):?>
-          <tr><td><label>E-mail:</label></td>
+            <tr><td><label>E-mail:</label></td>
             <td>
               <?php
               $r =  metadata($item,array('Item Type Metadata','E-mail'),array('all'=>'true'));
@@ -334,7 +334,7 @@ endif; ?>
               echo substr($html, 0, -2);
               ?>
             </td>
-          </tr>
+        </tr>
         <?php endif; ?>
     </table>
 <?php endif;?>
