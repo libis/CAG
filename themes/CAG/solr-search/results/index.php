@@ -388,7 +388,7 @@ jQuery(document).ready(function() {
                                     if(metadata($item,array('Item Type Metadata','Fax')))
                                         $actoren.= "<tr><td><strong>Fax:</strong></td><td>".metadata($item,array('Item Type Metadata','Fax'))."</td></tr>";
                                     if(metadata($item,array('Item Type Metadata','Website'))):
-                                        $link =  metadata($item,array('Item Type Metadata','Website'),array('all'=>'true'));
+                                        $link =  metadata($item,array('Item Type Metadata','Website'));
                                         $html = "";
                                         if($link != strip_tags($link)) {
                                             $html .= $link;
@@ -404,7 +404,7 @@ jQuery(document).ready(function() {
                                             $html .= $link;
                                         }else{
                                             $html .= "<a href='mailto:".$link."'>".$link."</a>";
-                                        }                                      
+                                        }
                                         $actoren.= "<tr><td><strong>E-mail:</strong></td><td>".$html."</td></tr>";
                                     endif;
                                     if(metadata($item,array('Item Type Metadata','Beschrijving')))
