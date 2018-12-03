@@ -387,10 +387,34 @@ jQuery(document).ready(function() {
                                         $actoren.= "<tr><td><strong>Telefoon:</strong></td><td>".metadata($item,array('Item Type Metadata','Telefoon'))."</td></tr>";
                                     if(metadata($item,array('Item Type Metadata','Fax')))
                                         $actoren.= "<tr><td><strong>Fax:</strong></td><td>".metadata($item,array('Item Type Metadata','Fax'))."</td></tr>";
-                                    if(metadata($item,array('Item Type Metadata','Website')))
-                                        $actoren.= "<tr><td><strong>Website:</strong></td><td width=375 style='word-break: break-all;word-wrap:break-word;' >".metadata($item,array('Item Type Metadata','Website'))."</td></tr>";
-                                    if(metadata($item,array('Item Type Metadata','E-mail')))
-                                        $actoren.= "<tr><td><strong>E-mail:</strong></td><td>".metadata($item,array('Item Type Metadata','E-mail'))."</td></tr>";
+                                    if(metadata($item,array('Item Type Metadata','Website'))):
+                                        $r =  metadata($item,array('Item Type Metadata','Website'),array('all'=>'true'));
+                                        $html = "";
+                                        foreach($r as $link):
+                                          if($link != strip_tags($link)) {
+                                              $html .= $link;
+                                          }else{
+                                              $html .= "<a href='".$link."'>".$link."</a>";
+                                          }
+                                          $html .= ", ";
+                                        endforeach;
+                                        $html .= substr($html, 0, -2);
+                                        $actoren.= "<tr><td><strong>Website:</strong></td><td width=375 style='word-break: break-all;word-wrap:break-word;' >".$html."</td></tr>";
+                                    endif;
+                                    if(metadata($item,array('Item Type Metadata','E-mail'))):
+                                        $r =  metadata($item,array('Item Type Metadata','E-mail'),array('all'=>'true'));
+                                        $html = "";
+                                        foreach($r as $link):
+                                          if($link != strip_tags($link)) {
+                                              $html .= $link;
+                                          }else{
+                                              $html .= "<a href='mailto:".$link."'>".$link."</a>";
+                                          }
+                                          $html .= ", ";
+                                        endforeach;
+                                        $html .= substr($html, 0, -2);
+                                        $actoren.= "<tr><td><strong>E-mail:</strong></td><td>".$html."</td></tr>";
+                                    endif;
                                     if(metadata($item,array('Item Type Metadata','Beschrijving')))
                                            $actoren.="<tr><td ><strong>Beschrijving:</strong></td><td width=375>".metadata($item,array('Item Type Metadata','Beschrijving'),array('snippet'=>200))."</td></tr>";
 

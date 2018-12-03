@@ -94,7 +94,7 @@ endif; ?>
     <?php } ?>
 
     <?php if(metadata($item,array('Item Type Metadata','Website'))){?>
-        <h3>>Website:</h3>
+        <h3>Website:</h3>
         <p>
           <?php
             $r =  metadata($item,array('Item Type Metadata','Website'),array('all'=>'true'));
@@ -229,7 +229,7 @@ endif; ?>
         <?php } ?>
 
         <?php if(metadata($item,array('Item Type Metadata','Website'))){?>
-            <h3>>Website:</h3>
+            <h3>Website:</h3>
             <p>
               <?php
                 $r =  metadata($item,array('Item Type Metadata','Website'),array('all'=>'true'));
@@ -327,7 +327,7 @@ endif; ?>
                 if($link != strip_tags($link)) {
                     $html .= $link;
                 }else{
-                    $html .= "<a href='".$link."'>".$link."</a>";
+                    $html .= "<a href='mailto:".$link."'>".$link."</a>";
                 }
                 $html .= ", ";
               endforeach;
