@@ -21,11 +21,11 @@ class SolrSearch_Helpers_Facet
      */
     public static function parseFacets()
     {
-        
+
         $facets = array();
-       
+
         if (array_key_exists('facet', $_GET)) {
-            
+
             // Extract the field/value facet pairs.
             preg_match_all('/(?P<field>[\w]+):"(?P<value>[-\w\s]+)"/',
                 $_GET['facet'], $matches
@@ -33,7 +33,7 @@ class SolrSearch_Helpers_Facet
 
             // Collapse into an array of pairs.
             foreach ($matches['field'] as $i => $field) {
-                $facets[] = array($field, $matches['value'][$i]);
+                $facets[] = array($field, htmlspecialchars(strip_tags($matches['value'][$i])));
             }
 
         }
