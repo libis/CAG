@@ -1,5 +1,9 @@
 User-agent: *
-Crawl-delay: 10
+Crawl-delay: 30
 Disallow: /files/
 Disallow: /*?solrfacet
 Disallow: /solr-search/
+Disallow: /solr-search/
+Disallow: /items/browse/
+Disallow: /items/index/
+Disallow: /index.php/
